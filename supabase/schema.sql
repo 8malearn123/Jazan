@@ -103,6 +103,49 @@ create table if not exists public.reviews (
   created_at   timestamptz not null default now()
 );
 
+-- رعاة المنصة
+create table if not exists public.sponsors (
+  id         uuid primary key default gen_random_uuid(),
+  name       text not null,
+  logo_url   text,
+  created_at timestamptz not null default now()
+);
+
+-- طلبات التوثيق (لوحة المشرف)
+do $$ begin
+  create type verification_status as enum ('pending', 'approved', 'rejected');
+exception when duplicate_object then null; end $$;
+
+create table if not exists public.verification_requests (
+  id          uuid primary key default gen_random_uuid(),
+  profile_id  uuid not null references public.profiles(id) on delete cascade,
+  status      verification_status not null default 'pending',
+  note        text,
+  reviewed_by uuid references public.profiles(id) on delete set null,
+  reviewed_at timestamptz,
+  created_at  timestamptz not null default now()
+);
+
+-- البلاغات (لوحة المشرف)
+create table if not exists public.reports (
+  id          uuid primary key default gen_random_uuid(),
+  target_id   uuid not null references public.profiles(id) on delete cascade,
+  reporter_id uuid references public.profiles(id) on delete set null,
+  reason      text not null,
+  status      text not null default 'open' check (status in ('open', 'resolved')),
+  created_at  timestamptz not null default now()
+);
+
+-- عدد الفرص المفتوحة لكل شركة (يقابل الحقل openings في الواجهة)
+create or replace view public.companies_with_openings as
+select c.*, coalesce(j.openings, 0)::int as openings
+from public.companies c
+left join (
+  select company_id, count(*) as openings
+  from public.jobs
+  group by company_id
+) j on j.company_id = c.id;
+
 -- ============================================================
 --  دالة مساعدة: هل المستخدم الحالي مشرف؟
 -- ============================================================
@@ -147,6 +190,9 @@ alter table public.companies          enable row level security;
 alter table public.jobs               enable row level security;
 alter table public.portfolio_items    enable row level security;
 alter table public.reviews            enable row level security;
+alter table public.sponsors           enable row level security;
+alter table public.verification_requests enable row level security;
+alter table public.reports            enable row level security;
 
 -- قراءة عامة (للجميع)
 do $$
@@ -154,12 +200,43 @@ declare t text;
 begin
   foreach t in array array[
     'profiles','hero_profiles','producer_profiles','products',
-    'companies','jobs','portfolio_items','reviews'
+    'companies','jobs','portfolio_items','reviews','sponsors'
   ] loop
     execute format('drop policy if exists "public_read" on public.%I;', t);
     execute format('create policy "public_read" on public.%I for select using (true);', t);
   end loop;
 end $$;
+
+-- sponsors: المشرف فقط يضيف/يعدّل
+drop policy if exists "admin_write_sponsors" on public.sponsors;
+create policy "admin_write_sponsors" on public.sponsors
+  for all using (public.is_admin()) with check (public.is_admin());
+
+-- verification_requests: المالك يقدّم طلبه ويراه، والمشرف يدير الكل
+drop policy if exists "own_verification_insert" on public.verification_requests;
+create policy "own_verification_insert" on public.verification_requests
+  for insert with check (auth.uid() = profile_id);
+
+drop policy if exists "own_or_admin_verification_read" on public.verification_requests;
+create policy "own_or_admin_verification_read" on public.verification_requests
+  for select using (auth.uid() = profile_id or public.is_admin());
+
+drop policy if exists "admin_verification_update" on public.verification_requests;
+create policy "admin_verification_update" on public.verification_requests
+  for update using (public.is_admin());
+
+-- reports: أي مستخدم مسجّل يبلّغ، والمشرف فقط يقرأ ويعالج
+drop policy if exists "auth_report_insert" on public.reports;
+create policy "auth_report_insert" on public.reports
+  for insert with check (auth.uid() is not null);
+
+drop policy if exists "admin_reports_read" on public.reports;
+create policy "admin_reports_read" on public.reports
+  for select using (public.is_admin());
+
+drop policy if exists "admin_reports_update" on public.reports;
+create policy "admin_reports_update" on public.reports
+  for update using (public.is_admin());
 
 -- profiles: المالك يعدّل ملفه، والمشرف يعدّل أي ملف
 drop policy if exists "own_profile_update" on public.profiles;
