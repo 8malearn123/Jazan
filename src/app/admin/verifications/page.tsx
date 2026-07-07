@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { pendingVerifications } from "@/lib/data";
 import { roleLabels } from "@/components/auth/AuthProvider";
+import { useVerifications } from "../_components/useVerifications";
 import { AdminPageHead, TableCard, Th, Td, Pill } from "../_components/AdminTable";
 
 const roleTone: Record<"hero" | "producer" | "company", "info" | "amber"> = {
@@ -12,15 +11,7 @@ const roleTone: Record<"hero" | "producer" | "company", "info" | "amber"> = {
   company: "info",
 };
 export default function VerificationsPage() {
-  const [rows, setRows] = useState(pendingVerifications);
-  const [toast, setToast] = useState("");
-
-  function resolve(id: string, accepted: boolean) {
-    const row = rows.find((r) => r.id === id);
-    setRows((list) => list.filter((r) => r.id !== id));
-    setToast(`${accepted ? "تم قبول" : "تم رفض"} طلب ${row?.name ?? ""}`);
-    setTimeout(() => setToast(""), 2500);
-  }
+  const { pending: rows, resolve, toast } = useVerifications();
 
   return (
     <div className="mx-auto w-full max-w-[1200px] space-y-5">

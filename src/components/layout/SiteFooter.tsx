@@ -17,6 +17,7 @@ const columns = [
       { label: "الأسئلة الشائعة", href: "/faq" },
       { label: "تواصل معنا", href: "/contact" },
       { label: "سياسة الخصوصية", href: "/privacy" },
+      { label: "شروط الاستخدام", href: "/terms" },
     ],
   },
 ];

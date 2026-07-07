@@ -22,8 +22,14 @@ function matchStatus(hero: Hero, f: StatusFilter): boolean {
   return hero.status === "both";
 }
 
-export function BrowseClient({ heroes }: { heroes: Hero[] }) {
-  const [query, setQuery] = useState("");
+export function BrowseClient({
+  heroes,
+  initialQuery = "",
+}: {
+  heroes: Hero[];
+  initialQuery?: string;
+}) {
+  const [query, setQuery] = useState(initialQuery);
   const [city, setCity] = useState("all");
   const [status, setStatus] = useState<StatusFilter>("all");
 

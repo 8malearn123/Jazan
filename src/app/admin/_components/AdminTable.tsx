@@ -54,23 +54,3 @@ export function Pill({
     </span>
   );
 }
-
-/** أزرار إجراءات صغيرة */
-export function ActionBtn({
-  children,
-  tone = "default",
-}: {
-  children: React.ReactNode;
-  tone?: "default" | "accept" | "reject";
-}) {
-  const tones: Record<string, string> = {
-    default: "border border-line bg-white text-charcoal hover:bg-cream",
-    accept: "bg-jazan text-white hover:bg-jazan-dark",
-    reject: "border border-[#e8c9c9] bg-white text-[#b3261e] hover:bg-[#fdf3f3]",
-  };
-  return (
-    <button className={cn("cursor-pointer rounded-lg px-3 py-1.5 text-[12px] font-semibold transition-colors", tones[tone])}>
-      {children}
-    </button>
-  );
-}

@@ -11,6 +11,10 @@ import {
   StoreIcon,
   BuildingIcon,
   CheckIcon,
+  MailIcon,
+  LockIcon,
+  UserIcon,
+  EyeIcon,
 } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
@@ -18,83 +22,6 @@ import { homeForRole } from "@/lib/demo";
 import { site } from "@/lib/site";
 import { heroStats } from "@/lib/stats";
 import type { UserRole } from "@/lib/types";
-
-function MailIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="M22 7l-10 5L2 7" />
-    </svg>
-  );
-}
-
-function LockIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <rect x="3" y="11" width="18" height="11" rx="2" />
-      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-    </svg>
-  );
-}
-
-function UserIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-    </svg>
-  );
-}
-
-function EyeIcon({ off, className }: { off?: boolean; className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
-      <circle cx="12" cy="12" r="3" />
-      {off ? <path d="M3 3l18 18" /> : null}
-    </svg>
-  );
-}
 
 type RoleChoice = Extract<UserRole, "hero" | "producer" | "company">;
 
@@ -157,6 +84,7 @@ function RegisterForm() {
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [confirmEmailSent, setConfirmEmailSent] = useState(false);
 
   const canSubmit = name.trim() && email.trim() && password.trim();
 
@@ -165,7 +93,7 @@ function RegisterForm() {
     if (!canSubmit || loading) return;
     setError("");
     setLoading(true);
-    const { user, error } = await signUp({
+    const { user, error, needsEmailConfirmation } = await signUp({
       name: name.trim(),
       email: email.trim(),
       password,
@@ -173,6 +101,12 @@ function RegisterForm() {
     });
     if (error || !user) {
       setError("تعذّر إنشاء الحساب. ربما البريد مستخدم مسبقاً.");
+      setLoading(false);
+      return;
+    }
+    if (needsEmailConfirmation) {
+      // Supabase يرسل رابط تفعيل — لا جلسة بعد، فلا نوجّه للداشبورد.
+      setConfirmEmailSent(true);
       setLoading(false);
       return;
     }
@@ -292,7 +226,7 @@ function RegisterForm() {
               الاسم الكامل
             </label>
             <div className={inputWrap}>
-              <UserIcon className="text-muted" />
+              <UserIcon width={18} height={18} className="text-muted" />
               <input
                 id="name"
                 type="text"
@@ -312,7 +246,7 @@ function RegisterForm() {
               البريد الإلكتروني
             </label>
             <div className={inputWrap}>
-              <MailIcon className="text-muted" />
+              <MailIcon width={18} height={18} className="text-muted" />
               <input
                 id="email"
                 type="email"
@@ -333,7 +267,7 @@ function RegisterForm() {
               كلمة المرور
             </label>
             <div className={inputWrap}>
-              <LockIcon className="text-muted" />
+              <LockIcon width={18} height={18} className="text-muted" />
               <input
                 id="password"
                 type={showPass ? "text" : "password"}
@@ -349,7 +283,7 @@ function RegisterForm() {
                 aria-label={showPass ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
                 className="text-muted/70 transition-colors hover:text-muted"
               >
-                <EyeIcon off={showPass} />
+                <EyeIcon off={showPass} width={18} height={18} />
               </button>
             </div>
             <p className="mt-[7px] text-[12px] text-muted/70">
@@ -362,11 +296,23 @@ function RegisterForm() {
               </p>
             ) : null}
 
+            {confirmEmailSent ? (
+              <p className="mt-4 rounded-lg bg-success/12 px-3 py-2.5 text-[13px] font-medium leading-relaxed text-success-ink">
+                تم إنشاء حسابك! أرسلنا رابط تفعيل إلى{" "}
+                <span className="mono font-semibold" dir="ltr">{email.trim()}</span> —
+                افتح بريدك واضغط الرابط، ثم{" "}
+                <Link href="/login" className="font-bold text-success-ink underline">
+                  سجّل الدخول
+                </Link>
+                .
+              </p>
+            ) : null}
+
             <Button
               type="submit"
               size="lg"
               className="mt-6 w-full"
-              disabled={!canSubmit || loading}
+              disabled={!canSubmit || loading || confirmEmailSent}
             >
               {loading ? "جارٍ إنشاء الحساب…" : "إنشاء حساب"}
             </Button>
@@ -374,11 +320,11 @@ function RegisterForm() {
 
           <p className="mt-5 text-center text-[12px] leading-[1.7] text-muted/70">
             بالمتابعة، أنت توافق على{" "}
-            <Link href="/register" className="text-muted hover:underline">
+            <Link href="/terms" className="text-muted hover:underline">
               شروط الاستخدام
             </Link>{" "}
             و
-            <Link href="/register" className="text-muted hover:underline">
+            <Link href="/privacy" className="text-muted hover:underline">
               سياسة الخصوصية
             </Link>
           </p>

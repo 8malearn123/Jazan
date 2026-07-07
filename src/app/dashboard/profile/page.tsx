@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { useAuth } from "@/components/auth/AuthProvider";
+import type { UserRole } from "@/lib/types";
 
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-white px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
@@ -12,6 +13,28 @@ const MAX_FILE_BYTES = 2 * 1024 * 1024;
 const ACCEPT = ".pdf,.png,.jpg,.jpeg";
 
 type Attachment = { name: string; size: number };
+
+/** بيانات الملف القابلة للتعديل — تُحفظ محلياً في الوضع التجريبي */
+type ProfileDraft = {
+  name: string;
+  title: string;
+  city: string;
+  whatsapp: string;
+  bio: string;
+  skills: string[];
+};
+
+/** وسوم مبدئية مناسبة لكل دور */
+const seedSkills: Record<UserRole, string[]> = {
+  hero: ["React", "TypeScript"],
+  producer: ["طعام منزلي", "حلويات شعبية"],
+  company: ["تطوير برمجيات", "تسويق"],
+  admin: [],
+};
+
+function storageKey(userId: string) {
+  return `jazanheroes.profile.${userId}`;
+}
 
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -27,9 +50,51 @@ export default function ProfilePage() {
 
   const [saved, setSaved] = useState(false);
 
-  // المهارات كوسوم منفصلة
-  const [skills, setSkills] = useState<string[]>(["React", "TypeScript"]);
+  // الحقول — تُملأ من الجلسة ثم من المسودة المحفوظة (إن وُجدت)
+  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [city, setCity] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [bio, setBio] = useState("");
+  const [skills, setSkills] = useState<string[]>([]);
   const [skillInput, setSkillInput] = useState("");
+
+  useEffect(() => {
+    if (!user) return;
+    /* eslint-disable react-hooks/set-state-in-effect */
+    try {
+      const raw = localStorage.getItem(storageKey(user.id));
+      if (raw) {
+        const draft = JSON.parse(raw) as ProfileDraft;
+        setName(draft.name ?? user.name);
+        setTitle(draft.title ?? "");
+        setCity(draft.city ?? "");
+        setWhatsapp(draft.whatsapp ?? "");
+        setBio(draft.bio ?? "");
+        setSkills(draft.skills ?? seedSkills[user.role]);
+        return;
+      }
+    } catch {
+      // ignore
+    }
+    setName(user.name);
+    setSkills(seedSkills[user.role]);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [user]);
+
+  function handleSave(e: React.FormEvent) {
+    e.preventDefault();
+    if (user) {
+      const draft: ProfileDraft = { name, title, city, whatsapp, bio, skills };
+      try {
+        localStorage.setItem(storageKey(user.id), JSON.stringify(draft));
+      } catch {
+        // ignore
+      }
+    }
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
+  }
 
   function addSkill() {
     const v = skillInput.trim();
@@ -93,38 +158,57 @@ export default function ProfilePage() {
         </div>
       </section>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSaved(true);
-          setTimeout(() => setSaved(false), 2500);
-        }}
-        className="mt-4 rounded-[16px] border border-line bg-white p-5"
-      >
+      <form onSubmit={handleSave} className="mt-4 rounded-[16px] border border-line bg-white p-5">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
               {isCompany ? "اسم الشركة" : "الاسم الكامل"}
             </label>
-            <input className={inputClass} defaultValue={user?.name ?? ""} />
+            <input
+              className={inputClass}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div>
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
               {isCompany ? "المجال" : isProducer ? "النشاط" : "المسمى / التخصص"}
             </label>
-            <input className={inputClass} placeholder={isProducer ? "طعام منزلي" : "مطوّر واجهات أمامية"} />
+            <input
+              className={inputClass}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder={isProducer ? "طعام منزلي" : "مطوّر واجهات أمامية"}
+            />
           </div>
           <div>
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">المدينة</label>
-            <input className={inputClass} placeholder="صبيا" />
+            <input
+              className={inputClass}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="صبيا"
+            />
           </div>
           <div>
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">رقم واتساب</label>
-            <input className={inputClass} dir="ltr" placeholder="9665XXXXXXXX" />
+            <input
+              className={inputClass}
+              dir="ltr"
+              value={whatsapp}
+              onChange={(e) => setWhatsapp(e.target.value)}
+              placeholder="9665XXXXXXXX"
+            />
           </div>
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">نبذة تعريفية</label>
-            <textarea rows={4} className={`${inputClass} resize-none`} placeholder="عرّف بنفسك أو بنشاطك…" />
+            <textarea
+              rows={4}
+              className={`${inputClass} resize-none`}
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="عرّف بنفسك أو بنشاطك…"
+            />
           </div>
 
           {/* المهارات كوسوم */}

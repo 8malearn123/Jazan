@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { WhatsappIcon } from "@/components/icons";
+import { WhatsappIcon, StarFilledIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import { cn } from "@/lib/cn";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
@@ -44,9 +44,15 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
           shape="circle"
           className="-mt-11 h-14 w-14 border-[3px] border-white shadow-[0_4px_12px_rgba(28,42,38,.1)]"
         />
-        <h3 className="mt-[11px] text-base font-bold text-charcoal">
-          {hero.name}
-        </h3>
+        <div className="mt-[11px] flex items-center justify-between gap-2">
+          <h3 className="text-base font-bold text-charcoal">{hero.name}</h3>
+          {hero.rating ? (
+            <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-charcoal">
+              <StarFilledIcon className="h-3.5 w-3.5 text-amber" />
+              <span className="mono">{hero.rating.toFixed(1)}</span>
+            </span>
+          ) : null}
+        </div>
         <div className="mt-0.5 text-[13px] text-muted">
           {hero.title} · {hero.city}
         </div>

@@ -1,16 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useVerifications } from "../../_components/useVerifications";
 
-/** أزرار قبول/رفض في صفحة معاينة الطلب */
-export function VerificationActions({ name }: { name: string }) {
+/** أزرار قبول/رفض في صفحة معاينة الطلب — تحدّث الحالة الموحّدة ثم تعود للقائمة */
+export function VerificationActions({ id }: { id: string }) {
   const router = useRouter();
+  const { resolve } = useVerifications();
 
   function decide(accepted: boolean) {
-    // (مؤقتاً) — يُربط بقاعدة البيانات لاحقاً
-    if (typeof window !== "undefined") {
-      window.alert(`${accepted ? "تم قبول" : "تم رفض"} طلب توثيق ${name}`);
-    }
+    resolve(id, accepted);
     router.push("/admin/verifications");
   }
 

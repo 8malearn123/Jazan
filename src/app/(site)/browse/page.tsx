@@ -11,7 +11,12 @@ export const metadata: Metadata = {
     "مطوّرون، مصمّمون، كتّاب ومواهب من قلب منطقة جازان — تصفّح الأبطال وتواصل مباشرة.",
 };
 
-export default function BrowseHeroesPage() {
+export default async function BrowseHeroesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
   return (
     <Container className="py-8 sm:py-10 lg:py-12">
       <BrowseTabs active="heroes" />
@@ -27,7 +32,7 @@ export default function BrowseHeroesPage() {
         </p>
       </header>
 
-      <BrowseClient heroes={sampleHeroes} />
+      <BrowseClient heroes={sampleHeroes} initialQuery={q ?? ""} />
     </Container>
   );
 }

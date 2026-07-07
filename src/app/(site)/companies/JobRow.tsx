@@ -17,7 +17,7 @@ function typeBadgeClass(type?: string) {
 
 /** صف وظيفة في قائمة "أحدث الوظائف" — مطابق لإطار التصفّح في browse.html */
 export function JobRow({ job }: { job: Job }) {
-  const { title, companyName, companyId, city, type, tags } = job;
+  const { title, companyName, companyId, city, type, tags, salary } = job;
   const tagsLabel = tags?.length ? tags.join(" · ") : null;
 
   return (
@@ -43,6 +43,12 @@ export function JobRow({ job }: { job: Job }) {
           <span className="font-semibold text-ink">{companyName}</span>
           <span aria-hidden>·</span>
           <span>{city}</span>
+          {salary ? (
+            <>
+              <span aria-hidden>·</span>
+              <span className="mono font-semibold text-jazan">{salary}</span>
+            </>
+          ) : null}
           {tagsLabel ? (
             <>
               <span aria-hidden>·</span>

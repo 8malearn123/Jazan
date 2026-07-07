@@ -1,12 +1,12 @@
 import Link from "next/link";
 import type { Producer } from "@/lib/types";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { CheckIcon } from "@/components/icons";
+import { CheckIcon, StarFilledIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 
 /** بطاقة أسرة منتجة / صانع — مطابقة لإطار التصفّح في التصميم */
 export function ProducerCard({ producer }: { producer: Producer }) {
-  const { id, name, category, city, bio, verified } = producer;
+  const { id, name, category, city, bio, verified, rating, reviewsCount } = producer;
 
   return (
     <article className="group overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(28,42,38,.12)]">
@@ -44,6 +44,17 @@ export function ProducerCard({ producer }: { producer: Producer }) {
         <div className="mt-[3px] text-[13px] text-muted">
           {bio ?? category} · {city}
         </div>
+
+        {/* التقييم */}
+        {rating ? (
+          <div className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-charcoal">
+            <StarFilledIcon className="h-3.5 w-3.5 text-amber" />
+            <span className="mono">{rating.toFixed(1)}</span>
+            {reviewsCount ? (
+              <span className="font-normal text-muted">({reviewsCount} تقييم)</span>
+            ) : null}
+          </div>
+        ) : null}
 
         {/* الإجراءات */}
         <div className="mt-4 flex gap-2">

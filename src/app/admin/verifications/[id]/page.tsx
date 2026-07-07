@@ -71,7 +71,7 @@ export default async function VerificationPreviewPage({
             راجِع الملف كما سيظهر للعامة، ثم اعتمده أو ارفضه.
           </div>
         </div>
-        <VerificationActions name={req.name} />
+        <VerificationActions id={req.id} />
       </div>
 
       {/* الملف — مطابق لصفحة عرض البطل */}

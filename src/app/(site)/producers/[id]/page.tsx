@@ -9,9 +9,10 @@ import {
   StoreIcon,
   WhatsappIcon,
   ArrowLeftIcon,
+  MapPinIcon,
+  StarFilledIcon,
 } from "@/components/icons";
 import { producers, getProducer } from "@/lib/data";
-import type { Product } from "@/lib/types";
 import { whatsappLink, site } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -32,34 +33,6 @@ export async function generateMetadata({
   };
 }
 
-/** أيقونة دبوس الموقع */
-function MapPinIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-
-/** منتجات تجريبية للعرض — تُستبدل ببيانات حقيقية لاحقاً */
-const sampleProducts: Product[] = [
-  { id: "p1", name: "معصوب بالموز والعسل", price: 28, category: "طعام" },
-  { id: "p2", name: "مرسة جمبري", price: 45, category: "طعام" },
-  { id: "p3", name: "عريكة بالعسل البلدي", price: 35, category: "طعام" },
-  { id: "p4", name: "مديد الحلبة", price: 22, category: "طعام" },
-  { id: "p5", name: "رز كبسة دجاج", price: 40, category: "طعام" },
-  { id: "p6", name: "حنيذ لحم بلدي", price: 75, category: "طعام" },
-];
-
 export default async function ProducerPage({
   params,
 }: {
@@ -69,9 +42,9 @@ export default async function ProducerPage({
   const producer = getProducer(id);
   if (!producer) notFound();
 
-  const { name, category, city, bio, verified } = producer;
+  const { name, category, city, bio, verified, rating, reviewsCount } = producer;
   const phone = producer.whatsapp ?? site.whatsapp;
-  const products = producer.products?.length ? producer.products : sampleProducts;
+  const products = producer.products ?? [];
 
   return (
     <Container className="py-8 sm:py-10">
@@ -123,6 +96,15 @@ export default async function ProducerPage({
                   <MapPinIcon className="h-4 w-4" />
                   {city}
                 </span>
+                {rating ? (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[13px] font-semibold text-white">
+                    <StarFilledIcon className="h-3.5 w-3.5 text-amber" />
+                    <span className="mono">{rating.toFixed(1)}</span>
+                    {reviewsCount ? (
+                      <span className="text-white/70">({reviewsCount} تقييم)</span>
+                    ) : null}
+                  </span>
+                ) : null}
               </div>
             </div>
           </div>
@@ -173,6 +155,16 @@ export default async function ProducerPage({
               (<span className="mono">{products.length}</span>)
             </span>
           </h2>
+          {products.length === 0 ? (
+            <div className="rounded-[18px] border border-dashed border-line bg-cream/40 py-14 text-center">
+              <p className="text-[15px] font-semibold text-charcoal">
+                لا توجد منتجات معروضة حالياً
+              </p>
+              <p className="mt-1 text-[13px] text-muted">
+                تواصل مع {name} عبر واتساب للاستفسار عن المتوفر.
+              </p>
+            </div>
+          ) : null}
           <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
             {products.map((product) => (
               <article

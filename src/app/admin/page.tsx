@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import { EyeIcon } from "@/components/icons";
 import { StatCard } from "./StatCard";
-import { sampleHeroes, companies, producers, pendingVerifications } from "@/lib/data";
+import { sampleHeroes, companies, producers } from "@/lib/data";
+import { useVerifications } from "./_components/useVerifications";
 import { counts } from "@/lib/stats";
 
 /* ===== أيقونات محلية صغيرة ===== */
@@ -33,15 +34,6 @@ function BuildingBadgeIcon() {
       <path d="M3 21h18" />
       <path d="M5 21V7l8-4v18" />
       <path d="M19 21V11l-6-4" />
-    </svg>
-  );
-}
-
-function EyeIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
-      <circle cx="12" cy="12" r="3" />
     </svg>
   );
 }
@@ -159,16 +151,8 @@ const recentUsers: RecentRow[] = [
 /* ===== الصفحة ===== */
 
 export default function AdminDashboardPage() {
-  // طلبات التوثيق — قابلة للقبول/الرفض (تتحدّث محلياً)
-  const [pending, setPending] = useState(pendingVerifications);
-  const [toast, setToast] = useState("");
-
-  function resolve(id: string, accepted: boolean) {
-    const row = pending.find((p) => p.id === id);
-    setPending((list) => list.filter((p) => p.id !== id));
-    setToast(`${accepted ? "تم قبول" : "تم رفض"} طلب ${row?.name ?? ""}`);
-    setTimeout(() => setToast(""), 2500);
-  }
+  // طلبات التوثيق — حالة موحّدة مع صفحة التوثيق (تُحفظ محلياً)
+  const { pending, resolve, toast } = useVerifications();
 
   return (
     <div className="mx-auto w-full max-w-[1200px] space-y-5">
@@ -256,7 +240,7 @@ export default function AdminDashboardPage() {
                       className="inline-flex items-center gap-1.5 rounded-[9px] border-[1.5px] border-line bg-white px-3 py-2 text-[13px] font-semibold text-charcoal no-underline transition-colors duration-[150ms] hover:bg-cream"
                     >
                       <span className="text-muted">
-                        <EyeIcon />
+                        <EyeIcon width={14} height={14} />
                       </span>
                       <span className="hidden sm:inline">معاينة</span>
                     </Link>

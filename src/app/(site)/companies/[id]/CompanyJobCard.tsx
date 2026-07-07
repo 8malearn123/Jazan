@@ -1,42 +1,6 @@
 import type { Job } from "@/lib/types";
-import { WhatsappIcon } from "@/components/icons";
+import { WhatsappIcon, BriefcaseIcon, ClockIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
-
-/** أيقونة حقيبة عمل */
-function BriefcaseIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <rect x="2" y="7" width="20" height="14" rx="2" />
-      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-    </svg>
-  );
-}
-
-/** أيقونة ساعة */
-function ClockIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </svg>
-  );
-}
 
 /** لون شارة نوع الفرصة */
 function typeBadgeClass(type?: string) {
@@ -61,7 +25,7 @@ export function CompanyJobCard({
   companyName: string;
   companyWhatsapp?: string;
 }) {
-  const { title, city, type, tags, postedAt } = job;
+  const { title, city, type, tags, postedAt, salary } = job;
   const waHref = whatsappLink(
     companyWhatsapp ?? site.whatsapp,
     `مرحباً ${companyName}، أرغب بالتقديم على وظيفة ${title}`
@@ -90,6 +54,9 @@ export function CompanyJobCard({
 
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-muted">
             <span>{city}</span>
+            {salary ? (
+              <span className="mono font-semibold text-jazan">{salary}</span>
+            ) : null}
             {postedAt ? (
               <span className="inline-flex items-center gap-1.5">
                 <ClockIcon className="h-[15px] w-[15px]" />

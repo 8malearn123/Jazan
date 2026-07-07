@@ -1,25 +1,9 @@
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { CheckIcon, WhatsappIcon } from "@/components/icons";
+import { CheckIcon, WhatsappIcon, MapPinIcon, StarFilledIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import type { Hero } from "@/lib/types";
 
-function MapPinIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-function MailIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="M22 7l-10 5L2 7" />
-    </svg>
-  );
-}
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center px-4 py-1 text-center">
@@ -75,16 +59,26 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
             <MapPinIcon className="h-4 w-4" />
             {hero.city}، جازان
           </span>
+          {hero.rating ? (
+            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal">
+              <StarFilledIcon className="h-4 w-4 text-amber" />
+              <span className="mono">{hero.rating.toFixed(1)}</span>
+              {hero.reviewsCount ? (
+                <span className="font-normal text-muted">({hero.reviewsCount} تقييم)</span>
+              ) : null}
+            </span>
+          ) : null}
         </div>
 
         {/* شريط الإحصائيات */}
         <div className="mt-5 flex flex-wrap items-center justify-center divide-x divide-x-reverse divide-line rounded-2xl border border-line bg-cream/60 py-2">
           {hero.years != null && <Stat value={`+${hero.years}`} label="سنوات الخبرة" />}
           <Stat value={`${hero.skills.length}`} label="المهارات" />
+          {hero.rating != null && <Stat value={hero.rating.toFixed(1)} label="التقييم" />}
           <Stat value={hero.city} label="المدينة" />
         </div>
 
-        {/* أزرار التواصل */}
+        {/* زر التواصل */}
         <div className="mt-5 flex w-full max-w-md flex-col gap-2.5 sm:flex-row sm:justify-center">
           <a
             href={wa}
@@ -95,13 +89,6 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
             <WhatsappIcon className="h-[19px] w-[19px]" />
             تواصل عبر واتساب
           </a>
-          <button
-            type="button"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border-[1.5px] border-line bg-white px-5 py-3 text-[15px] font-semibold text-charcoal transition-[transform,border-color] hover:-translate-y-px hover:border-jazan"
-          >
-            <MailIcon className="h-[18px] w-[18px] text-muted" />
-            إيميل
-          </button>
         </div>
       </div>
     </div>

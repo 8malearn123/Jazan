@@ -5,72 +5,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/Button";
-import { StarIcon } from "@/components/icons";
+import { StarIcon, MailIcon, LockIcon, EyeIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { demoAccounts, homeForRole } from "@/lib/demo";
 import { site } from "@/lib/site";
 import { heroStats } from "@/lib/stats";
-
-// أيقونة البريد
-function MailIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="M22 7l-10 5L2 7" />
-    </svg>
-  );
-}
-
-// أيقونة القفل
-function LockIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <rect x="3" y="11" width="18" height="11" rx="2" />
-      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-    </svg>
-  );
-}
-
-// أيقونة العين
-function EyeIcon({ off, className }: { off?: boolean; className?: string }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
-      <circle cx="12" cy="12" r="3" />
-      {off ? <path d="M3 3l18 18" /> : null}
-    </svg>
-  );
-}
 
 const inputWrap =
   "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-white px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
@@ -172,7 +111,7 @@ export default function LoginPage() {
               البريد الإلكتروني
             </label>
             <div className={inputWrap}>
-              <MailIcon className="text-muted" />
+              <MailIcon width={18} height={18} className="text-muted" />
               <input
                 id="email"
                 type="email"
@@ -192,7 +131,7 @@ export default function LoginPage() {
               كلمة المرور
             </label>
             <div className={inputWrap}>
-              <LockIcon className="text-muted" />
+              <LockIcon width={18} height={18} className="text-muted" />
               <input
                 id="password"
                 type={showPass ? "text" : "password"}
@@ -208,7 +147,7 @@ export default function LoginPage() {
                 aria-label={showPass ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
                 className="text-muted/70 transition-colors hover:text-muted"
               >
-                <EyeIcon off={showPass} />
+                <EyeIcon off={showPass} width={18} height={18} />
               </button>
             </div>
 
@@ -261,7 +200,7 @@ export default function LoginPage() {
 
           <p className="mt-5 text-center text-[12px] leading-[1.7] text-muted/70">
             بالمتابعة، أنت توافق على{" "}
-            <Link href="/privacy" className="text-muted hover:underline">
+            <Link href="/terms" className="text-muted hover:underline">
               شروط الاستخدام
             </Link>{" "}
             و

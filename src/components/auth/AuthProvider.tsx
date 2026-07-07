@@ -12,7 +12,12 @@ const STORAGE_KEY = "jazanheroes.session";
 
 type Credentials = { email: string; password: string };
 type SignUpInput = { name: string; email: string; password: string; role: UserRole };
-type Result = { user?: SessionUser; error?: string };
+type Result = {
+  user?: SessionUser;
+  error?: string;
+  /** أُنشئ الحساب لكن يلزم تأكيد البريد قبل الدخول (وضع Supabase) */
+  needsEmailConfirmation?: boolean;
+};
 
 type AuthContextValue = {
   user: SessionUser | null;
@@ -152,7 +157,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       options: { data: { name: c.name, role: c.role } },
     });
     if (error) return { error: error.message };
-    return { user: { id: data.user?.id ?? "", name: c.name, role: c.role, email: c.email } };
+    const u: SessionUser = { id: data.user?.id ?? "", name: c.name, role: c.role, email: c.email };
+    // بدون جلسة فعّالة (تفعيل البريد مطلوب) لا يمكن دخول الداشبورد مباشرة.
+    if (!data.session) return { user: u, needsEmailConfirmation: true };
+    return { user: u };
   }, [login]);
 
   const logout = useCallback(async () => {

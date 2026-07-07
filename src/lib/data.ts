@@ -9,6 +9,7 @@ import type {
 } from "./types";
 
 // بيانات تجريبية مؤقتة — تُستبدل بقاعدة بيانات حقيقية في مرحلة الباك-إند
+// أرقام الواتساب هنا أرقام تجريبية للعرض فقط.
 
 export const sampleHeroes: Hero[] = [
   {
@@ -22,7 +23,31 @@ export const sampleHeroes: Hero[] = [
     rating: 4.9,
     reviewsCount: 12,
     verified: true,
+    whatsapp: "966500000101",
     bio: "مطوّر واجهات أمامية بخبرة 4 سنوات في React وTypeScript، يركّز على الأداء وتجربة المستخدم وبناء واجهات عربية الاتجاه.",
+    reviews: [
+      {
+        id: "rv1",
+        author: "تهامة للتقنية",
+        rating: 5,
+        comment: "تسليم قبل الموعد وجودة عالية في التفاصيل. تجربة تعامل ممتازة.",
+        date: "قبل أسبوع",
+      },
+      {
+        id: "rv2",
+        author: "متجر الساحل",
+        rating: 5,
+        comment: "طوّر لنا واجهة المتجر بالكامل — سريع، متعاون، ويقترح حلولاً أفضل.",
+        date: "قبل شهر",
+      },
+      {
+        id: "rv3",
+        author: "واحة جازان الرقمية",
+        rating: 4,
+        comment: "عمل احترافي والتواصل سلس عبر واتساب.",
+        date: "قبل شهرين",
+      },
+    ],
   },
   {
     id: "h2",
@@ -35,6 +60,23 @@ export const sampleHeroes: Hero[] = [
     rating: 5.0,
     reviewsCount: 8,
     verified: true,
+    whatsapp: "966500000102",
+    reviews: [
+      {
+        id: "rv4",
+        author: "دار صبيا للنشر",
+        rating: 5,
+        comment: "صمّمت هوية كاملة لمشروعنا — ذوق رفيع وفهم عميق للسوق المحلي.",
+        date: "قبل أسبوعين",
+      },
+      {
+        id: "rv5",
+        author: "أسرة نكهات صبيا",
+        rating: 5,
+        comment: "شعارنا الجديد من إبداعها. شكراً نورة!",
+        date: "قبل شهر",
+      },
+    ],
   },
   {
     id: "h3",
@@ -46,6 +88,7 @@ export const sampleHeroes: Hero[] = [
     years: 4,
     rating: 4.7,
     reviewsCount: 5,
+    whatsapp: "966500000103",
   },
   {
     id: "h4",
@@ -57,6 +100,7 @@ export const sampleHeroes: Hero[] = [
     years: 2,
     rating: 4.8,
     reviewsCount: 9,
+    whatsapp: "966500000104",
   },
   {
     id: "h5",
@@ -68,6 +112,16 @@ export const sampleHeroes: Hero[] = [
     years: 5,
     rating: 4.9,
     reviewsCount: 16,
+    whatsapp: "966500000105",
+    reviews: [
+      {
+        id: "rv6",
+        author: "واحة جازان الرقمية",
+        rating: 5,
+        comment: "تصوير احترافي لحملتنا الإعلانية — زوايا مبدعة وإخراج مميز.",
+        date: "قبل 3 أيام",
+      },
+    ],
   },
   {
     id: "h6",
@@ -79,6 +133,7 @@ export const sampleHeroes: Hero[] = [
     years: 1,
     rating: 4.6,
     reviewsCount: 4,
+    whatsapp: "966500000106",
   },
   {
     id: "h7",
@@ -90,6 +145,7 @@ export const sampleHeroes: Hero[] = [
     years: 3,
     rating: 4.8,
     reviewsCount: 11,
+    whatsapp: "966500000107",
   },
   {
     id: "h8",
@@ -101,6 +157,7 @@ export const sampleHeroes: Hero[] = [
     years: 6,
     rating: 5.0,
     reviewsCount: 20,
+    whatsapp: "966500000108",
   },
 ];
 
@@ -113,7 +170,16 @@ export const producers: Producer[] = [
     rating: 4.9,
     reviewsCount: 34,
     verified: true,
+    whatsapp: "966500000201",
     bio: "أكلات جازانية منزلية أصيلة — معصوب، مراصيع، وحلويات شعبية بنكهة البيت.",
+    products: [
+      { id: "p1", name: "معصوب بالموز والعسل", price: 28, category: "طعام" },
+      { id: "p2", name: "مرسة جمبري", price: 45, category: "طعام" },
+      { id: "p3", name: "عريكة بالعسل البلدي", price: 35, category: "طعام" },
+      { id: "p4", name: "مديد الحلبة", price: 22, category: "طعام" },
+      { id: "p5", name: "رز كبسة دجاج", price: 40, category: "طعام" },
+      { id: "p6", name: "حنيذ لحم بلدي", price: 75, category: "طعام" },
+    ],
   },
   {
     id: "pr2",
@@ -123,7 +189,15 @@ export const producers: Producer[] = [
     rating: 4.8,
     reviewsCount: 21,
     verified: true,
+    whatsapp: "966500000202",
     bio: "حِرف يدوية وسلال خوص ومنتجات تراثية مصنوعة بحب.",
+    products: [
+      { id: "p7", name: "سلة خوص مضفورة يدوياً", price: 60, category: "حِرف" },
+      { id: "p8", name: "مكبّة عريش تراثية", price: 85, category: "حِرف" },
+      { id: "p9", name: "حصيرة سعف ملوّنة", price: 120, category: "حِرف" },
+      { id: "p10", name: "قبعة مظلّة جازانية", price: 45, category: "حِرف" },
+      { id: "p11", name: "مروحة يدوية من الخوص", price: 25, category: "حِرف" },
+    ],
   },
   {
     id: "pr3",
@@ -133,7 +207,14 @@ export const producers: Producer[] = [
     rating: 4.7,
     reviewsCount: 18,
     verified: false,
+    whatsapp: "966500000203",
     bio: "عطور ومباخر فاخرة بخلطات جنوبية مميّزة.",
+    products: [
+      { id: "p12", name: "دهن عود جنوبي فاخر", price: 150, category: "عطور" },
+      { id: "p13", name: "خلطة الفل والكادي", price: 95, category: "عطور" },
+      { id: "p14", name: "بخور معطّر بالمسك", price: 70, category: "عطور" },
+      { id: "p15", name: "ماء ورد طبيعي", price: 35, category: "عطور" },
+    ],
   },
 ];
 
@@ -145,6 +226,7 @@ export const companies: Company[] = [
     city: "جيزان",
     openings: 4,
     verified: true,
+    whatsapp: "966500000301",
     about: "شركة تقنية محلية متخصصة في تطوير البرمجيات والحلول الرقمية لمنطقة جازان.",
   },
   {
@@ -154,6 +236,7 @@ export const companies: Company[] = [
     city: "صبيا",
     openings: 3,
     verified: true,
+    whatsapp: "966500000302",
   },
   {
     id: "c3",
@@ -162,6 +245,7 @@ export const companies: Company[] = [
     city: "جيزان",
     openings: 2,
     verified: true,
+    whatsapp: "966500000303",
   },
   {
     id: "c4",
@@ -170,6 +254,7 @@ export const companies: Company[] = [
     city: "صبيا",
     openings: 1,
     verified: true,
+    whatsapp: "966500000304",
   },
 ];
 
@@ -181,6 +266,7 @@ export const jobs: Job[] = [
     companyId: "c1",
     city: "جيزان",
     type: "دوام كامل",
+    salary: "8,000 – 12,000 ر.س",
     tags: ["React", "TypeScript"],
   },
   {
@@ -190,6 +276,7 @@ export const jobs: Job[] = [
     companyId: "c2",
     city: "صبيا",
     type: "عن بُعد",
+    salary: "6,000 – 9,000 ر.س",
     tags: ["SEO", "إعلانات"],
   },
   {
@@ -199,6 +286,7 @@ export const jobs: Job[] = [
     companyId: "c3",
     city: "جيزان",
     type: "دوام جزئي",
+    salary: "بالاتفاق",
     tags: ["إدارة", "تجارة"],
   },
 ];
