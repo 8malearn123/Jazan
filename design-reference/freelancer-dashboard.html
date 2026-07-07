@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ font-family:'Alexandria', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:'IBM Plex Mono', monospace; font-feature-settings:"tnum"; }
+  .jh-btn{ transition:transform .15s ease, background .2s ease, box-shadow .2s ease; }
+  .jh-btn:hover{ transform:translateY(-1px); }
+  .jh-nav:hover{ background:#F3F0E9 !important; }
+  .jh-row:hover{ background:#FAF8F4 !important; }
+  .jh-bar{ transition:filter .2s ease; }
+  .jh-bar:hover{ filter:brightness(1.08); }
+  image-slot{ display:block; }
+</style>
+</helmet>
+
+<div dir="rtl" style="width:max-content; min-width:100%; min-height:100vh; box-sizing:border-box; padding:48px; background:#E5E2DB; display:flex; flex-direction:column; gap:60px; align-items:flex-start;">
+
+  <!-- TITLE STRIP -->
+  <div style="flex:none; width:1200px;">
+    <div style="display:flex; align-items:center; gap:18px;">
+      <div style="width:54px; height:54px; border-radius:15px; background:#0F5C4A; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(15,92,74,.28);">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg>
+      </div>
+      <div>
+        <div style="font-size:24px; font-weight:800; color:#1C2A26; letter-spacing:-.3px;">لوحة تحكم المطوّر / المستقل</div>
+        <div style="font-size:14px; color:#6B7770; margin-top:2px;">تقارير الإحصائيات · حالة الطلبات والموافقات · أداء الملف</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD — DESKTOP ============ -->
+  <div style="flex:none; width:1200px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">لوحة التحكم — سطح المكتب</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9; display:flex; min-height:880px;">
+
+      <!-- sidebar -->
+      <aside style="width:248px; flex:none; background:#fff; border-left:1px solid #E7E2D9; display:flex; flex-direction:column; padding:22px 16px;">
+        <div style="display:flex; align-items:center; gap:10px; padding:0 8px 18px;">
+          <div style="width:36px; height:36px; border-radius:11px; background:#0F5C4A; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg></div>
+          <span style="font-size:16px; font-weight:800; color:#1C2A26;">أبطال جازان</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:11px; background:#FAF8F4; border:1px solid #E7E2D9; border-radius:13px; padding:11px; margin-bottom:18px;">
+          <image-slot id="fd_avatar" style="width:40px; height:40px; border-radius:50%;" shape="circle" placeholder=""></image-slot>
+          <div style="flex:1; overflow:hidden;"><div style="font-size:14px; font-weight:700; color:#1C2A26; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">محمد عسيري</div><div style="font-size:12px; color:#6B7770;">مطوّر واجهات</div></div>
+        </div>
+        <nav style="display:flex; flex-direction:column; gap:3px;">
+          <a href="#" style="text-decoration:none; display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:11px; background:rgba(15,92,74,.10); color:#0F5C4A; font-size:14px; font-weight:600;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>لوحة التحكم</a>
+          <a href="Jazan Heroes - Portfolio.dc.html" class="jh-nav" style="text-decoration:none; display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:11px; color:#3A4742; font-size:14px; font-weight:500; transition:background .2s;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>صفحتي العامة</a>
+          <a href="#" class="jh-nav" style="text-decoration:none; display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:11px; color:#3A4742; font-size:14px; font-weight:500; transition:background .2s;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>طلباتي <span style="margin-right:auto; background:#0F5C4A; color:#fff; border-radius:999px; padding:1px 8px; font-size:11px; font-weight:700;">4</span></a>
+          <a href="#" class="jh-nav" style="text-decoration:none; display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:11px; color:#3A4742; font-size:14px; font-weight:500; transition:background .2s;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>الرسائل</a>
+          <a href="#" class="jh-nav" style="text-decoration:none; display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:11px; color:#3A4742; font-size:14px; font-weight:500; transition:background .2s;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>الإعدادات</a>
+        </nav>
+        <a href="#" style="margin-top:auto; text-decoration:none; display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:11px; color:#6B7770; font-size:14px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>تسجيل الخروج</a>
+      </aside>
+
+      <!-- main -->
+      <main style="flex:1; padding:26px 30px; overflow:hidden;">
+        <!-- topbar -->
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <h1 style="margin:0; font-size:24px; font-weight:800; color:#1C2A26;">أهلاً محمد 👋</h1>
+            <div style="font-size:14px; color:#6B7770; margin-top:3px;">هذي نظرة على أداء ملفك آخر 30 يوم</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:11px; padding:10px 16px; display:flex; align-items:center; gap:8px; color:#1C2A26; font-size:14px;">آخر 30 يوم<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <span style="display:inline-flex; align-items:center; gap:7px; background:rgba(34,165,101,.12); color:#15784A; border-radius:999px; padding:9px 14px; font-size:13px; font-weight:600;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>الملف معتمد · منشور</span>
+          </div>
+        </div>
+
+        <!-- stats row -->
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:24px;">
+          <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between;"><div style="width:38px; height:38px; border-radius:11px; background:rgba(15,92,74,.10); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><span style="font-size:12px; font-weight:600; color:#15784A; background:rgba(34,165,101,.12); border-radius:7px; padding:3px 8px;">+18%</span></div>
+            <div class="mono" style="font-size:30px; font-weight:600; color:#1C2A26; margin-top:14px;">1,240</div>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مشاهدات الملف</div>
+          </div>
+          <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between;"><div style="width:38px; height:38px; border-radius:11px; background:rgba(37,211,102,.12); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487 1.711.739 2.379.802 3.234.674.52-.078 1.601-.654 1.827-1.286.226-.632.226-1.174.158-1.286-.067-.112-.247-.18-.518-.329z"/></svg></div><span style="font-size:12px; font-weight:600; color:#15784A; background:rgba(34,165,101,.12); border-radius:7px; padding:3px 8px;">+9%</span></div>
+            <div class="mono" style="font-size:30px; font-weight:600; color:#1C2A26; margin-top:14px;">86</div>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">نقرات واتساب</div>
+          </div>
+          <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between;"><div style="width:38px; height:38px; border-radius:11px; background:rgba(45,127,249,.12); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2D7FF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div></div>
+            <div class="mono" style="font-size:30px; font-weight:600; color:#1C2A26; margin-top:14px;">7</div>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">طلبات تقديم</div>
+          </div>
+          <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between;"><div style="width:38px; height:38px; border-radius:11px; background:rgba(232,147,46,.14); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C5781C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+            <div class="mono" style="font-size:30px; font-weight:600; color:#1C2A26; margin-top:14px;">43%</div>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">معدل القبول</div>
+          </div>
+        </div>
+
+        <!-- chart + approval breakdown -->
+        <div style="display:grid; grid-template-columns:1.7fr 1fr; gap:16px; margin-top:16px;">
+          <!-- bar chart -->
+          <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:22px;">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div><h3 style="margin:0; font-size:16px; font-weight:700; color:#1C2A26;">مشاهدات الملف</h3><div style="font-size:13px; color:#6B7770; margin-top:2px;">آخر 7 أيام</div></div>
+              <div style="display:flex; align-items:center; gap:7px; font-size:13px; color:#6B7770;"><span style="width:10px; height:10px; border-radius:3px; background:#0F5C4A;"></span>مشاهدات</div>
+            </div>
+            <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; height:200px; margin-top:24px;">
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="jh-bar" style="width:100%; max-width:42px; height:96px; background:#D7E3DF; border-radius:8px 8px 0 0;"></div><span style="font-size:12px; color:#6B7770;">السبت</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="jh-bar" style="width:100%; max-width:42px; height:128px; background:#0F5C4A; border-radius:8px 8px 0 0;"></div><span style="font-size:12px; color:#6B7770;">الأحد</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="jh-bar" style="width:100%; max-width:42px; height:80px; background:#D7E3DF; border-radius:8px 8px 0 0;"></div><span style="font-size:12px; color:#6B7770;">الاثنين</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="jh-bar" style="width:100%; max-width:42px; height:148px; background:#0F5C4A; border-radius:8px 8px 0 0;"></div><span style="font-size:12px; color:#6B7770;">الثلاثاء</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="jh-bar" style="width:100%; max-width:42px; height:172px; background:#0F5C4A; border-radius:8px 8px 0 0;"></div><span style="font-size:12px; color:#6B7770;">الأربعاء</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="jh-bar" style="width:100%; max-width:42px; height:120px; background:#D7E3DF; border-radius:8px 8px 0 0;"></div><span style="font-size:12px; color:#6B7770;">الخميس</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="jh-bar" style="width:100%; max-width:42px; height:104px; background:#E8932E; border-radius:8px 8px 0 0;"></div><span style="font-size:12px; color:#1C2A26; font-weight:600;">اليوم</span></div>
+            </div>
+          </div>
+
+          <!-- approvals breakdown -->
+          <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:22px;">
+            <h3 style="margin:0; font-size:16px; font-weight:700; color:#1C2A26;">حالة الطلبات</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">من 7 طلبات تقديم</div>
+            <!-- stacked bar -->
+            <div style="display:flex; height:12px; border-radius:999px; overflow:hidden; margin-top:20px;">
+              <div style="width:43%; background:#22A565;"></div>
+              <div style="width:29%; background:#2D7FF9;"></div>
+              <div style="width:28%; background:#9AA29D;"></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:14px; margin-top:22px;">
+              <div style="display:flex; align-items:center; gap:10px;"><span style="width:10px; height:10px; border-radius:3px; background:#22A565;"></span><span style="flex:1; font-size:14px; color:#3A4742;">مقبول للمقابلة</span><span class="mono" style="font-size:15px; font-weight:600; color:#1C2A26;">3</span></div>
+              <div style="display:flex; align-items:center; gap:10px;"><span style="width:10px; height:10px; border-radius:3px; background:#2D7FF9;"></span><span style="flex:1; font-size:14px; color:#3A4742;">قيد المراجعة</span><span class="mono" style="font-size:15px; font-weight:600; color:#1C2A26;">2</span></div>
+              <div style="display:flex; align-items:center; gap:10px;"><span style="width:10px; height:10px; border-radius:3px; background:#9AA29D;"></span><span style="flex:1; font-size:14px; color:#3A4742;">غير مقبول</span><span class="mono" style="font-size:15px; font-weight:600; color:#1C2A26;">2</span></div>
+            </div>
+            <div style="margin-top:22px; padding-top:18px; border-top:1px solid #F0EDE6;">
+              <div style="display:flex; align-items:center; justify-content:space-between;"><span style="font-size:13px; color:#6B7770;">اكتمال الملف</span><span class="mono" style="font-size:13px; font-weight:600; color:#0F5C4A;">85%</span></div>
+              <div style="height:8px; background:#F0EDE6; border-radius:999px; margin-top:9px; overflow:hidden;"><div style="width:85%; height:100%; background:#0F5C4A; border-radius:999px;"></div></div>
+              <div style="font-size:12px; color:#9AA29D; margin-top:9px;">أضف رابط Behance لرفع نسبة الاكتمال.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- applications table -->
+        <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; margin-top:16px; overflow:hidden;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px; border-bottom:1px solid #E7E2D9;">
+            <h3 style="margin:0; font-size:16px; font-weight:700; color:#1C2A26;">طلبات التقديم الأخيرة</h3>
+            <a href="#" style="font-size:14px; color:#0F5C4A; font-weight:600; text-decoration:none;">عرض الكل ←</a>
+          </div>
+          <div style="display:grid; grid-template-columns:1.4fr 1.1fr 110px 150px 110px; gap:14px; align-items:center; padding:12px 22px; background:#FAF8F4; border-bottom:1px solid #E7E2D9; font-size:12px; font-weight:700; color:#6B7770;">
+            <span>الوظيفة</span><span>الشركة</span><span>التاريخ</span><span>الحالة</span><span style="text-align:left;">النسخة</span>
+          </div>
+          <div class="jh-row" style="display:grid; grid-template-columns:1.4fr 1.1fr 110px 150px 110px; gap:14px; align-items:center; padding:14px 22px; border-bottom:1px solid #F0EDE6; transition:background .15s;">
+            <span style="font-size:15px; font-weight:600; color:#1C2A26;">مطوّر واجهات أمامية</span>
+            <span style="font-size:14px; color:#3A4742;">تهامة للتقنية</span>
+            <span class="mono" style="font-size:13px; color:#6B7770;">12 يونيو</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; width:max-content; background:rgba(34,165,101,.12); color:#15784A; border-radius:999px; padding:5px 11px; font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#22A565;"></span>مقبول للمقابلة</span>
+            <span style="font-size:13px; color:#6B7770; text-align:left;">فرونت-إند</span>
+          </div>
+          <div class="jh-row" style="display:grid; grid-template-columns:1.4fr 1.1fr 110px 150px 110px; gap:14px; align-items:center; padding:14px 22px; border-bottom:1px solid #F0EDE6; transition:background .15s;">
+            <span style="font-size:15px; font-weight:600; color:#1C2A26;">مطوّر React</span>
+            <span style="font-size:14px; color:#3A4742;">واحة جازان الرقمية</span>
+            <span class="mono" style="font-size:13px; color:#6B7770;">9 يونيو</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; width:max-content; background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:999px; padding:5px 11px; font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#2D7FF9;"></span>قيد المراجعة</span>
+            <span style="font-size:13px; color:#6B7770; text-align:left;">ويب عام</span>
+          </div>
+          <div class="jh-row" style="display:grid; grid-template-columns:1.4fr 1.1fr 110px 150px 110px; gap:14px; align-items:center; padding:14px 22px; border-bottom:1px solid #F0EDE6; transition:background .15s;">
+            <span style="font-size:15px; font-weight:600; color:#1C2A26;">مهندس واجهات</span>
+            <span style="font-size:14px; color:#3A4742;">متجر الساحل</span>
+            <span class="mono" style="font-size:13px; color:#6B7770;">5 يونيو</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; width:max-content; background:rgba(34,165,101,.12); color:#15784A; border-radius:999px; padding:5px 11px; font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#22A565;"></span>مقبول للمقابلة</span>
+            <span style="font-size:13px; color:#6B7770; text-align:left;">فرونت-إند</span>
+          </div>
+          <div class="jh-row" style="display:grid; grid-template-columns:1.4fr 1.1fr 110px 150px 110px; gap:14px; align-items:center; padding:14px 22px; transition:background .15s;">
+            <span style="font-size:15px; font-weight:600; color:#1C2A26;">مطوّر تطبيقات</span>
+            <span style="font-size:14px; color:#3A4742;">دار صبيا للنشر</span>
+            <span class="mono" style="font-size:13px; color:#6B7770;">1 يونيو</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; width:max-content; background:rgba(107,119,112,.14); color:#6B7770; border-radius:999px; padding:5px 11px; font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:#9AA29D;"></span>غير مقبول</span>
+            <span style="font-size:13px; color:#6B7770; text-align:left;">جوال</span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

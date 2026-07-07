@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ font-family:'Alexandria', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:'IBM Plex Mono', monospace; font-feature-settings:"tnum"; }
+  .jh-btn{ transition:transform .15s ease, background .2s ease, box-shadow .2s ease; }
+  .jh-btn:hover{ transform:translateY(-1px); }
+  .jh-btn:active{ transform:translateY(0); }
+  .jh-role{ transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .jh-role:hover{ transform:translateY(-5px); box-shadow:0 16px 38px rgba(28,42,38,.12) !important; border-color:#0F5C4A !important; }
+  @keyframes jhBlink{ 0%,100%{ opacity:1; } 50%{ opacity:0; } }
+  .jh-caret{ animation:jhBlink 1.1s step-end infinite; }
+  image-slot{ display:block; }
+</style>
+</helmet>
+
+<div dir="rtl" style="width:max-content; min-width:100%; min-height:100vh; box-sizing:border-box; padding:48px; background:#E5E2DB; display:flex; flex-direction:column; gap:60px; align-items:flex-start;">
+
+  <!-- TITLE STRIP -->
+  <div style="flex:none; width:1100px;">
+    <div style="display:flex; align-items:center; gap:18px;">
+      <div style="width:54px; height:54px; border-radius:15px; background:#0F5C4A; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(15,92,74,.28);">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg>
+      </div>
+      <div>
+        <div style="font-size:24px; font-weight:800; color:#1C2A26; letter-spacing:-.3px;">الانضمام كبطل — المصادقة</div>
+        <div style="font-size:14px; color:#6B7770; margin-top:2px;">تسجيل بالإيميل وكلمة المرور · تحقّق البريد · اختيار الدور · بوابة الدخول والمراجعة</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FRAME 1 : CREATE ACCOUNT — DESKTOP SPLIT ============ -->
+  <div style="flex:none; width:1100px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">إنشاء حساب — سطح المكتب</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9; display:flex; min-height:640px;">
+
+      <!-- brand panel -->
+      <div style="width:46%; flex:none; background:#0F5C4A; padding:48px; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg></div>
+          <span style="font-size:21px; font-weight:800; color:#fff;">أبطال جازان</span>
+        </div>
+        <div>
+          <h2 style="margin:0; font-size:34px; font-weight:800; color:#fff; line-height:1.25; letter-spacing:-.5px; text-wrap:balance;">انضم لمجتمع<br>مواهب جازان</h2>
+          <p style="margin:16px 0 0; font-size:16px; line-height:1.8; color:rgba(255,255,255,.72); max-width:340px;">سجّل بإيميلك، ابنِ صفحتك الاحترافية، واستقبل الفرص مباشرة عبر واتساب.</p>
+          <div style="display:flex; align-items:center; gap:22px; margin-top:28px;">
+            <div><div class="mono" style="font-size:24px; font-weight:600; color:#E8932E;">420+</div><div style="font-size:13px; color:rgba(255,255,255,.6);">بطل</div></div>
+            <div><div class="mono" style="font-size:24px; font-weight:600; color:#E8932E;">85+</div><div style="font-size:13px; color:rgba(255,255,255,.6);">أسرة منتجة</div></div>
+            <div><div class="mono" style="font-size:24px; font-weight:600; color:#E8932E;">60+</div><div style="font-size:13px; color:rgba(255,255,255,.6);">شركة</div></div>
+          </div>
+        </div>
+        <div style="position:absolute; bottom:-60px; left:-60px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,.04);"></div>
+        <div style="position:absolute; top:40px; left:-40px; width:120px; height:120px; border-radius:50%; background:rgba(232,147,46,.10);"></div>
+      </div>
+
+      <!-- form panel -->
+      <div style="flex:1; padding:44px 56px; display:flex; flex-direction:column; justify-content:center;">
+        <h1 style="margin:0; font-size:28px; font-weight:800; color:#1C2A26; letter-spacing:-.4px;">أنشئ حسابك</h1>
+        <p style="margin:8px 0 0; font-size:15px; color:#6B7770;">لديك حساب؟ <a href="#" style="color:#0F5C4A; font-weight:600; text-decoration:none;">سجّل الدخول</a></p>
+
+        <label style="display:block; font-size:13px; font-weight:600; color:#1C2A26; margin:24px 0 8px;">الاسم الكامل</label>
+        <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:12px; padding:14px 16px; font-size:15px; color:#1C2A26;">محمد عسيري</div>
+
+        <label style="display:block; font-size:13px; font-weight:600; color:#1C2A26; margin:18px 0 8px;">البريد الإلكتروني</label>
+        <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 5L2 7"/></svg>
+          <span class="mono" style="flex:1; font-size:14px; color:#1C2A26;">mohammed@email.com</span>
+        </div>
+
+        <label style="display:block; font-size:13px; font-weight:600; color:#1C2A26; margin:18px 0 8px;">كلمة المرور</label>
+        <div style="background:#fff; border:1.5px solid #0F5C4A; border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:10px; box-shadow:0 0 0 4px rgba(15,92,74,.08);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span style="flex:1; font-size:18px; color:#1C2A26; letter-spacing:3px;">••••••••</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA29D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div style="font-size:12px; color:#9AA29D; margin-top:7px;">8 أحرف على الأقل، وتشمل رقماً واحداً.</div>
+
+        <button class="jh-btn" style="margin-top:24px; width:100%; border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:13px; padding:15px; font-weight:700; font-size:16px; box-shadow:0 8px 20px rgba(15,92,74,.22);">إنشاء الحساب</button>
+
+        <p style="margin:18px 0 0; font-size:12px; line-height:1.7; color:#9AA29D; text-align:center;">بالمتابعة، أنت توافق على <a href="#" style="color:#6B7770;">شروط الاستخدام</a> و<a href="#" style="color:#6B7770;">سياسة الخصوصية</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MOBILE FRAMES ROW ============ -->
+  <div style="flex:none; display:flex; gap:48px; align-items:flex-start;">
+
+    <!-- MOBILE : LOGIN -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">تسجيل الدخول (إيميل + كلمة مرور) — الجوال</div>
+      <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9; min-height:680px; display:flex; flex-direction:column;">
+        <div style="background:#0F5C4A; padding:30px 22px 26px;">
+          <div style="display:flex; align-items:center; gap:10px;"><div style="width:38px; height:38px; border-radius:11px; background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg></div><span style="font-size:18px; font-weight:800; color:#fff;">أبطال جازان</span></div>
+          <h1 style="margin:20px 0 0; font-size:24px; font-weight:800; color:#fff;">أهلاً بعودتك</h1>
+        </div>
+        <div style="flex:1; padding:24px 22px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#1C2A26; margin:4px 0 8px;">البريد الإلكتروني</label>
+          <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:12px; padding:13px 14px; display:flex; align-items:center; gap:9px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 5L2 7"/></svg><span class="mono" style="font-size:14px; color:#1C2A26;">mohammed@email.com</span></div>
+
+          <label style="display:block; font-size:13px; font-weight:600; color:#1C2A26; margin:18px 0 8px;">كلمة المرور</label>
+          <div style="background:#fff; border:1.5px solid #0F5C4A; border-radius:12px; padding:13px 14px; display:flex; align-items:center; gap:9px; box-shadow:0 0 0 4px rgba(15,92,74,.08);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span style="flex:1; font-size:17px; color:#1C2A26; letter-spacing:3px;">••••••••</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA29D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div style="text-align:left; margin-top:10px;"><a href="#" style="font-size:13px; color:#0F5C4A; font-weight:600; text-decoration:none;">نسيت كلمة المرور؟</a></div>
+
+          <button class="jh-btn" style="margin-top:20px; width:100%; border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:13px; padding:15px; font-weight:700; font-size:16px;">تسجيل الدخول</button>
+          <div style="text-align:center; margin-top:20px; font-size:14px; color:#6B7770;">ليس لديك حساب؟ <a href="#" style="color:#0F5C4A; font-weight:600; text-decoration:none;">أنشئ حساباً</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE : EMAIL VERIFICATION -->
+    <div style="flex:none; width:390px;">
+      <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">تحقّق البريد لأول مرّة — الجوال</div>
+      <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9; min-height:680px; display:flex; flex-direction:column;">
+        <div style="padding:18px 20px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #E7E2D9;">
+          <button style="border:none; background:transparent; cursor:pointer; padding:4px; display:flex;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C2A26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></button>
+          <span style="font-size:16px; font-weight:700; color:#1C2A26;">تأكيد البريد الإلكتروني</span>
+        </div>
+        <div style="flex:1; padding:34px 24px; text-align:center;">
+          <div style="width:64px; height:64px; margin:0 auto; border-radius:18px; background:rgba(15,92,74,.10); display:flex; align-items:center; justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 5L2 7"/></svg></div>
+          <h1 style="margin:20px 0 0; font-size:22px; font-weight:800; color:#1C2A26;">تأكّد من بريدك</h1>
+          <p style="margin:9px 0 0; font-size:14px; line-height:1.7; color:#6B7770;">أرسلنا رمز تحقّق من 4 أرقام إلى<br><span class="mono" style="color:#1C2A26; font-weight:600;">mohammed@email.com</span></p>
+          <div dir="ltr" style="display:flex; gap:12px; justify-content:center; margin-top:28px;">
+            <div style="width:62px; height:70px; background:#fff; border:1.5px solid #0F5C4A; border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 4px rgba(15,92,74,.08);"><span class="mono" style="font-size:28px; font-weight:600; color:#1C2A26;">7</span></div>
+            <div style="width:62px; height:70px; background:#fff; border:1.5px solid #0F5C4A; border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 4px rgba(15,92,74,.08);"><span class="mono" style="font-size:28px; font-weight:600; color:#1C2A26;">3</span></div>
+            <div style="width:62px; height:70px; background:#fff; border:1.5px solid #0F5C4A; border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 4px rgba(15,92,74,.08);"><span class="jh-caret mono" style="font-size:28px; font-weight:300; color:#0F5C4A;">|</span></div>
+            <div style="width:62px; height:70px; background:#fff; border:1.5px solid #E7E2D9; border-radius:14px;"></div>
+          </div>
+          <div style="margin-top:22px; font-size:13px; color:#9AA29D;">لم يصلك البريد؟ تحقّق من مجلد الرسائل غير المرغوبة</div>
+          <div style="margin-top:8px; font-size:14px; color:#6B7770;">إعادة الإرسال خلال <span class="mono">0:24</span></div>
+        </div>
+        <div style="padding:18px 22px; border-top:1px solid #E7E2D9;">
+          <button class="jh-btn" style="width:100%; border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:13px; padding:15px; font-weight:700; font-size:16px;">تأكيد البريد</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ FRAME : ROLE SELECTION — DESKTOP ============ -->
+  <div style="flex:none; width:1100px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">اختيار الدور بعد التسجيل — سطح المكتب</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9; padding:48px 44px 52px;">
+      <div style="text-align:center; max-width:560px; margin:0 auto;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #E7E2D9; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:600; color:#0F5C4A;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>تم تأكيد بريدك</div>
+        <h1 style="margin:16px 0 0; font-size:32px; font-weight:800; color:#1C2A26; letter-spacing:-.5px;">كيف تريد الانضمام؟</h1>
+        <p style="margin:10px 0 0; font-size:16px; color:#6B7770;">اختر دورك في المنصة — تقدر تغيّره لاحقاً من الإعدادات.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:38px;">
+        <div class="jh-role" style="background:#fff; border:1.5px solid #E7E2D9; border-radius:20px; padding:30px; cursor:pointer; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <div style="width:60px; height:60px; border-radius:16px; background:rgba(15,92,74,.10); display:flex; align-items:center; justify-content:center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3 style="margin:20px 0 0; font-size:20px; font-weight:700; color:#1C2A26;">مستقل / باحث عن عمل</h3>
+          <p style="margin:9px 0 0; font-size:15px; line-height:1.7; color:#6B7770;">اعرض مهاراتك وسيرتك الذاتية، وحدّد حالتك للعمل الحر أو التوظيف.</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:22px; padding-top:18px; border-top:1px solid #F0EDE6;"><span style="font-size:14px; font-weight:600; color:#0F5C4A;">اختيار هذا الدور</span><div style="width:30px; height:30px; border-radius:50%; border:1.5px solid #E7E2D9; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></div></div>
+        </div>
+
+        <div class="jh-role" style="background:#fff; border:1.5px solid #E7E2D9; border-radius:20px; padding:30px; cursor:pointer; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <div style="width:60px; height:60px; border-radius:16px; background:rgba(232,147,46,.14); display:flex; align-items:center; justify-content:center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C5781C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l1.5-3h17L22 7"/><path d="M2 7a3 3 0 0 0 5 2 3 3 0 0 0 5 0 3 3 0 0 0 5 0 3 3 0 0 0 5-2"/><path d="M4 9.5V20h16V9.5"/><path d="M9 20v-5h6v5"/></svg></div>
+          <h3 style="margin:20px 0 0; font-size:20px; font-weight:700; color:#1C2A26;">أسرة منتجة / صانع</h3>
+          <p style="margin:9px 0 0; font-size:15px; line-height:1.7; color:#6B7770;">اعرض منتجاتك بصرياً — طعام، حِرف، عطور — واستقبل الطلبات عبر واتساب.</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:22px; padding-top:18px; border-top:1px solid #F0EDE6;"><span style="font-size:14px; font-weight:600; color:#C5781C;">اختيار هذا الدور</span><div style="width:30px; height:30px; border-radius:50%; border:1.5px solid #E7E2D9; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C5781C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></div></div>
+        </div>
+
+        <div class="jh-role" style="background:#fff; border:1.5px solid #E7E2D9; border-radius:20px; padding:30px; cursor:pointer; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <div style="width:60px; height:60px; border-radius:16px; background:rgba(45,127,249,.12); display:flex; align-items:center; justify-content:center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2D7FF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01"/></svg></div>
+          <h3 style="margin:20px 0 0; font-size:20px; font-weight:700; color:#1C2A26;">شركة / جهة</h3>
+          <p style="margin:9px 0 0; font-size:15px; line-height:1.7; color:#6B7770;">انشر الفرص، تابع المتقدمين، ووظّف مواهب جازان المحلية.</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:22px; padding-top:18px; border-top:1px solid #F0EDE6;"><span style="font-size:14px; font-weight:600; color:#2D7FF9;">اختيار هذا الدور</span><div style="width:30px; height:30px; border-radius:50%; border:1.5px solid #E7E2D9; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2D7FF9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STATUS ROW : GATE + PENDING ============ -->
+  <div style="flex:none; display:flex; gap:48px; align-items:flex-start;">
+
+    <!-- LOGIN GATE (before registration) -->
+    <div style="flex:none; width:620px;">
+      <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">قبل التسجيل — المحتوى مقفل (بوابة الدخول)</div>
+      <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9; position:relative;">
+        <!-- blurred content behind -->
+        <div style="padding:22px; filter:blur(5px); opacity:.55; pointer-events:none;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; overflow:hidden;"><div style="height:90px; background:#E7E2D9;"></div><div style="padding:14px;"><div style="height:12px; width:60%; background:#E7E2D9; border-radius:5px;"></div><div style="height:10px; width:40%; background:#EFEDE7; border-radius:5px; margin-top:9px;"></div></div></div>
+            <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; overflow:hidden;"><div style="height:90px; background:#E7E2D9;"></div><div style="padding:14px;"><div style="height:12px; width:55%; background:#E7E2D9; border-radius:5px;"></div><div style="height:10px; width:45%; background:#EFEDE7; border-radius:5px; margin-top:9px;"></div></div></div>
+            <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; overflow:hidden;"><div style="height:90px; background:#E7E2D9;"></div><div style="padding:14px;"><div style="height:12px; width:65%; background:#E7E2D9; border-radius:5px;"></div><div style="height:10px; width:38%; background:#EFEDE7; border-radius:5px; margin-top:9px;"></div></div></div>
+            <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; overflow:hidden;"><div style="height:90px; background:#E7E2D9;"></div><div style="padding:14px;"><div style="height:12px; width:50%; background:#E7E2D9; border-radius:5px;"></div><div style="height:10px; width:42%; background:#EFEDE7; border-radius:5px; margin-top:9px;"></div></div></div>
+          </div>
+        </div>
+        <!-- gate overlay -->
+        <div style="position:absolute; inset:0; background:rgba(250,248,244,.72); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px;">
+          <div style="width:62px; height:62px; border-radius:17px; background:#fff; border:1px solid #E7E2D9; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(28,42,38,.10);"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h2 style="margin:18px 0 0; font-size:22px; font-weight:800; color:#1C2A26;">سجّل لمشاهدة الأبطال</h2>
+          <p style="margin:9px 0 0; font-size:15px; line-height:1.7; color:#6B7770; max-width:340px;">المحتوى متاح للأعضاء فقط. أنشئ حسابك مجاناً للتصفّح والتواصل مع مواهب جازان.</p>
+          <div style="display:flex; gap:12px; margin-top:22px;">
+            <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:12px; padding:13px 28px; font-weight:700; font-size:15px;">أنشئ حساباً</button>
+            <button class="jh-btn" style="border:1.5px solid #E7E2D9; cursor:pointer; font-family:inherit; background:#fff; color:#1C2A26; border-radius:12px; padding:13px 24px; font-weight:600; font-size:15px;">تسجيل الدخول</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENDING REVIEW (after registration) -->
+    <div style="flex:none; width:432px;">
+      <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">بعد التسجيل — قيد المراجعة قبل النشر</div>
+      <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9; min-height:430px; display:flex; flex-direction:column;">
+        <!-- pending banner -->
+        <div style="display:flex; align-items:center; gap:11px; background:rgba(245,158,11,.12); border-bottom:1px solid rgba(245,158,11,.3); padding:14px 18px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B06A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div style="flex:1;"><div style="font-size:14px; font-weight:700; color:#B06A00;">صفحتك قيد المراجعة</div><div style="font-size:12px; color:#9A7430;">لن تظهر للعامة حتى يعتمدها فريق التشغيل.</div></div>
+        </div>
+
+        <div style="flex:1; padding:26px; text-align:center;">
+          <image-slot id="pend_avatar" style="width:80px; height:80px; margin:0 auto; border:3px solid #fff; border-radius:50%; box-shadow:0 6px 18px rgba(28,42,38,.12);" shape="circle" placeholder="صورة"></image-slot>
+          <h2 style="margin:14px 0 0; font-size:20px; font-weight:800; color:#1C2A26;">محمد عسيري</h2>
+          <div style="font-size:14px; color:#6B7770; margin-top:3px;">مطوّر واجهات أمامية · صبيا</div>
+          <span style="display:inline-flex; align-items:center; gap:7px; background:rgba(245,158,11,.16); color:#B06A00; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:600; margin-top:14px;"><span style="width:7px; height:7px; border-radius:50%; background:#F59E0B;"></span>بانتظار الاعتماد</span>
+
+          <!-- review steps -->
+          <div style="text-align:right; margin-top:24px; display:flex; flex-direction:column; gap:14px;">
+            <div style="display:flex; align-items:center; gap:12px;"><div style="width:26px; height:26px; flex:none; border-radius:50%; background:#22A565; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><span style="font-size:14px; color:#1C2A26; font-weight:600;">أنشأت حسابك وأكّدت بريدك</span></div>
+            <div style="display:flex; align-items:center; gap:12px;"><div style="width:26px; height:26px; flex:none; border-radius:50%; background:#22A565; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><span style="font-size:14px; color:#1C2A26; font-weight:600;">أكملت بيانات صفحتك</span></div>
+            <div style="display:flex; align-items:center; gap:12px;"><div style="width:26px; height:26px; flex:none; border-radius:50%; background:rgba(245,158,11,.18); border:2px solid #F59E0B; display:flex; align-items:center; justify-content:center;"><span style="width:7px; height:7px; border-radius:50%; background:#F59E0B;"></span></div><span style="font-size:14px; color:#B06A00; font-weight:600;">مراجعة فريق التشغيل <span style="font-weight:400; color:#9A7430;">(عادة خلال 24 ساعة)</span></span></div>
+            <div style="display:flex; align-items:center; gap:12px; opacity:.5;"><div style="width:26px; height:26px; flex:none; border-radius:50%; border:2px solid #E7E2D9;"></div><span style="font-size:14px; color:#6B7770;">نشر صفحتك للعامة</span></div>
+          </div>
+        </div>
+        <div style="padding:16px 22px; border-top:1px solid #E7E2D9; display:flex; gap:10px;">
+          <button class="jh-btn" style="flex:1; border:1.5px solid #E7E2D9; cursor:pointer; font-family:inherit; background:#fff; color:#1C2A26; border-radius:12px; padding:12px; font-weight:600; font-size:14px;">معاينة الصفحة</button>
+          <button class="jh-btn" style="flex:1; border:1.5px solid #0F5C4A; cursor:pointer; font-family:inherit; background:#fff; color:#0F5C4A; border-radius:12px; padding:12px; font-weight:600; font-size:14px;">تعديل البيانات</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

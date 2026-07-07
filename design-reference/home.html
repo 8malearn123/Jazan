@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ font-family:'Alexandria', system-ui, sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  .mono{ font-family:'IBM Plex Mono', monospace; font-feature-settings:"tnum"; }
+  @keyframes jhFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
+  @keyframes jhFade{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+  .jh-link{ position:relative; }
+  .jh-link::after{ content:""; position:absolute; right:0; bottom:-4px; height:2px; width:0; background:#0F5C4A; transition:width .25s ease; }
+  .jh-link:hover::after{ width:100%; }
+  .jh-cat:hover{ transform:translateY(-4px); box-shadow:0 12px 30px rgba(28,42,38,.10) !important; border-color:#0F5C4A !important; }
+  .jh-cat{ transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .jh-hero-card{ transition:transform .25s ease, box-shadow .25s ease; }
+  .jh-hero-card:hover{ transform:translateY(-4px); box-shadow:0 14px 34px rgba(28,42,38,.12) !important; }
+  .jh-btn{ transition:transform .15s ease, background .2s ease, box-shadow .2s ease; }
+  .jh-btn:hover{ transform:translateY(-1px); }
+  .jh-btn:active{ transform:translateY(0); }
+  .jh-wa:hover{ background:#1ebe5b !important; }
+  image-slot{ display:block; }
+</style>
+</helmet>
+
+<div dir="rtl" style="width:max-content; min-width:100%; min-height:100vh; box-sizing:border-box; padding:48px; background:#E5E2DB; display:flex; flex-direction:column; gap:60px; align-items:flex-start;">
+
+  <!-- ============ TITLE STRIP ============ -->
+  <div style="flex:none; width:1280px;">
+    <div style="display:flex; align-items:center; gap:18px;">
+      <div style="width:54px; height:54px; border-radius:15px; background:#0F5C4A; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(15,92,74,.28);">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg>
+      </div>
+      <div>
+        <div style="font-size:24px; font-weight:800; color:#1C2A26; letter-spacing:-.3px;">أبطال جازان</div>
+        <div style="font-size:14px; color:#6B7770; margin-top:2px;">نظام التصميم + الصفحة الرئيسية — هوية بصرية محلية</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FRAME 1 : DESIGN SYSTEM ============ -->
+  <div style="flex:none; width:1280px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">نظام التصميم — مكتبة المكوّنات</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9;">
+
+      <!-- DS header -->
+      <div style="padding:40px 48px 30px; border-bottom:1px solid #E7E2D9;">
+        <div style="font-size:13px; font-weight:600; color:#E8932E; letter-spacing:1px;">JAZAN HEROES · DESIGN SYSTEM</div>
+        <h2 style="margin:10px 0 0; font-size:34px; font-weight:800; color:#1C2A26; letter-spacing:-.5px;">نظام بصري دافئ، نظيف، موثوق</h2>
+        <p style="margin:8px 0 0; font-size:16px; color:#6B7770; max-width:620px; line-height:1.7;">مسطّح بلا تدرجات، بطاقات بزوايا مدوّرة وظلال خفيفة جداً، مساحات تنفّس واسعة، أيقونات SVG موحّدة، وتباين يحقق WCAG AA.</p>
+      </div>
+
+      <div style="padding:40px 48px; display:flex; flex-direction:column; gap:46px;">
+
+        <!-- COLORS -->
+        <section>
+          <div style="font-size:12px; font-weight:700; color:#6B7770; letter-spacing:1.5px; margin-bottom:18px;">الألوان · COLORS</div>
+          <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:16px;">
+            <div>
+              <div style="height:88px; border-radius:14px; background:#0F5C4A; box-shadow:0 4px 14px rgba(15,92,74,.22);"></div>
+              <div style="margin-top:10px; font-size:13px; font-weight:600; color:#1C2A26;">أخضر جازان</div>
+              <div class="mono" style="font-size:12px; color:#6B7770; margin-top:2px;">#0F5C4A</div>
+            </div>
+            <div>
+              <div style="height:88px; border-radius:14px; background:#E8932E; box-shadow:0 4px 14px rgba(232,147,46,.25);"></div>
+              <div style="margin-top:10px; font-size:13px; font-weight:600; color:#1C2A26;">كهرماني</div>
+              <div class="mono" style="font-size:12px; color:#6B7770; margin-top:2px;">#E8932E</div>
+            </div>
+            <div>
+              <div style="height:88px; border-radius:14px; background:#FAF8F4; border:1px solid #E7E2D9;"></div>
+              <div style="margin-top:10px; font-size:13px; font-weight:600; color:#1C2A26;">أوف-وايت</div>
+              <div class="mono" style="font-size:12px; color:#6B7770; margin-top:2px;">#FAF8F4</div>
+            </div>
+            <div>
+              <div style="height:88px; border-radius:14px; background:#1C2A26;"></div>
+              <div style="margin-top:10px; font-size:13px; font-weight:600; color:#1C2A26;">فحمي</div>
+              <div class="mono" style="font-size:12px; color:#6B7770; margin-top:2px;">#1C2A26</div>
+            </div>
+            <div>
+              <div style="height:88px; border-radius:14px; background:#6B7770;"></div>
+              <div style="margin-top:10px; font-size:13px; font-weight:600; color:#1C2A26;">رمادي</div>
+              <div class="mono" style="font-size:12px; color:#6B7770; margin-top:2px;">#6B7770</div>
+            </div>
+            <div>
+              <div style="height:88px; border-radius:14px; background:#fff; border:1px solid #E7E2D9; display:flex; align-items:flex-end; padding:8px;"><div style="height:3px; width:100%; background:#E7E2D9; border-radius:2px;"></div></div>
+              <div style="margin-top:10px; font-size:13px; font-weight:600; color:#1C2A26;">حدود/فواصل</div>
+              <div class="mono" style="font-size:12px; color:#6B7770; margin-top:2px;">#E7E2D9</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TYPE -->
+        <section style="display:grid; grid-template-columns:1.3fr 1fr; gap:40px;">
+          <div>
+            <div style="font-size:12px; font-weight:700; color:#6B7770; letter-spacing:1.5px; margin-bottom:18px;">الخطوط · TYPOGRAPHY</div>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div style="font-size:46px; font-weight:800; color:#1C2A26; line-height:1.1; letter-spacing:-.5px;">أبطال جازان <span style="font-size:14px; color:#6B7770; font-weight:500;">— Alexandria 800 / 46px</span></div>
+              <div style="font-size:30px; font-weight:700; color:#1C2A26;">عنوان قسم رئيسي <span style="font-size:13px; color:#6B7770; font-weight:500;">— 700 / 30px</span></div>
+              <div style="font-size:20px; font-weight:600; color:#1C2A26;">عنوان فرعي للبطاقات <span style="font-size:13px; color:#6B7770; font-weight:500;">— 600 / 20px</span></div>
+              <div style="font-size:16px; font-weight:400; color:#3A4742; line-height:1.8; max-width:520px;">نص الفقرة الأساسي — منصة مجتمعية تربط المستقلين والأسر المنتجة والشركات في منطقة جازان. <span style="color:#6B7770;">Regular / 16px</span></div>
+            </div>
+          </div>
+          <div style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:24px;">
+            <div style="font-size:13px; font-weight:600; color:#6B7770; margin-bottom:14px;">الأسعار والأرقام · MONO</div>
+            <div class="mono" style="font-size:30px; font-weight:600; color:#0F5C4A;">120 <span style="font-size:16px; color:#6B7770;">ر.س</span></div>
+            <div class="mono" style="font-size:30px; font-weight:600; color:#0F5C4A; margin-top:6px;">+966 5X XXX</div>
+            <div class="mono" style="font-size:14px; color:#6B7770; margin-top:14px;">IBM Plex Mono · tabular</div>
+          </div>
+        </section>
+
+        <!-- BUTTONS + WHATSAPP -->
+        <section>
+          <div style="font-size:12px; font-weight:700; color:#6B7770; letter-spacing:1.5px; margin-bottom:18px;">الأزرار · BUTTONS</div>
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
+            <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:12px; padding:13px 26px; font-weight:600; font-size:15px; box-shadow:0 6px 16px rgba(15,92,74,.22);">انضم كبطل</button>
+            <button class="jh-btn" style="cursor:pointer; font-family:inherit; background:#fff; color:#0F5C4A; border:1.5px solid #0F5C4A; border-radius:12px; padding:13px 26px; font-weight:600; font-size:15px;">للشركات</button>
+            <button class="jh-btn" style="cursor:pointer; font-family:inherit; background:transparent; color:#1C2A26; border:1.5px solid #E7E2D9; border-radius:12px; padding:13px 26px; font-weight:500; font-size:15px;">تسجيل الدخول</button>
+            <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#E8932E; color:#fff; border-radius:12px; padding:13px 26px; font-weight:600; font-size:15px;">إجراء مميّز</button>
+            <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:12px; padding:13px 24px; font-weight:600; font-size:15px; display:inline-flex; align-items:center; gap:10px; box-shadow:0 6px 16px rgba(37,211,102,.28);">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              تواصل عبر واتساب
+            </button>
+          </div>
+        </section>
+
+        <!-- STATUS BADGES + TAGS + INPUTS -->
+        <section style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+          <div>
+            <div style="font-size:12px; font-weight:700; color:#6B7770; letter-spacing:1.5px; margin-bottom:18px;">وسوم الحالة · STATUS</div>
+            <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+              <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(34,165,101,.12); color:#15784A; border-radius:999px; padding:7px 14px; font-size:13px; font-weight:600;"><span style="width:8px; height:8px; border-radius:50%; background:#22A565;"></span>متاح للعمل الحر</span>
+              <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:999px; padding:7px 14px; font-size:13px; font-weight:600;"><span style="width:8px; height:8px; border-radius:50%; background:#2D7FF9;"></span>يبحث عن وظيفة</span>
+              <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(245,158,11,.16); color:#B06A00; border-radius:999px; padding:7px 14px; font-size:13px; font-weight:600;"><span style="width:8px; height:8px; border-radius:50%; background:#F59E0B;"></span>متاح للاثنين</span>
+            </div>
+            <div style="font-size:12px; font-weight:700; color:#6B7770; letter-spacing:1.5px; margin:26px 0 14px;">وسوم المهارات · TAGS</div>
+            <div style="display:flex; flex-wrap:wrap; gap:9px;">
+              <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">React</span>
+              <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">هوية بصرية</span>
+              <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">تصوير</span>
+              <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">كتابة محتوى</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px; font-weight:700; color:#6B7770; letter-spacing:1.5px; margin-bottom:18px;">حقول الإدخال · INPUTS</div>
+            <label style="display:block; font-size:13px; font-weight:600; color:#1C2A26; margin-bottom:8px;">الاسم الكامل</label>
+            <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:12px; padding:13px 16px; font-size:15px; color:#1C2A26; margin-bottom:18px;">محمد عسيري</div>
+            <label style="display:block; font-size:13px; font-weight:600; color:#1C2A26; margin-bottom:8px;">البحث</label>
+            <div style="background:#fff; border:1.5px solid #0F5C4A; border-radius:12px; padding:13px 16px; font-size:15px; color:#6B7770; display:flex; align-items:center; gap:10px; box-shadow:0 0 0 4px rgba(15,92,74,.08);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+              ابحث عن مهارة أو تخصص…
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FRAME 2 : HOME — DESKTOP ============ -->
+  <div style="flex:none; width:1280px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">الصفحة الرئيسية — سطح المكتب</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9;">
+
+      <!-- HEADER -->
+      <header style="display:flex; align-items:center; justify-content:space-between; padding:18px 44px; background:rgba(250,248,244,.9); border-bottom:1px solid #E7E2D9; position:sticky; top:0;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:42px; height:42px; border-radius:12px; background:#0F5C4A; display:flex; align-items:center; justify-content:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg>
+          </div>
+          <span style="font-size:20px; font-weight:800; color:#1C2A26; letter-spacing:-.3px;">أبطال جازان</span>
+        </div>
+        <nav style="display:flex; align-items:center; gap:34px;">
+          <a class="jh-link" href="#" style="text-decoration:none; color:#1C2A26; font-size:15px; font-weight:500;">تصفّح الأبطال</a>
+          <a class="jh-link" href="#" style="text-decoration:none; color:#1C2A26; font-size:15px; font-weight:500;">للشركات</a>
+          <a class="jh-link" href="#" style="text-decoration:none; color:#1C2A26; font-size:15px; font-weight:500;">كيف تعمل</a>
+        </nav>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <a href="#" style="text-decoration:none; color:#1C2A26; font-size:15px; font-weight:500;">تسجيل الدخول</a>
+          <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:11px; padding:11px 22px; font-weight:600; font-size:15px; box-shadow:0 6px 16px rgba(15,92,74,.22);">انضم كبطل</button>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <section style="padding:62px 44px 54px; display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center;">
+        <div>
+          <div style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #E7E2D9; border-radius:999px; padding:7px 15px; font-size:13px; font-weight:600; color:#0F5C4A;">
+            <span style="width:7px; height:7px; border-radius:50%; background:#22A565;"></span>منصة جازان المجتمعية للمواهب
+          </div>
+          <h1 style="margin:22px 0 0; font-size:54px; line-height:1.12; font-weight:800; color:#1C2A26; letter-spacing:-1px; text-wrap:balance;">مواهب جازان<br>تلتقي بالفرص الحقيقية</h1>
+          <p style="margin:20px 0 0; font-size:18px; line-height:1.8; color:#6B7770; max-width:480px;">منصة محلية تربط المستقلين والباحثين عن عمل، والأسر المنتجة والصُنّاع، بالشركات والجهات — تواصل مباشر بضغطة زر.</p>
+
+          <!-- search -->
+          <div style="margin-top:30px; background:#fff; border:1.5px solid #E7E2D9; border-radius:16px; padding:7px 7px 7px 18px; display:flex; align-items:center; gap:12px; max-width:520px; box-shadow:0 6px 22px rgba(28,42,38,.06);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <span style="flex:1; color:#9AA29D; font-size:16px;">ابحث عن مطوّر، مصمّم، أسرة منتجة…</span>
+            <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:11px; padding:12px 24px; font-weight:600; font-size:15px;">بحث</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:26px; margin-top:28px;">
+            <div><div class="mono" style="font-size:24px; font-weight:600; color:#0F5C4A;">420+</div><div style="font-size:13px; color:#6B7770;">بطل مسجّل</div></div>
+            <div style="width:1px; height:34px; background:#E7E2D9;"></div>
+            <div><div class="mono" style="font-size:24px; font-weight:600; color:#0F5C4A;">85+</div><div style="font-size:13px; color:#6B7770;">أسرة منتجة</div></div>
+            <div style="width:1px; height:34px; background:#E7E2D9;"></div>
+            <div><div class="mono" style="font-size:24px; font-weight:600; color:#0F5C4A;">60+</div><div style="font-size:13px; color:#6B7770;">شركة وجهة</div></div>
+          </div>
+        </div>
+
+        <!-- hero visual -->
+        <div style="position:relative;">
+          <image-slot id="jh_hero" style="width:100%; height:420px;" shape="rounded" radius="24" placeholder="أفلت صورة للـ Hero (مواهب جازان)"></image-slot>
+          <div style="position:absolute; bottom:-18px; right:-14px; background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:14px 18px; box-shadow:0 12px 30px rgba(28,42,38,.12); display:flex; align-items:center; gap:12px; animation:jhFloat 5s ease-in-out infinite;">
+            <div style="width:40px; height:40px; border-radius:11px; background:rgba(34,165,101,.14); display:flex; align-items:center; justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22A565" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div><div style="font-size:14px; font-weight:700; color:#1C2A26;">تم التواصل بنجاح</div><div style="font-size:12px; color:#6B7770;">عبر واتساب · قبل دقيقة</div></div>
+          </div>
+          <div style="position:absolute; top:-16px; left:-12px; background:#fff; border:1px solid #E7E2D9; border-radius:14px; padding:11px 15px; box-shadow:0 10px 26px rgba(28,42,38,.10); animation:jhFloat 6s ease-in-out infinite .8s;">
+            <div style="font-size:12px; color:#6B7770;">تخصصات متاحة</div>
+            <div style="font-size:15px; font-weight:700; color:#0F5C4A;">برمجة · تصميم · حِرف</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATEGORY CARDS -->
+      <section style="padding:0 44px 58px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:28px; box-shadow:0 1px 2px rgba(28,42,38,.04); cursor:pointer;">
+          <div style="width:52px; height:52px; border-radius:14px; background:rgba(15,92,74,.10); display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 style="margin:18px 0 0; font-size:20px; font-weight:700; color:#1C2A26;">مستقل / باحث عن عمل</h3>
+          <p style="margin:8px 0 0; font-size:15px; line-height:1.7; color:#6B7770;">ابنِ بروفايلك، اعرض مهاراتك وسيرتك الذاتية، وحدّد حالتك.</p>
+          <div style="margin-top:18px; display:flex; align-items:center; gap:7px; color:#0F5C4A; font-size:14px; font-weight:600;">ابدأ الآن <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></div>
+        </div>
+        <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:28px; box-shadow:0 1px 2px rgba(28,42,38,.04); cursor:pointer;">
+          <div style="width:52px; height:52px; border-radius:14px; background:rgba(232,147,46,.14); display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C5781C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l1.5-3h17L22 7"/><path d="M2 7v0a3 3 0 0 0 5 2 3 3 0 0 0 5 0 3 3 0 0 0 5 0 3 3 0 0 0 5-2"/><path d="M4 9.5V20h16V9.5"/><path d="M9 20v-5h6v5"/></svg>
+          </div>
+          <h3 style="margin:18px 0 0; font-size:20px; font-weight:700; color:#1C2A26;">أسرة منتجة / صانع</h3>
+          <p style="margin:8px 0 0; font-size:15px; line-height:1.7; color:#6B7770;">اعرض منتجاتك بصرياً — طعام، حِرف، عطور — واستقبل الطلبات.</p>
+          <div style="margin-top:18px; display:flex; align-items:center; gap:7px; color:#C5781C; font-size:14px; font-weight:600;">ابدأ الآن <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></div>
+        </div>
+        <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:28px; box-shadow:0 1px 2px rgba(28,42,38,.04); cursor:pointer;">
+          <div style="width:52px; height:52px; border-radius:14px; background:rgba(45,127,249,.12); display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2D7FF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01"/></svg>
+          </div>
+          <h3 style="margin:18px 0 0; font-size:20px; font-weight:700; color:#1C2A26;">شركة / جهة</h3>
+          <p style="margin:8px 0 0; font-size:15px; line-height:1.7; color:#6B7770;">انشر الفرص، تابع المتقدمين، ووظّف مواهب جازان المحلية.</p>
+          <div style="margin-top:18px; display:flex; align-items:center; gap:7px; color:#2D7FF9; font-size:14px; font-weight:600;">ابدأ الآن <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section style="background:#0F5C4A; padding:58px 44px;">
+        <div style="text-align:center; max-width:560px; margin:0 auto;">
+          <div style="font-size:13px; font-weight:700; color:#E8932E; letter-spacing:1px;">كيف تعمل المنصة</div>
+          <h2 style="margin:10px 0 0; font-size:34px; font-weight:800; color:#fff; letter-spacing:-.5px;">ثلاث خطوات تفصلك عن الفرصة</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:42px;">
+          <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:30px;">
+            <div class="mono" style="font-size:14px; color:#E8932E; font-weight:600;">01</div>
+            <div style="width:48px; height:48px; border-radius:13px; background:rgba(255,255,255,.10); display:flex; align-items:center; justify-content:center; margin-top:14px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+            </div>
+            <h3 style="margin:18px 0 0; font-size:19px; font-weight:700; color:#fff;">أنشئ بروفايلك</h3>
+            <p style="margin:8px 0 0; font-size:15px; line-height:1.7; color:rgba(255,255,255,.72);">سجّل، اختر دورك، وابنِ صفحتك الاحترافية في دقائق.</p>
+          </div>
+          <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:30px;">
+            <div class="mono" style="font-size:14px; color:#E8932E; font-weight:600;">02</div>
+            <div style="width:48px; height:48px; border-radius:13px; background:rgba(255,255,255,.10); display:flex; align-items:center; justify-content:center; margin-top:14px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3 style="margin:18px 0 0; font-size:19px; font-weight:700; color:#fff;">اعرض أعمالك</h3>
+            <p style="margin:8px 0 0; font-size:15px; line-height:1.7; color:rgba(255,255,255,.72);">أضف مهاراتك ومنتجاتك ومعرض أعمالك بشكل بصري جذّاب.</p>
+          </div>
+          <div style="background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:30px;">
+            <div class="mono" style="font-size:14px; color:#E8932E; font-weight:600;">03</div>
+            <div style="width:48px; height:48px; border-radius:13px; background:rgba(37,211,102,.18); display:flex; align-items:center; justify-content:center; margin-top:14px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>
+            </div>
+            <h3 style="margin:18px 0 0; font-size:19px; font-weight:700; color:#fff;">تواصل مباشرة</h3>
+            <p style="margin:8px 0 0; font-size:15px; line-height:1.7; color:rgba(255,255,255,.72);">يصلك العميل أو صاحب العمل عبر واتساب بضغطة زر واحدة.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAMPLE HEROES -->
+      <section style="padding:58px 44px;">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+          <div>
+            <div style="font-size:13px; font-weight:700; color:#E8932E; letter-spacing:1px;">عيّنة من الأبطال</div>
+            <h2 style="margin:10px 0 0; font-size:34px; font-weight:800; color:#1C2A26; letter-spacing:-.5px;">مواهب من قلب المنطقة</h2>
+          </div>
+          <a class="jh-link" href="#" style="text-decoration:none; color:#0F5C4A; font-size:15px; font-weight:600;">تصفّح كل الأبطال ←</a>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:34px;">
+
+          <div class="jh-hero-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+            <image-slot id="jh_p1" style="width:100%; height:150px;" shape="rect" placeholder="صورة"></image-slot>
+            <div style="padding:18px;">
+              <div style="display:flex; align-items:center; gap:11px;">
+                <image-slot id="jh_a1" style="width:46px; height:46px; margin-top:-44px; border:3px solid #fff; border-radius:50%;" shape="circle" placeholder=""></image-slot>
+              </div>
+              <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">محمد عسيري</h3>
+              <div style="font-size:14px; color:#6B7770; margin-top:2px;">مطوّر واجهات أمامية · صبيا</div>
+              <span style="display:inline-flex; align-items:center; gap:7px; background:rgba(34,165,101,.12); color:#15784A; border-radius:999px; padding:6px 12px; font-size:12px; font-weight:600; margin-top:14px;"><span style="width:7px; height:7px; border-radius:50%; background:#22A565;"></span>متاح للعمل الحر</span>
+            </div>
+          </div>
+
+          <div class="jh-hero-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+            <image-slot id="jh_p2" style="width:100%; height:150px;" shape="rect" placeholder="صورة"></image-slot>
+            <div style="padding:18px;">
+              <image-slot id="jh_a2" style="width:46px; height:46px; margin-top:-44px; border:3px solid #fff; border-radius:50%;" shape="circle" placeholder=""></image-slot>
+              <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">نورة حكمي</h3>
+              <div style="font-size:14px; color:#6B7770; margin-top:2px;">مصمّمة هوية بصرية · جيزان</div>
+              <span style="display:inline-flex; align-items:center; gap:7px; background:rgba(245,158,11,.16); color:#B06A00; border-radius:999px; padding:6px 12px; font-size:12px; font-weight:600; margin-top:14px;"><span style="width:7px; height:7px; border-radius:50%; background:#F59E0B;"></span>متاح للاثنين</span>
+            </div>
+          </div>
+
+          <div class="jh-hero-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+            <image-slot id="jh_p3" style="width:100%; height:150px;" shape="rect" placeholder="صورة"></image-slot>
+            <div style="padding:18px;">
+              <image-slot id="jh_a3" style="width:46px; height:46px; margin-top:-44px; border:3px solid #fff; border-radius:50%;" shape="circle" placeholder=""></image-slot>
+              <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">عبدالله مالكي</h3>
+              <div style="font-size:14px; color:#6B7770; margin-top:2px;">مهندس بيانات · أبو عريش</div>
+              <span style="display:inline-flex; align-items:center; gap:7px; background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:999px; padding:6px 12px; font-size:12px; font-weight:600; margin-top:14px;"><span style="width:7px; height:7px; border-radius:50%; background:#2D7FF9;"></span>يبحث عن وظيفة</span>
+            </div>
+          </div>
+
+          <div class="jh-hero-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+            <image-slot id="jh_p4" style="width:100%; height:150px;" shape="rect" placeholder="صورة"></image-slot>
+            <div style="padding:18px;">
+              <image-slot id="jh_a4" style="width:46px; height:46px; margin-top:-44px; border:3px solid #fff; border-radius:50%;" shape="circle" placeholder=""></image-slot>
+              <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">أسرة نكهات صبيا</h3>
+              <div style="font-size:14px; color:#6B7770; margin-top:2px;">أكلات جازانية منزلية · صبيا</div>
+              <span style="display:inline-flex; align-items:center; gap:7px; background:rgba(232,147,46,.16); color:#B06A00; border-radius:999px; padding:6px 12px; font-size:12px; font-weight:600; margin-top:14px;"><span style="width:7px; height:7px; border-radius:50%; background:#E8932E;"></span>أسرة منتجة</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PARTNERS (registered companies posting jobs) -->
+      <section style="padding:8px 44px 50px;">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+          <div>
+            <div style="font-size:13px; font-weight:700; color:#E8932E; letter-spacing:1px;">الشركاء</div>
+            <h2 style="margin:10px 0 0; font-size:34px; font-weight:800; color:#1C2A26; letter-spacing:-.5px;">شركات وجهات تنشر فرصها معنا</h2>
+            <p style="margin:8px 0 0; font-size:16px; color:#6B7770;">جهات مسجّلة في المنصة توظّف مواهب جازان مباشرة.</p>
+          </div>
+          <a class="jh-link" href="#" style="text-decoration:none; color:#0F5C4A; font-size:15px; font-weight:600;">كل الشركاء ←</a>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:30px;">
+          <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:24px; box-shadow:0 1px 2px rgba(28,42,38,.04); cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:13px;">
+              <image-slot id="ptn_1" style="width:52px; height:52px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+              <div><div style="font-size:16px; font-weight:700; color:#1C2A26;">تهامة للتقنية</div><div style="font-size:13px; color:#6B7770;">تطوير برمجيات</div></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding-top:16px; border-top:1px solid #F0EDE6;"><span style="font-size:13px; color:#6B7770;"><span class="mono" style="color:#0F5C4A; font-weight:600;">4</span> فرص مفتوحة</span><span style="display:inline-flex; align-items:center; gap:5px; background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:7px; padding:3px 9px; font-size:11px; font-weight:700;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>موثّقة</span></div>
+          </div>
+          <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:24px; box-shadow:0 1px 2px rgba(28,42,38,.04); cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:13px;">
+              <image-slot id="ptn_2" style="width:52px; height:52px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+              <div><div style="font-size:16px; font-weight:700; color:#1C2A26;">واحة جازان الرقمية</div><div style="font-size:13px; color:#6B7770;">تسويق رقمي</div></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding-top:16px; border-top:1px solid #F0EDE6;"><span style="font-size:13px; color:#6B7770;"><span class="mono" style="color:#0F5C4A; font-weight:600;">3</span> فرص مفتوحة</span><span style="display:inline-flex; align-items:center; gap:5px; background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:7px; padding:3px 9px; font-size:11px; font-weight:700;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>موثّقة</span></div>
+          </div>
+          <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:24px; box-shadow:0 1px 2px rgba(28,42,38,.04); cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:13px;">
+              <image-slot id="ptn_3" style="width:52px; height:52px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+              <div><div style="font-size:16px; font-weight:700; color:#1C2A26;">متجر الساحل</div><div style="font-size:13px; color:#6B7770;">تجارة إلكترونية</div></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding-top:16px; border-top:1px solid #F0EDE6;"><span style="font-size:13px; color:#6B7770;"><span class="mono" style="color:#0F5C4A; font-weight:600;">2</span> فرص مفتوحة</span><span style="display:inline-flex; align-items:center; gap:5px; background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:7px; padding:3px 9px; font-size:11px; font-weight:700;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>موثّقة</span></div>
+          </div>
+          <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:24px; box-shadow:0 1px 2px rgba(28,42,38,.04); cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:13px;">
+              <image-slot id="ptn_4" style="width:52px; height:52px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+              <div><div style="font-size:16px; font-weight:700; color:#1C2A26;">دار صبيا للنشر</div><div style="font-size:13px; color:#6B7770;">إعلام ومحتوى</div></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding-top:16px; border-top:1px solid #F0EDE6;"><span style="font-size:13px; color:#6B7770;"><span class="mono" style="color:#0F5C4A; font-weight:600;">1</span> فرصة مفتوحة</span><span style="display:inline-flex; align-items:center; gap:5px; background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:7px; padding:3px 9px; font-size:11px; font-weight:700;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>موثّقة</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPONSORS (marketing sponsors of the platform) -->
+      <section style="padding:0 44px 58px;">
+        <div style="background:#fff; border:1px solid #E7E2D9; border-radius:22px; padding:38px 40px; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <div style="text-align:center;">
+            <div style="font-size:13px; font-weight:700; color:#E8932E; letter-spacing:1px;">الرعاة</div>
+            <h2 style="margin:8px 0 0; font-size:26px; font-weight:800; color:#1C2A26; letter-spacing:-.4px;">بدعمٍ من رعاة مبادرة أبطال جازان</h2>
+            <p style="margin:7px 0 0; font-size:15px; color:#6B7770;">جهات ساهمت في رعاية المنصة ودعمها تسويقياً لتمكين مواهب المنطقة.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:18px; margin-top:30px; align-items:center;">
+            <image-slot id="spn_1" style="width:100%; height:74px; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder="شعار راعٍ"></image-slot>
+            <image-slot id="spn_2" style="width:100%; height:74px; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder="شعار راعٍ"></image-slot>
+            <image-slot id="spn_3" style="width:100%; height:74px; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder="شعار راعٍ"></image-slot>
+            <image-slot id="spn_4" style="width:100%; height:74px; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder="شعار راعٍ"></image-slot>
+            <image-slot id="spn_5" style="width:100%; height:74px; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder="شعار راعٍ"></image-slot>
+          </div>
+          <div style="text-align:center; margin-top:26px;">
+            <button class="jh-btn" style="border:1.5px solid #E7E2D9; cursor:pointer; font-family:inherit; background:#fff; color:#1C2A26; border-radius:12px; padding:12px 26px; font-weight:600; font-size:15px;">كن راعياً للمنصة</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA STRIP -->
+      <section style="padding:0 44px 58px;">
+        <div style="background:#fff; border:1px solid #E7E2D9; border-radius:22px; padding:44px; display:flex; align-items:center; justify-content:space-between; gap:30px; box-shadow:0 8px 28px rgba(28,42,38,.06);">
+          <div>
+            <h2 style="margin:0; font-size:30px; font-weight:800; color:#1C2A26; letter-spacing:-.4px;">جاهز تكون من أبطال جازان؟</h2>
+            <p style="margin:10px 0 0; font-size:17px; color:#6B7770;">سجّل مجاناً وابنِ صفحتك خلال دقائق.</p>
+          </div>
+          <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#E8932E; color:#fff; border-radius:13px; padding:16px 34px; font-weight:700; font-size:17px; white-space:nowrap; box-shadow:0 8px 20px rgba(232,147,46,.28);">انضم كبطل الآن</button>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer style="background:#1C2A26; padding:48px 44px 30px;">
+        <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:40px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:11px;">
+              <div style="width:38px; height:38px; border-radius:11px; background:#0F5C4A; display:flex; align-items:center; justify-content:center;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg>
+              </div>
+              <span style="font-size:19px; font-weight:800; color:#fff;">أبطال جازان</span>
+            </div>
+            <p style="margin:16px 0 0; font-size:14px; line-height:1.8; color:rgba(255,255,255,.55); max-width:300px;">منصة مجتمعية محلية تربط مواهب منطقة جازان بالفرص — مستقلين، أسر منتجة، وشركات.</p>
+          </div>
+          <div>
+            <div style="font-size:14px; font-weight:700; color:#fff; margin-bottom:16px;">المنصة</div>
+            <div style="display:flex; flex-direction:column; gap:11px;">
+              <a href="#" style="text-decoration:none; color:rgba(255,255,255,.6); font-size:14px;">تصفّح الأبطال</a>
+              <a href="#" style="text-decoration:none; color:rgba(255,255,255,.6); font-size:14px;">للشركات</a>
+              <a href="#" style="text-decoration:none; color:rgba(255,255,255,.6); font-size:14px;">كيف تعمل</a>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:14px; font-weight:700; color:#fff; margin-bottom:16px;">الدعم</div>
+            <div style="display:flex; flex-direction:column; gap:11px;">
+              <a href="#" style="text-decoration:none; color:rgba(255,255,255,.6); font-size:14px;">الأسئلة الشائعة</a>
+              <a href="#" style="text-decoration:none; color:rgba(255,255,255,.6); font-size:14px;">تواصل معنا</a>
+              <a href="#" style="text-decoration:none; color:rgba(255,255,255,.6); font-size:14px;">سياسة الخصوصية</a>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:14px; font-weight:700; color:#fff; margin-bottom:16px;">تابعنا</div>
+            <div style="display:flex; gap:12px;">
+              <a href="#" style="width:40px; height:40px; border-radius:11px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="rgba(255,255,255,.7)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487 1.711.739 2.379.802 3.234.674.52-.078 1.601-.654 1.827-1.286.226-.632.226-1.174.158-1.286-.067-.112-.247-.18-.518-.329z"/></svg></a>
+              <a href="#" style="width:40px; height:40px; border-radius:11px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="rgba(255,255,255,.7)" stroke="none"/></svg></a>
+              <a href="#" style="width:40px; height:40px; border-radius:11px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="rgba(255,255,255,.7)"><path d="M19.6 7.2s-.2-1.3-.8-1.9c-.7-.8-1.6-.8-2-.9C14 4.2 12 4.2 12 4.2h0s-2 0-4.8.2c-.4.1-1.3.1-2 .9-.6.6-.8 1.9-.8 1.9S4.2 8.8 4.2 10.4v1.5c0 1.6.2 3.2.2 3.2s.2 1.3.8 1.9c.7.8 1.7.8 2.1.9 1.5.1 4.7.2 4.7.2s2 0 4.8-.2c.4-.1 1.3-.1 2-.9.6-.6.8-1.9.8-1.9s.2-1.6.2-3.2v-1.5c0-1.6-.2-3.2-.2-3.2zM9.9 14.6V8.9l5.3 2.9-5.3 2.8z"/></svg></a>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:36px; padding-top:22px; border-top:1px solid rgba(255,255,255,.1); display:flex; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.45);">
+          <span>© 2026 أبطال جازان — جميع الحقوق محفوظة</span>
+          <span>صُنع بفخر في منطقة جازان</span>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- ============ FRAME 3 : HOME — MOBILE ============ -->
+  <div style="flex:none; width:390px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">الصفحة الرئيسية — الجوال</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9;">
+
+      <!-- mobile header -->
+      <header style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:#FAF8F4; border-bottom:1px solid #E7E2D9;">
+        <div style="display:flex; align-items:center; gap:9px;">
+          <div style="width:34px; height:34px; border-radius:10px; background:#0F5C4A; display:flex; align-items:center; justify-content:center;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg>
+          </div>
+          <span style="font-size:17px; font-weight:800; color:#1C2A26;">أبطال جازان</span>
+        </div>
+        <button style="border:none; background:transparent; cursor:pointer; padding:6px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C2A26" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      </header>
+
+      <!-- mobile hero -->
+      <section style="padding:30px 18px 26px;">
+        <div style="display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:12px; font-weight:600; color:#0F5C4A;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#22A565;"></span>منصة جازان المجتمعية
+        </div>
+        <h1 style="margin:16px 0 0; font-size:33px; line-height:1.18; font-weight:800; color:#1C2A26; letter-spacing:-.6px;">مواهب جازان تلتقي بالفرص</h1>
+        <p style="margin:12px 0 0; font-size:16px; line-height:1.7; color:#6B7770;">منصة محلية تربط المستقلين والأسر المنتجة بالشركات — تواصل مباشر بضغطة زر.</p>
+        <div style="margin-top:20px; background:#fff; border:1.5px solid #E7E2D9; border-radius:14px; padding:6px 6px 6px 14px; display:flex; align-items:center; gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+          <span style="flex:1; color:#9AA29D; font-size:14px;">ابحث عن تخصص…</span>
+          <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:10px; padding:10px 18px; font-weight:600; font-size:14px;">بحث</button>
+        </div>
+        <image-slot id="jh_m_hero" style="width:100%; height:200px; margin-top:18px;" shape="rounded" radius="18" placeholder="أفلت صورة"></image-slot>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:20px;">
+          <div style="text-align:center;"><div class="mono" style="font-size:20px; font-weight:600; color:#0F5C4A;">420+</div><div style="font-size:12px; color:#6B7770;">بطل</div></div>
+          <div style="width:1px; height:30px; background:#E7E2D9;"></div>
+          <div style="text-align:center;"><div class="mono" style="font-size:20px; font-weight:600; color:#0F5C4A;">85+</div><div style="font-size:12px; color:#6B7770;">أسرة</div></div>
+          <div style="width:1px; height:30px; background:#E7E2D9;"></div>
+          <div style="text-align:center;"><div class="mono" style="font-size:20px; font-weight:600; color:#0F5C4A;">60+</div><div style="font-size:12px; color:#6B7770;">شركة</div></div>
+        </div>
+      </section>
+
+      <!-- mobile categories -->
+      <section style="padding:0 18px 28px; display:flex; flex-direction:column; gap:12px;">
+        <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:18px; display:flex; align-items:center; gap:15px;">
+          <div style="width:46px; height:46px; flex:none; border-radius:13px; background:rgba(15,92,74,.10); display:flex; align-items:center; justify-content:center;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div style="flex:1;"><h3 style="margin:0; font-size:16px; font-weight:700; color:#1C2A26;">مستقل / باحث عن عمل</h3><p style="margin:3px 0 0; font-size:13px; color:#6B7770;">ابنِ بروفايلك واعرض مهاراتك.</p></div>
+        </div>
+        <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:18px; display:flex; align-items:center; gap:15px;">
+          <div style="width:46px; height:46px; flex:none; border-radius:13px; background:rgba(232,147,46,.14); display:flex; align-items:center; justify-content:center;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#C5781C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l1.5-3h17L22 7"/><path d="M2 7a3 3 0 0 0 5 2 3 3 0 0 0 5 0 3 3 0 0 0 5 0 3 3 0 0 0 5-2"/><path d="M4 9.5V20h16V9.5"/></svg></div>
+          <div style="flex:1;"><h3 style="margin:0; font-size:16px; font-weight:700; color:#1C2A26;">أسرة منتجة / صانع</h3><p style="margin:3px 0 0; font-size:13px; color:#6B7770;">اعرض منتجاتك واستقبل الطلبات.</p></div>
+        </div>
+        <div class="jh-cat" style="background:#fff; border:1px solid #E7E2D9; border-radius:16px; padding:18px; display:flex; align-items:center; gap:15px;">
+          <div style="width:46px; height:46px; flex:none; border-radius:13px; background:rgba(45,127,249,.12); display:flex; align-items:center; justify-content:center;"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#2D7FF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
+          <div style="flex:1;"><h3 style="margin:0; font-size:16px; font-weight:700; color:#1C2A26;">شركة / جهة</h3><p style="margin:3px 0 0; font-size:13px; color:#6B7770;">انشر الفرص ووظّف المواهب.</p></div>
+        </div>
+      </section>
+
+      <!-- mobile heroes -->
+      <section style="padding:26px 18px; background:#fff; border-top:1px solid #E7E2D9;">
+        <h2 style="margin:0 0 18px; font-size:22px; font-weight:800; color:#1C2A26;">عيّنة من الأبطال</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div style="background:#FAF8F4; border:1px solid #E7E2D9; border-radius:14px; overflow:hidden;">
+            <image-slot id="jh_m1" style="width:100%; height:96px;" shape="rect" placeholder=""></image-slot>
+            <div style="padding:12px;"><h3 style="margin:0; font-size:14px; font-weight:700; color:#1C2A26;">محمد عسيري</h3><div style="font-size:12px; color:#6B7770; margin-top:2px;">مطوّر · صبيا</div><span style="display:inline-flex; align-items:center; gap:5px; background:rgba(34,165,101,.12); color:#15784A; border-radius:999px; padding:4px 9px; font-size:11px; font-weight:600; margin-top:9px;"><span style="width:6px; height:6px; border-radius:50%; background:#22A565;"></span>عمل حر</span></div>
+          </div>
+          <div style="background:#FAF8F4; border:1px solid #E7E2D9; border-radius:14px; overflow:hidden;">
+            <image-slot id="jh_m2" style="width:100%; height:96px;" shape="rect" placeholder=""></image-slot>
+            <div style="padding:12px;"><h3 style="margin:0; font-size:14px; font-weight:700; color:#1C2A26;">نورة حكمي</h3><div style="font-size:12px; color:#6B7770; margin-top:2px;">مصمّمة · جيزان</div><span style="display:inline-flex; align-items:center; gap:5px; background:rgba(245,158,11,.16); color:#B06A00; border-radius:999px; padding:4px 9px; font-size:11px; font-weight:600; margin-top:9px;"><span style="width:6px; height:6px; border-radius:50%; background:#F59E0B;"></span>الاثنين</span></div>
+          </div>
+        </div>
+        <button class="jh-btn" style="width:100%; margin-top:14px; border:1.5px solid #0F5C4A; cursor:pointer; font-family:inherit; background:#fff; color:#0F5C4A; border-radius:12px; padding:13px; font-weight:600; font-size:15px;">تصفّح كل الأبطال</button>
+      </section>
+
+      <!-- mobile CTA -->
+      <section style="padding:28px 18px;">
+        <div style="background:#0F5C4A; border-radius:18px; padding:28px 22px; text-align:center;">
+          <h2 style="margin:0; font-size:22px; font-weight:800; color:#fff;">جاهز تكون من أبطال جازان؟</h2>
+          <p style="margin:9px 0 0; font-size:14px; color:rgba(255,255,255,.72);">سجّل مجاناً وابنِ صفحتك خلال دقائق.</p>
+          <button class="jh-btn" style="width:100%; margin-top:18px; border:none; cursor:pointer; font-family:inherit; background:#E8932E; color:#fff; border-radius:12px; padding:14px; font-weight:700; font-size:16px;">انضم كبطل الآن</button>
+        </div>
+      </section>
+
+      <!-- mobile sticky whatsapp -->
+      <div style="position:sticky; bottom:0; padding:12px 18px; background:linear-gradient(to top, #FAF8F4 70%, transparent); display:flex;">
+        <button class="jh-btn jh-wa" style="flex:1; border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:13px; padding:15px; font-weight:700; font-size:16px; display:inline-flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 8px 20px rgba(37,211,102,.32);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>
+          تواصل عبر واتساب
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ font-family:'Alexandria', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:'IBM Plex Mono', monospace; font-feature-settings:"tnum"; }
+  .jh-btn{ transition:transform .15s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease; }
+  .jh-btn:hover{ transform:translateY(-1px); }
+  .jh-wa:hover{ background:#1ebe5b !important; }
+  .jh-view:hover{ background:#0F5C4A !important; color:#fff !important; }
+  .jh-card{ transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .jh-card:hover{ transform:translateY(-4px); box-shadow:0 16px 36px rgba(28,42,38,.13) !important; border-color:#0F5C4A !important; }
+  .jh-chip{ transition:background .2s ease, color .2s ease, border-color .2s ease; cursor:pointer; }
+  image-slot{ display:block; }
+</style>
+</helmet>
+
+<div dir="rtl" style="width:max-content; min-width:100%; min-height:100vh; box-sizing:border-box; padding:48px; background:#E5E2DB; display:flex; flex-direction:column; gap:60px; align-items:flex-start;">
+
+  <!-- TITLE STRIP -->
+  <div style="flex:none; width:1180px;">
+    <div style="display:flex; align-items:center; gap:18px;">
+      <div style="width:54px; height:54px; border-radius:15px; background:#0F5C4A; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(15,92,74,.28);">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg>
+      </div>
+      <div>
+        <div style="font-size:24px; font-weight:800; color:#1C2A26; letter-spacing:-.3px;">صفحات التصفّح</div>
+        <div style="font-size:14px; color:#6B7770; margin-top:2px;">عرض الأبطال · الأسر المنتجة · الوظائف والشركات — مع معاينة الملف التعريفي</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FRAME 1 : BROWSE HEROES (ENHANCED) ============ -->
+  <div style="flex:none; width:1180px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">تصفّح الأبطال — بطاقات بمهارات وزر عرض الملف</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9;">
+
+      <header style="display:flex; align-items:center; justify-content:space-between; padding:16px 34px; background:rgba(250,248,244,.92); border-bottom:1px solid #E7E2D9;">
+        <div style="display:flex; align-items:center; gap:11px;">
+          <div style="width:36px; height:36px; border-radius:11px; background:#0F5C4A; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg></div>
+          <span style="font-size:18px; font-weight:800; color:#1C2A26;">أبطال جازان</span>
+          <nav style="display:flex; align-items:center; gap:6px; margin-right:18px;">
+            <span style="background:rgba(15,92,74,.10); color:#0F5C4A; border-radius:9px; padding:8px 14px; font-size:14px; font-weight:600;">الأبطال</span>
+            <span style="color:#6B7770; border-radius:9px; padding:8px 14px; font-size:14px;">الأسر المنتجة</span>
+            <span style="color:#6B7770; border-radius:9px; padding:8px 14px; font-size:14px;">الوظائف</span>
+          </nav>
+        </div>
+        <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">انضم كبطل</button>
+      </header>
+
+      <div style="padding:30px 34px 24px;">
+        <h1 style="margin:0; font-size:30px; font-weight:800; color:#1C2A26; letter-spacing:-.5px;">تصفّح أبطال جازان</h1>
+        <p style="margin:8px 0 0; font-size:16px; color:#6B7770;">مطوّرون، مصمّمون، كتّاب ومواهب من قلب المنطقة — <span class="mono" style="color:#1C2A26; font-weight:600;">420</span> بطل.</p>
+        <div style="display:flex; align-items:center; gap:12px; margin-top:20px;">
+          <div style="flex:1; background:#fff; border:1.5px solid #E7E2D9; border-radius:13px; padding:13px 16px; display:flex; align-items:center; gap:11px;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <span style="color:#9AA29D; font-size:15px;">ابحث بالاسم أو المهارة…</span>
+          </div>
+          <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:13px; padding:13px 16px; display:flex; align-items:center; gap:9px; color:#1C2A26; font-size:14px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>كل المدن<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:13px; padding:13px 16px; display:flex; align-items:center; gap:9px; color:#1C2A26; font-size:14px;">التخصص<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:9px; margin-top:16px;">
+          <span class="jh-chip" style="background:#0F5C4A; color:#fff; border:1.5px solid #0F5C4A; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">الكل</span>
+          <span class="jh-chip" style="background:#fff; color:#15784A; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; border-radius:50%; background:#22A565;"></span>متاح للعمل الحر</span>
+          <span class="jh-chip" style="background:#fff; color:#1F5FCC; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; border-radius:50%; background:#2D7FF9;"></span>يبحث عن وظيفة</span>
+          <span class="jh-chip" style="background:#fff; color:#B06A00; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; border-radius:50%; background:#F59E0B;"></span>متاح للاثنين</span>
+        </div>
+      </div>
+
+      <div style="padding:6px 34px 40px; display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+
+        <!-- HERO CARD 1 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c1" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#15784A; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#22A565;"></span>عمل حر</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a1" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">محمد عسيري</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مطوّر واجهات · صبيا</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">React</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">TypeScript</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">2+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">4.9</span> · 12 تقييم</div>
+            <div style="display:flex; gap:8px; margin-top:14px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO CARD 2 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c2" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#B06A00; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#F59E0B;"></span>للاثنين</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a2" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">نورة حكمي</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مصمّمة هوية · جيزان</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">هوية بصرية</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">Figma</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">3+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">5.0</span> · 8 تقييمات</div>
+            <div style="display:flex; gap:8px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO CARD 3 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c3" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#1F5FCC; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#2D7FF9;"></span>يبحث عن وظيفة</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a3" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">عبدالله مالكي</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مهندس بيانات · أبو عريش</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">Python</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">SQL</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">4+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">4.7</span> · 5 تقييمات</div>
+            <div style="display:flex; gap:8px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO CARD 4 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c4" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#15784A; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#22A565;"></span>عمل حر</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a4" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">ريم زيلعي</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">كاتبة محتوى · جيزان</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">كتابة</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">SEO</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">2+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">4.8</span> · 9 تقييمات</div>
+            <div style="display:flex; gap:8px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO CARD 5 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c5" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#B06A00; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#F59E0B;"></span>للاثنين</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a5" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">خالد فيفي</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مصوّر فوتوغرافي · فيفا</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">تصوير</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">مونتاج</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">5+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">4.9</span> · 16 تقييم</div>
+            <div style="display:flex; gap:8px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO CARD 6 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c6" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#1F5FCC; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#2D7FF9;"></span>يبحث عن وظيفة</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a6" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">سارة مدخلي</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مطوّرة واجهات · صامطة</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">Vue</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">CSS</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">1+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">4.6</span> · 4 تقييمات</div>
+            <div style="display:flex; gap:8px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO CARD 7 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c7" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#15784A; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#22A565;"></span>عمل حر</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a7" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">يوسف نجمي</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مطوّر تطبيقات · بيش</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">Flutter</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">Firebase</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">3+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">4.8</span> · 11 تقييم</div>
+            <div style="display:flex; gap:8px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO CARD 8 -->
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04); display:flex; flex-direction:column;">
+          <div style="position:relative;"><image-slot id="hb_c8" style="width:100%; height:84px;" shape="rect" placeholder=""></image-slot><span style="position:absolute; top:10px; left:10px; background:rgba(255,255,255,.92); color:#B06A00; border-radius:999px; padding:4px 10px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; box-shadow:0 2px 6px rgba(28,42,38,.1);"><span style="width:6px; height:6px; border-radius:50%; background:#F59E0B;"></span>للاثنين</span></div>
+          <div style="padding:16px; flex:1; display:flex; flex-direction:column;">
+            <image-slot id="hb_a8" style="width:56px; height:56px; margin-top:-44px; border:3px solid #fff; border-radius:50%; box-shadow:0 4px 12px rgba(28,42,38,.1);" shape="circle" placeholder=""></image-slot>
+            <h3 style="margin:11px 0 0; font-size:16px; font-weight:700; color:#1C2A26;">أمل شعبي</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:2px;">مديرة مشاريع · الدرب</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:11px;">
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">Agile</span>
+              <span style="background:#F3F0E9; color:#3A4742; border-radius:7px; padding:4px 9px; font-size:11px;">Scrum</span>
+              <span style="background:#F3F0E9; color:#9AA29D; border-radius:7px; padding:4px 9px; font-size:11px;">6+</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:12px; color:#6B7770; font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8932E" stroke="none"><path d="M12 2l2.9 6.3 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.8 1.5-6.5-5-4.4 6.6-.6z"/></svg><span class="mono" style="color:#1C2A26; font-weight:600;">5.0</span> · 20 تقييم</div>
+            <div style="display:flex; gap:8px; margin-top:auto; padding-top:14px;">
+              <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:10px; padding:9px; font-weight:600; font-size:13px;">عرض الملف</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:10px; padding:9px 12px; font-weight:600; font-size:13px; display:inline-flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FRAME 2 : HERO QUICK-PREVIEW MODAL ============ -->
+  <div style="flex:none; width:560px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">معاينة سريعة للملف — عند الضغط على البطاقة</div>
+    <div style="background:#fff; border-radius:20px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9;">
+      <div style="position:relative;">
+        <image-slot id="qp_cover" style="width:100%; height:120px;" shape="rect" placeholder=""></image-slot>
+        <button style="position:absolute; top:12px; left:12px; border:none; background:rgba(255,255,255,.9); border-radius:9px; width:32px; height:32px; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C2A26" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div style="padding:0 24px 24px; margin-top:-40px;">
+        <div style="display:flex; align-items:flex-end; gap:16px;">
+          <image-slot id="qp_avatar" style="width:84px; height:84px; border:4px solid #fff; border-radius:50%; box-shadow:0 6px 18px rgba(28,42,38,.14);" shape="circle" placeholder=""></image-slot>
+          <div style="padding-bottom:4px;">
+            <div style="display:flex; align-items:center; gap:8px;"><h2 style="margin:0; font-size:22px; font-weight:800; color:#1C2A26;">محمد عسيري</h2><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F5C4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke-width="1.6"/><path d="M8.5 12.5l2.2 2.2 4.3-4.4"/></svg></div>
+            <div style="font-size:14px; color:#6B7770; margin-top:3px;">مطوّر واجهات أمامية · صبيا</div>
+          </div>
+        </div>
+        <span style="display:inline-flex; align-items:center; gap:7px; background:rgba(34,165,101,.12); color:#15784A; border-radius:999px; padding:6px 13px; font-size:13px; font-weight:600; margin-top:14px;"><span style="width:7px; height:7px; border-radius:50%; background:#22A565;"></span>متاح للعمل الحر</span>
+        <p style="margin:16px 0 0; font-size:14px; line-height:1.85; color:#3A4742;">مطوّر واجهات أمامية بخبرة 4 سنوات في React وTypeScript، يركّز على الأداء وتجربة المستخدم وبناء واجهات عربية الاتجاه.</p>
+        <div style="margin-top:16px;"><div style="font-size:12px; font-weight:700; color:#6B7770; letter-spacing:.5px; margin-bottom:10px;">المهارات</div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">React</span>
+            <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">TypeScript</span>
+            <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">Next.js</span>
+            <span style="background:#F3F0E9; color:#3A4742; border:1px solid #E7E2D9; border-radius:999px; padding:6px 13px; font-size:13px;">RTL</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:12px; padding:18px 24px; border-top:1px solid #E7E2D9; background:#FAF8F4;">
+        <a href="Jazan Heroes - Portfolio.dc.html" class="jh-btn" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:12px; padding:13px; font-weight:600; font-size:15px;">فتح الملف الكامل</a>
+        <button class="jh-btn jh-wa" style="flex:1; border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:12px; padding:13px; font-weight:700; font-size:15px; display:inline-flex; align-items:center; justify-content:center; gap:9px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>تواصل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FRAME 3 : BROWSE PRODUCER FAMILIES ============ -->
+  <div style="flex:none; width:1180px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">تصفّح الأسر المنتجة — سطح المكتب</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9;">
+
+      <header style="display:flex; align-items:center; justify-content:space-between; padding:16px 34px; background:rgba(250,248,244,.92); border-bottom:1px solid #E7E2D9;">
+        <div style="display:flex; align-items:center; gap:11px;">
+          <div style="width:36px; height:36px; border-radius:11px; background:#0F5C4A; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg></div>
+          <span style="font-size:18px; font-weight:800; color:#1C2A26;">أبطال جازان</span>
+          <nav style="display:flex; align-items:center; gap:6px; margin-right:18px;">
+            <span style="color:#6B7770; border-radius:9px; padding:8px 14px; font-size:14px;">الأبطال</span>
+            <span style="background:rgba(232,147,46,.14); color:#C5781C; border-radius:9px; padding:8px 14px; font-size:14px; font-weight:600;">الأسر المنتجة</span>
+            <span style="color:#6B7770; border-radius:9px; padding:8px 14px; font-size:14px;">الوظائف</span>
+          </nav>
+        </div>
+        <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">انضم كبطل</button>
+      </header>
+
+      <div style="padding:30px 34px 24px;">
+        <h1 style="margin:0; font-size:30px; font-weight:800; color:#1C2A26; letter-spacing:-.5px;">الأسر المنتجة والصُنّاع</h1>
+        <p style="margin:8px 0 0; font-size:16px; color:#6B7770;">طعام منزلي، حِرف يدوية وعطور من جازان — <span class="mono" style="color:#1C2A26; font-weight:600;">85</span> أسرة.</p>
+        <div style="display:flex; align-items:center; gap:12px; margin-top:20px;">
+          <div style="flex:1; background:#fff; border:1.5px solid #E7E2D9; border-radius:13px; padding:13px 16px; display:flex; align-items:center; gap:11px;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <span style="color:#9AA29D; font-size:15px;">ابحث عن نشاط أو منتج…</span>
+          </div>
+          <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:13px; padding:13px 16px; display:flex; align-items:center; gap:9px; color:#1C2A26; font-size:14px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>كل المدن<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:9px; margin-top:16px;">
+          <span class="jh-chip" style="background:#E8932E; color:#fff; border:1.5px solid #E8932E; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">الكل</span>
+          <span class="jh-chip" style="background:#fff; color:#3A4742; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">طعام</span>
+          <span class="jh-chip" style="background:#fff; color:#3A4742; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">حِرف</span>
+          <span class="jh-chip" style="background:#fff; color:#3A4742; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">عطور</span>
+        </div>
+      </div>
+
+      <div style="padding:6px 34px 40px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="pb_c1" style="width:100%; height:140px;" shape="rect" placeholder=""></image-slot>
+          <div style="padding:18px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between;"><image-slot id="pb_l1" style="width:50px; height:50px; margin-top:-46px; border:3px solid #fff; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot><span style="background:rgba(232,147,46,.16); color:#B06A00; border-radius:8px; padding:4px 10px; font-size:12px; font-weight:600;">طعام</span></div>
+            <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">أسرة نكهات صبيا</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:3px;">أكلات جازانية منزلية · صبيا</div>
+            <div style="display:flex; gap:8px; margin-top:16px;">
+              <a href="Jazan Heroes - Producer.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px; font-weight:600; font-size:13px;">عرض المتجر</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:11px; padding:10px 14px; font-weight:600; font-size:13px;">اطلب</button>
+            </div>
+          </div>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="pb_c2" style="width:100%; height:140px;" shape="rect" placeholder=""></image-slot>
+          <div style="padding:18px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between;"><image-slot id="pb_l2" style="width:50px; height:50px; margin-top:-46px; border:3px solid #fff; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot><span style="background:rgba(232,147,46,.16); color:#B06A00; border-radius:8px; padding:4px 10px; font-size:12px; font-weight:600;">حِرف</span></div>
+            <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">سعف وخوص</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:3px;">حِرف يدوية تراثية · أبو عريش</div>
+            <div style="display:flex; gap:8px; margin-top:16px;">
+              <a href="Jazan Heroes - Producer.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px; font-weight:600; font-size:13px;">عرض المتجر</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:11px; padding:10px 14px; font-weight:600; font-size:13px;">اطلب</button>
+            </div>
+          </div>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="pb_c3" style="width:100%; height:140px;" shape="rect" placeholder=""></image-slot>
+          <div style="padding:18px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between;"><image-slot id="pb_l3" style="width:50px; height:50px; margin-top:-46px; border:3px solid #fff; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot><span style="background:rgba(232,147,46,.16); color:#B06A00; border-radius:8px; padding:4px 10px; font-size:12px; font-weight:600;">عطور</span></div>
+            <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">عبير تهامة</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:3px;">عطور وبخور بلدي · جيزان</div>
+            <div style="display:flex; gap:8px; margin-top:16px;">
+              <a href="Jazan Heroes - Producer.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px; font-weight:600; font-size:13px;">عرض المتجر</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:11px; padding:10px 14px; font-weight:600; font-size:13px;">اطلب</button>
+            </div>
+          </div>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="pb_c4" style="width:100%; height:140px;" shape="rect" placeholder=""></image-slot>
+          <div style="padding:18px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between;"><image-slot id="pb_l4" style="width:50px; height:50px; margin-top:-46px; border:3px solid #fff; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot><span style="background:rgba(232,147,46,.16); color:#B06A00; border-radius:8px; padding:4px 10px; font-size:12px; font-weight:600;">طعام</span></div>
+            <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">حلويات أم فهد</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:3px;">حلويات منزلية · صامطة</div>
+            <div style="display:flex; gap:8px; margin-top:16px;">
+              <a href="Jazan Heroes - Producer.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px; font-weight:600; font-size:13px;">عرض المتجر</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:11px; padding:10px 14px; font-weight:600; font-size:13px;">اطلب</button>
+            </div>
+          </div>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="pb_c5" style="width:100%; height:140px;" shape="rect" placeholder=""></image-slot>
+          <div style="padding:18px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between;"><image-slot id="pb_l5" style="width:50px; height:50px; margin-top:-46px; border:3px solid #fff; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot><span style="background:rgba(232,147,46,.16); color:#B06A00; border-radius:8px; padding:4px 10px; font-size:12px; font-weight:600;">حِرف</span></div>
+            <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">فخار جازان</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:3px;">فخاريات يدوية · الدرب</div>
+            <div style="display:flex; gap:8px; margin-top:16px;">
+              <a href="Jazan Heroes - Producer.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px; font-weight:600; font-size:13px;">عرض المتجر</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:11px; padding:10px 14px; font-weight:600; font-size:13px;">اطلب</button>
+            </div>
+          </div>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; overflow:hidden; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="pb_c6" style="width:100%; height:140px;" shape="rect" placeholder=""></image-slot>
+          <div style="padding:18px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between;"><image-slot id="pb_l6" style="width:50px; height:50px; margin-top:-46px; border:3px solid #fff; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot><span style="background:rgba(232,147,46,.16); color:#B06A00; border-radius:8px; padding:4px 10px; font-size:12px; font-weight:600;">طعام</span></div>
+            <h3 style="margin:12px 0 0; font-size:17px; font-weight:700; color:#1C2A26;">عسل جبال فيفا</h3>
+            <div style="font-size:13px; color:#6B7770; margin-top:3px;">عسل بلدي جبلي · فيفا</div>
+            <div style="display:flex; gap:8px; margin-top:16px;">
+              <a href="Jazan Heroes - Producer.dc.html" class="jh-btn jh-view" style="flex:1; text-align:center; text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px; font-weight:600; font-size:13px;">عرض المتجر</a>
+              <button class="jh-btn jh-wa" style="border:none; cursor:pointer; font-family:inherit; background:#25D366; color:#fff; border-radius:11px; padding:10px 14px; font-weight:600; font-size:13px;">اطلب</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FRAME 4 : BROWSE JOBS & COMPANIES ============ -->
+  <div style="flex:none; width:1180px;">
+    <div style="font-size:13px; color:#6B7770; margin-bottom:12px; font-weight:500;">تصفّح الوظائف والشركات — سطح المكتب</div>
+    <div style="background:#FAF8F4; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; border:1px solid #E7E2D9;">
+
+      <header style="display:flex; align-items:center; justify-content:space-between; padding:16px 34px; background:rgba(250,248,244,.92); border-bottom:1px solid #E7E2D9;">
+        <div style="display:flex; align-items:center; gap:11px;">
+          <div style="width:36px; height:36px; border-radius:11px; background:#0F5C4A; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8932E" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z"/></svg></div>
+          <span style="font-size:18px; font-weight:800; color:#1C2A26;">أبطال جازان</span>
+          <nav style="display:flex; align-items:center; gap:6px; margin-right:18px;">
+            <span style="color:#6B7770; border-radius:9px; padding:8px 14px; font-size:14px;">الأبطال</span>
+            <span style="color:#6B7770; border-radius:9px; padding:8px 14px; font-size:14px;">الأسر المنتجة</span>
+            <span style="background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:9px; padding:8px 14px; font-size:14px; font-weight:600;">الوظائف</span>
+          </nav>
+        </div>
+        <button class="jh-btn" style="border:none; cursor:pointer; font-family:inherit; background:#0F5C4A; color:#fff; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">انضم كبطل</button>
+      </header>
+
+      <div style="padding:30px 34px 24px;">
+        <h1 style="margin:0; font-size:30px; font-weight:800; color:#1C2A26; letter-spacing:-.5px;">الوظائف والشركات</h1>
+        <p style="margin:8px 0 0; font-size:16px; color:#6B7770;">فرص عمل من شركات وجهات جازان — <span class="mono" style="color:#1C2A26; font-weight:600;">38</span> فرصة من <span class="mono" style="color:#1C2A26; font-weight:600;">60</span> شركة.</p>
+        <div style="display:flex; align-items:center; gap:12px; margin-top:20px;">
+          <div style="flex:1; background:#fff; border:1.5px solid #E7E2D9; border-radius:13px; padding:13px 16px; display:flex; align-items:center; gap:11px;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+            <span style="color:#9AA29D; font-size:15px;">ابحث عن وظيفة أو شركة…</span>
+          </div>
+          <div style="background:#fff; border:1.5px solid #E7E2D9; border-radius:13px; padding:13px 16px; display:flex; align-items:center; gap:9px; color:#1C2A26; font-size:14px;">المجال<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:9px; margin-top:16px;">
+          <span class="jh-chip" style="background:#2D7FF9; color:#fff; border:1.5px solid #2D7FF9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">الكل</span>
+          <span class="jh-chip" style="background:#fff; color:#3A4742; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">دوام كامل</span>
+          <span class="jh-chip" style="background:#fff; color:#3A4742; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">عن بُعد</span>
+          <span class="jh-chip" style="background:#fff; color:#3A4742; border:1.5px solid #E7E2D9; border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600;">عقد مستقل</span>
+        </div>
+      </div>
+
+      <div style="padding:6px 34px 40px; display:flex; flex-direction:column; gap:14px;">
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:20px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="jb_l1" style="width:54px; height:54px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:10px;"><h3 style="margin:0; font-size:17px; font-weight:700; color:#1C2A26;">مطوّر واجهات أمامية</h3><span style="background:rgba(15,92,74,.10); color:#0F5C4A; border-radius:7px; padding:3px 10px; font-size:12px; font-weight:600;">دوام كامل</span></div>
+            <div style="display:flex; align-items:center; gap:14px; margin-top:7px; color:#6B7770; font-size:14px;"><span style="font-weight:600; color:#3A4742;">شركة تهامة للتقنية</span><span>·</span><span>جيزان</span><span>·</span><span>React · TypeScript</span></div>
+          </div>
+          <div style="text-align:center;"><div class="mono" style="font-size:16px; font-weight:600; color:#0F5C4A;">12</div><div style="font-size:11px; color:#6B7770;">متقدم</div></div>
+          <a href="Jazan Heroes - Company.dc.html" class="jh-btn jh-view" style="text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">عرض الوظيفة</a>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:20px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="jb_l2" style="width:54px; height:54px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:10px;"><h3 style="margin:0; font-size:17px; font-weight:700; color:#1C2A26;">مصمّم UI/UX</h3><span style="background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:7px; padding:3px 10px; font-size:12px; font-weight:600;">عن بُعد</span></div>
+            <div style="display:flex; align-items:center; gap:14px; margin-top:7px; color:#6B7770; font-size:14px;"><span style="font-weight:600; color:#3A4742;">واحة جازان الرقمية</span><span>·</span><span>عن بُعد</span><span>·</span><span>Figma · بحوث</span></div>
+          </div>
+          <div style="text-align:center;"><div class="mono" style="font-size:16px; font-weight:600; color:#0F5C4A;">8</div><div style="font-size:11px; color:#6B7770;">متقدم</div></div>
+          <a href="Jazan Heroes - Company.dc.html" class="jh-btn jh-view" style="text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">عرض الوظيفة</a>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:20px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="jb_l3" style="width:54px; height:54px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:10px;"><h3 style="margin:0; font-size:17px; font-weight:700; color:#1C2A26;">كاتب محتوى تقني</h3><span style="background:rgba(232,147,46,.16); color:#B06A00; border-radius:7px; padding:3px 10px; font-size:12px; font-weight:600;">عقد مستقل</span></div>
+            <div style="display:flex; align-items:center; gap:14px; margin-top:7px; color:#6B7770; font-size:14px;"><span style="font-weight:600; color:#3A4742;">دار صبيا للنشر</span><span>·</span><span>جزئي</span><span>·</span><span>كتابة · تدقيق</span></div>
+          </div>
+          <div style="text-align:center;"><div class="mono" style="font-size:16px; font-weight:600; color:#0F5C4A;">5</div><div style="font-size:11px; color:#6B7770;">متقدم</div></div>
+          <a href="Jazan Heroes - Company.dc.html" class="jh-btn jh-view" style="text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">عرض الوظيفة</a>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:20px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="jb_l4" style="width:54px; height:54px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:10px;"><h3 style="margin:0; font-size:17px; font-weight:700; color:#1C2A26;">مهندس بيانات</h3><span style="background:rgba(15,92,74,.10); color:#0F5C4A; border-radius:7px; padding:3px 10px; font-size:12px; font-weight:600;">دوام كامل</span></div>
+            <div style="display:flex; align-items:center; gap:14px; margin-top:7px; color:#6B7770; font-size:14px;"><span style="font-weight:600; color:#3A4742;">شركة تهامة للتقنية</span><span>·</span><span>جيزان</span><span>·</span><span>SQL · Python</span></div>
+          </div>
+          <div style="text-align:center;"><div class="mono" style="font-size:16px; font-weight:600; color:#0F5C4A;">9</div><div style="font-size:11px; color:#6B7770;">متقدم</div></div>
+          <a href="Jazan Heroes - Company.dc.html" class="jh-btn jh-view" style="text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">عرض الوظيفة</a>
+        </div>
+        <div class="jh-card" style="background:#fff; border:1px solid #E7E2D9; border-radius:18px; padding:20px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 1px 2px rgba(28,42,38,.04);">
+          <image-slot id="jb_l5" style="width:54px; height:54px; flex:none; border:1px solid #E7E2D9; border-radius:14px;" shape="rounded" radius="12" placeholder=""></image-slot>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:10px;"><h3 style="margin:0; font-size:17px; font-weight:700; color:#1C2A26;">أخصائي تسويق رقمي</h3><span style="background:rgba(45,127,249,.12); color:#1F5FCC; border-radius:7px; padding:3px 10px; font-size:12px; font-weight:600;">عن بُعد</span></div>
+            <div style="display:flex; align-items:center; gap:14px; margin-top:7px; color:#6B7770; font-size:14px;"><span style="font-weight:600; color:#3A4742;">متجر الساحل</span><span>·</span><span>عن بُعد</span><span>·</span><span>SEO · إعلانات</span></div>
+          </div>
+          <div style="text-align:center;"><div class="mono" style="font-size:16px; font-weight:600; color:#0F5C4A;">14</div><div style="font-size:11px; color:#6B7770;">متقدم</div></div>
+          <a href="Jazan Heroes - Company.dc.html" class="jh-btn jh-view" style="text-decoration:none; border:1.5px solid #0F5C4A; background:#fff; color:#0F5C4A; border-radius:11px; padding:10px 20px; font-weight:600; font-size:14px;">عرض الوظيفة</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

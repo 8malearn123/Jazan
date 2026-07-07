@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-sans: var(--font-alexandria), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", monospace;
+
+  /* Brand palette — أبطال جازان */
+  --color-jazan: #0f5c4a;
+  --color-jazan-dark: #0c4a3c;
+  --color-amber: #e8932e;
+  --color-amber-dark: #c5781c;
+  --color-cream: #faf8f4;
+  --color-sand: #e5e2db;
+  --color-charcoal: #1c2a26;
+  --color-ink: #3a4742;
+  --color-muted: #6b7770;
+  --color-line: #e7e2d9;
+
+  /* Status */
+  --color-success: #22a565;
+  --color-success-ink: #15784a;
+  --color-info: #2d7ff9;
+  --color-info-ink: #1f5fcc;
+  --color-warn: #f59e0b;
+  --color-warn-ink: #b06a00;
+  --color-whatsapp: #25d366;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tabular numbers for prices / stats */
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+}
+
+::selection {
+  background: rgba(15, 92, 74, 0.18);
+}
+
+/* Animated underline for nav links */
+.jh-link {
+  position: relative;
+}
+.jh-link::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 0;
+  background: var(--color-jazan);
+  transition: width 0.25s ease;
+}
+.jh-link:hover::after {
+  width: 100%;
+}
+
+@keyframes jhFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+.jh-float {
+  animation: jhFloat 5s ease-in-out infinite;
+}
+.jh-float-slow {
+  animation: jhFloat 6s ease-in-out infinite 0.8s;
+}
