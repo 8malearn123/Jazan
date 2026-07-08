@@ -1,24 +1,25 @@
+"use client";
+
 import Link from "next/link";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { WhatsappIcon, StarFilledIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
 
 /** شارة التوفّر المُصغّرة المعروضة فوق الغلاف */
-const overlayPill: Record<
-  AvailabilityStatus,
-  { label: string; dot: string; text: string }
-> = {
-  freelance: { label: "عمل حر", dot: "bg-success", text: "text-success-ink" },
-  job: { label: "يبحث عن وظيفة", dot: "bg-info", text: "text-info-ink" },
-  both: { label: "للاثنين", dot: "bg-amber", text: "text-warn-ink" },
-  producer: { label: "أسرة منتجة", dot: "bg-amber", text: "text-warn-ink" },
+const overlayPillStyle: Record<AvailabilityStatus, { dot: string; text: string }> = {
+  freelance: { dot: "bg-success", text: "text-success-ink" },
+  job: { dot: "bg-info", text: "text-info-ink" },
+  both: { dot: "bg-amber", text: "text-warn-ink" },
+  producer: { dot: "bg-amber", text: "text-warn-ink" },
 };
 
 /** بطاقة بطل في شبكة التصفّح — مطابقة لـ browse.html (FRAME 1) */
 export function HeroBrowseCard({ hero }: { hero: Hero }) {
-  const pill = overlayPill[hero.status];
+  const { d } = useLocale();
+  const pill = { ...overlayPillStyle[hero.status], label: d.status[hero.status] };
   const shownSkills = hero.skills.slice(0, 2);
   const extraCount = hero.skills.length - shownSkills.length;
 
@@ -80,7 +81,7 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
             href={`/heroes/${hero.id}`}
             className="flex-1 rounded-[10px] border-[1.5px] border-jazan bg-surface px-3 py-[9px] text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan hover:text-white"
           >
-            عرض الملف
+            {d.cards.viewProfile}
           </Link>
           <a
             href={whatsappLink(hero.whatsapp ?? site.whatsapp, `مرحباً ${hero.name}، شفت ملفك في أبطال جازان`)}

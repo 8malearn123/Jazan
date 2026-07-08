@@ -1,28 +1,33 @@
+"use client";
+
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { CheckIcon } from "@/components/icons";
 import { companies as partners } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 
 export function Partners() {
+  const { d } = useLocale();
+
   return (
     <section className="pb-12">
       <Container>
         <div className="flex items-end justify-between gap-4">
           <div>
-            <div className="text-[13px] font-bold tracking-wide text-amber">الشركاء</div>
+            <div className="text-[13px] font-bold tracking-wide text-amber">{d.partners.kicker}</div>
             <h2 className="mt-2.5 text-[24px] font-extrabold tracking-[-.5px] text-charcoal sm:text-[28px] lg:text-[34px]">
-              شركات وجهات تنشر فرصها معنا
+              {d.partners.title}
             </h2>
             <p className="mt-2 text-[15px] text-muted sm:text-base">
-              جهات مسجّلة في المنصة توظّف مواهب جازان مباشرة.
+              {d.partners.desc}
             </p>
           </div>
           <Link
             href="/companies"
             className="jh-link shrink-0 text-sm font-semibold text-jazan no-underline sm:text-[15px]"
           >
-            كل الشركاء ←
+            {d.partners.all}
           </Link>
         </div>
 
@@ -45,12 +50,12 @@ export function Partners() {
               <div className="mt-[18px] flex items-center justify-between border-t border-line-soft pt-4">
                 <span className="text-[13px] text-muted">
                   <span className="mono font-semibold text-jazan">{p.openings}</span>{" "}
-                  {p.openings === 1 ? "فرصة مفتوحة" : "فرص مفتوحة"}
+                  {p.openings === 1 ? d.partners.opening : d.partners.openings}
                 </span>
                 {p.verified ? (
                   <span className="inline-flex items-center gap-1.5 rounded-md bg-info/12 px-2 py-1 text-[11px] font-bold text-info-ink">
                     <CheckIcon width={11} height={11} strokeWidth={3} />
-                    موثّقة
+                    {d.partners.verified}
                   </span>
                 ) : null}
               </div>

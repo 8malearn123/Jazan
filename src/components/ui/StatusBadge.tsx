@@ -1,34 +1,14 @@
+"use client";
+
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n";
 import type { AvailabilityStatus } from "@/lib/types";
 
-const config: Record<
-  AvailabilityStatus,
-  { label: string; dot: string; bg: string; text: string }
-> = {
-  freelance: {
-    label: "متاح للعمل الحر",
-    dot: "bg-success",
-    bg: "bg-success/12",
-    text: "text-success-ink",
-  },
-  job: {
-    label: "يبحث عن وظيفة",
-    dot: "bg-info",
-    bg: "bg-info/12",
-    text: "text-info-ink",
-  },
-  both: {
-    label: "متاح للاثنين",
-    dot: "bg-warn",
-    bg: "bg-warn/16",
-    text: "text-warn-ink",
-  },
-  producer: {
-    label: "أسرة منتجة",
-    dot: "bg-amber",
-    bg: "bg-amber/16",
-    text: "text-warn-ink",
-  },
+const styles: Record<AvailabilityStatus, { dot: string; bg: string; text: string }> = {
+  freelance: { dot: "bg-success", bg: "bg-success/12", text: "text-success-ink" },
+  job: { dot: "bg-info", bg: "bg-info/12", text: "text-info-ink" },
+  both: { dot: "bg-warn", bg: "bg-warn/16", text: "text-warn-ink" },
+  producer: { dot: "bg-amber", bg: "bg-amber/16", text: "text-warn-ink" },
 };
 
 export function StatusBadge({
@@ -40,7 +20,14 @@ export function StatusBadge({
   className?: string;
   size?: "sm" | "md";
 }) {
-  const c = config[status];
+  const { d } = useLocale();
+  const labels: Record<AvailabilityStatus, string> = {
+    freelance: d.browse.chips.freelance,
+    job: d.browse.chips.job,
+    both: d.browse.chips.both,
+    producer: d.status.producer,
+  };
+  const c = styles[status];
   return (
     <span
       className={cn(
@@ -58,7 +45,7 @@ export function StatusBadge({
           c.dot
         )}
       />
-      {c.label}
+      {labels[status]}
     </span>
   );
 }

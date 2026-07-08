@@ -1,20 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import type { Company } from "@/lib/types";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { BuildingIcon, CheckIcon, MapPinIcon } from "@/components/icons";
+import { useLocale } from "@/lib/i18n";
 
 /** شارة "موثّقة" بلون أزرق */
-function VerifiedBadge() {
+function VerifiedBadge({ label }: { label: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full bg-info/12 px-3 py-[5px] text-xs font-bold text-info-ink">
       <CheckIcon className="h-[13px] w-[13px]" strokeWidth={2.6} />
-      موثّقة
+      {label}
     </span>
   );
 }
 
 /** بطاقة شركة / جهة في شبكة التصفّح */
 export function CompanyCard({ company }: { company: Company }) {
+  const { d } = useLocale();
   const { id, name, field, city, openings, verified } = company;
 
   return (
@@ -27,7 +31,7 @@ export function CompanyCard({ company }: { company: Company }) {
           label="شعار"
           className="h-[60px] w-[60px] border border-line"
         />
-        {verified ? <VerifiedBadge /> : null}
+        {verified ? <VerifiedBadge label={d.cards.verified} /> : null}
       </div>
 
       {/* الاسم */}
@@ -49,7 +53,7 @@ export function CompanyCard({ company }: { company: Company }) {
 
       {/* الفرص المفتوحة */}
       <div className="mt-3.5 inline-flex w-max items-center gap-1.5 rounded-lg bg-jazan/10 px-3 py-1.5 text-[13px] font-semibold text-jazan">
-        <span className="mono">{openings}</span> فرص مفتوحة
+        <span className="mono">{openings}</span> {d.cards.openings}
       </div>
 
       {/* الإجراء */}
@@ -57,7 +61,7 @@ export function CompanyCard({ company }: { company: Company }) {
         href={`/companies/${id}`}
         className="mt-4 rounded-[11px] border-[1.5px] border-jazan bg-surface px-3 py-2.5 text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan hover:text-white"
       >
-        عرض الشركة
+        {d.cards.viewCompany}
       </Link>
     </article>
   );
