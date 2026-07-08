@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import type { Job } from "@/lib/types";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { useLocale } from "@/lib/i18n";
 
 /** لون شارة نوع الفرصة حسب النوع */
 function typeBadgeClass(type?: string) {
@@ -17,6 +20,7 @@ function typeBadgeClass(type?: string) {
 
 /** صف وظيفة في قائمة "أحدث الوظائف" — مطابق لإطار التصفّح في browse.html */
 export function JobRow({ job }: { job: Job }) {
+  const { d } = useLocale();
   const { title, companyName, companyId, city, type, tags, salary } = job;
   const tagsLabel = tags?.length ? tags.join(" · ") : null;
 
@@ -62,7 +66,7 @@ export function JobRow({ job }: { job: Job }) {
         href={companyId ? `/companies/${companyId}` : "/companies"}
         className="shrink-0 rounded-[11px] bg-jazan px-5 py-2.5 text-center text-sm font-semibold text-white no-underline shadow-[0_6px_16px_rgba(15,92,74,.22)] transition-[transform,background] duration-150 hover:-translate-y-px hover:bg-jazan-dark"
       >
-        تقدّم
+        {d.cards.apply}
       </Link>
     </div>
   );

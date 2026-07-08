@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n";
 import type { Company, Job } from "@/lib/types";
 import { CompanyCard } from "./CompanyCard";
 import { JobRow } from "./JobRow";
@@ -10,6 +11,7 @@ import { JobRow } from "./JobRow";
 const jobTypes = ["الكل", "دوام كامل", "عن بُعد", "دوام جزئي"];
 
 export function CompaniesClient({ companies, jobs }: { companies: Company[]; jobs: Job[] }) {
+  const { d } = useLocale();
   const [query, setQuery] = useState("");
   const [city, setCity] = useState("all");
   const [jobType, setJobType] = useState("الكل");
@@ -53,7 +55,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="ابحث عن وظيفة أو شركة…"
+            placeholder={d.companiesPage.searchPh}
             className="w-full bg-transparent text-[15px] text-charcoal outline-none placeholder:text-[#9aa29d]"
           />
         </div>
@@ -62,7 +64,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
           onChange={(e) => setCity(e.target.value)}
           className="rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 text-sm text-charcoal outline-none focus:border-jazan"
         >
-          <option value="all">كل المدن</option>
+          <option value="all">{d.companiesPage.allCities}</option>
           {cities.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -73,7 +75,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
 
       {/* شبكة الشركات */}
       <p className="mt-5 text-[13px] text-muted">
-        <span className="mono font-semibold text-charcoal">{filteredCompanies.length}</span> شركة
+        <span className="mono font-semibold text-charcoal">{filteredCompanies.length}</span> {d.companiesPage.company}
       </p>
       {filteredCompanies.length > 0 ? (
         <div className="mt-3 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -83,13 +85,13 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
         </div>
       ) : (
         <div className="mt-3 rounded-[18px] border border-dashed border-line bg-surface py-12 text-center">
-          <p className="text-[15px] font-semibold text-charcoal">لا توجد شركات مطابقة</p>
+          <p className="text-[15px] font-semibold text-charcoal">{d.companiesPage.emptyCompanies}</p>
         </div>
       )}
 
       {/* أحدث الوظائف */}
       <section className="mt-12">
-        <h2 className="text-xl font-bold text-charcoal sm:text-2xl">أحدث الوظائف</h2>
+        <h2 className="text-xl font-bold text-charcoal sm:text-2xl">{d.companiesPage.latestJobs}</h2>
 
         {/* شرائح نوع الدوام */}
         <div className="mt-4 flex flex-wrap items-center gap-2.5">
@@ -105,7 +107,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
                   : "border-line bg-surface text-ink hover:border-jazan"
               )}
             >
-              {t}
+              {t === "الكل" ? d.companiesPage.all : t}
             </button>
           ))}
         </div>
@@ -118,7 +120,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
           </div>
         ) : (
           <div className="mt-5 rounded-[18px] border border-dashed border-line bg-surface py-12 text-center">
-            <p className="text-[15px] font-semibold text-charcoal">لا توجد وظائف مطابقة</p>
+            <p className="text-[15px] font-semibold text-charcoal">{d.companiesPage.emptyJobs}</p>
           </div>
         )}
       </section>

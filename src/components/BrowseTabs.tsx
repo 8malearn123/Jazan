@@ -1,16 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n";
 
 type TabKey = "heroes" | "producers" | "jobs";
 
-const tabs: { key: TabKey; label: string; href: string }[] = [
-  { key: "heroes", label: "الأبطال", href: "/browse" },
-  { key: "producers", label: "الأسر المنتجة", href: "/producers" },
-  { key: "jobs", label: "الوظائف", href: "/companies" },
-];
-
 /** شريط تبويب التصفّح المشترك (الأبطال · الأسر المنتجة · الوظائف) */
 export function BrowseTabs({ active }: { active: TabKey }) {
+  const { d } = useLocale();
+
+  const tabs: { key: TabKey; label: string; href: string }[] = [
+    { key: "heroes", label: d.tabs.heroes, href: "/browse" },
+    { key: "producers", label: d.tabs.producers, href: "/producers" },
+    { key: "jobs", label: d.tabs.jobs, href: "/companies" },
+  ];
+
   return (
     <nav className="flex flex-wrap items-center gap-1.5">
       {tabs.map((t) => {

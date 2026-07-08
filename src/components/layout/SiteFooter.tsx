@@ -1,26 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { StarIcon, WhatsappIcon, InstagramIcon, YoutubeIcon } from "@/components/icons";
 import { site } from "@/lib/site";
-
-const columns = [
-  {
-    title: "المنصة",
-    links: [
-      { label: "تصفّح الأبطال", href: "/browse" },
-      { label: "للشركات", href: "/companies" },
-      { label: "كيف تعمل", href: "/#how-it-works" },
-    ],
-  },
-  {
-    title: "الدعم",
-    links: [
-      { label: "الأسئلة الشائعة", href: "/faq" },
-      { label: "تواصل معنا", href: "/contact" },
-      { label: "سياسة الخصوصية", href: "/privacy" },
-      { label: "شروط الاستخدام", href: "/terms" },
-    ],
-  },
-];
+import { useLocale } from "@/lib/i18n";
 
 const socials = [
   { label: "واتساب", Icon: WhatsappIcon, href: "#" },
@@ -29,6 +12,28 @@ const socials = [
 ];
 
 export function SiteFooter() {
+  const { d } = useLocale();
+
+  const columns = [
+    {
+      title: d.footer.platform,
+      links: [
+        { label: d.header.browse, href: "/browse" },
+        { label: d.header.companies, href: "/companies" },
+        { label: d.header.how, href: "/#how-it-works" },
+      ],
+    },
+    {
+      title: d.footer.support,
+      links: [
+        { label: d.footer.faq, href: "/faq" },
+        { label: d.footer.contact, href: "/contact" },
+        { label: d.footer.privacy, href: "/privacy" },
+        { label: d.footer.terms, href: "/terms" },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-[#1c2a26] px-5 pb-8 pt-12 sm:px-8">
       <div className="mx-auto w-full max-w-7xl">
@@ -41,7 +46,7 @@ export function SiteFooter() {
               <span className="text-[19px] font-extrabold text-white">{site.name}</span>
             </div>
             <p className="mt-4 max-w-[300px] text-sm leading-8 text-white/55">
-              منصة مجتمعية محلية تربط مواهب منطقة جازان بالفرص — مستقلين، أسر منتجة، وشركات.
+              {d.footer.about}
             </p>
           </div>
 
@@ -63,7 +68,7 @@ export function SiteFooter() {
           ))}
 
           <div>
-            <div className="mb-4 text-sm font-bold text-white">تابعنا</div>
+            <div className="mb-4 text-sm font-bold text-white">{d.footer.follow}</div>
             <div className="flex gap-3">
               {socials.map(({ label, Icon, href }) => (
                 <Link
@@ -80,8 +85,8 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-9 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-white/45 sm:flex-row">
-          <span>© {site.year} {site.name} — جميع الحقوق محفوظة</span>
-          <span>صُنع بفخر في منطقة جازان</span>
+          <span>© {site.year} {site.name} — {d.footer.rights}</span>
+          <span>{d.footer.made}</span>
         </div>
       </div>
     </footer>

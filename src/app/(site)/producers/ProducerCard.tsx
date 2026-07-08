@@ -1,11 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import type { Producer } from "@/lib/types";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { CheckIcon, StarFilledIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
+import { useLocale } from "@/lib/i18n";
 
 /** بطاقة أسرة منتجة / صانع — مطابقة لإطار التصفّح في التصميم */
 export function ProducerCard({ producer }: { producer: Producer }) {
+  const { d } = useLocale();
   const { id, name, category, city, bio, verified, rating, reviewsCount } = producer;
 
   return (
@@ -51,7 +55,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
             <StarFilledIcon className="h-3.5 w-3.5 text-amber" />
             <span className="mono">{rating.toFixed(1)}</span>
             {reviewsCount ? (
-              <span className="font-normal text-muted">({reviewsCount} تقييم)</span>
+              <span className="font-normal text-muted">({reviewsCount} {d.cards.review})</span>
             ) : null}
           </div>
         ) : null}
@@ -62,7 +66,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
             href={`/producers/${id}`}
             className="flex-1 rounded-[11px] border-[1.5px] border-jazan bg-surface px-3 py-2.5 text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan/5"
           >
-            عرض المتجر
+            {d.cards.viewStore}
           </Link>
           <a
             href={whatsappLink(
@@ -73,7 +77,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
             rel="noopener noreferrer"
             className="rounded-[11px] bg-whatsapp px-3.5 py-2.5 text-[13px] font-semibold text-white no-underline transition-[filter] hover:brightness-95"
           >
-            اطلب
+            {d.cards.order}
           </a>
         </div>
       </div>

@@ -6,15 +6,25 @@ import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/Button";
 import { MenuIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { LangToggle } from "@/components/layout/LangToggle";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
-import { navLinks } from "@/lib/site";
+import { useLocale } from "@/lib/i18n";
 import { homeForRole } from "@/lib/demo";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, ready } = useAuth();
+  const { d } = useLocale();
+
+  const navLinks = [
+    { label: d.header.browse, href: "/browse" },
+    { label: d.header.companies, href: "/companies" },
+    { label: d.header.how, href: "/#how-it-works" },
+  ];
 
   const dashboardHref = user ? homeForRole(user.role) : "/dashboard";
+  const dashboardLabel =
+    user?.role === "admin" ? d.header.adminPanel : d.header.dashboard;
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-cream/90 backdrop-blur">
@@ -39,13 +49,14 @@ export function SiteHeader() {
           {ready && user ? (
             <>
               <span className="max-w-[180px] truncate text-[14px] text-muted">
-                أهلاً، <span className="font-semibold text-charcoal">{user.name}</span>
+                {d.header.hello}{" "}
+                <span className="font-semibold text-charcoal">{user.name}</span>
                 <span className="ms-1.5 rounded-full bg-jazan/10 px-2 py-0.5 text-[11px] font-semibold text-jazan">
                   {roleLabels[user.role]}
                 </span>
               </span>
               <Button href={dashboardHref} size="sm">
-                {user.role === "admin" ? "لوحة المشرف" : "لوحة التحكم"}
+                {dashboardLabel}
               </Button>
             </>
           ) : (
@@ -54,18 +65,20 @@ export function SiteHeader() {
                 href="/login"
                 className="text-[15px] font-medium text-charcoal no-underline"
               >
-                تسجيل الدخول
+                {d.header.login}
               </Link>
               <Button href="/register" size="sm">
-                انضم كبطل
+                {d.header.join}
               </Button>
             </>
           )}
+          <LangToggle />
         </div>
 
-        {/* Mobile: theme toggle + menu button */}
+        {/* Mobile: toggles + menu button */}
         <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
+          <LangToggle />
           <button
             type="button"
             aria-label="القائمة"
@@ -94,15 +107,15 @@ export function SiteHeader() {
             <div className="mt-2 flex flex-col gap-2">
               {ready && user ? (
                 <Button href={dashboardHref} size="sm">
-                  {user.role === "admin" ? "لوحة المشرف" : "لوحة التحكم"}
+                  {dashboardLabel}
                 </Button>
               ) : (
                 <>
                   <Button href="/login" variant="ghost" size="sm">
-                    تسجيل الدخول
+                    {d.header.login}
                   </Button>
                   <Button href="/register" size="sm">
-                    انضم كبطل
+                    {d.header.join}
                   </Button>
                 </>
               )}

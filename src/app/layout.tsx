@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Alexandria, IBM_Plex_Mono } from "next/font/google";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { LocaleProvider } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -55,13 +56,15 @@ export default function RootLayout({
       className={`${alexandria.variable} ${plexMono.variable}`}
     >
       <body>
-        {/* يطبّق الوضع الداكن قبل الرسم لتفادي الوميض */}
+        {/* يطبّق الوضع الداكن واللغة قبل الرسم لتفادي الوميض */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("jazanheroes.theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}`,
+            __html: `try{var t=localStorage.getItem("jazanheroes.theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");var l=localStorage.getItem("jazanheroes.locale");if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr"}}catch(e){}`,
           }}
         />
-        <AuthProvider>{children}</AuthProvider>
+        <LocaleProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

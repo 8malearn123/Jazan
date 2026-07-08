@@ -3,12 +3,14 @@
 import { useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n";
 import type { Producer } from "@/lib/types";
 import { ProducerCard } from "./ProducerCard";
 
 const categories = ["الكل", "طعام", "حِرف", "عطور"];
 
 export function ProducersClient({ producers }: { producers: Producer[] }) {
+  const { d } = useLocale();
   const [query, setQuery] = useState("");
   const [city, setCity] = useState("all");
   const [category, setCategory] = useState("الكل");
@@ -42,7 +44,7 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="ابحث عن نشاط أو منتج…"
+            placeholder={d.producersPage.searchPh}
             className="w-full bg-transparent text-[15px] text-charcoal placeholder:text-muted/70 focus:outline-none"
           />
         </div>
@@ -51,7 +53,7 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
           onChange={(e) => setCity(e.target.value)}
           className="rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 text-sm text-charcoal outline-none focus:border-amber"
         >
-          <option value="all">كل المدن</option>
+          <option value="all">{d.producersPage.allCities}</option>
           {cities.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -74,13 +76,13 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
                 : "border-line bg-surface text-ink hover:bg-black/[.02]"
             )}
           >
-            {cat}
+            {cat === "الكل" ? d.producersPage.all : cat}
           </button>
         ))}
       </div>
 
       <p className="mt-5 text-[13px] text-muted">
-        <span className="mono font-semibold text-charcoal">{results.length}</span> نتيجة
+        <span className="mono font-semibold text-charcoal">{results.length}</span> {d.producersPage.result}
       </p>
 
       {results.length > 0 ? (
@@ -91,8 +93,8 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
         </div>
       ) : (
         <div className="mt-3 rounded-[18px] border border-dashed border-line bg-surface py-16 text-center">
-          <p className="text-[15px] font-semibold text-charcoal">لا توجد نتائج مطابقة</p>
-          <p className="mt-1 text-[13px] text-muted">جرّب تعديل البحث أو الفئة.</p>
+          <p className="text-[15px] font-semibold text-charcoal">{d.producersPage.emptyTitle}</p>
+          <p className="mt-1 text-[13px] text-muted">{d.producersPage.emptyDesc}</p>
         </div>
       )}
     </>

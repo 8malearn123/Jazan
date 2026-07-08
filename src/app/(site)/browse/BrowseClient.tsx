@@ -3,16 +3,17 @@
 import { useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/lib/i18n";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
 import { HeroBrowseCard } from "./HeroBrowseCard";
 
 type StatusFilter = "all" | AvailabilityStatus;
 
-const chips: { key: StatusFilter; label: string; dot?: string; text?: string }[] = [
-  { key: "all", label: "الكل" },
-  { key: "freelance", label: "متاح للعمل الحر", dot: "bg-success", text: "text-success-ink" },
-  { key: "job", label: "يبحث عن وظيفة", dot: "bg-info", text: "text-info-ink" },
-  { key: "both", label: "متاح للاثنين", dot: "bg-amber", text: "text-warn-ink" },
+const chipStyles: { key: StatusFilter; dot?: string; text?: string }[] = [
+  { key: "all" },
+  { key: "freelance", dot: "bg-success", text: "text-success-ink" },
+  { key: "job", dot: "bg-info", text: "text-info-ink" },
+  { key: "both", dot: "bg-amber", text: "text-warn-ink" },
 ];
 
 function matchStatus(hero: Hero, f: StatusFilter): boolean {
@@ -29,6 +30,7 @@ export function BrowseClient({
   heroes: Hero[];
   initialQuery?: string;
 }) {
+  const { d } = useLocale();
   const [query, setQuery] = useState(initialQuery);
   const [city, setCity] = useState("all");
   const [status, setStatus] = useState<StatusFilter>("all");
@@ -37,6 +39,11 @@ export function BrowseClient({
     () => Array.from(new Set(heroes.map((h) => h.city))).sort(),
     [heroes]
   );
+
+  const chips = chipStyles.map((c) => ({
+    ...c,
+    label: d.browse.chips[c.key as keyof typeof d.browse.chips] ?? d.browse.chips.all,
+  }));
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -61,7 +68,7 @@ export function BrowseClient({
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="ابحث بالاسم أو المهارة…"
+            placeholder={d.browse.searchPh}
             className="w-full bg-transparent text-[15px] text-charcoal outline-none placeholder:text-[#9aa29d]"
           />
         </div>
@@ -70,7 +77,7 @@ export function BrowseClient({
           onChange={(e) => setCity(e.target.value)}
           className="rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 text-sm text-charcoal outline-none focus:border-jazan"
         >
-          <option value="all">كل المدن</option>
+          <option value="all">{d.browse.allCities}</option>
           {cities.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -106,7 +113,7 @@ export function BrowseClient({
 
       {/* العدّاد */}
       <p className="mt-5 text-[13px] text-muted">
-        <span className="mono font-semibold text-charcoal">{results.length}</span> نتيجة
+        <span className="mono font-semibold text-charcoal">{results.length}</span> {d.browse.result}
       </p>
 
       {/* الشبكة */}
@@ -118,8 +125,8 @@ export function BrowseClient({
         </div>
       ) : (
         <div className="mt-3 rounded-[18px] border border-dashed border-line bg-surface py-16 text-center">
-          <p className="text-[15px] font-semibold text-charcoal">لا توجد نتائج مطابقة</p>
-          <p className="mt-1 text-[13px] text-muted">جرّب تعديل البحث أو المُرشّحات.</p>
+          <p className="text-[15px] font-semibold text-charcoal">{d.browse.emptyTitle}</p>
+          <p className="mt-1 text-[13px] text-muted">{d.browse.emptyDesc}</p>
         </div>
       )}
     </>
