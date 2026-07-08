@@ -23,7 +23,7 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
   const extraCount = hero.skills.length - shownSkills.length;
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_14px_34px_rgba(28,42,38,.12)]">
+    <div className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_14px_34px_rgba(28,42,38,.12)]">
       {/* الغلاف + شارة التوفّر */}
       <div className="relative">
         <ImagePlaceholder shape="rect" className="h-[84px] w-full" />
@@ -42,7 +42,7 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
       <div className="flex flex-1 flex-col p-4">
         <ImagePlaceholder
           shape="circle"
-          className="-mt-11 h-14 w-14 border-[3px] border-white shadow-[0_4px_12px_rgba(28,42,38,.1)]"
+          className="-mt-11 h-14 w-14 border-[3px] border-surface shadow-[0_4px_12px_rgba(28,42,38,.1)]"
         />
         <div className="mt-[11px] flex items-center justify-between gap-2">
           <h3 className="text-base font-bold text-charcoal">{hero.name}</h3>
@@ -62,13 +62,13 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
           {shownSkills.map((skill) => (
             <span
               key={skill}
-              className="rounded-[7px] bg-[#f3f0e9] px-2.5 py-1 text-[11px] text-ink"
+              className="rounded-[7px] bg-tag px-2.5 py-1 text-[11px] text-ink"
             >
               {skill}
             </span>
           ))}
           {extraCount > 0 && (
-            <span className="rounded-[7px] bg-[#f3f0e9] px-2.5 py-1 text-[11px] text-muted">
+            <span className="rounded-[7px] bg-tag px-2.5 py-1 text-[11px] text-muted">
               +{extraCount}
             </span>
           )}
@@ -78,7 +78,7 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
         <div className="mt-auto flex gap-2 pt-3.5">
           <Link
             href={`/heroes/${hero.id}`}
-            className="flex-1 rounded-[10px] border-[1.5px] border-jazan bg-white px-3 py-[9px] text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan hover:text-white"
+            className="flex-1 rounded-[10px] border-[1.5px] border-jazan bg-surface px-3 py-[9px] text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan hover:text-white"
           >
             عرض الملف
           </Link>

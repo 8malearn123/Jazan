@@ -16,7 +16,7 @@ export function StatCard({
 }) {
   return (
     <div
-      className="rounded-[14px] border border-line bg-white p-3.5"
+      className="rounded-[14px] border border-line bg-surface p-3.5"
       style={{ borderInlineEndWidth: 3, borderInlineEndColor: accent }}
     >
       <div className="flex items-center gap-2">

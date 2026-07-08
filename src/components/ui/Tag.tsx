@@ -12,7 +12,7 @@ export function Tag({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-line bg-[#f3f0e9] px-3 py-1.5 text-[13px] text-ink",
+        "inline-flex items-center rounded-full border border-line bg-tag px-3 py-1.5 text-[13px] text-ink",
         className
       )}
     >

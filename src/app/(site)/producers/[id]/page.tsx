@@ -57,7 +57,7 @@ export default async function ProducerPage({
         تصفّح الأسر المنتجة
       </Link>
 
-      <div className="mt-5 overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgba(28,42,38,.04)]">
+      <div className="mt-5 overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)]">
         {/* الغلاف */}
         <div className="relative">
           <ImagePlaceholder
@@ -65,13 +65,13 @@ export default async function ProducerPage({
             label="صورة غلاف النشاط"
             className="h-[200px] w-full sm:h-[230px]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 to-charcoal/5" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/5" />
           <div className="absolute inset-x-5 bottom-5 flex items-end gap-4 sm:inset-x-8">
             <ImagePlaceholder
               shape="rounded"
               radius={18}
               label="شعار"
-              className="h-[76px] w-[76px] flex-none border-4 border-white shadow-[0_8px_22px_rgba(0,0,0,.25)] sm:h-[92px] sm:w-[92px]"
+              className="h-[76px] w-[76px] flex-none border-4 border-surface shadow-[0_8px_22px_rgba(0,0,0,.25)] sm:h-[92px] sm:w-[92px]"
             />
             <div className="pb-1">
               <div className="flex items-center gap-2">
@@ -169,7 +169,7 @@ export default async function ProducerPage({
             {products.map((product) => (
               <article
                 key={product.id}
-                className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(28,42,38,.12)]"
+                className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(28,42,38,.12)]"
               >
                 <ImagePlaceholder
                   shape="rect"

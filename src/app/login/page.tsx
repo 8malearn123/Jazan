@@ -12,7 +12,7 @@ import { site } from "@/lib/site";
 import { heroStats } from "@/lib/stats";
 
 const inputWrap =
-  "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-white px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 const inputField =
   "min-w-0 flex-1 bg-transparent text-[15px] text-charcoal outline-none placeholder:text-muted/60";
 
@@ -189,7 +189,7 @@ export default function LoginPage() {
                   key={acc.role}
                   type="button"
                   onClick={() => handleDemo(acc)}
-                  className="flex flex-col items-start rounded-xl border border-line bg-white px-3.5 py-2.5 text-start transition-colors hover:border-jazan hover:bg-jazan/[.03]"
+                  className="flex flex-col items-start rounded-xl border border-line bg-surface px-3.5 py-2.5 text-start transition-colors hover:border-jazan hover:bg-jazan/[.03]"
                 >
                   <span className="text-[13px] font-bold text-charcoal">{acc.label}</span>
                   <span className="text-[11px] text-muted">{acc.hint}</span>

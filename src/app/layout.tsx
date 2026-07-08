@@ -51,9 +51,16 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
+      suppressHydrationWarning
       className={`${alexandria.variable} ${plexMono.variable}`}
     >
       <body>
+        {/* يطبّق الوضع الداكن قبل الرسم لتفادي الوميض */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("jazanheroes.theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}`,
+          }}
+        />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

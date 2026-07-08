@@ -28,7 +28,7 @@ export function ImagePlaceholder({
     <div
       style={shapeStyle}
       className={cn(
-        "flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#eceae3] to-[#e3e0d8] text-center",
+        "flex items-center justify-center overflow-hidden bg-gradient-to-br from-slot to-slot-deep text-center",
         className
       )}
     >

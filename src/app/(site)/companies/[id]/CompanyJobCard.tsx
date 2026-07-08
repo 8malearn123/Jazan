@@ -32,7 +32,7 @@ export function CompanyJobCard({
   );
 
   return (
-    <div className="rounded-[18px] border border-line bg-white p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-0.5 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.1)]">
+    <div className="rounded-[18px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-0.5 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.1)]">
       <div className="flex items-start gap-4">
         <span className="flex h-[50px] w-[50px] flex-none items-center justify-center rounded-[13px] bg-jazan/10 text-jazan">
           <BriefcaseIcon className="h-6 w-6" />
@@ -70,7 +70,7 @@ export function CompanyJobCard({
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-[7px] bg-[#f3f0e9] px-2.5 py-1 text-[12px] text-ink"
+                  className="rounded-[7px] bg-tag px-2.5 py-1 text-[12px] text-ink"
                 >
                   {tag}
                 </span>

@@ -18,7 +18,7 @@ export function CompanyCard({ company }: { company: Company }) {
   const { id, name, field, city, openings, verified } = company;
 
   return (
-    <article className="flex flex-col rounded-[18px] border border-line bg-white p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_14px_34px_rgba(28,42,38,.12)]">
+    <article className="flex flex-col rounded-[18px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_14px_34px_rgba(28,42,38,.12)]">
       {/* الشعار + التحقّق */}
       <div className="flex items-start justify-between">
         <ImagePlaceholder
@@ -55,7 +55,7 @@ export function CompanyCard({ company }: { company: Company }) {
       {/* الإجراء */}
       <Link
         href={`/companies/${id}`}
-        className="mt-4 rounded-[11px] border-[1.5px] border-jazan bg-white px-3 py-2.5 text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan hover:text-white"
+        className="mt-4 rounded-[11px] border-[1.5px] border-jazan bg-surface px-3 py-2.5 text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan hover:text-white"
       >
         عرض الشركة
       </Link>

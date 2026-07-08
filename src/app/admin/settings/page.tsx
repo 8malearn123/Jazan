@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 import { AdminPageHead } from "../_components/AdminTable";
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-white px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 const initialToggles = [
   { key: "register", label: "السماح بالتسجيل الجديد", on: true },
@@ -27,7 +27,7 @@ export default function AdminSettingsPage() {
       <AdminPageHead title="الإعدادات" subtitle="إعدادات المنصة العامة" />
 
       {/* معلومات المنصة */}
-      <section className="rounded-[16px] border border-line bg-white p-5">
+      <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">معلومات المنصة</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div>
@@ -46,7 +46,7 @@ export default function AdminSettingsPage() {
       </section>
 
       {/* خيارات التشغيل */}
-      <section className="rounded-[16px] border border-line bg-white p-5">
+      <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">خيارات التشغيل</h2>
         <div className="mt-3 divide-y divide-line">
           {toggles.map((t) => (
@@ -56,10 +56,10 @@ export default function AdminSettingsPage() {
                 type="button"
                 onClick={() => flip(t.key)}
                 className={`flex h-6 w-11 cursor-pointer items-center rounded-full p-0.5 transition-colors ${
-                  t.on ? "justify-end bg-jazan" : "justify-start bg-[#d9d5cc]"
+                  t.on ? "justify-end bg-jazan" : "justify-start bg-sand"
                 }`}
               >
-                <span className="h-5 w-5 rounded-full bg-white shadow" />
+                <span className="h-5 w-5 rounded-full bg-surface shadow" />
               </button>
             </div>
           ))}

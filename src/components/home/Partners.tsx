@@ -30,7 +30,7 @@ export function Partners() {
           {partners.map((p) => (
             <div
               key={p.id}
-              className="jh-cat rounded-[18px] border border-line bg-white p-6 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.10)]"
+              className="jh-cat rounded-[18px] border border-line bg-surface p-6 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.10)]"
             >
               <div className="flex items-center gap-3">
                 <ImagePlaceholder
@@ -42,7 +42,7 @@ export function Partners() {
                   <div className="text-[13px] text-muted">{p.field}</div>
                 </div>
               </div>
-              <div className="mt-[18px] flex items-center justify-between border-t border-[#f0ede6] pt-4">
+              <div className="mt-[18px] flex items-center justify-between border-t border-line-soft pt-4">
                 <span className="text-[13px] text-muted">
                   <span className="mono font-semibold text-jazan">{p.openings}</span>{" "}
                   {p.openings === 1 ? "فرصة مفتوحة" : "فرص مفتوحة"}

@@ -11,7 +11,7 @@ export function Hero() {
       <Container className="grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-12">
         {/* Text side */}
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-1.5 text-xs font-semibold text-jazan sm:text-[13px]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-1.5 text-xs font-semibold text-jazan sm:text-[13px]">
             <span className="h-[7px] w-[7px] rounded-full bg-success" />
             {site.tagline}
           </div>
@@ -30,7 +30,7 @@ export function Hero() {
           {/* Search */}
           <form
             action="/browse"
-            className="mt-6 flex max-w-[520px] items-center gap-2 rounded-2xl border-[1.5px] border-line bg-white p-[6px] ps-3.5 shadow-[0_6px_22px_rgba(28,42,38,.06)] sm:mt-7 sm:gap-3 sm:p-[7px] sm:ps-4"
+            className="mt-6 flex max-w-[520px] items-center gap-2 rounded-2xl border-[1.5px] border-line bg-surface p-[6px] ps-3.5 shadow-[0_6px_22px_rgba(28,42,38,.06)] sm:mt-7 sm:gap-3 sm:p-[7px] sm:ps-4"
           >
             <SearchIcon width={20} height={20} className="shrink-0 text-muted" />
             <input
@@ -67,7 +67,7 @@ export function Hero() {
             className="h-[230px] w-full sm:h-[340px] lg:h-[420px]"
           />
 
-          <div className="jh-float absolute -bottom-4 -start-2 flex items-center gap-3 rounded-2xl border border-line bg-white p-3 px-4 shadow-[0_12px_30px_rgba(28,42,38,.12)] sm:-start-3 sm:p-3.5 sm:px-[18px]">
+          <div className="jh-float absolute -bottom-4 -start-2 flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 px-4 shadow-[0_12px_30px_rgba(28,42,38,.12)] sm:-start-3 sm:p-3.5 sm:px-[18px]">
             <span className="flex h-9 w-9 items-center justify-center rounded-[11px] bg-success/15 sm:h-10 sm:w-10">
               <CheckIcon width={20} height={20} className="text-success" strokeWidth={2.2} />
             </span>
@@ -79,7 +79,7 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="jh-float-slow absolute -top-4 -end-2 rounded-2xl border border-line bg-white px-3.5 py-2.5 shadow-[0_10px_26px_rgba(28,42,38,.10)] sm:-end-3 sm:px-4 sm:py-3">
+          <div className="jh-float-slow absolute -top-4 -end-2 rounded-2xl border border-line bg-surface px-3.5 py-2.5 shadow-[0_10px_26px_rgba(28,42,38,.10)] sm:-end-3 sm:px-4 sm:py-3">
             <div className="text-[11px] text-muted sm:text-xs">تخصصات متاحة</div>
             <div className="text-sm font-bold text-jazan sm:text-[15px]">
               برمجة · تصميم · حِرف

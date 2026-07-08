@@ -124,7 +124,7 @@ export default async function CompanyPage({
       </Link>
 
       {/* بطاقة الهوية المؤسسية */}
-      <div className="mt-5 overflow-hidden rounded-[20px] border border-line bg-white shadow-[0_1px_2px_rgba(28,42,38,.04)]">
+      <div className="mt-5 overflow-hidden rounded-[20px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)]">
         {/* غلاف بلون العلامة */}
         <div className="relative h-[120px] bg-jazan sm:h-[140px]">
           <div className="absolute inset-0 opacity-[.15] [background:radial-gradient(circle_at_20%_30%,#fff_0,transparent_45%)]" />
@@ -137,7 +137,7 @@ export default async function CompanyPage({
                 shape="rounded"
                 radius={18}
                 label="شعار"
-                className="-mt-10 h-[88px] w-[88px] flex-none border-[3px] border-white bg-white shadow-[0_6px_18px_rgba(28,42,38,.12)] sm:-mt-12 sm:h-[100px] sm:w-[100px]"
+                className="-mt-10 h-[88px] w-[88px] flex-none border-[3px] border-surface bg-surface shadow-[0_6px_18px_rgba(28,42,38,.12)] sm:-mt-12 sm:h-[100px] sm:w-[100px]"
               />
               <div className="pb-1">
                 <div className="flex flex-wrap items-center gap-2.5">
@@ -199,7 +199,7 @@ export default async function CompanyPage({
         {/* عمود رئيسي: الوظائف هي البطل */}
         <div className="lg:col-span-2">
           {/* عن الشركة */}
-          <section className="rounded-[18px] border border-line bg-white p-6">
+          <section className="rounded-[18px] border border-line bg-surface p-6">
             <h2 className="text-[17px] font-bold text-charcoal">عن الشركة</h2>
             <p className="mt-3 text-[15px] leading-[1.9] text-ink">
               {company.about ??
@@ -231,7 +231,7 @@ export default async function CompanyPage({
         {/* عمود جانبي */}
         <aside className="flex flex-col gap-5">
           {/* بيئة العمل */}
-          <div className="rounded-[18px] border border-line bg-white p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)]">
+          <div className="rounded-[18px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)]">
             <h3 className="text-base font-bold text-charcoal">بيئة العمل</h3>
             <div className="mt-3 grid grid-cols-2 gap-2.5">
               {Array.from({ length: 4 }).map((_, i) => (
@@ -241,7 +241,7 @@ export default async function CompanyPage({
           </div>
 
           {/* التواصل */}
-          <div className="rounded-[18px] border border-line bg-white p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)]">
+          <div className="rounded-[18px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)]">
             <h3 className="text-base font-bold text-charcoal">تواصل معنا</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted">
               مهتم بالانضمام إلى {company.name}؟ تواصل مباشرة عبر واتساب أو تقدّم
@@ -259,7 +259,7 @@ export default async function CompanyPage({
               </a>
               <Link
                 href="/companies"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border-[1.5px] border-line bg-white px-4 py-3 text-[15px] font-semibold text-charcoal no-underline transition-colors hover:border-jazan"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] font-semibold text-charcoal no-underline transition-colors hover:border-jazan"
               >
                 <BriefcaseIcon className="h-[18px] w-[18px] text-muted" />
                 تصفّح شركات أخرى

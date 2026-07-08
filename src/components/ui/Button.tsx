@@ -9,7 +9,7 @@ const variants: Record<Variant, string> = {
   primary:
     "bg-jazan text-white shadow-[0_6px_16px_rgba(15,92,74,.22)] hover:bg-jazan-dark",
   secondary:
-    "bg-white text-jazan border-[1.5px] border-jazan hover:bg-jazan/5",
+    "bg-surface text-jazan border-[1.5px] border-jazan hover:bg-jazan/5",
   ghost:
     "bg-transparent text-charcoal border-[1.5px] border-line hover:bg-black/[.03]",
   amber:

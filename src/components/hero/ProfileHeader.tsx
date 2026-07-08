@@ -21,7 +21,7 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
   );
 
   return (
-    <div className="overflow-hidden rounded-[22px] border border-line bg-white shadow-[0_1px_3px_rgba(28,42,38,.06)]">
+    <div className="overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_1px_3px_rgba(28,42,38,.06)]">
       {/* الغلاف */}
       <div className="relative">
         <ImagePlaceholder shape="rect" label="صورة غلاف" className="h-[140px] w-full sm:h-[190px]" />
@@ -33,7 +33,7 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
         <ImagePlaceholder
           shape="circle"
           label="صورة"
-          className="-mt-14 h-[112px] w-[112px] border-[5px] border-white shadow-[0_8px_22px_rgba(28,42,38,.16)] sm:-mt-16 sm:h-[128px] sm:w-[128px]"
+          className="-mt-14 h-[112px] w-[112px] border-[5px] border-surface shadow-[0_8px_22px_rgba(28,42,38,.16)] sm:-mt-16 sm:h-[128px] sm:w-[128px]"
         />
 
         <div className="mt-3 flex items-center gap-2.5">

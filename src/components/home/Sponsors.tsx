@@ -7,7 +7,7 @@ export function Sponsors() {
   return (
     <section className="pb-16">
       <Container>
-        <div className="rounded-[22px] border border-line bg-white px-6 py-9 shadow-[0_1px_2px_rgba(28,42,38,.04)] sm:px-10">
+        <div className="rounded-[22px] border border-line bg-surface px-6 py-9 shadow-[0_1px_2px_rgba(28,42,38,.04)] sm:px-10">
           <div className="text-center">
             <div className="text-[13px] font-bold tracking-wide text-amber">الرعاة</div>
             <h2 className="mt-2 text-[24px] font-extrabold tracking-[-.4px] text-charcoal sm:text-[26px]">

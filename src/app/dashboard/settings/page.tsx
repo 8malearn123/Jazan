@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-white px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 export default function DashboardSettingsPage() {
   const { user } = useAuth();
@@ -18,7 +18,7 @@ export default function DashboardSettingsPage() {
       </div>
 
       {/* الحساب */}
-      <section className="rounded-[16px] border border-line bg-white p-5">
+      <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">معلومات الحساب</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div>
@@ -33,7 +33,7 @@ export default function DashboardSettingsPage() {
       </section>
 
       {/* كلمة المرور */}
-      <section className="rounded-[16px] border border-line bg-white p-5">
+      <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">تغيير كلمة المرور</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div>

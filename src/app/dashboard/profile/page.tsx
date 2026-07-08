@@ -6,7 +6,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import type { UserRole } from "@/lib/types";
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-white px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 /** الحد الأقصى لحجم المرفق: 2 ميجابايت */
 const MAX_FILE_BYTES = 2 * 1024 * 1024;
@@ -148,17 +148,17 @@ export default function ProfilePage() {
       <p className="mt-0.5 text-[13px] text-muted">عدّل بياناتك العامة كما تظهر للزوار.</p>
 
       {/* الصور */}
-      <section className="mt-5 overflow-hidden rounded-[16px] border border-line bg-white">
+      <section className="mt-5 overflow-hidden rounded-[16px] border border-line bg-surface">
         <ImagePlaceholder shape="rect" label="صورة الغلاف" className="h-[120px] w-full" />
         <div className="flex items-end gap-4 px-5 pb-5">
-          <ImagePlaceholder shape="circle" className="-mt-9 h-[72px] w-[72px] border-[3px] border-white" />
-          <button className="mb-1 cursor-pointer rounded-lg border border-line bg-white px-3 py-1.5 text-[13px] font-semibold text-charcoal transition-colors hover:bg-cream">
+          <ImagePlaceholder shape="circle" className="-mt-9 h-[72px] w-[72px] border-[3px] border-surface" />
+          <button className="mb-1 cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[13px] font-semibold text-charcoal transition-colors hover:bg-cream">
             تغيير الصورة
           </button>
         </div>
       </section>
 
-      <form onSubmit={handleSave} className="mt-4 rounded-[16px] border border-line bg-white p-5">
+      <form onSubmit={handleSave} className="mt-4 rounded-[16px] border border-line bg-surface p-5">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
@@ -214,18 +214,18 @@ export default function ProfilePage() {
           {/* المهارات كوسوم */}
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">{skillsLabel}</label>
-            <div className="flex flex-wrap items-center gap-2 rounded-xl border-[1.5px] border-line bg-white p-2 focus-within:border-jazan">
+            <div className="flex flex-wrap items-center gap-2 rounded-xl border-[1.5px] border-line bg-surface p-2 focus-within:border-jazan">
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#f3f0e9] px-3 py-1 text-[13px] text-ink"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-tag px-3 py-1 text-[13px] text-ink"
                 >
                   {skill}
                   <button
                     type="button"
                     onClick={() => removeSkill(skill)}
                     aria-label={`حذف ${skill}`}
-                    className="cursor-pointer text-muted transition-colors hover:text-[#b3261e]"
+                    className="cursor-pointer text-muted transition-colors hover:text-danger"
                   >
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
                       <path d="M18 6L6 18M6 6l12 12" />
@@ -280,7 +280,7 @@ export default function ProfilePage() {
                 {files.map((f) => (
                   <li
                     key={f.name}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-line bg-white px-3 py-2"
+                    className="flex items-center justify-between gap-3 rounded-lg border border-line bg-surface px-3 py-2"
                   >
                     <span className="min-w-0 flex-1 truncate text-[13px] text-charcoal">{f.name}</span>
                     <span className="mono shrink-0 text-[12px] text-muted">{formatSize(f.size)}</span>
@@ -288,7 +288,7 @@ export default function ProfilePage() {
                       type="button"
                       onClick={() => removeFile(f.name)}
                       aria-label="حذف الملف"
-                      className="shrink-0 cursor-pointer text-muted transition-colors hover:text-[#b3261e]"
+                      className="shrink-0 cursor-pointer text-muted transition-colors hover:text-danger"
                     >
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round">
                         <path d="M18 6L6 18M6 6l12 12" />

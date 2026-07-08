@@ -19,7 +19,7 @@ export function AdminPageHead({
 /** بطاقة تحوي جدولاً قابلاً للتمرير أفقياً */
 export function TableCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="overflow-hidden rounded-[16px] border border-line bg-white">
+    <div className="overflow-hidden rounded-[16px] border border-line bg-surface">
       <div className="overflow-x-auto">{children}</div>
     </div>
   );

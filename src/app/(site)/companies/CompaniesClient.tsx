@@ -47,7 +47,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
     <>
       {/* البحث + المدينة */}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="flex flex-1 items-center gap-2.5 rounded-[13px] border-[1.5px] border-line bg-white px-4 py-3 focus-within:border-jazan">
+        <div className="flex flex-1 items-center gap-2.5 rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 focus-within:border-jazan">
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-muted" />
           <input
             type="text"
@@ -60,7 +60,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="rounded-[13px] border-[1.5px] border-line bg-white px-4 py-3 text-sm text-charcoal outline-none focus:border-jazan"
+          className="rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 text-sm text-charcoal outline-none focus:border-jazan"
         >
           <option value="all">كل المدن</option>
           {cities.map((c) => (
@@ -82,7 +82,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
           ))}
         </div>
       ) : (
-        <div className="mt-3 rounded-[18px] border border-dashed border-line bg-white py-12 text-center">
+        <div className="mt-3 rounded-[18px] border border-dashed border-line bg-surface py-12 text-center">
           <p className="text-[15px] font-semibold text-charcoal">لا توجد شركات مطابقة</p>
         </div>
       )}
@@ -102,7 +102,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
                 "cursor-pointer rounded-full border-[1.5px] px-4 py-2 text-[13px] font-semibold transition-colors",
                 jobType === t
                   ? "border-info bg-info text-white"
-                  : "border-line bg-white text-ink hover:border-jazan"
+                  : "border-line bg-surface text-ink hover:border-jazan"
               )}
             >
               {t}
@@ -117,7 +117,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
             ))}
           </div>
         ) : (
-          <div className="mt-5 rounded-[18px] border border-dashed border-line bg-white py-12 text-center">
+          <div className="mt-5 rounded-[18px] border border-dashed border-line bg-surface py-12 text-center">
             <p className="text-[15px] font-semibold text-charcoal">لا توجد وظائف مطابقة</p>
           </div>
         )}

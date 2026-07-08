@@ -17,6 +17,13 @@
   --color-muted: #6b7770;
   --color-line: #e7e2d9;
 
+  /* أسطح ومكوّنات (تتبدّل مع الوضع الداكن) */
+  --color-surface: #ffffff;
+  --color-tag: #f3f0e9;
+  --color-line-soft: #f0ede6;
+  --color-slot: #eceae3;
+  --color-slot-deep: #e3e0d8;
+
   /* Status */
   --color-success: #22a565;
   --color-success-ink: #15784a;
@@ -25,6 +32,41 @@
   --color-warn: #f59e0b;
   --color-warn-ink: #b06a00;
   --color-whatsapp: #25d366;
+
+  /* ألوان الخطر (رفض / حذف) */
+  --color-danger: #b3261e;
+  --color-danger-line: #e8c9c9;
+  --color-danger-soft: #fdf3f3;
+}
+
+/* ===== الوضع الداكن =====
+   الألوان كلها متغيّرات، فيكفي تبديل قيمها تحت .dark */
+.dark {
+  --color-jazan: #2f9478;
+  --color-jazan-dark: #257a63;
+  --color-amber-dark: #f0a952;
+  --color-cream: #101613;
+  --color-sand: #0b100e;
+  --color-charcoal: #e9eeeb;
+  --color-ink: #c3ccc6;
+  --color-muted: #8f9a93;
+  --color-line: #263029;
+
+  --color-surface: #171f1b;
+  --color-tag: #232d27;
+  --color-line-soft: #1f2823;
+  --color-slot: #1d2621;
+  --color-slot-deep: #161e1a;
+
+  --color-success-ink: #4cc38a;
+  --color-info-ink: #7fb1ff;
+  --color-warn-ink: #f0b35c;
+
+  --color-danger: #f28b82;
+  --color-danger-line: #573434;
+  --color-danger-soft: #2a1d1d;
+
+  color-scheme: dark;
 }
 
 * {
@@ -52,6 +94,9 @@ body {
 
 ::selection {
   background: rgba(15, 92, 74, 0.18);
+}
+.dark ::selection {
+  background: rgba(47, 148, 120, 0.35);
 }
 
 /* Animated underline for nav links */

@@ -21,7 +21,7 @@ export function JobRow({ job }: { job: Job }) {
   const tagsLabel = tags?.length ? tags.join(" · ") : null;
 
   return (
-    <div className="flex flex-col gap-4 rounded-[18px] border border-line bg-white p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-0.5 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.1)] sm:flex-row sm:items-center sm:gap-[18px] sm:py-5 sm:ps-6">
+    <div className="flex flex-col gap-4 rounded-[18px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-0.5 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.1)] sm:flex-row sm:items-center sm:gap-[18px] sm:py-5 sm:ps-6">
       <ImagePlaceholder
         shape="rounded"
         radius={14}

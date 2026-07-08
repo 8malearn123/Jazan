@@ -34,7 +34,7 @@ export default function AdminReportsPage() {
       ) : null}
 
       {reports.length === 0 ? (
-        <div className="rounded-[16px] border border-line bg-white px-6 py-12 text-center text-[14px] text-muted">
+        <div className="rounded-[16px] border border-line bg-surface px-6 py-12 text-center text-[14px] text-muted">
           لا توجد بلاغات.
         </div>
       ) : (
@@ -76,7 +76,7 @@ export default function AdminReportsPage() {
                       ) : null}
                       <button
                         onClick={() => removeReport(r.id)}
-                        className="cursor-pointer rounded-lg border border-[#e8c9c9] bg-white px-3 py-1.5 text-[12px] font-semibold text-[#b3261e] transition-colors hover:bg-[#fdf3f3]"
+                        className="cursor-pointer rounded-lg border border-danger-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-danger transition-colors hover:bg-danger-soft"
                       >
                         حذف
                       </button>

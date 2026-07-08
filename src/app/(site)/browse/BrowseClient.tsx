@@ -55,7 +55,7 @@ export function BrowseClient({
     <>
       {/* البحث + المدينة */}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="flex flex-1 items-center gap-2.5 rounded-[13px] border-[1.5px] border-line bg-white px-4 py-3 focus-within:border-jazan">
+        <div className="flex flex-1 items-center gap-2.5 rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 focus-within:border-jazan">
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-muted" />
           <input
             type="text"
@@ -68,7 +68,7 @@ export function BrowseClient({
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="rounded-[13px] border-[1.5px] border-line bg-white px-4 py-3 text-sm text-charcoal outline-none focus:border-jazan"
+          className="rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 text-sm text-charcoal outline-none focus:border-jazan"
         >
           <option value="all">كل المدن</option>
           {cities.map((c) => (
@@ -92,11 +92,11 @@ export function BrowseClient({
                 "inline-flex cursor-pointer items-center gap-[7px] rounded-full border-[1.5px] px-4 py-2 text-[13px] font-semibold transition-colors",
                 active
                   ? "border-jazan bg-jazan text-white"
-                  : cn("border-line bg-white hover:border-jazan", chip.text ?? "text-charcoal")
+                  : cn("border-line bg-surface hover:border-jazan", chip.text ?? "text-charcoal")
               )}
             >
               {chip.dot ? (
-                <span className={cn("h-[7px] w-[7px] rounded-full", active ? "bg-white" : chip.dot)} />
+                <span className={cn("h-[7px] w-[7px] rounded-full", active ? "bg-surface" : chip.dot)} />
               ) : null}
               {chip.label}
             </button>
@@ -117,7 +117,7 @@ export function BrowseClient({
           ))}
         </div>
       ) : (
-        <div className="mt-3 rounded-[18px] border border-dashed border-line bg-white py-16 text-center">
+        <div className="mt-3 rounded-[18px] border border-dashed border-line bg-surface py-16 text-center">
           <p className="text-[15px] font-semibold text-charcoal">لا توجد نتائج مطابقة</p>
           <p className="mt-1 text-[13px] text-muted">جرّب تعديل البحث أو المُرشّحات.</p>
         </div>

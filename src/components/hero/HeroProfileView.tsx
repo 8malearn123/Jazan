@@ -29,7 +29,7 @@ export function HeroProfileView({
       {/* المحتوى */}
       <div className="mt-5 flex flex-col gap-5">
         {/* معرض الأعمال — الأبرز */}
-        <section className="rounded-[18px] border border-line bg-white p-6">
+        <section className="rounded-[18px] border border-line bg-surface p-6">
           <div className="flex items-center justify-between">
             <SectionTitle>معرض الأعمال</SectionTitle>
             <span className="mono text-[13px] text-muted">{worksCount} أعمال</span>
@@ -55,12 +55,12 @@ export function HeroProfileView({
 
         {/* نبذة + المهارات */}
         <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
-          <section className="rounded-[18px] border border-line bg-white p-6">
+          <section className="rounded-[18px] border border-line bg-surface p-6">
             <SectionTitle>نبذة</SectionTitle>
             <p className="mt-3 text-[15px] leading-[1.95] text-ink">{bio}</p>
           </section>
 
-          <section className="rounded-[18px] border border-line bg-white p-6">
+          <section className="rounded-[18px] border border-line bg-surface p-6">
             <SectionTitle>المهارات</SectionTitle>
             <div className="mt-4 flex flex-wrap gap-[9px]">
               {hero.skills.map((skill) => (
@@ -72,7 +72,7 @@ export function HeroProfileView({
 
         {/* التقييمات */}
         {hero.reviews?.length ? (
-          <section className="rounded-[18px] border border-line bg-white p-6">
+          <section className="rounded-[18px] border border-line bg-surface p-6">
             <div className="flex items-center justify-between">
               <SectionTitle>التقييمات</SectionTitle>
               {hero.rating ? (

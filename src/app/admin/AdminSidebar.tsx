@@ -149,7 +149,7 @@ function SidebarHeader() {
 /** الشريط الجانبي لسطح المكتب */
 export function AdminSidebar() {
   return (
-    <aside className="hidden w-[250px] flex-none flex-col bg-charcoal px-4 py-[22px] lg:flex">
+    <aside className="hidden w-[250px] flex-none flex-col bg-[#1c2a26] px-4 py-[22px] lg:flex">
       <SidebarHeader />
       <div className="my-[14px] h-px bg-white/[.08]" />
       <NavLinks />
@@ -167,7 +167,7 @@ export function AdminMobileNav() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="فتح القائمة"
-        className="flex h-10 w-10 items-center justify-center rounded-[11px] border border-line bg-white text-charcoal lg:hidden"
+        className="flex h-10 w-10 items-center justify-center rounded-[11px] border border-line bg-surface text-charcoal lg:hidden"
       >
         <svg
           width="20"
@@ -190,7 +190,7 @@ export function AdminMobileNav() {
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-black/40"
           />
-          <div className="absolute inset-y-0 end-0 flex w-[260px] flex-col bg-charcoal px-4 py-[22px] shadow-2xl">
+          <div className="absolute inset-y-0 end-0 flex w-[260px] flex-col bg-[#1c2a26] px-4 py-[22px] shadow-2xl">
             <div className="flex items-center justify-between">
               <SidebarHeader />
               <button

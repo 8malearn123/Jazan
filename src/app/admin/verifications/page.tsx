@@ -27,7 +27,7 @@ export default function VerificationsPage() {
       ) : null}
 
       {rows.length === 0 ? (
-        <div className="rounded-[16px] border border-line bg-white px-6 py-12 text-center text-[14px] text-muted">
+        <div className="rounded-[16px] border border-line bg-surface px-6 py-12 text-center text-[14px] text-muted">
           ✓ لا توجد طلبات معلّقة — تمت مراجعة الكل.
         </div>
       ) : (
@@ -61,13 +61,13 @@ export default function VerificationsPage() {
                       </button>
                       <button
                         onClick={() => resolve(r.id, false)}
-                        className="cursor-pointer rounded-lg border border-[#e8c9c9] bg-white px-3 py-1.5 text-[12px] font-semibold text-[#b3261e] transition-colors hover:bg-[#fdf3f3]"
+                        className="cursor-pointer rounded-lg border border-danger-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-danger transition-colors hover:bg-danger-soft"
                       >
                         رفض
                       </button>
                       <Link
                         href={`/admin/verifications/${r.id}`}
-                        className="cursor-pointer rounded-lg border border-line bg-white px-3 py-1.5 text-[12px] font-semibold text-charcoal no-underline transition-colors hover:bg-cream"
+                        className="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-charcoal no-underline transition-colors hover:bg-cream"
                       >
                         معاينة
                       </Link>

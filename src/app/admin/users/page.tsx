@@ -104,7 +104,7 @@ export default function AdminUsersPage() {
                     <div className="flex gap-2">
                       <Link
                         href={r.href}
-                        className="cursor-pointer rounded-lg border border-line bg-white px-3 py-1.5 text-[12px] font-semibold text-charcoal no-underline transition-colors hover:bg-cream"
+                        className="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-charcoal no-underline transition-colors hover:bg-cream"
                       >
                         عرض
                       </Link>
@@ -113,7 +113,7 @@ export default function AdminUsersPage() {
                         className={
                           isSuspended
                             ? "cursor-pointer rounded-lg bg-jazan px-3 py-1.5 text-[12px] font-semibold text-white transition-colors hover:bg-jazan-dark"
-                            : "cursor-pointer rounded-lg border border-[#e8c9c9] bg-white px-3 py-1.5 text-[12px] font-semibold text-[#b3261e] transition-colors hover:bg-[#fdf3f3]"
+                            : "cursor-pointer rounded-lg border border-danger-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-danger transition-colors hover:bg-danger-soft"
                         }
                       >
                         {isSuspended ? "تفعيل" : "إيقاف"}

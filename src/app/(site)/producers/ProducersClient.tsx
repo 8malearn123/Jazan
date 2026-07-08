@@ -36,7 +36,7 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
     <>
       {/* البحث + المدينة */}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="flex flex-1 items-center gap-3 rounded-[13px] border-[1.5px] border-line bg-white px-4 py-3 focus-within:border-amber">
+        <div className="flex flex-1 items-center gap-3 rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 focus-within:border-amber">
           <SearchIcon className="h-[19px] w-[19px] flex-none text-muted" />
           <input
             type="search"
@@ -49,7 +49,7 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="rounded-[13px] border-[1.5px] border-line bg-white px-4 py-3 text-sm text-charcoal outline-none focus:border-amber"
+          className="rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 text-sm text-charcoal outline-none focus:border-amber"
         >
           <option value="all">كل المدن</option>
           {cities.map((c) => (
@@ -71,7 +71,7 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
               "cursor-pointer rounded-full border-[1.5px] px-4 py-2 text-[13px] font-semibold transition-colors",
               category === cat
                 ? "border-amber bg-amber text-white"
-                : "border-line bg-white text-ink hover:bg-black/[.02]"
+                : "border-line bg-surface text-ink hover:bg-black/[.02]"
             )}
           >
             {cat}
@@ -90,7 +90,7 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
           ))}
         </div>
       ) : (
-        <div className="mt-3 rounded-[18px] border border-dashed border-line bg-white py-16 text-center">
+        <div className="mt-3 rounded-[18px] border border-dashed border-line bg-surface py-16 text-center">
           <p className="text-[15px] font-semibold text-charcoal">لا توجد نتائج مطابقة</p>
           <p className="mt-1 text-[13px] text-muted">جرّب تعديل البحث أو الفئة.</p>
         </div>

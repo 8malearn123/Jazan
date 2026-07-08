@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { ArrowLeftIcon } from "@/components/icons";
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-white px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 export default function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
@@ -19,7 +19,7 @@ export default function ForgotPasswordPage() {
           <Logo size="md" />
         </div>
 
-        <div className="rounded-[22px] border border-line bg-white p-7 shadow-[0_8px_28px_rgba(28,42,38,.06)] sm:p-9">
+        <div className="rounded-[22px] border border-line bg-surface p-7 shadow-[0_8px_28px_rgba(28,42,38,.06)] sm:p-9">
           {sent ? (
             <div className="text-center">
               <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-success/15">

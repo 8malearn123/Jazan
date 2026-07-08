@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/Button";
 import { MenuIcon } from "@/components/icons";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 import { navLinks } from "@/lib/site";
 import { homeForRole } from "@/lib/demo";
@@ -34,6 +35,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3.5 lg:flex">
+          <ThemeToggle />
           {ready && user ? (
             <>
               <span className="max-w-[180px] truncate text-[14px] text-muted">
@@ -61,15 +63,18 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          aria-label="القائمة"
-          onClick={() => setOpen((v) => !v)}
-          className="cursor-pointer p-1.5 lg:hidden"
-        >
-          <MenuIcon width={26} height={26} className="text-charcoal" />
-        </button>
+        {/* Mobile: theme toggle + menu button */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            aria-label="القائمة"
+            onClick={() => setOpen((v) => !v)}
+            className="cursor-pointer p-1.5"
+          >
+            <MenuIcon width={26} height={26} className="text-charcoal" />
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

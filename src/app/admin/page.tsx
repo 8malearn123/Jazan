@@ -64,13 +64,13 @@ const roleConfig: Record<
   },
   producer: {
     label: "أسرة منتجة",
-    cls: "bg-amber/[.14] text-[#C5781C]",
+    cls: "bg-amber/[.14] text-amber-dark",
     icon: StoreBadgeIcon,
     shape: "rounded",
   },
   company: {
     label: "شركة",
-    cls: "bg-info/12 text-[#1F5FCC]",
+    cls: "bg-info/12 text-info-ink",
     icon: BuildingBadgeIcon,
     shape: "rounded",
   },
@@ -113,7 +113,7 @@ function ActivePill() {
 function SuspendedPill() {
   return (
     <span className="inline-flex w-max items-center gap-1.5 rounded-full bg-muted/[.14] px-[10px] py-1 text-[12px] font-semibold text-muted">
-      <span className="h-1.5 w-1.5 rounded-full bg-[#9AA29D]" />
+      <span className="h-1.5 w-1.5 rounded-full bg-muted" />
       موقوف
     </span>
   );
@@ -123,7 +123,7 @@ function Avatar({ shape }: { shape: "circle" | "rounded" }) {
   return (
     <span
       className={cn(
-        "h-[42px] w-[42px] flex-none bg-gradient-to-br from-[#eceae3] to-[#e3e0d8]",
+        "h-[42px] w-[42px] flex-none bg-gradient-to-br from-slot to-slot-deep",
         shape === "circle" ? "rounded-full" : "rounded-[11px]"
       )}
     />
@@ -180,7 +180,7 @@ export default function AdminDashboardPage() {
       ) : null}
 
       {/* جدول طلبات التوثيق المعلّقة */}
-      <section className="overflow-hidden rounded-[18px] border border-line bg-white">
+      <section className="overflow-hidden rounded-[18px] border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4 sm:px-6">
           <div>
             <h2 className="text-[15px] font-bold text-charcoal">
@@ -217,7 +217,7 @@ export default function AdminDashboardPage() {
                   key={row.id}
                   className={cn(
                     "grid grid-cols-[2fr_1.1fr_1fr_230px] items-center gap-3.5 px-5 py-3 transition-colors duration-[150ms] hover:bg-cream sm:px-6",
-                    i < pending.length - 1 && "border-b border-[#F0EDE6]"
+                    i < pending.length - 1 && "border-b border-line-soft"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -237,7 +237,7 @@ export default function AdminDashboardPage() {
                   <div className="flex justify-start gap-2">
                     <Link
                       href={`/admin/verifications/${row.id}`}
-                      className="inline-flex items-center gap-1.5 rounded-[9px] border-[1.5px] border-line bg-white px-3 py-2 text-[13px] font-semibold text-charcoal no-underline transition-colors duration-[150ms] hover:bg-cream"
+                      className="inline-flex items-center gap-1.5 rounded-[9px] border-[1.5px] border-line bg-surface px-3 py-2 text-[13px] font-semibold text-charcoal no-underline transition-colors duration-[150ms] hover:bg-cream"
                     >
                       <span className="text-muted">
                         <EyeIcon width={14} height={14} />
@@ -247,7 +247,7 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => resolve(row.id, false)}
-                      className="rounded-[9px] border-[1.5px] border-[#F3D6D6] bg-white px-3.5 py-2 text-[13px] font-semibold text-[#DC2626] transition-colors duration-[150ms] hover:bg-[#FBEAEA]"
+                      className="rounded-[9px] border-[1.5px] border-danger-line bg-surface px-3.5 py-2 text-[13px] font-semibold text-danger transition-colors duration-[150ms] hover:bg-danger-soft"
                     >
                       رفض
                     </button>
@@ -267,7 +267,7 @@ export default function AdminDashboardPage() {
       </section>
 
       {/* جدول أحدث المستخدمين */}
-      <section className="overflow-hidden rounded-[18px] border border-line bg-white">
+      <section className="overflow-hidden rounded-[18px] border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4 sm:px-6">
           <div>
             <h2 className="text-[15px] font-bold text-charcoal">أحدث المستخدمين</h2>
@@ -298,13 +298,13 @@ export default function AdminDashboardPage() {
                 key={u.id}
                 className={cn(
                   "grid grid-cols-[2fr_1fr_130px_120px_70px] items-center gap-3.5 px-5 py-3 transition-colors duration-[150ms] hover:bg-cream sm:px-6",
-                  i < recentUsers.length - 1 && "border-b border-[#F0EDE6]"
+                  i < recentUsers.length - 1 && "border-b border-line-soft"
                 )}
               >
                 <div className="flex items-center gap-3">
                   <span
                     className={cn(
-                      "h-[38px] w-[38px] flex-none bg-gradient-to-br from-[#eceae3] to-[#e3e0d8]",
+                      "h-[38px] w-[38px] flex-none bg-gradient-to-br from-slot to-slot-deep",
                       roleConfig[u.role].shape === "circle"
                         ? "rounded-full"
                         : "rounded-[11px]"
@@ -325,7 +325,7 @@ export default function AdminDashboardPage() {
                 <Link
                   href="/admin/users"
                   aria-label="إدارة المستخدم"
-                  className="flex h-[34px] w-[34px] items-center justify-center justify-self-start rounded-[8px] border border-line bg-white text-muted no-underline transition-colors duration-[150ms] hover:bg-cream"
+                  className="flex h-[34px] w-[34px] items-center justify-center justify-self-start rounded-[8px] border border-line bg-surface text-muted no-underline transition-colors duration-[150ms] hover:bg-cream"
                 >
                   <DotsIcon />
                 </Link>

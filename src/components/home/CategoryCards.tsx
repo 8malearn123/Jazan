@@ -40,7 +40,7 @@ export function CategoryCards() {
           <Link
             key={c.title}
             href={c.href}
-            className="jh-cat group rounded-[18px] border border-line bg-white p-7 no-underline shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.10)]"
+            className="jh-cat group rounded-[18px] border border-line bg-surface p-7 no-underline shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.10)]"
           >
             <span className={`flex h-[52px] w-[52px] items-center justify-center rounded-[14px] ${c.iconBg}`}>
               <c.Icon width={26} height={26} className={c.iconColor} />

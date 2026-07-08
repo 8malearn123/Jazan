@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { AdminSidebar, AdminMobileNav } from "./AdminSidebar";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 export default function AdminLayout({
   children,
@@ -51,7 +52,7 @@ export default function AdminLayout({
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* الشريط العلوي */}
-        <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-white px-5 py-3 sm:px-8">
+        <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-surface px-5 py-3 sm:px-8">
           <div className="flex items-center gap-3">
             <AdminMobileNav />
             <div className="hidden sm:block">
@@ -63,6 +64,7 @@ export default function AdminLayout({
           </div>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <div className="hidden text-end leading-tight sm:block">
               <div className="text-[13px] font-semibold text-charcoal">
                 {user.name}
@@ -72,7 +74,7 @@ export default function AdminLayout({
             <button
               type="button"
               onClick={handleLogout}
-              className="inline-flex items-center gap-2 rounded-[10px] border border-line bg-white px-3 py-2 text-[13px] font-semibold text-charcoal transition-colors duration-[150ms] hover:bg-black/[.03]"
+              className="inline-flex items-center gap-2 rounded-[10px] border border-line bg-surface px-3 py-2 text-[13px] font-semibold text-charcoal transition-colors duration-[150ms] hover:bg-black/[.03]"
             >
               <svg
                 width="16"

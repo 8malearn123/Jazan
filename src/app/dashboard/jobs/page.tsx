@@ -15,7 +15,7 @@ type Job = {
 };
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-white px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 const jobTypes = ["دوام كامل", "دوام جزئي", "عن بُعد", "عقد مستقل"];
 
@@ -93,7 +93,7 @@ export default function JobsManagementPage() {
       ) : null}
 
       {/* نموذج إضافة وظيفة */}
-      <form onSubmit={addJob} className="rounded-[16px] border border-line bg-white p-5">
+      <form onSubmit={addJob} className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">نشر وظيفة جديدة</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div>
@@ -154,12 +154,12 @@ export default function JobsManagementPage() {
         </div>
 
         {jobs.length === 0 ? (
-          <div className="rounded-[16px] border border-dashed border-line bg-white py-12 text-center text-[14px] text-muted">
+          <div className="rounded-[16px] border border-dashed border-line bg-surface py-12 text-center text-[14px] text-muted">
             لا توجد وظائف بعد — انشر أول وظيفة من الأعلى.
           </div>
         ) : (
           jobs.map((job) => (
-            <div key={job.id} className="overflow-hidden rounded-[16px] border border-line bg-white">
+            <div key={job.id} className="overflow-hidden rounded-[16px] border border-line bg-surface">
               <div className="flex flex-wrap items-start justify-between gap-3 p-5">
                 <div>
                   <div className="flex flex-wrap items-center gap-2.5">
@@ -176,7 +176,7 @@ export default function JobsManagementPage() {
                   {job.tags.length ? (
                     <div className="mt-2.5 flex flex-wrap gap-1.5">
                       {job.tags.map((t) => (
-                        <span key={t} className="rounded-[7px] bg-[#f3f0e9] px-2.5 py-1 text-[11px] text-ink">{t}</span>
+                        <span key={t} className="rounded-[7px] bg-tag px-2.5 py-1 text-[11px] text-ink">{t}</span>
                       ))}
                     </div>
                   ) : null}
@@ -185,19 +185,19 @@ export default function JobsManagementPage() {
                 <div className="flex flex-wrap items-center gap-2">
                   <button
                     onClick={() => setExpanded(expanded === job.id ? null : job.id)}
-                    className="cursor-pointer rounded-lg border border-line bg-white px-3 py-1.5 text-[12px] font-semibold text-charcoal transition-colors hover:bg-cream"
+                    className="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-charcoal transition-colors hover:bg-cream"
                   >
                     المتقدّمون (<span className="mono">{job.applicants.length}</span>)
                   </button>
                   <button
                     onClick={() => toggleOpen(job.id)}
-                    className="cursor-pointer rounded-lg border border-line bg-white px-3 py-1.5 text-[12px] font-semibold text-charcoal transition-colors hover:bg-cream"
+                    className="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-charcoal transition-colors hover:bg-cream"
                   >
                     {job.open ? "إغلاق" : "إعادة فتح"}
                   </button>
                   <button
                     onClick={() => removeJob(job.id)}
-                    className="cursor-pointer rounded-lg border border-[#e8c9c9] bg-white px-3 py-1.5 text-[12px] font-semibold text-[#b3261e] transition-colors hover:bg-[#fdf3f3]"
+                    className="cursor-pointer rounded-lg border border-danger-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-danger transition-colors hover:bg-danger-soft"
                   >
                     حذف
                   </button>
@@ -213,7 +213,7 @@ export default function JobsManagementPage() {
                   ) : (
                     <div className="mt-3 flex flex-col gap-2">
                       {job.applicants.map((a, i) => (
-                        <div key={i} className="flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-2.5">
+                        <div key={i} className="flex items-center justify-between gap-3 rounded-xl border border-line bg-surface px-4 py-2.5">
                           <div className="flex items-center gap-3">
                             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-jazan/10 text-[13px] font-bold text-jazan">
                               {a.name.charAt(0)}
@@ -225,7 +225,7 @@ export default function JobsManagementPage() {
                           </div>
                           <Link
                             href={`/heroes/${a.id}`}
-                            className="cursor-pointer rounded-lg border border-line bg-white px-3 py-1.5 text-[12px] font-semibold text-charcoal no-underline transition-colors hover:bg-cream"
+                            className="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-charcoal no-underline transition-colors hover:bg-cream"
                           >
                             عرض الملف
                           </Link>

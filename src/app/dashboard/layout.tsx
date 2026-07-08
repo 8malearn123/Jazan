@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon } from "@/components/icons";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import type { UserRole } from "@/lib/types";
@@ -79,7 +80,7 @@ function NavLinks({
               "flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm no-underline transition-colors",
               active
                 ? "bg-jazan/10 font-semibold text-jazan"
-                : "font-medium text-ink hover:bg-[#f3f0e9]"
+                : "font-medium text-ink hover:bg-tag"
             )}
           >
             <item.Icon className={active ? "text-jazan" : "text-muted"} />
@@ -128,9 +129,10 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-cream">
       {/* الشريط العلوي للجوال */}
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-white px-4 py-3 lg:hidden">
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-surface px-4 py-3 lg:hidden">
         <Logo size="sm" />
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <button
             onClick={handleLogout}
             className="rounded-[10px] border-[1.5px] border-line px-3 py-2 text-[13px] font-semibold text-charcoal transition-colors hover:bg-black/[.03]"
@@ -153,9 +155,9 @@ export default function DashboardLayout({
           <button
             aria-label="إغلاق القائمة"
             onClick={() => setDrawerOpen(false)}
-            className="absolute inset-0 bg-charcoal/40"
+            className="absolute inset-0 bg-black/40"
           />
-          <aside className="absolute inset-y-0 end-0 flex w-[280px] max-w-[82%] flex-col bg-white p-4 shadow-xl">
+          <aside className="absolute inset-y-0 end-0 flex w-[280px] max-w-[82%] flex-col bg-surface p-4 shadow-xl">
             <div className="flex items-center justify-between pb-4">
               <Logo size="sm" />
               <button
@@ -172,7 +174,7 @@ export default function DashboardLayout({
             </div>
             <button
               onClick={handleLogout}
-              className="mt-auto flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-[#f3f0e9]"
+              className="mt-auto flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-tag"
             >
               <LogoutIcon />
               تسجيل الخروج
@@ -183,7 +185,7 @@ export default function DashboardLayout({
 
       <div className="mx-auto flex w-full max-w-[1280px] gap-0 lg:gap-6 lg:p-6">
         {/* الشريط الجانبي لسطح المكتب */}
-        <aside className="sticky top-6 hidden h-[calc(100vh-3rem)] w-[248px] flex-none flex-col rounded-2xl border border-line bg-white p-4 lg:flex">
+        <aside className="sticky top-6 hidden h-[calc(100vh-3rem)] w-[248px] flex-none flex-col rounded-2xl border border-line bg-surface p-4 lg:flex">
           <div className="px-2 pb-4">
             <Logo size="sm" />
           </div>
@@ -193,7 +195,7 @@ export default function DashboardLayout({
           </div>
           <button
             onClick={handleLogout}
-            className="mt-auto flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-[#f3f0e9]"
+            className="mt-auto flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-tag"
           >
             <LogoutIcon />
             تسجيل الخروج
@@ -203,9 +205,10 @@ export default function DashboardLayout({
         {/* المحتوى */}
         <main className="min-w-0 flex-1 px-4 py-5 lg:px-0 lg:py-0">
           {/* الشريط العلوي لسطح المكتب */}
-          <div className="mb-5 hidden items-center justify-between rounded-2xl border border-line bg-white px-5 py-3.5 lg:flex">
+          <div className="mb-5 hidden items-center justify-between rounded-2xl border border-line bg-surface px-5 py-3.5 lg:flex">
             <Logo size="sm" />
             <div className="flex items-center gap-4">
+              <ThemeToggle />
               <div className="text-end">
                 <div className="text-sm font-bold text-charcoal">{user.name}</div>
                 <div className="text-[12px] text-muted">{roleLabels[user.role]}</div>

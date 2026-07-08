@@ -86,7 +86,7 @@ export default function SponsorPage() {
             {benefits.map((b) => (
               <div
                 key={b.title}
-                className="rounded-[18px] border border-line bg-white p-7 shadow-[0_1px_2px_rgba(28,42,38,.04)]"
+                className="rounded-[18px] border border-line bg-surface p-7 shadow-[0_1px_2px_rgba(28,42,38,.04)]"
               >
                 <span className="flex h-[52px] w-[52px] items-center justify-center rounded-[14px] bg-jazan/10 text-jazan">
                   <b.Icon width={26} height={26} />
@@ -112,7 +112,7 @@ export default function SponsorPage() {
             {tiers.map((t) => (
               <div
                 key={t.name}
-                className={`flex flex-col rounded-[20px] border bg-white p-7 ${
+                className={`flex flex-col rounded-[20px] border bg-surface p-7 ${
                   t.highlight
                     ? "border-jazan shadow-[0_14px_34px_rgba(15,92,74,.14)]"
                     : "border-line shadow-[0_1px_2px_rgba(28,42,38,.04)]"

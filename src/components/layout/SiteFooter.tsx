@@ -30,7 +30,7 @@ const socials = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-charcoal px-5 pb-8 pt-12 sm:px-8">
+    <footer className="bg-[#1c2a26] px-5 pb-8 pt-12 sm:px-8">
       <div className="mx-auto w-full max-w-7xl">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">

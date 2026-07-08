@@ -9,7 +9,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
   const { id, name, category, city, bio, verified, rating, reviewsCount } = producer;
 
   return (
-    <article className="group overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(28,42,38,.12)]">
+    <article className="group overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(28,42,38,.12)]">
       {/* الغلاف */}
       <ImagePlaceholder shape="rect" className="h-[140px] w-full" />
 
@@ -20,7 +20,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
             shape="rounded"
             radius={12}
             label="شعار"
-            className="-mt-[46px] h-[50px] w-[50px] border-[3px] border-white"
+            className="-mt-[46px] h-[50px] w-[50px] border-[3px] border-surface"
           />
           <span className="rounded-lg bg-amber/15 px-2.5 py-1 text-xs font-semibold text-amber-dark">
             {category}
@@ -60,7 +60,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
         <div className="mt-4 flex gap-2">
           <Link
             href={`/producers/${id}`}
-            className="flex-1 rounded-[11px] border-[1.5px] border-jazan bg-white px-3 py-2.5 text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan/5"
+            className="flex-1 rounded-[11px] border-[1.5px] border-jazan bg-surface px-3 py-2.5 text-center text-[13px] font-semibold text-jazan no-underline transition-colors hover:bg-jazan/5"
           >
             عرض المتجر
           </Link>

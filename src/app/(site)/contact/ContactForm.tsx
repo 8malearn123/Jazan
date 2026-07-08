@@ -4,14 +4,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-white px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
 
   if (sent) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-[20px] border border-line bg-white p-10 text-center shadow-[0_1px_2px_rgba(28,42,38,.04)]">
+      <div className="flex flex-col items-center justify-center rounded-[20px] border border-line bg-surface p-10 text-center shadow-[0_1px_2px_rgba(28,42,38,.04)]">
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-success/15">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="text-success">
             <path d="M20 6L9 17l-5-5" />
@@ -29,7 +29,7 @@ export function ContactForm() {
         e.preventDefault();
         setSent(true);
       }}
-      className="rounded-[20px] border border-line bg-white p-6 shadow-[0_1px_2px_rgba(28,42,38,.04)] sm:p-8"
+      className="rounded-[20px] border border-line bg-surface p-6 shadow-[0_1px_2px_rgba(28,42,38,.04)] sm:p-8"
     >
       <div className="flex flex-col gap-4">
         <div>

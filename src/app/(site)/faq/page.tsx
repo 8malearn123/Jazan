@@ -59,7 +59,7 @@ export default function FaqPage() {
         {faqs.map((f, i) => (
           <details
             key={i}
-            className="group rounded-[16px] border border-line bg-white px-5 py-4 shadow-[0_1px_2px_rgba(28,42,38,.04)] open:border-jazan/40"
+            className="group rounded-[16px] border border-line bg-surface px-5 py-4 shadow-[0_1px_2px_rgba(28,42,38,.04)] open:border-jazan/40"
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-[16px] font-bold text-charcoal">
               {f.q}
@@ -74,7 +74,7 @@ export default function FaqPage() {
         ))}
       </div>
 
-      <div className="mx-auto mt-12 max-w-2xl rounded-[20px] border border-line bg-white p-8 text-center shadow-[0_1px_2px_rgba(28,42,38,.04)]">
+      <div className="mx-auto mt-12 max-w-2xl rounded-[20px] border border-line bg-surface p-8 text-center shadow-[0_1px_2px_rgba(28,42,38,.04)]">
         <h2 className="text-[20px] font-extrabold text-charcoal">لم تجد إجابتك؟</h2>
         <p className="mt-2 text-[15px] text-muted">فريقنا سعيد بمساعدتك في أي وقت.</p>
         <div className="mt-5">

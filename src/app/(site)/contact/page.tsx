@@ -51,7 +51,7 @@ export default function ContactPage() {
         <div className="flex flex-col gap-4">
           {channels.map((c) => {
             const inner = (
-              <div className="flex items-center gap-4 rounded-[16px] border border-line bg-white p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(28,42,38,.08)]">
+              <div className="flex items-center gap-4 rounded-[16px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(28,42,38,.08)]">
                 <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] ${c.wrap}`}>
                   <c.Icon width={22} height={22} />
                 </span>

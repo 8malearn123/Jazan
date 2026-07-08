@@ -23,7 +23,7 @@ export function VerificationActions({ id }: { id: string }) {
       </button>
       <button
         onClick={() => decide(false)}
-        className="cursor-pointer rounded-xl border border-[#e8c9c9] bg-white px-6 py-2.5 text-[14px] font-semibold text-[#b3261e] transition-colors hover:bg-[#fdf3f3]"
+        className="cursor-pointer rounded-xl border border-danger-line bg-surface px-6 py-2.5 text-[14px] font-semibold text-danger transition-colors hover:bg-danger-soft"
       >
         رفض الطلب
       </button>

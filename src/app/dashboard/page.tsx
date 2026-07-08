@@ -95,7 +95,7 @@ export default function DashboardPage() {
       {/* بطاقات الإحصائيات */}
       <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-3">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-[14px] border border-line bg-white p-4">
+          <div key={s.label} className="rounded-[14px] border border-line bg-surface p-4">
             <div className="flex items-center justify-between">
               <span className={cn("flex h-8 w-8 items-center justify-center rounded-[10px]", s.bg)}>
                 <s.Icon className={cn("h-[18px] w-[18px]", s.text)} />
@@ -117,12 +117,12 @@ export default function DashboardPage() {
       {/* اكتمال الملف + حالة التوفّر */}
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr]">
         {/* اكتمال الملف */}
-        <div className="rounded-2xl border border-line bg-white p-5">
+        <div className="rounded-2xl border border-line bg-surface p-5">
           <div className="flex items-center justify-between">
             <h3 className="text-[15px] font-bold text-charcoal">اكتمال الملف</h3>
             <span className="mono text-[15px] font-semibold text-jazan">85%</span>
           </div>
-          <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-[#F0EDE6]">
+          <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-line-soft">
             <div className="h-full rounded-full bg-jazan" style={{ width: "85%" }} />
           </div>
           <p className="mt-3 text-[13px] text-muted">
@@ -150,7 +150,7 @@ export default function DashboardPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-5 border-t border-[#F0EDE6] pt-4">
+          <div className="mt-5 border-t border-line-soft pt-4">
             <Button variant="secondary" size="sm" className="gap-2" href="/dashboard/profile">
               <EditIcon />
               تعديل الملف الشخصي
@@ -159,7 +159,7 @@ export default function DashboardPage() {
         </div>
 
         {/* حالة التوفّر */}
-        <div className="rounded-2xl border border-line bg-white p-5">
+        <div className="rounded-2xl border border-line bg-surface p-5">
           <h3 className="text-[15px] font-bold text-charcoal">{copy.availTitle}</h3>
           <div className="mt-4 flex items-center justify-between rounded-xl border border-line bg-cream px-4 py-3">
             <div>
@@ -182,7 +182,7 @@ export default function DashboardPage() {
             >
               <span
                 className={cn(
-                  "absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-all",
+                  "absolute top-1 h-5 w-5 rounded-full bg-surface shadow transition-all",
                   available ? "start-1" : "start-6"
                 )}
               />
@@ -204,7 +204,7 @@ export default function DashboardPage() {
       {/* الرسم البياني + معرض الأعمال */}
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr]">
         {/* الرسم البياني */}
-        <div className="rounded-2xl border border-line bg-white p-5">
+        <div className="rounded-2xl border border-line bg-surface p-5">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-[15px] font-bold text-charcoal">مشاهدات الملف</h3>
@@ -221,7 +221,7 @@ export default function DashboardPage() {
                 <div
                   className={cn(
                     "w-full max-w-[42px] rounded-t-lg transition-[filter] hover:brightness-105",
-                    b.today ? "bg-amber" : b.hot ? "bg-jazan" : "bg-[#D7E3DF]"
+                    b.today ? "bg-amber" : b.hot ? "bg-jazan" : "bg-tag"
                   )}
                   style={{ height: `${(b.h / maxBar) * 100}%` }}
                 />
@@ -239,7 +239,7 @@ export default function DashboardPage() {
         </div>
 
         {/* معرض الأعمال */}
-        <div className="rounded-2xl border border-line bg-white p-5">
+        <div className="rounded-2xl border border-line bg-surface p-5">
           <div className="flex items-center justify-between">
             <h3 className="text-[15px] font-bold text-charcoal">{copy.worksTitle}</h3>
             <span className="mono text-[13px] text-muted">3</span>
@@ -274,7 +274,7 @@ export default function DashboardPage() {
       </div>
 
       {/* الجدول */}
-      <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-white">
+      <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <h3 className="text-[15px] font-bold text-charcoal">{copy.tableTitle}</h3>
         </div>
@@ -292,13 +292,13 @@ export default function DashboardPage() {
             key={i}
             className={cn(
               "flex flex-col gap-2 px-5 py-4 transition-colors hover:bg-cream sm:grid sm:grid-cols-[1.4fr_1.4fr_110px_120px] sm:items-center sm:gap-3",
-              i < recentRows.length - 1 && "border-b border-[#F0EDE6]"
+              i < recentRows.length - 1 && "border-b border-line-soft"
             )}
           >
             <span className="text-[15px] font-semibold text-charcoal">{row.name}</span>
             <span className="text-sm text-ink">{row.interest}</span>
             <span className="mono text-[13px] text-muted">{row.date}</span>
-            <span className="inline-flex w-max items-center gap-1.5 rounded-full bg-whatsapp/12 px-2.5 py-1 text-[12px] font-semibold text-[#128C4B]">
+            <span className="inline-flex w-max items-center gap-1.5 rounded-full bg-whatsapp/12 px-2.5 py-1 text-[12px] font-semibold text-success-ink">
               <WhatsappIcon className="h-3.5 w-3.5" />
               واتساب
             </span>

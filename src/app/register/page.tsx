@@ -64,7 +64,7 @@ const roles: {
 ];
 
 const inputWrap =
-  "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-white px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 const inputField =
   "min-w-0 flex-1 bg-transparent text-[15px] text-charcoal outline-none placeholder:text-muted/60";
 
@@ -186,7 +186,7 @@ function RegisterForm() {
                     onClick={() => setRole(r.value)}
                     aria-pressed={active}
                     className={cn(
-                      "group relative flex flex-row items-center gap-3 rounded-2xl border-[1.5px] bg-white p-3.5 text-start transition-[border-color,box-shadow,transform] sm:flex-col sm:items-start sm:gap-0 sm:p-4",
+                      "group relative flex flex-row items-center gap-3 rounded-2xl border-[1.5px] bg-surface p-3.5 text-start transition-[border-color,box-shadow,transform] sm:flex-col sm:items-start sm:gap-0 sm:p-4",
                       active
                         ? "border-jazan shadow-[0_10px_26px_rgba(15,92,74,.12)]"
                         : "border-line hover:-translate-y-0.5 hover:border-jazan/40 hover:shadow-[0_10px_26px_rgba(28,42,38,.08)]"
