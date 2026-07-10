@@ -108,7 +108,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
                   : "border-line bg-surface text-ink hover:border-jazan"
               )}
             >
-              {t === "الكل" ? d.companiesPage.all : t}
+              {t === "الكل" ? d.companiesPage.all : d.jobType[t] ?? t}
             </button>
           ))}
         </div>

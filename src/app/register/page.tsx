@@ -20,47 +20,22 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import { homeForRole } from "@/lib/demo";
 import { site } from "@/lib/site";
-import { heroStats } from "@/lib/stats";
+import { counts } from "@/lib/stats";
+import { useLocale } from "@/lib/i18n";
 import type { UserRole } from "@/lib/types";
 
 type RoleChoice = Extract<UserRole, "hero" | "producer" | "company">;
 
-const roles: {
+const roleStyles: {
   value: RoleChoice;
-  title: string;
-  desc: string;
   Icon: typeof UsersIcon;
   accent: string;
   iconBg: string;
   iconText: string;
 }[] = [
-  {
-    value: "hero",
-    title: "بطل / مستقل",
-    desc: "اعرض مهاراتك وسيرتك، وحدّد حالتك للعمل الحر أو التوظيف.",
-    Icon: UsersIcon,
-    accent: "text-jazan",
-    iconBg: "bg-jazan/10",
-    iconText: "text-jazan",
-  },
-  {
-    value: "producer",
-    title: "أسرة منتجة",
-    desc: "اعرض منتجاتك بصرياً — طعام، حِرف، عطور — واستقبل الطلبات.",
-    Icon: StoreIcon,
-    accent: "text-amber-dark",
-    iconBg: "bg-amber/14",
-    iconText: "text-amber-dark",
-  },
-  {
-    value: "company",
-    title: "شركة / جهة",
-    desc: "انشر الفرص، تابع المتقدمين، ووظّف مواهب جازان المحلية.",
-    Icon: BuildingIcon,
-    accent: "text-info-ink",
-    iconBg: "bg-info/12",
-    iconText: "text-info-ink",
-  },
+  { value: "hero", Icon: UsersIcon, accent: "text-jazan", iconBg: "bg-jazan/10", iconText: "text-jazan" },
+  { value: "producer", Icon: StoreIcon, accent: "text-amber-dark", iconBg: "bg-amber/14", iconText: "text-amber-dark" },
+  { value: "company", Icon: BuildingIcon, accent: "text-info-ink", iconBg: "bg-info/12", iconText: "text-info-ink" },
 ];
 
 const inputWrap =
@@ -69,6 +44,13 @@ const inputField =
   "min-w-0 flex-1 bg-transparent text-[15px] text-charcoal outline-none placeholder:text-muted/60";
 
 function RegisterForm() {
+  const { d, isAr } = useLocale();
+  const heroStats = [
+    { value: String(counts.heroes), label: d.stats.heroes },
+    { value: String(counts.producers), label: d.stats.producers },
+    { value: String(counts.companies), label: d.stats.companies },
+  ];
+  const roles = roleStyles.map((r) => ({ ...r, ...d.categories[r.value] }));
   const router = useRouter();
   const { signUp } = useAuth();
   const params = useSearchParams();
@@ -100,7 +82,7 @@ function RegisterForm() {
       role,
     });
     if (error || !user) {
-      setError("تعذّر إنشاء الحساب. ربما البريد مستخدم مسبقاً.");
+      setError(d.auth.registerErr);
       setLoading(false);
       return;
     }
@@ -122,18 +104,18 @@ function RegisterForm() {
             <StarIcon width={26} height={26} className="text-amber" strokeWidth={2.1} />
           </span>
           <span className="text-xl font-extrabold text-white md:text-[21px]">
-            {site.name}
+            {isAr ? site.name : "Jazan Heroes"}
           </span>
         </Link>
 
         <div className="my-10 md:my-0">
           <h2 className="text-balance text-[30px] font-extrabold leading-[1.25] tracking-[-.5px] text-white md:text-[34px]">
-            انضم لمجتمع
+            {d.auth.asideRegisterTitle1}
             <br />
-            مواهب جازان
+            {d.auth.asideRegisterTitle2}
           </h2>
           <p className="mt-4 max-w-[340px] text-[15px] leading-[1.8] text-white/70 md:text-base">
-            سجّل بإيميلك، ابنِ صفحتك الاحترافية، واستقبل الفرص مباشرة عبر واتساب.
+            {d.auth.asideRegisterDesc}
           </p>
           <div className="mt-7 flex items-center gap-6">
             {heroStats.map((s) => (
@@ -159,22 +141,22 @@ function RegisterForm() {
           </div>
 
           <h1 className="text-[26px] font-extrabold tracking-[-.4px] text-charcoal md:text-[28px]">
-            أنشئ حسابك
+            {d.auth.registerTitle}
           </h1>
           <p className="mt-2 text-[15px] text-muted">
-            لديك حساب؟{" "}
+            {d.auth.haveAccount}{" "}
             <Link
               href="/login"
               className="font-semibold text-jazan no-underline hover:underline"
             >
-              سجّل الدخول
+              {d.auth.loginLink}
             </Link>
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6" noValidate>
             {/* اختيار الدور */}
             <span className="mb-3 block text-[13px] font-semibold text-charcoal">
-              كيف تريد الانضمام؟
+              {d.auth.howJoin}
             </span>
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
               {roles.map((r) => {
@@ -223,7 +205,7 @@ function RegisterForm() {
               htmlFor="name"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
             >
-              الاسم الكامل
+              {d.auth.fullName}
             </label>
             <div className={inputWrap}>
               <UserIcon width={18} height={18} className="text-muted" />
@@ -232,7 +214,7 @@ function RegisterForm() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="محمد عسيري"
+                placeholder={d.auth.namePh}
                 className={inputField}
                 autoComplete="name"
               />
@@ -243,7 +225,7 @@ function RegisterForm() {
               htmlFor="email"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
             >
-              البريد الإلكتروني
+              {d.auth.email}
             </label>
             <div className={inputWrap}>
               <MailIcon width={18} height={18} className="text-muted" />
@@ -264,7 +246,7 @@ function RegisterForm() {
               htmlFor="password"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
             >
-              كلمة المرور
+              {d.auth.password}
             </label>
             <div className={inputWrap}>
               <LockIcon width={18} height={18} className="text-muted" />
@@ -280,14 +262,14 @@ function RegisterForm() {
               <button
                 type="button"
                 onClick={() => setShowPass((v) => !v)}
-                aria-label={showPass ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+                aria-label={showPass ? d.auth.hidePass : d.auth.showPass}
                 className="text-muted/70 transition-colors hover:text-muted"
               >
                 <EyeIcon off={showPass} width={18} height={18} />
               </button>
             </div>
             <p className="mt-[7px] text-[12px] text-muted/70">
-              8 أحرف على الأقل، وتشمل رقماً واحداً.
+              {d.auth.passwordHint}
             </p>
 
             {error ? (
@@ -298,11 +280,11 @@ function RegisterForm() {
 
             {confirmEmailSent ? (
               <p className="mt-4 rounded-lg bg-success/12 px-3 py-2.5 text-[13px] font-medium leading-relaxed text-success-ink">
-                تم إنشاء حسابك! أرسلنا رابط تفعيل إلى{" "}
-                <span className="mono font-semibold" dir="ltr">{email.trim()}</span> —
-                افتح بريدك واضغط الرابط، ثم{" "}
+                {d.auth.confirmPrefix}
+                <span className="mono font-semibold" dir="ltr">{email.trim()}</span>
+                {d.auth.confirmSuffix}
                 <Link href="/login" className="font-bold text-success-ink underline">
-                  سجّل الدخول
+                  {d.auth.confirmLogin}
                 </Link>
                 .
               </p>
@@ -314,18 +296,18 @@ function RegisterForm() {
               className="mt-6 w-full"
               disabled={!canSubmit || loading || confirmEmailSent}
             >
-              {loading ? "جارٍ إنشاء الحساب…" : "إنشاء حساب"}
+              {loading ? d.auth.creating : d.auth.createBtn}
             </Button>
           </form>
 
           <p className="mt-5 text-center text-[12px] leading-[1.7] text-muted/70">
-            بالمتابعة، أنت توافق على{" "}
+            {d.auth.terms1}{" "}
             <Link href="/terms" className="text-muted hover:underline">
-              شروط الاستخدام
+              {d.auth.termsLink}
             </Link>{" "}
-            و
+            {d.auth.and}
             <Link href="/privacy" className="text-muted hover:underline">
-              سياسة الخصوصية
+              {d.auth.privacyLink}
             </Link>
           </p>
         </div>

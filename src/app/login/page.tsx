@@ -9,7 +9,8 @@ import { StarIcon, MailIcon, LockIcon, EyeIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { demoAccounts, homeForRole } from "@/lib/demo";
 import { site } from "@/lib/site";
-import { heroStats } from "@/lib/stats";
+import { counts } from "@/lib/stats";
+import { useLocale } from "@/lib/i18n";
 
 const inputWrap =
   "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
@@ -17,6 +18,12 @@ const inputField =
   "min-w-0 flex-1 bg-transparent text-[15px] text-charcoal outline-none placeholder:text-muted/60";
 
 export default function LoginPage() {
+  const { d, isAr } = useLocale();
+  const heroStats = [
+    { value: String(counts.heroes), label: d.stats.heroes },
+    { value: String(counts.producers), label: d.stats.producers },
+    { value: String(counts.companies), label: d.stats.companies },
+  ];
   const router = useRouter();
   const { signIn, loginDemo } = useAuth();
   const [email, setEmail] = useState("");
@@ -32,7 +39,7 @@ export default function LoginPage() {
     setLoading(true);
     const { user, error } = await signIn({ email: email.trim(), password });
     if (error || !user) {
-      setError("تعذّر تسجيل الدخول. تحقّق من البريد وكلمة المرور.");
+      setError(d.auth.loginErr);
       setLoading(false);
       return;
     }
@@ -53,19 +60,18 @@ export default function LoginPage() {
             <StarIcon width={26} height={26} className="text-amber" strokeWidth={2.1} />
           </span>
           <span className="text-xl font-extrabold text-white md:text-[21px]">
-            {site.name}
+            {isAr ? site.name : "Jazan Heroes"}
           </span>
         </Link>
 
         <div className="my-10 md:my-0">
           <h2 className="text-balance text-[30px] font-extrabold leading-[1.25] tracking-[-.5px] text-white md:text-[34px]">
-            أهلاً بعودتك إلى
+            {d.auth.asideLoginTitle1}
             <br />
-            مجتمع مواهب جازان
+            {d.auth.asideLoginTitle2}
           </h2>
           <p className="mt-4 max-w-[340px] text-[15px] leading-[1.8] text-white/70 md:text-base">
-            سجّل دخولك لمتابعة طلباتك، وإدارة صفحتك، واستقبال الفرص مباشرة عبر
-            واتساب.
+            {d.auth.asideLoginDesc}
           </p>
           <div className="mt-7 flex items-center gap-6">
             {heroStats.map((s) => (
@@ -91,15 +97,15 @@ export default function LoginPage() {
           </div>
 
           <h1 className="text-[26px] font-extrabold tracking-[-.4px] text-charcoal md:text-[28px]">
-            تسجيل الدخول
+            {d.auth.loginTitle}
           </h1>
           <p className="mt-2 text-[15px] text-muted">
-            ليس لديك حساب؟{" "}
+            {d.auth.noAccount}{" "}
             <Link
               href="/register"
               className="font-semibold text-jazan no-underline hover:underline"
             >
-              سجّل
+              {d.auth.registerLink}
             </Link>
           </p>
 
@@ -108,7 +114,7 @@ export default function LoginPage() {
               htmlFor="email"
               className="mb-2 block text-[13px] font-semibold text-charcoal"
             >
-              البريد الإلكتروني
+              {d.auth.email}
             </label>
             <div className={inputWrap}>
               <MailIcon width={18} height={18} className="text-muted" />
@@ -128,7 +134,7 @@ export default function LoginPage() {
               htmlFor="password"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
             >
-              كلمة المرور
+              {d.auth.password}
             </label>
             <div className={inputWrap}>
               <LockIcon width={18} height={18} className="text-muted" />
@@ -144,7 +150,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPass((v) => !v)}
-                aria-label={showPass ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+                aria-label={showPass ? d.auth.hidePass : d.auth.showPass}
                 className="text-muted/70 transition-colors hover:text-muted"
               >
                 <EyeIcon off={showPass} width={18} height={18} />
@@ -156,7 +162,7 @@ export default function LoginPage() {
                 href="/forgot-password"
                 className="text-[13px] font-semibold text-jazan no-underline hover:underline"
               >
-                نسيت كلمة المرور؟
+                {d.auth.forgot}
               </Link>
             </div>
 
@@ -172,7 +178,7 @@ export default function LoginPage() {
               className="mt-5 w-full"
               disabled={!email.trim() || !password.trim() || loading}
             >
-              {loading ? "جارٍ الدخول…" : "تسجيل الدخول"}
+              {loading ? d.auth.loggingIn : d.auth.loginBtn}
             </Button>
           </form>
 
@@ -180,7 +186,7 @@ export default function LoginPage() {
           <div className="mt-7">
             <div className="flex items-center gap-3">
               <span className="h-px flex-1 bg-line" />
-              <span className="text-[12px] font-medium text-muted">أو جرّب حساباً تجريبياً</span>
+              <span className="text-[12px] font-medium text-muted">{d.auth.tryDemo}</span>
               <span className="h-px flex-1 bg-line" />
             </div>
             <div className="mt-4 grid grid-cols-2 gap-2.5">
@@ -191,21 +197,21 @@ export default function LoginPage() {
                   onClick={() => handleDemo(acc)}
                   className="flex flex-col items-start rounded-xl border border-line bg-surface px-3.5 py-2.5 text-start transition-colors hover:border-jazan hover:bg-jazan/[.03]"
                 >
-                  <span className="text-[13px] font-bold text-charcoal">{acc.label}</span>
-                  <span className="text-[11px] text-muted">{acc.hint}</span>
+                  <span className="text-[13px] font-bold text-charcoal">{d.demo[acc.role].label}</span>
+                  <span className="text-[11px] text-muted">{d.demo[acc.role].hint}</span>
                 </button>
               ))}
             </div>
           </div>
 
           <p className="mt-5 text-center text-[12px] leading-[1.7] text-muted/70">
-            بالمتابعة، أنت توافق على{" "}
+            {d.auth.terms1}{" "}
             <Link href="/terms" className="text-muted hover:underline">
-              شروط الاستخدام
+              {d.auth.termsLink}
             </Link>{" "}
-            و
+            {d.auth.and}
             <Link href="/privacy" className="text-muted hover:underline">
-              سياسة الخصوصية
+              {d.auth.privacyLink}
             </Link>
           </p>
         </div>

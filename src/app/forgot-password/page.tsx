@@ -5,11 +5,13 @@ import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/Button";
 import { ArrowLeftIcon } from "@/components/icons";
+import { useLocale } from "@/lib/i18n";
 
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 export default function ForgotPasswordPage() {
+  const { d } = useLocale();
   const [sent, setSent] = useState(false);
 
   return (
@@ -27,18 +29,18 @@ export default function ForgotPasswordPage() {
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
               </span>
-              <h1 className="mt-4 text-[22px] font-extrabold text-charcoal">تحقّق من بريدك</h1>
+              <h1 className="mt-4 text-[22px] font-extrabold text-charcoal">{d.auth.forgotSentTitle}</h1>
               <p className="mt-2 text-[15px] leading-8 text-muted">
-                إذا كان بريدك مسجّلاً لدينا، فستصلك رسالة تحتوي رابط إعادة تعيين كلمة المرور.
+                {d.auth.forgotSentDesc}
               </p>
             </div>
           ) : (
             <>
               <h1 className="text-[24px] font-extrabold tracking-[-.4px] text-charcoal">
-                نسيت كلمة المرور؟
+                {d.auth.forgotTitle}
               </h1>
               <p className="mt-2 text-[15px] leading-7 text-muted">
-                أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.
+                {d.auth.forgotDesc}
               </p>
               <form
                 onSubmit={(e) => {
@@ -49,12 +51,12 @@ export default function ForgotPasswordPage() {
               >
                 <div>
                   <label className="mb-2 block text-[13px] font-semibold text-charcoal">
-                    البريد الإلكتروني
+                    {d.auth.email}
                   </label>
                   <input required type="email" className={inputClass} placeholder="you@example.com" />
                 </div>
                 <Button type="submit" variant="primary" className="w-full">
-                  إرسال رابط الاستعادة
+                  {d.auth.forgotBtn}
                 </Button>
               </form>
             </>
@@ -65,7 +67,7 @@ export default function ForgotPasswordPage() {
             className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-muted no-underline transition-colors hover:text-jazan"
           >
             <ArrowLeftIcon width={16} height={16} />
-            العودة لتسجيل الدخول
+            {d.auth.backToLogin}
           </Link>
         </div>
       </div>

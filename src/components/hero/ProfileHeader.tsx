@@ -1,7 +1,10 @@
+"use client";
+
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CheckIcon, WhatsappIcon, MapPinIcon, StarFilledIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
+import { useLocale } from "@/lib/i18n";
 import type { Hero } from "@/lib/types";
 
 function Stat({ value, label }: { value: string; label: string }) {
@@ -15,6 +18,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 
 /** ترويسة صفحة البطل — بطاقة بروفايل مركزية بشريط إحصائيات */
 export function ProfileHeader({ hero }: { hero: Hero }) {
+  const { d } = useLocale();
   const wa = whatsappLink(
     hero.whatsapp ?? site.whatsapp,
     `مرحباً ${hero.name}، شفت ملفك في أبطال جازان`
@@ -43,8 +47,8 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
           {hero.verified && (
             <span
               className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-jazan text-white"
-              aria-label="موثّق"
-              title="موثّق"
+              aria-label={d.heroPage.verifiedBadge}
+              title={d.heroPage.verifiedBadge}
             >
               <CheckIcon className="h-3.5 w-3.5" />
             </span>
@@ -57,14 +61,15 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
           <StatusBadge status={hero.status} />
           <span className="inline-flex items-center gap-1.5 text-sm text-muted">
             <MapPinIcon className="h-4 w-4" />
-            {hero.city}، جازان
+            {hero.city}
+            {d.heroPage.region}
           </span>
           {hero.rating ? (
             <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal">
               <StarFilledIcon className="h-4 w-4 text-amber" />
               <span className="mono">{hero.rating.toFixed(1)}</span>
               {hero.reviewsCount ? (
-                <span className="font-normal text-muted">({hero.reviewsCount} تقييم)</span>
+                <span className="font-normal text-muted">({hero.reviewsCount} {d.cards.review})</span>
               ) : null}
             </span>
           ) : null}
@@ -72,10 +77,10 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
 
         {/* شريط الإحصائيات */}
         <div className="mt-5 flex flex-wrap items-center justify-center divide-x divide-x-reverse divide-line rounded-2xl border border-line bg-cream/60 py-2">
-          {hero.years != null && <Stat value={`+${hero.years}`} label="سنوات الخبرة" />}
-          <Stat value={`${hero.skills.length}`} label="المهارات" />
-          {hero.rating != null && <Stat value={hero.rating.toFixed(1)} label="التقييم" />}
-          <Stat value={hero.city} label="المدينة" />
+          {hero.years != null && <Stat value={`+${hero.years}`} label={d.heroPage.yearsExp} />}
+          <Stat value={`${hero.skills.length}`} label={d.heroPage.skillsStat} />
+          {hero.rating != null && <Stat value={hero.rating.toFixed(1)} label={d.heroPage.ratingStat} />}
+          <Stat value={hero.city} label={d.heroPage.cityStat} />
         </div>
 
         {/* زر التواصل */}
@@ -87,7 +92,7 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
             className="inline-flex flex-1 items-center justify-center gap-2.5 rounded-xl bg-whatsapp px-6 py-3 text-[15px] font-bold text-white shadow-[0_6px_16px_rgba(37,211,102,.28)] transition-[transform,filter] hover:-translate-y-px hover:brightness-95"
           >
             <WhatsappIcon className="h-[19px] w-[19px]" />
-            تواصل عبر واتساب
+            {d.heroPage.contactWa}
           </a>
         </div>
       </div>
