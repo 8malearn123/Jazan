@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
+import { normalizeText, fuzzyIncludes } from "@/lib/text";
 import type { Producer } from "@/lib/types";
 import { ProducerCard } from "./ProducerCard";
 
@@ -21,13 +22,14 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
   );
 
   const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = normalizeText(query.trim());
     return producers.filter((p) => {
       const inQuery =
         !q ||
-        p.name.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        (p.bio ?? "").toLowerCase().includes(q);
+        fuzzyIncludes(p.name, q) ||
+        fuzzyIncludes(p.category, q) ||
+        fuzzyIncludes(p.bio, q) ||
+        p.products?.some((pr) => fuzzyIncludes(pr.name, q));
       const inCity = city === "all" || p.city === city;
       const inCat = category === "الكل" || p.category === category;
       return inQuery && inCity && inCat;

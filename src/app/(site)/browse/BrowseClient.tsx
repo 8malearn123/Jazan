@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
+import { normalizeText, fuzzyIncludes } from "@/lib/text";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
 import { HeroBrowseCard } from "./HeroBrowseCard";
 
@@ -46,13 +47,13 @@ export function BrowseClient({
   }));
 
   const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = normalizeText(query.trim());
     return heroes.filter((h) => {
       const inQuery =
         !q ||
-        h.name.toLowerCase().includes(q) ||
-        h.title.toLowerCase().includes(q) ||
-        h.skills.some((s) => s.toLowerCase().includes(q));
+        fuzzyIncludes(h.name, q) ||
+        fuzzyIncludes(h.title, q) ||
+        h.skills.some((s) => fuzzyIncludes(s, q));
       const inCity = city === "all" || h.city === city;
       return inQuery && inCity && matchStatus(h, status);
     });

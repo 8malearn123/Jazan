@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
+import { normalizeText, fuzzyIncludes } from "@/lib/text";
 import type { Company, Job } from "@/lib/types";
 import { CompanyCard } from "./CompanyCard";
 import { JobRow } from "./JobRow";
@@ -21,13 +22,13 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
     [companies]
   );
 
-  const q = query.trim().toLowerCase();
+  const q = normalizeText(query.trim());
 
   const filteredCompanies = useMemo(
     () =>
       companies.filter((c) => {
         const inQuery =
-          !q || c.name.toLowerCase().includes(q) || c.field.toLowerCase().includes(q);
+          !q || fuzzyIncludes(c.name, q) || fuzzyIncludes(c.field, q);
         const inCity = city === "all" || c.city === city;
         return inQuery && inCity;
       }),
@@ -38,7 +39,7 @@ export function CompaniesClient({ companies, jobs }: { companies: Company[]; job
     () =>
       jobs.filter((j) => {
         const inQuery =
-          !q || j.title.toLowerCase().includes(q) || j.companyName.toLowerCase().includes(q);
+          !q || fuzzyIncludes(j.title, q) || fuzzyIncludes(j.companyName, q);
         const inType = jobType === "الكل" || j.type === jobType;
         return inQuery && inType;
       }),
