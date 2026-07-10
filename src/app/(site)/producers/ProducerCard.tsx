@@ -27,7 +27,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
             className="-mt-[46px] h-[50px] w-[50px] border-[3px] border-surface"
           />
           <span className="rounded-lg bg-amber/15 px-2.5 py-1 text-xs font-semibold text-amber-dark">
-            {category}
+            {d.prodCat[category] ?? category}
           </span>
         </div>
 
@@ -46,7 +46,7 @@ export function ProducerCard({ producer }: { producer: Producer }) {
 
         {/* الفئة · المدينة */}
         <div className="mt-[3px] text-[13px] text-muted">
-          {bio ?? category} · {city}
+          {bio ?? (d.prodCat[category] ?? category)} · {city}
         </div>
 
         {/* التقييم */}

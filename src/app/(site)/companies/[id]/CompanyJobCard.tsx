@@ -1,6 +1,9 @@
+"use client";
+
 import type { Job } from "@/lib/types";
 import { WhatsappIcon, BriefcaseIcon, ClockIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
+import { useLocale } from "@/lib/i18n";
 
 /** لون شارة نوع الفرصة */
 function typeBadgeClass(type?: string) {
@@ -25,6 +28,7 @@ export function CompanyJobCard({
   companyName: string;
   companyWhatsapp?: string;
 }) {
+  const { d } = useLocale();
   const { title, city, type, tags, postedAt, salary } = job;
   const waHref = whatsappLink(
     companyWhatsapp ?? site.whatsapp,
@@ -47,7 +51,7 @@ export function CompanyJobCard({
               <span
                 className={`rounded-[7px] px-2.5 py-[3px] text-xs font-semibold ${typeBadgeClass(type)}`}
               >
-                {type}
+                {d.jobType[type] ?? type}
               </span>
             ) : null}
           </div>
@@ -88,7 +92,7 @@ export function CompanyJobCard({
           rel="noopener noreferrer"
           className="rounded-[11px] bg-jazan px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-[0_6px_16px_rgba(15,92,74,.22)] transition-[transform,background] duration-150 hover:-translate-y-px hover:bg-jazan-dark"
         >
-          تقديم
+          {d.companyDetail.apply}
         </a>
         <a
           href={waHref}
@@ -97,7 +101,7 @@ export function CompanyJobCard({
           className="inline-flex items-center gap-2 rounded-[11px] bg-whatsapp px-4 py-2.5 text-sm font-semibold text-white no-underline transition-[filter] hover:brightness-95"
         >
           <WhatsappIcon className="h-[17px] w-[17px]" />
-          استفسار عبر واتساب
+          {d.companyDetail.inquiry}
         </a>
       </div>
     </div>

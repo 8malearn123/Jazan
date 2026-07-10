@@ -39,7 +39,7 @@ export function JobRow({ job }: { job: Job }) {
             <span
               className={`rounded-[7px] px-2.5 py-[3px] text-xs font-semibold ${typeBadgeClass(type)}`}
             >
-              {type}
+              {d.jobType[type] ?? type}
             </span>
           ) : null}
         </div>

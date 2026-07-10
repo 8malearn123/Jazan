@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { ArrowLeftIcon } from "@/components/icons";
+import { BackLink } from "@/components/BackLink";
 import { HeroProfileView } from "@/components/hero/HeroProfileView";
 import { sampleHeroes, getHero } from "@/lib/data";
 
@@ -40,13 +39,7 @@ export default async function HeroProfilePage({
   return (
     <Container className="py-6 sm:py-8 lg:py-10">
       <div className="mx-auto max-w-4xl">
-        <Link
-          href="/browse"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted no-underline transition-colors hover:text-jazan"
-        >
-          <ArrowLeftIcon className="h-[18px] w-[18px]" />
-          رجوع لتصفّح الأبطال
-        </Link>
+        <BackLink to="heroes" />
 
         <div className="mt-4">
           <HeroProfileView hero={hero} bio={bio} />

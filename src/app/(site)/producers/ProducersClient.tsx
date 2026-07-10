@@ -78,7 +78,7 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
                 : "border-line bg-surface text-ink hover:bg-black/[.02]"
             )}
           >
-            {cat === "الكل" ? d.producersPage.all : cat}
+            {cat === "الكل" ? d.producersPage.all : d.prodCat[cat] ?? cat}
           </button>
         ))}
       </div>

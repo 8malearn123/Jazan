@@ -1,6 +1,9 @@
+"use client";
+
 import { Tag } from "@/components/ui/Tag";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StarFilledIcon } from "@/components/icons";
+import { useLocale } from "@/lib/i18n";
 import type { Hero } from "@/lib/types";
 import { ProfileHeader } from "./ProfileHeader";
 
@@ -21,6 +24,7 @@ export function HeroProfileView({
   bio: string;
   worksCount?: number;
 }) {
+  const { d } = useLocale();
   return (
     <>
       {/* الترويسة */}
@@ -31,8 +35,8 @@ export function HeroProfileView({
         {/* معرض الأعمال — الأبرز */}
         <section className="rounded-[18px] border border-line bg-surface p-6">
           <div className="flex items-center justify-between">
-            <SectionTitle>معرض الأعمال</SectionTitle>
-            <span className="mono text-[13px] text-muted">{worksCount} أعمال</span>
+            <SectionTitle>{d.heroPage.portfolio}</SectionTitle>
+            <span className="mono text-[13px] text-muted">{worksCount} {d.heroPage.works}</span>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
             <ImagePlaceholder
@@ -56,12 +60,12 @@ export function HeroProfileView({
         {/* نبذة + المهارات */}
         <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
           <section className="rounded-[18px] border border-line bg-surface p-6">
-            <SectionTitle>نبذة</SectionTitle>
+            <SectionTitle>{d.heroPage.about}</SectionTitle>
             <p className="mt-3 text-[15px] leading-[1.95] text-ink">{bio}</p>
           </section>
 
           <section className="rounded-[18px] border border-line bg-surface p-6">
-            <SectionTitle>المهارات</SectionTitle>
+            <SectionTitle>{d.heroPage.skills}</SectionTitle>
             <div className="mt-4 flex flex-wrap gap-[9px]">
               {hero.skills.map((skill) => (
                 <Tag key={skill}>{skill}</Tag>
@@ -74,13 +78,13 @@ export function HeroProfileView({
         {hero.reviews?.length ? (
           <section className="rounded-[18px] border border-line bg-surface p-6">
             <div className="flex items-center justify-between">
-              <SectionTitle>التقييمات</SectionTitle>
+              <SectionTitle>{d.heroPage.reviews}</SectionTitle>
               {hero.rating ? (
                 <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal">
                   <StarFilledIcon className="h-4 w-4 text-amber" />
                   <span className="mono">{hero.rating.toFixed(1)}</span>
                   <span className="font-normal text-muted">
-                    من {hero.reviewsCount ?? hero.reviews.length} تقييم
+                    {d.heroPage.of} {hero.reviewsCount ?? hero.reviews.length} {d.cards.review}
                   </span>
                 </span>
               ) : null}

@@ -12,7 +12,7 @@ const socials = [
 ];
 
 export function SiteFooter() {
-  const { d } = useLocale();
+  const { d, isAr } = useLocale();
 
   const columns = [
     {
@@ -43,7 +43,7 @@ export function SiteFooter() {
               <span className="flex h-[38px] w-[38px] items-center justify-center rounded-[11px] bg-jazan">
                 <StarIcon width={22} height={22} className="text-amber" strokeWidth={2.1} />
               </span>
-              <span className="text-[19px] font-extrabold text-white">{site.name}</span>
+              <span className="text-[19px] font-extrabold text-white">{isAr ? site.name : "Jazan Heroes"}</span>
             </div>
             <p className="mt-4 max-w-[300px] text-sm leading-8 text-white/55">
               {d.footer.about}
@@ -85,7 +85,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-9 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-white/45 sm:flex-row">
-          <span>© {site.year} {site.name} — {d.footer.rights}</span>
+          <span>© {site.year} {isAr ? site.name : "Jazan Heroes"} — {d.footer.rights}</span>
           <span>{d.footer.made}</span>
         </div>
       </div>
