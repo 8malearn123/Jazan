@@ -200,6 +200,25 @@ export function StarFilledIcon(props: IconProps) {
   );
 }
 
+/** خريطة مطوية */
+export function MapIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" />
+      <path d="M9 4v14M15 6v14" />
+    </svg>
+  );
+}
+
+/** إغلاق (X) */
+export function XIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M18 6L6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
 /** شمس — الوضع الفاتح */
 export function SunIcon(props: IconProps) {
   return (

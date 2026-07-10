@@ -106,6 +106,16 @@ const ar = {
     producers: "الأسر المنتجة",
     jobs: "الوظائف",
   },
+  map: {
+    open: "خريطة جازان",
+    title: "خريطة محافظات جازان",
+    subtitle: "مرّر أو اضغط على أي محافظة لعرض إحصائياتها",
+    heroes: "أبطال",
+    producers: "أسر منتجة",
+    companies: "شركات",
+    empty: "لا يوجد مسجّلون من هذه المحافظة بعد — كن أول الأبطال!",
+    close: "إغلاق",
+  },
   browse: {
     title: "تصفّح أبطال جازان",
     subtitlePrefix: "مطوّرون، مصمّمون، كتّاب ومواهب من قلب المنطقة — ",
@@ -262,6 +272,16 @@ const en: Dict = {
     heroes: "Heroes",
     producers: "Producers",
     jobs: "Jobs",
+  },
+  map: {
+    open: "Jazan map",
+    title: "Jazan Governorates Map",
+    subtitle: "Hover or tap any governorate to see its stats",
+    heroes: "Heroes",
+    producers: "Producers",
+    companies: "Companies",
+    empty: "No registered members from this governorate yet — be the first!",
+    close: "Close",
   },
   browse: {
     title: "Browse Jazan Heroes",

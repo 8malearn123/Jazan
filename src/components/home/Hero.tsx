@@ -1,14 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Button } from "@/components/ui/Button";
-import { SearchIcon, CheckIcon } from "@/components/icons";
+import { SearchIcon, CheckIcon, MapIcon } from "@/components/icons";
+import { JazanMap } from "@/components/home/JazanMap";
 import { counts } from "@/lib/stats";
 import { useLocale } from "@/lib/i18n";
 
 export function Hero() {
   const { d } = useLocale();
+  const [mapOpen, setMapOpen] = useState(false);
 
   const stats = [
     { value: String(counts.heroes), label: d.stats.heroes },
@@ -50,7 +53,18 @@ export function Hero() {
             <Button type="submit" size="sm">
               {d.hero.search}
             </Button>
+            <button
+              type="button"
+              onClick={() => setMapOpen(true)}
+              aria-label={d.map.open}
+              title={d.map.open}
+              className="flex h-[38px] w-[38px] flex-none cursor-pointer items-center justify-center rounded-xl border-[1.5px] border-line bg-surface text-jazan transition-colors hover:border-jazan hover:bg-jazan hover:text-white"
+            >
+              <MapIcon width={19} height={19} />
+            </button>
           </form>
+
+          <JazanMap open={mapOpen} onClose={() => setMapOpen(false)} />
 
           {/* Stats */}
           <div className="mt-6 flex items-center gap-4 sm:mt-7 sm:gap-6">
