@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { useLocale } from "@/lib/i18n";
 
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 export function ContactForm() {
+  const { d } = useLocale();
+  const t = d.contactPage;
   const [sent, setSent] = useState(false);
 
   if (sent) {
@@ -17,8 +20,8 @@ export function ContactForm() {
             <path d="M20 6L9 17l-5-5" />
           </svg>
         </span>
-        <h3 className="mt-4 text-[20px] font-extrabold text-charcoal">وصلتنا رسالتك!</h3>
-        <p className="mt-2 text-[15px] text-muted">سنردّ عليك في أقرب وقت ممكن. شكراً لتواصلك.</p>
+        <h3 className="mt-4 text-[20px] font-extrabold text-charcoal">{t.sentTitle}</h3>
+        <p className="mt-2 text-[15px] text-muted">{t.sentDesc}</p>
       </div>
     );
   }
@@ -33,19 +36,19 @@ export function ContactForm() {
     >
       <div className="flex flex-col gap-4">
         <div>
-          <label className="mb-2 block text-[13px] font-semibold text-charcoal">الاسم الكامل</label>
-          <input required className={inputClass} placeholder="اسمك" />
+          <label className="mb-2 block text-[13px] font-semibold text-charcoal">{t.formName}</label>
+          <input required className={inputClass} placeholder={t.formNamePh} />
         </div>
         <div>
-          <label className="mb-2 block text-[13px] font-semibold text-charcoal">البريد الإلكتروني</label>
+          <label className="mb-2 block text-[13px] font-semibold text-charcoal">{t.formEmail}</label>
           <input required type="email" className={inputClass} placeholder="you@example.com" />
         </div>
         <div>
-          <label className="mb-2 block text-[13px] font-semibold text-charcoal">رسالتك</label>
-          <textarea required rows={5} className={`${inputClass} resize-none`} placeholder="كيف يمكننا مساعدتك؟" />
+          <label className="mb-2 block text-[13px] font-semibold text-charcoal">{t.formMsg}</label>
+          <textarea required rows={5} className={`${inputClass} resize-none`} placeholder={t.formMsgPh} />
         </div>
         <Button type="submit" variant="primary" className="w-full">
-          إرسال الرسالة
+          {t.send}
         </Button>
       </div>
     </form>
