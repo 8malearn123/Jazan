@@ -26,7 +26,7 @@ export function Hero() {
             {d.hero.tagline}
           </div>
 
-          <h1 className="mt-5 text-[30px] font-extrabold leading-[1.15] tracking-[-.6px] text-charcoal text-balance sm:mt-6 sm:text-[40px] sm:leading-[1.12] lg:text-[46px] lg:tracking-[-1px] xl:text-[54px]">
+          <h1 className="mt-5 text-[30px] font-extrabold leading-[1.4] tracking-[-.6px] text-charcoal text-balance sm:mt-6 sm:text-[40px] sm:leading-[1.35] lg:text-[46px] lg:tracking-[-1px] xl:text-[54px]">
             {d.hero.title1}
             <br />
             {d.hero.title2}
