@@ -10,6 +10,7 @@ import {
   BriefcaseIcon,
 } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
+import { SocialLinksRow } from "@/components/SocialLinksRow";
 import { useLocale } from "@/lib/i18n";
 import type { Company, Job } from "@/lib/types";
 import { CompanyJobCard } from "./CompanyJobCard";
@@ -175,6 +176,7 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
                 {t.browseOthers}
               </Link>
             </div>
+            <SocialLinksRow profileId={company.id} className="mt-4 justify-start" />
           </div>
         </aside>
       </div>

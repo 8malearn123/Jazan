@@ -10,6 +10,7 @@ import {
   StarFilledIcon,
 } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
+import { SocialLinksRow } from "@/components/SocialLinksRow";
 import { useLocale } from "@/lib/i18n";
 import type { Producer } from "@/lib/types";
 
@@ -113,6 +114,9 @@ export function ProducerView({ producer }: { producer: Producer }) {
             {t.orderWa}
           </a>
         </div>
+
+        {/* شبكات التواصل */}
+        <SocialLinksRow profileId={producer.id} className="mt-4 justify-start" />
 
         {/* قائمة المنتجات */}
         <h2 className="mt-[34px] mb-[18px] text-xl font-bold text-charcoal">
