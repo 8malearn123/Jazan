@@ -1,22 +1,36 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
 import { normalizeText } from "@/lib/text";
 import { companyMatches, jobMatches } from "@/lib/search";
+import {
+  approvedOffers,
+  loadOfferModeration,
+  onOfferModerationChange,
+} from "@/lib/offers";
 import type { Company, Job } from "@/lib/types";
 import { CompanyCard } from "./CompanyCard";
 import { JobRow } from "./JobRow";
 
 const jobTypes = ["الكل", "دوام كامل", "عن بُعد", "دوام جزئي"];
 
-export function CompaniesClient({ companies, jobs }: { companies: Company[]; jobs: Job[] }) {
+export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Company[]; jobs: Job[] }) {
   const { d } = useLocale();
   const [query, setQuery] = useState("");
   const [city, setCity] = useState("all");
   const [jobType, setJobType] = useState("الكل");
+
+  // عروض الشركات المعتمدة من الإدارة تُنشر هنا مع الوظائف الأساسية
+  const [extraJobs, setExtraJobs] = useState<Job[]>([]);
+  useEffect(() => {
+    const update = () => setExtraJobs(approvedOffers(loadOfferModeration()));
+    update();
+    return onOfferModerationChange(update);
+  }, []);
+  const jobs = useMemo(() => [...extraJobs, ...baseJobs], [extraJobs, baseJobs]);
 
   const cities = useMemo(
     () => Array.from(new Set(companies.map((c) => c.city).filter(Boolean) as string[])).sort(),
