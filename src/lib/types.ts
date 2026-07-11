@@ -129,8 +129,16 @@ export interface PendingVerification {
 export interface AdminReport {
   id: string;
   target: string;
+  /** نوع الجهة المُبلَّغ عنها */
+  targetType: string;
+  /** رابط الصفحة العامة للجهة (إن وُجدت) */
+  targetHref?: string;
   reason: string;
   reporter: string;
   date: string;
   status: "open" | "resolved";
+  /** نص البلاغ كما كتبه المُبلِّغ */
+  message: string;
+  /** اقتباس من المحتوى المُبلَّغ عنه */
+  content: string;
 }

@@ -331,7 +331,39 @@ export function getPendingVerification(id: string): PendingVerification | undefi
 
 // البلاغات (لوحة المشرف)
 export const reports: AdminReport[] = [
-  { id: "r1", target: "متجر الساحل", reason: "محتوى غير مناسب", reporter: "مستخدم #1042", date: "اليوم", status: "open" },
-  { id: "r2", target: "سعيد قحطاني", reason: "معلومات مضلّلة", reporter: "مستخدم #877", date: "أمس", status: "open" },
-  { id: "r3", target: "عطور الساحل", reason: "صورة مخالفة", reporter: "مستخدم #654", date: "قبل يومين", status: "resolved" },
+  {
+    id: "r1",
+    target: "متجر الساحل",
+    targetType: "شركة",
+    targetHref: "/companies/c3",
+    reason: "محتوى غير مناسب",
+    reporter: "مستخدم #1042",
+    date: "اليوم",
+    status: "open",
+    message: "وصف الشركة يحتوي عبارات دعائية مبالغ فيها وغير لائقة، وتظهر في نتائج البحث بشكل مزعج. أرجو مراجعتها.",
+    content: "«أفضل متجر في المملكة بلا منازع — الباقي كلهم مقلّدين، لا تشتري إلا من عندنا!»",
+  },
+  {
+    id: "r2",
+    target: "سعيد قحطاني",
+    targetType: "بطل / مستقل",
+    reason: "معلومات مضلّلة",
+    reporter: "مستخدم #877",
+    date: "أمس",
+    status: "open",
+    message: "الملف يدّعي خبرة ١٠ سنوات وشهادات دولية، وبعد التعامل معه اتضح أن الأعمال المعروضة منسوخة من مواقع أجنبية.",
+    content: "«خبرة تزيد عن ١٠ سنوات في تطوير التطبيقات، حاصل على شهادات دولية متعددة، ونفّذت أكثر من ٢٠٠ مشروع»",
+  },
+  {
+    id: "r3",
+    target: "عطور الساحل",
+    targetType: "أسرة منتجة",
+    targetHref: "/producers/pr3",
+    reason: "صورة مخالفة",
+    reporter: "مستخدم #654",
+    date: "قبل يومين",
+    status: "resolved",
+    message: "إحدى صور المنتجات تعرض علامة تجارية مسجّلة لشركة عطور عالمية بدون إذن.",
+    content: "صورة منتج «عود فاخر» تظهر فيها عبوة تحمل شعار علامة تجارية عالمية مسجّلة.",
+  },
 ];
