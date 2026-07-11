@@ -115,6 +115,9 @@ const ar = {
     companies: "شركات",
     empty: "لا يوجد مسجّلون من هذه المحافظة بعد — كن أول الأبطال!",
     close: "إغلاق",
+    clickHint: "اضغط لعرض الحسابات",
+    membersIn: "المسجّلون في",
+    backToMap: "رجوع للخريطة",
   },
   browse: {
     title: "تصفّح أبطال جازان",
@@ -490,6 +493,9 @@ const en: Dict = {
     companies: "Companies",
     empty: "No registered members from this governorate yet — be the first!",
     close: "Close",
+    clickHint: "Tap to view profiles",
+    membersIn: "Members in",
+    backToMap: "Back to map",
   },
   browse: {
     title: "Browse Jazan Heroes",
