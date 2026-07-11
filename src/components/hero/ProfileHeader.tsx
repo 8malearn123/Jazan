@@ -4,6 +4,7 @@ import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CheckIcon, WhatsappIcon, MapPinIcon, StarFilledIcon } from "@/components/icons";
 import { SocialLinksRow } from "@/components/SocialLinksRow";
+import { CvButton } from "@/components/hero/CvButton";
 import { whatsappLink, site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 import type { Hero } from "@/lib/types";
@@ -84,21 +85,20 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
           <Stat value={hero.city} label={d.heroPage.cityStat} />
         </div>
 
-        {/* زر التواصل */}
-        <div className="mt-5 flex w-full max-w-md flex-col gap-2.5 sm:flex-row sm:justify-center">
+        {/* صف الإجراءات: شبكات التواصل (يمين) · واتساب (وسط) · السيرة الذاتية (يسار) */}
+        <div className="mt-5 flex w-full max-w-2xl flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <SocialLinksRow profileId={hero.id} className="flex-none sm:order-first" />
           <a
             href={wa}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex flex-1 items-center justify-center gap-2.5 rounded-xl bg-whatsapp px-6 py-3 text-[15px] font-bold text-white shadow-[0_6px_16px_rgba(37,211,102,.28)] transition-[transform,filter] hover:-translate-y-px hover:brightness-95"
+            className="inline-flex w-full flex-1 items-center justify-center gap-2.5 rounded-xl bg-whatsapp px-6 py-3 text-[15px] font-bold text-white shadow-[0_6px_16px_rgba(37,211,102,.28)] transition-[transform,filter] hover:-translate-y-px hover:brightness-95 sm:w-auto sm:min-w-[220px]"
           >
             <WhatsappIcon className="h-[19px] w-[19px]" />
             {d.heroPage.contactWa}
           </a>
+          <CvButton hero={hero} />
         </div>
-
-        {/* شبكات التواصل */}
-        <SocialLinksRow profileId={hero.id} className="mt-4" />
       </div>
     </div>
   );
