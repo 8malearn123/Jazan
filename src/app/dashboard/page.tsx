@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { CheckIcon, WhatsappIcon, EyeIcon, StarFilledIcon } from "@/components/icons";
+import { CheckIcon, WhatsappIcon, EyeIcon, StarFilledIcon, XIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 
@@ -66,22 +66,93 @@ const recentRows = [
   { name: "متجر الساحل", interest: "مهتم بالتعاون", date: "1 يونيو" },
 ] as const;
 
-// آخر التقييمات — آراء العملاء والشركات
-const recentReviews = [
+// التقييمات — آراء العملاء والشركات (الصندوق يعرض أحدث 3 والنافذة تعرض الكل)
+const allReviews = [
   { author: "تهامة للتقنية", type: "شركة", rating: 5, comment: "تسليم قبل الموعد وجودة عالية في التفاصيل. تجربة تعامل ممتازة وننصح به.", date: "قبل أسبوع" },
   { author: "أم فيصل", type: "عميل", rating: 5, comment: "تعامل راقي وسرعة في الرد، والنتيجة فاقت التوقع. شكراً من القلب!", date: "قبل أسبوعين" },
   { author: "متجر الساحل", type: "شركة", rating: 4, comment: "عمل احترافي والتواصل سلس عبر واتساب. نتطلع لتعاون قادم.", date: "قبل شهر" },
+  { author: "واحة جازان الرقمية", type: "شركة", rating: 5, comment: "التزام كامل بالمتطلبات وتسليم مرتّب. شراكة موفقة إن شاء الله.", date: "قبل شهر" },
+  { author: "أبو خالد", type: "عميل", rating: 4, comment: "خدمة جيدة وسعر مناسب، وياليت تكون الردود أسرع شوي في أوقات الذروة.", date: "قبل شهرين" },
+  { author: "دار صبيا للنشر", type: "شركة", rating: 5, comment: "إبداع في التنفيذ وتفاصيل مدروسة. تعاملنا معه أكثر من مرة وما قصّر.", date: "قبل شهرين" },
+  { author: "نوف الجيزاني", type: "عميل", rating: 3, comment: "الشغل حلو بس تأخر التسليم يومين عن الموعد المتفق عليه.", date: "قبل 3 أشهر" },
+  { author: "مؤسسة الشاطئ", type: "شركة", rating: 5, comment: "احترافية عالية من أول تواصل حتى التسليم. يستاهل التقييم الكامل.", date: "قبل 4 أشهر" },
 ] as const;
 
+const recentReviews = allReviews.slice(0, 3);
+
 const avgRating = (
-  recentReviews.reduce((sum, r) => sum + r.rating, 0) / recentReviews.length
+  allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length
 ).toFixed(1);
+
+/** نجوم من 5 */
+function Stars({ rating, size = "h-3.5 w-3.5" }: { rating: number; size?: string }) {
+  return (
+    <span className="inline-flex items-center gap-0.5" aria-label={`التقييم ${rating} من 5`}>
+      {Array.from({ length: 5 }).map((_, star) => (
+        <StarFilledIcon
+          key={star}
+          className={star < rating ? `${size} text-amber` : `${size} text-line`}
+        />
+      ))}
+    </span>
+  );
+}
+
+/** نافذة كل التقييمات */
+function AllReviewsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="جميع التقييمات">
+      <button aria-label="إغلاق" onClick={onClose} className="absolute inset-0 cursor-default bg-black/50 backdrop-blur-[2px]" />
+      <div className="relative z-10 flex max-h-[88vh] w-full max-w-[560px] flex-col overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_24px_70px_rgba(0,0,0,.35)]">
+        <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
+          <div className="flex items-center gap-3">
+            <h2 className="text-[16px] font-extrabold text-charcoal">جميع التقييمات</h2>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber/15 px-2.5 py-1 text-[12px] font-bold text-amber-dark">
+              <StarFilledIcon className="h-3.5 w-3.5 text-amber" />
+              <span className="mono">{avgRating}</span>
+              <span className="font-medium text-muted">· <span className="mono">{allReviews.length}</span></span>
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="إغلاق"
+            className="flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-[10px] border border-line text-muted transition-colors hover:border-jazan hover:text-jazan"
+          >
+            <XIcon width={18} height={18} />
+          </button>
+        </div>
+        <div className="overflow-y-auto">
+          {allReviews.map((r, i) => (
+            <div key={i} className={cn("flex flex-col gap-2 px-5 py-4", i < allReviews.length - 1 && "border-b border-line-soft")}>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-jazan/10 text-[14px] font-bold text-jazan">
+                    {r.author.trim().charAt(0)}
+                  </span>
+                  <div>
+                    <div className="text-[13px] font-bold text-charcoal">{r.author}</div>
+                    <div className="text-[11px] text-muted">{r.type} · {r.date}</div>
+                  </div>
+                </div>
+                <Stars rating={r.rating} />
+              </div>
+              <p className="text-[13px] leading-relaxed text-ink">{r.comment}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function DashboardPage() {
   const { user } = useAuth();
   const firstName = (user?.name ?? "بطل").split(" ")[0];
 
   const [available, setAvailable] = useState(true);
+  const [reviewsOpen, setReviewsOpen] = useState(false);
 
   const maxBar = Math.max(...chart.map((b) => b.h));
 
@@ -321,13 +392,22 @@ export default function DashboardPage() {
       <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
           <h3 className="text-[15px] font-bold text-charcoal">آخر التقييمات</h3>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber/15 px-3 py-1.5 text-[13px] font-bold text-amber-dark">
-            <StarFilledIcon className="h-4 w-4 text-amber" />
-            <span className="mono">{avgRating}</span>
-            <span className="font-medium text-muted">
-              من <span className="mono">{recentReviews.length}</span> تقييمات
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber/15 px-3 py-1.5 text-[13px] font-bold text-amber-dark">
+              <StarFilledIcon className="h-4 w-4 text-amber" />
+              <span className="mono">{avgRating}</span>
+              <span className="font-medium text-muted">
+                من <span className="mono">{allReviews.length}</span> تقييمات
+              </span>
             </span>
-          </span>
+            <button
+              type="button"
+              onClick={() => setReviewsOpen(true)}
+              className="cursor-pointer rounded-[10px] border-[1.5px] border-jazan bg-surface px-3.5 py-1.5 text-[13px] font-semibold text-jazan transition-colors hover:bg-jazan hover:text-white"
+            >
+              جميع التقييمات
+            </button>
+          </div>
         </div>
 
         <div className="grid gap-0 sm:grid-cols-3 sm:divide-x sm:divide-x-reverse sm:divide-line-soft">
@@ -350,22 +430,14 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-              <span
-                className="inline-flex items-center gap-0.5"
-                aria-label={`التقييم ${r.rating} من 5`}
-              >
-                {Array.from({ length: 5 }).map((_, star) => (
-                  <StarFilledIcon
-                    key={star}
-                    className={star < r.rating ? "h-3.5 w-3.5 text-amber" : "h-3.5 w-3.5 text-line"}
-                  />
-                ))}
-              </span>
+              <Stars rating={r.rating} />
               <p className="text-[13px] leading-relaxed text-ink">{r.comment}</p>
             </div>
           ))}
         </div>
       </div>
+
+      <AllReviewsModal open={reviewsOpen} onClose={() => setReviewsOpen(false)} />
     </div>
   );
 }
