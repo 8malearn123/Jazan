@@ -367,6 +367,27 @@ const ar = {
       { name: "بلاتيني", features: ["كل مزايا الذهبي", "حملة تعريفية مخصّصة", "شراكة محتوى حصرية"], highlight: false },
     ],
   },
+  notifs: {
+    title: "الإشعارات",
+    aria: "الإشعارات",
+    empty: "لا توجد إشعارات بعد.",
+    markAll: "تحديد الكل كمقروء",
+    hero: [
+      { id: "h-approved", type: "approved", title: "تم اعتماد ملفك 🎉", desc: "ملفك الشخصي معتمد ومنشور الآن ويظهر للجميع في التصفّح.", time: "قبل ساعتين" },
+      { id: "h-selected", type: "selected", title: "شركة مهتمة بك", desc: "«تهامة للتقنية» شاهدت ملفك وترغب بالتواصل معك بخصوص فرصة عمل.", time: "قبل 5 ساعات" },
+      { id: "h-review", type: "review", title: "تقييم جديد", desc: "حصلت على تقييم 5.0 من «متجر الساحل» — أحسنت!", time: "أمس" },
+    ],
+    producer: [
+      { id: "p-approved", type: "approved", title: "تم اعتماد متجرك 🎉", desc: "متجرك معتمد ومنشور الآن ويظهر للجميع في التصفّح.", time: "قبل ساعة" },
+      { id: "p-selected", type: "selected", title: "شركة اختارت منتجاتك", desc: "«دار صبيا للنشر» مهتمة بطلب منتجاتك لفعاليتها القادمة.", time: "قبل 6 ساعات" },
+      { id: "p-review", type: "review", title: "تقييم جديد", desc: "حصلت على تقييم 4.9 من عميل على طلبه الأخير.", time: "أمس" },
+    ],
+    company: [
+      { id: "c-approved", type: "approved", title: "تم توثيق شركتك ✅", desc: "شركتك موثّقة الآن وتظهر بشارة «موثّقة» للجميع.", time: "قبل 3 ساعات" },
+      { id: "c-selected", type: "selected", title: "متقدّم جديد", desc: "«محمد عسيري» تقدّم على وظيفة مطوّر واجهات أمامية.", time: "قبل 8 ساعات" },
+      { id: "c-review", type: "review", title: "تقييم جديد", desc: "حصلت شركتك على تقييم 4.8 من أحد المتعاملين.", time: "قبل يومين" },
+    ],
+  },
   cards: {
     viewProfile: "عرض الملف",
     viewStore: "عرض المتجر",
@@ -743,6 +764,27 @@ const en: Dict = {
       { name: "Silver", features: ["Logo in the sponsors section", "Social media mention"], highlight: false },
       { name: "Gold", features: ["All Silver benefits", "Premium homepage visibility", "Monthly reach report"], highlight: true },
       { name: "Platinum", features: ["All Gold benefits", "Dedicated introduction campaign", "Exclusive content partnership"], highlight: false },
+    ],
+  },
+  notifs: {
+    title: "Notifications",
+    aria: "Notifications",
+    empty: "No notifications yet.",
+    markAll: "Mark all as read",
+    hero: [
+      { id: "h-approved", type: "approved", title: "Your profile is approved 🎉", desc: "Your profile is now approved, published, and visible to everyone.", time: "2 hours ago" },
+      { id: "h-selected", type: "selected", title: "A company is interested in you", desc: "\"Tihama Tech\" viewed your profile and wants to contact you about a job.", time: "5 hours ago" },
+      { id: "h-review", type: "review", title: "New review", desc: "You received a 5.0 rating from \"Coast Store\" — well done!", time: "Yesterday" },
+    ],
+    producer: [
+      { id: "p-approved", type: "approved", title: "Your store is approved 🎉", desc: "Your store is now approved, published, and visible to everyone.", time: "An hour ago" },
+      { id: "p-selected", type: "selected", title: "A company picked your products", desc: "\"Dar Sabya Publishing\" wants to order your products for its next event.", time: "6 hours ago" },
+      { id: "p-review", type: "review", title: "New review", desc: "You received a 4.9 rating from a customer on their last order.", time: "Yesterday" },
+    ],
+    company: [
+      { id: "c-approved", type: "approved", title: "Your company is verified ✅", desc: "Your company is now verified and shows the \"Verified\" badge to everyone.", time: "3 hours ago" },
+      { id: "c-selected", type: "selected", title: "New applicant", desc: "\"Mohammed Asiri\" applied to the Front-end Developer position.", time: "8 hours ago" },
+      { id: "c-review", type: "review", title: "New review", desc: "Your company received a 4.8 rating from a client.", time: "2 days ago" },
     ],
   },
   cards: {

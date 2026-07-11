@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { NotificationBell } from "@/components/dashboard/NotificationBell";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import type { UserRole } from "@/lib/types";
@@ -132,6 +133,7 @@ export default function DashboardLayout({
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-surface px-4 py-3 lg:hidden">
         <Logo size="sm" />
         <div className="flex items-center gap-2">
+          <NotificationBell />
           <ThemeToggle />
           <button
             onClick={handleLogout}
@@ -208,6 +210,7 @@ export default function DashboardLayout({
           <div className="mb-5 hidden items-center justify-between rounded-2xl border border-line bg-surface px-5 py-3.5 lg:flex">
             <Logo size="sm" />
             <div className="flex items-center gap-4">
+              <NotificationBell />
               <ThemeToggle />
               <div className="text-end">
                 <div className="text-sm font-bold text-charcoal">{user.name}</div>
