@@ -8,11 +8,18 @@ import { SearchIcon, CheckIcon, MapIcon } from "@/components/icons";
 import { JazanMap } from "@/components/home/JazanMap";
 import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
+import { useLanding } from "@/lib/landing";
 
 export function Hero() {
-  const { d } = useLocale();
+  const { d, isAr } = useLocale();
   const [mapOpen, setMapOpen] = useState(false);
   const live = useLiveCounts();
+  const landing = useLanding();
+
+  // النص العربي يحرّره المدير من لوحة الإدارة؛ الإنجليزية من القاموس
+  const copy = isAr
+    ? landing
+    : { tagline: d.hero.tagline, title1: d.hero.title1, title2: d.hero.title2, desc: d.hero.desc };
 
   const stats = [
     { value: String(live.heroes), label: d.stats.heroes },
@@ -27,17 +34,17 @@ export function Hero() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-1.5 text-xs font-semibold text-jazan sm:text-[13px]">
             <span className="h-[7px] w-[7px] rounded-full bg-success" />
-            {d.hero.tagline}
+            {copy.tagline}
           </div>
 
           <h1 className="mt-5 text-[30px] font-extrabold leading-[1.4] tracking-[-.6px] text-charcoal text-balance sm:mt-6 sm:text-[40px] sm:leading-[1.35] lg:text-[46px] lg:tracking-[-1px] xl:text-[54px]">
-            {d.hero.title1}
+            {copy.title1}
             <br />
-            {d.hero.title2}
+            {copy.title2}
           </h1>
 
           <p className="mt-4 max-w-[480px] text-base leading-7 text-muted sm:mt-5 sm:text-[17px] sm:leading-8 lg:text-[18px]">
-            {d.hero.desc}
+            {copy.desc}
           </p>
 
           {/* Search */}

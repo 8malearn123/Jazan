@@ -5,22 +5,53 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { counts } from "@/lib/stats";
-import { GridIcon, UsersIcon, BuildingIcon, StoreIcon, StarFilledIcon } from "@/components/icons";
+import {
+  GridIcon,
+  UsersIcon,
+  BuildingIcon,
+  StoreIcon,
+  StarFilledIcon,
+  ImagesIcon,
+  BriefcaseIcon,
+} from "@/components/icons";
 import {
   loadReviewModeration,
   onReviewModerationChange,
   pendingReviews,
 } from "@/lib/reviews";
+import { loadMediaModeration, onMediaModerationChange, pendingMedia } from "@/lib/media";
+import { loadOfferModeration, onOfferModerationChange, pendingOffers } from "@/lib/offers";
 
-/** عدد التقييمات المعلّقة — يتحدّث مباشرة عند اعتماد/رفض المشرف */
-function usePendingReviewsCount() {
-  const [count, setCount] = useState(0);
+/** عدّاد معلّق حي — يتحدّث مباشرة عند قرارات المشرف */
+function usePendingCount(count: () => number, subscribe: (l: () => void) => () => void) {
+  const [value, setValue] = useState(0);
   useEffect(() => {
-    const update = () => setCount(pendingReviews(loadReviewModeration()).length);
+    const update = () => setValue(count());
     update();
-    return onReviewModerationChange(update);
+    return subscribe(update);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return count;
+  return value;
+}
+
+/** أيقونة منزل (الصفحة الرئيسية) */
+function HomeIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      width="19"
+      height="19"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <path d="M9 22V12h6v10" />
+    </svg>
+  );
 }
 
 /** أيقونة درع (التوثيق) */
@@ -92,10 +123,13 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { href: "/admin", label: "لوحة المعلومات", icon: GridIcon },
+  { href: "/admin/landing", label: "الصفحة الرئيسية", icon: HomeIcon },
   { href: "/admin/verifications", label: "التوثيق والطلبات", icon: ShieldIcon, badge: counts.pending },
   { href: "/admin/users", label: "المستخدمون", icon: UsersIcon },
   { href: "/admin/companies", label: "الشركات", icon: BuildingIcon },
   { href: "/admin/producers", label: "الأسر المنتجة", icon: StoreIcon },
+  { href: "/admin/offers", label: "عروض الشركات", icon: BriefcaseIcon },
+  { href: "/admin/media", label: "الشعارات والصور", icon: ImagesIcon },
   { href: "/admin/reviews", label: "التقييمات", icon: StarFilledIcon },
   { href: "/admin/reports", label: "البلاغات", icon: FlagIcon, badge: counts.openReports },
   { href: "/admin/settings", label: "الإعدادات", icon: SettingsIcon },
@@ -103,13 +137,28 @@ const navItems: NavItem[] = [
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
-  const pendingReviewsCount = usePendingReviewsCount();
+  const pendingReviewsCount = usePendingCount(
+    () => pendingReviews(loadReviewModeration()).length,
+    onReviewModerationChange
+  );
+  const pendingMediaCount = usePendingCount(
+    () => pendingMedia(loadMediaModeration()).length,
+    onMediaModerationChange
+  );
+  const pendingOffersCount = usePendingCount(
+    () => pendingOffers(loadOfferModeration()).length,
+    onOfferModerationChange
+  );
+  const liveBadges: Record<string, number> = {
+    "/admin/reviews": pendingReviewsCount,
+    "/admin/media": pendingMediaCount,
+    "/admin/offers": pendingOffersCount,
+  };
   return (
     <nav className="flex flex-col gap-[3px]">
       {navItems.map((item) => {
         const Icon = item.icon;
-        const badge =
-          item.href === "/admin/reviews" ? pendingReviewsCount : item.badge;
+        const badge = liveBadges[item.href] ?? item.badge;
         const active =
           item.href === "/admin"
             ? pathname === "/admin"
