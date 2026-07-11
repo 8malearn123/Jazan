@@ -268,6 +268,9 @@ const ar = {
     cartWa: "تواصل عبر واتساب",
     cartClear: "تفريغ",
     cartHint: "اختر منتجاتك ثم تواصل عبر واتساب — بنرسل القائمة جاهزة.",
+    cartEmpty: "السلة فارغة — أضف منتجات من القائمة.",
+    cartOpen: "فتح سلة الطلب",
+    cartClose: "إغلاق السلة",
   },
   companyDetail: {
     back: "تصفّح الشركات",
@@ -677,6 +680,9 @@ const en: Dict = {
     cartWa: "Chat on WhatsApp",
     cartClear: "Clear",
     cartHint: "Pick your products, then chat on WhatsApp — we send the list ready-made.",
+    cartEmpty: "Cart is empty — add products from the list.",
+    cartOpen: "Open order cart",
+    cartClose: "Close cart",
   },
   companyDetail: {
     back: "Browse companies",
