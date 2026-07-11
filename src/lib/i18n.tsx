@@ -123,7 +123,9 @@ const ar = {
     title: "تصفّح أبطال جازان",
     subtitlePrefix: "مطوّرون، مصمّمون، كتّاب ومواهب من قلب المنطقة — ",
     subtitleSuffix: " بطل.",
-    searchPh: "ابحث بالاسم أو المهارة…",
+    searchPh: "ابحث بالاسم، المهارة، المنتج أو الوظيفة…",
+    alsoProducers: "أسر منتجة تقدّم ما تبحث عنه",
+    alsoCompanies: "شركات وفرص توظيف مطابقة",
     allCities: "كل المدن",
     chips: {
       all: "الكل",
@@ -522,7 +524,9 @@ const en: Dict = {
     title: "Browse Jazan Heroes",
     subtitlePrefix: "Developers, designers, writers and talents from the region — ",
     subtitleSuffix: " heroes.",
-    searchPh: "Search by name or skill…",
+    searchPh: "Search by name, skill, product or job…",
+    alsoProducers: "Producing families offering what you need",
+    alsoCompanies: "Matching companies & job openings",
     allCities: "All cities",
     chips: {
       all: "All",
