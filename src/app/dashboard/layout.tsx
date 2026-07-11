@@ -7,6 +7,7 @@ import { Logo } from "@/components/Logo";
 import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { NotificationBell } from "@/components/dashboard/NotificationBell";
+import { DownloadPdfButton } from "@/components/dashboard/DownloadPdfButton";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import type { UserRole } from "@/lib/types";
@@ -174,13 +175,16 @@ export default function DashboardLayout({
             <div className="mt-4">
               <NavLinks items={items} onNavigate={() => setDrawerOpen(false)} />
             </div>
-            <button
-              onClick={handleLogout}
-              className="mt-auto flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-tag"
-            >
-              <LogoutIcon />
-              تسجيل الخروج
-            </button>
+            <div className="mt-auto flex flex-col gap-2">
+              <DownloadPdfButton />
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-tag"
+              >
+                <LogoutIcon />
+                تسجيل الخروج
+              </button>
+            </div>
           </aside>
         </div>
       ) : null}
@@ -195,13 +199,16 @@ export default function DashboardLayout({
           <div className="mt-4">
             <NavLinks items={items} />
           </div>
-          <button
-            onClick={handleLogout}
-            className="mt-auto flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-tag"
-          >
-            <LogoutIcon />
-            تسجيل الخروج
-          </button>
+          <div className="mt-auto flex flex-col gap-2">
+            <DownloadPdfButton />
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 rounded-[11px] px-3.5 py-2.5 text-sm text-muted transition-colors hover:bg-tag"
+            >
+              <LogoutIcon />
+              تسجيل الخروج
+            </button>
+          </div>
         </aside>
 
         {/* المحتوى */}
