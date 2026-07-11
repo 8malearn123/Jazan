@@ -1,11 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { counts } from "@/lib/stats";
-import { GridIcon, UsersIcon, BuildingIcon, StoreIcon } from "@/components/icons";
+import { GridIcon, UsersIcon, BuildingIcon, StoreIcon, StarFilledIcon } from "@/components/icons";
+import {
+  loadReviewModeration,
+  onReviewModerationChange,
+  pendingReviews,
+} from "@/lib/reviews";
+
+/** عدد التقييمات المعلّقة — يتحدّث مباشرة عند اعتماد/رفض المشرف */
+function usePendingReviewsCount() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const update = () => setCount(pendingReviews(loadReviewModeration()).length);
+    update();
+    return onReviewModerationChange(update);
+  }, []);
+  return count;
+}
 
 /** أيقونة درع (التوثيق) */
 function ShieldIcon({ className }: { className?: string }) {
@@ -80,16 +96,20 @@ const navItems: NavItem[] = [
   { href: "/admin/users", label: "المستخدمون", icon: UsersIcon },
   { href: "/admin/companies", label: "الشركات", icon: BuildingIcon },
   { href: "/admin/producers", label: "الأسر المنتجة", icon: StoreIcon },
+  { href: "/admin/reviews", label: "التقييمات", icon: StarFilledIcon },
   { href: "/admin/reports", label: "البلاغات", icon: FlagIcon, badge: counts.openReports },
   { href: "/admin/settings", label: "الإعدادات", icon: SettingsIcon },
 ];
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+  const pendingReviewsCount = usePendingReviewsCount();
   return (
     <nav className="flex flex-col gap-[3px]">
       {navItems.map((item) => {
         const Icon = item.icon;
+        const badge =
+          item.href === "/admin/reviews" ? pendingReviewsCount : item.badge;
         const active =
           item.href === "/admin"
             ? pathname === "/admin"
@@ -108,9 +128,9 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           >
             <Icon className={cn("h-[18px] w-[18px] shrink-0", active && "text-amber")} />
             <span className="truncate">{item.label}</span>
-            {item.badge ? (
+            {badge ? (
               <span className="mono ms-auto rounded-full bg-amber px-2 py-px text-[11px] font-bold text-white">
-                {item.badge}
+                {badge}
               </span>
             ) : null}
           </Link>

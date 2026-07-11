@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { CheckIcon, WhatsappIcon, EyeIcon, StarFilledIcon, XIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
+import {
+  approvedReviews,
+  pendingReviews,
+  loadReviewModeration,
+  onReviewModerationChange,
+  type Review,
+  type ReviewModeration,
+} from "@/lib/reviews";
 
 // أيقونات محلية صغيرة
 function ChartIcon({ className }: { className?: string }) {
@@ -76,23 +84,24 @@ const recentRows = [
   { name: "متجر الساحل", interest: "مهتم بالتعاون", date: "1 يونيو" },
 ] as const;
 
-// التقييمات — آراء العملاء والشركات (الصندوق يعرض أحدث 3 والنافذة تعرض الكل)
-const allReviews = [
-  { author: "تهامة للتقنية", type: "شركة", rating: 5, comment: "تسليم قبل الموعد وجودة عالية في التفاصيل. تجربة تعامل ممتازة وننصح به.", date: "قبل أسبوع" },
-  { author: "أم فيصل", type: "عميل", rating: 5, comment: "تعامل راقي وسرعة في الرد، والنتيجة فاقت التوقع. شكراً من القلب!", date: "قبل أسبوعين" },
-  { author: "متجر الساحل", type: "شركة", rating: 4, comment: "عمل احترافي والتواصل سلس عبر واتساب. نتطلع لتعاون قادم.", date: "قبل شهر" },
-  { author: "واحة جازان الرقمية", type: "شركة", rating: 5, comment: "التزام كامل بالمتطلبات وتسليم مرتّب. شراكة موفقة إن شاء الله.", date: "قبل شهر" },
-  { author: "أبو خالد", type: "عميل", rating: 4, comment: "خدمة جيدة وسعر مناسب، وياليت تكون الردود أسرع شوي في أوقات الذروة.", date: "قبل شهرين" },
-  { author: "دار صبيا للنشر", type: "شركة", rating: 5, comment: "إبداع في التنفيذ وتفاصيل مدروسة. تعاملنا معه أكثر من مرة وما قصّر.", date: "قبل شهرين" },
-  { author: "نوف الجيزاني", type: "عميل", rating: 3, comment: "الشغل حلو بس تأخر التسليم يومين عن الموعد المتفق عليه.", date: "قبل 3 أشهر" },
-  { author: "مؤسسة الشاطئ", type: "شركة", rating: 5, comment: "احترافية عالية من أول تواصل حتى التسليم. يستاهل التقييم الكامل.", date: "قبل 4 أشهر" },
-] as const;
+// التقييمات — لا يُعرض هنا إلا ما اعتمده مشرف المنصة (تُدار من لوحة الإدارة)
+function useModeratedReviews() {
+  const [moderation, setModeration] = useState<ReviewModeration>({});
 
-const recentReviews = allReviews.slice(0, 3);
+  useEffect(() => {
+    /* eslint-disable-next-line react-hooks/set-state-in-effect */
+    setModeration(loadReviewModeration());
+    return onReviewModerationChange(() => setModeration(loadReviewModeration()));
+  }, []);
 
-const avgRating = (
-  allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length
-).toFixed(1);
+  const approved = approvedReviews(moderation);
+  const pendingCount = pendingReviews(moderation).length;
+  const avg =
+    approved.length > 0
+      ? (approved.reduce((sum, r) => sum + r.rating, 0) / approved.length).toFixed(1)
+      : "—";
+  return { approved, pendingCount, avg };
+}
 
 /** نجوم من 5 */
 function Stars({ rating, size = "h-3.5 w-3.5" }: { rating: number; size?: string }) {
@@ -108,8 +117,18 @@ function Stars({ rating, size = "h-3.5 w-3.5" }: { rating: number; size?: string
   );
 }
 
-/** نافذة كل التقييمات */
-function AllReviewsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+/** نافذة كل التقييمات (المعتمدة فقط) */
+function AllReviewsModal({
+  open,
+  onClose,
+  reviews,
+  avg,
+}: {
+  open: boolean;
+  onClose: () => void;
+  reviews: Review[];
+  avg: string;
+}) {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="جميع التقييمات">
@@ -120,8 +139,8 @@ function AllReviewsModal({ open, onClose }: { open: boolean; onClose: () => void
             <h2 className="text-[16px] font-extrabold text-charcoal">جميع التقييمات</h2>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-amber/15 px-2.5 py-1 text-[12px] font-bold text-amber-dark">
               <StarFilledIcon className="h-3.5 w-3.5 text-amber" />
-              <span className="mono">{avgRating}</span>
-              <span className="font-medium text-muted">· <span className="mono">{allReviews.length}</span></span>
+              <span className="mono">{avg}</span>
+              <span className="font-medium text-muted">· <span className="mono">{reviews.length}</span></span>
             </span>
           </div>
           <button
@@ -134,8 +153,8 @@ function AllReviewsModal({ open, onClose }: { open: boolean; onClose: () => void
           </button>
         </div>
         <div className="overflow-y-auto">
-          {allReviews.map((r, i) => (
-            <div key={i} className={cn("flex flex-col gap-2 px-5 py-4", i < allReviews.length - 1 && "border-b border-line-soft")}>
+          {reviews.map((r, i) => (
+            <div key={r.id} className={cn("flex flex-col gap-2 px-5 py-4", i < reviews.length - 1 && "border-b border-line-soft")}>
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-jazan/10 text-[14px] font-bold text-jazan">
@@ -163,6 +182,8 @@ export default function DashboardPage() {
 
   const [available, setAvailable] = useState(true);
   const [reviewsOpen, setReviewsOpen] = useState(false);
+  const { approved, pendingCount, avg } = useModeratedReviews();
+  const recentReviews = approved.slice(0, 3);
 
   const maxBar = Math.max(...chart.map((b) => b.h));
 
@@ -448,12 +469,20 @@ export default function DashboardPage() {
       <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
           <h3 className="text-[15px] font-bold text-charcoal">آخر التقييمات</h3>
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
+            {pendingCount > 0 ? (
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full bg-warn/16 px-3 py-1.5 text-[12px] font-semibold text-warn-ink"
+                title="التقييمات الجديدة لا تظهر إلا بعد موافقة إدارة المنصة"
+              >
+                <span className="mono">{pendingCount}</span> بانتظار موافقة الإدارة
+              </span>
+            ) : null}
             <span className="inline-flex items-center gap-1.5 rounded-full bg-amber/15 px-3 py-1.5 text-[13px] font-bold text-amber-dark">
               <StarFilledIcon className="h-4 w-4 text-amber" />
-              <span className="mono">{avgRating}</span>
+              <span className="mono">{avg}</span>
               <span className="font-medium text-muted">
-                من <span className="mono">{allReviews.length}</span> تقييمات
+                من <span className="mono">{approved.length}</span> تقييمات
               </span>
             </span>
             <button
@@ -466,10 +495,16 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {recentReviews.length === 0 ? (
+          <div className="px-5 py-8 text-center text-[13px] text-muted">
+            لا توجد تقييمات معتمدة بعد — التقييمات الجديدة تظهر هنا بعد موافقة إدارة المنصة.
+          </div>
+        ) : null}
+
         <div className="grid gap-0 sm:grid-cols-3 sm:divide-x sm:divide-x-reverse sm:divide-line-soft">
           {recentReviews.map((r, i) => (
             <div
-              key={i}
+              key={r.id}
               className={cn(
                 "flex flex-col gap-2 px-5 py-4",
                 i < recentReviews.length - 1 && "border-b border-line-soft sm:border-b-0"
@@ -493,7 +528,12 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <AllReviewsModal open={reviewsOpen} onClose={() => setReviewsOpen(false)} />
+      <AllReviewsModal
+        open={reviewsOpen}
+        onClose={() => setReviewsOpen(false)}
+        reviews={approved}
+        avg={avg}
+      />
     </div>
   );
 }
