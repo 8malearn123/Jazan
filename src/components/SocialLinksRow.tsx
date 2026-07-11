@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import {
+  WhatsappIcon,
   XSocialIcon,
   InstagramIcon,
   YoutubeIcon,
   LinkedinIcon,
   TiktokIcon,
+  GithubIcon,
   GlobeIcon,
 } from "@/components/icons";
 import {
@@ -18,11 +20,13 @@ import {
 import { cn } from "@/lib/cn";
 
 const platformIcons: Record<string, typeof GlobeIcon> = {
+  whatsapp: WhatsappIcon,
   x: XSocialIcon,
   instagram: InstagramIcon,
   youtube: YoutubeIcon,
   linkedin: LinkedinIcon,
   tiktok: TiktokIcon,
+  github: GithubIcon,
   website: GlobeIcon,
 };
 
