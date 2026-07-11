@@ -4,15 +4,18 @@ import Link from "next/link";
 import { StarIcon, WhatsappIcon, InstagramIcon, YoutubeIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
-
-const socials = [
-  { label: "واتساب", Icon: WhatsappIcon, href: "#" },
-  { label: "انستقرام", Icon: InstagramIcon, href: "#" },
-  { label: "يوتيوب", Icon: YoutubeIcon, href: "#" },
-];
+import { useSiteSocial } from "@/lib/siteSocial";
 
 export function SiteFooter() {
   const { d, isAr } = useLocale();
+  const followLinks = useSiteSocial();
+
+  // روابط تابعنا — يحددها المدير من إعدادات لوحة الإدارة
+  const socials = [
+    { label: "واتساب", Icon: WhatsappIcon, href: followLinks.whatsapp },
+    { label: "انستقرام", Icon: InstagramIcon, href: followLinks.instagram },
+    { label: "يوتيوب", Icon: YoutubeIcon, href: followLinks.youtube },
+  ].filter((s) => s.href.trim());
 
   const columns = [
     {
@@ -71,14 +74,17 @@ export function SiteFooter() {
             <div className="mb-4 text-sm font-bold text-white">{d.footer.follow}</div>
             <div className="flex gap-3">
               {socials.map(({ label, Icon, href }) => (
-                <Link
+                <a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
+                  title={label}
                   className="flex h-10 w-10 items-center justify-center rounded-[11px] bg-white/[.08] text-white/70 transition-colors hover:bg-white/[.16]"
                 >
                   <Icon width={19} height={19} />
-                </Link>
+                </a>
               ))}
             </div>
           </div>
