@@ -22,6 +22,7 @@ export function SiteFooter() {
       title: d.footer.platform,
       links: [
         { label: d.header.browse, href: "/browse" },
+        { label: d.header.producers, href: "/producers" },
         { label: d.header.companies, href: "/companies" },
         { label: d.header.how, href: "/#how-it-works" },
       ],

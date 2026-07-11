@@ -12,6 +12,7 @@ const STORAGE_KEY = "jazanheroes.locale";
 const ar = {
   header: {
     browse: "تصفّح الأبطال",
+    producers: "الأسر المنتجة",
     companies: "للشركات",
     how: "كيف تعمل",
     login: "تسجيل الدخول",
@@ -413,6 +414,7 @@ export type Dict = typeof ar;
 const en: Dict = {
   header: {
     browse: "Browse Heroes",
+    producers: "Producer Families",
     companies: "For Companies",
     how: "How It Works",
     login: "Log in",
