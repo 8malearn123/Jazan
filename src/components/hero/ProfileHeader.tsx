@@ -3,6 +3,7 @@
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CheckIcon, WhatsappIcon, MapPinIcon, StarFilledIcon } from "@/components/icons";
+import { SocialLinksRow } from "@/components/SocialLinksRow";
 import { whatsappLink, site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 import type { Hero } from "@/lib/types";
@@ -95,6 +96,9 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
             {d.heroPage.contactWa}
           </a>
         </div>
+
+        {/* شبكات التواصل */}
+        <SocialLinksRow profileId={hero.id} className="mt-4" />
       </div>
     </div>
   );

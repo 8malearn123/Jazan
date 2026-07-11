@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon } from "@/components/icons";
+import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon, ImagesIcon, HeadsetIcon, ShareIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { NotificationBell } from "@/components/dashboard/NotificationBell";
 import { DownloadPdfButton } from "@/components/dashboard/DownloadPdfButton";
@@ -50,6 +50,9 @@ function navForRole(role: UserRole): NavItem[] {
   const items: NavItem[] = [
     { href: "/dashboard", label: "لوحة التحكم", Icon: GridIcon },
     { href: "/dashboard/profile", label: "ملفي الشخصي", Icon: UsersIcon },
+    { href: "/dashboard/works", label: "أعمالي", Icon: ImagesIcon },
+    { href: "/dashboard/support", label: "الدعم الفني", Icon: HeadsetIcon },
+    { href: "/dashboard/social", label: "شبكات التواصل", Icon: ShareIcon },
   ];
   if (role === "company") {
     items.push({ href: "/dashboard/jobs", label: "إدارة الوظائف", Icon: BriefcaseIcon });
