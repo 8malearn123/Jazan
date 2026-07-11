@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { CheckIcon, WhatsappIcon, EyeIcon } from "@/components/icons";
+import { CheckIcon, WhatsappIcon, EyeIcon, StarFilledIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 
@@ -65,6 +65,17 @@ const recentRows = [
   { name: "واحة جازان الرقمية", interest: "طلب عرض سعر", date: "5 يونيو" },
   { name: "متجر الساحل", interest: "مهتم بالتعاون", date: "1 يونيو" },
 ] as const;
+
+// آخر التقييمات — آراء العملاء والشركات
+const recentReviews = [
+  { author: "تهامة للتقنية", type: "شركة", rating: 5, comment: "تسليم قبل الموعد وجودة عالية في التفاصيل. تجربة تعامل ممتازة وننصح به.", date: "قبل أسبوع" },
+  { author: "أم فيصل", type: "عميل", rating: 5, comment: "تعامل راقي وسرعة في الرد، والنتيجة فاقت التوقع. شكراً من القلب!", date: "قبل أسبوعين" },
+  { author: "متجر الساحل", type: "شركة", rating: 4, comment: "عمل احترافي والتواصل سلس عبر واتساب. نتطلع لتعاون قادم.", date: "قبل شهر" },
+] as const;
+
+const avgRating = (
+  recentReviews.reduce((sum, r) => sum + r.rating, 0) / recentReviews.length
+).toFixed(1);
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -304,6 +315,56 @@ export default function DashboardPage() {
             </span>
           </div>
         ))}
+      </div>
+
+      {/* آخر التقييمات */}
+      <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
+          <h3 className="text-[15px] font-bold text-charcoal">آخر التقييمات</h3>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber/15 px-3 py-1.5 text-[13px] font-bold text-amber-dark">
+            <StarFilledIcon className="h-4 w-4 text-amber" />
+            <span className="mono">{avgRating}</span>
+            <span className="font-medium text-muted">
+              من <span className="mono">{recentReviews.length}</span> تقييمات
+            </span>
+          </span>
+        </div>
+
+        <div className="grid gap-0 sm:grid-cols-3 sm:divide-x sm:divide-x-reverse sm:divide-line-soft">
+          {recentReviews.map((r, i) => (
+            <div
+              key={i}
+              className={cn(
+                "flex flex-col gap-2 px-5 py-4",
+                i < recentReviews.length - 1 && "border-b border-line-soft sm:border-b-0"
+              )}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-jazan/10 text-[14px] font-bold text-jazan">
+                    {r.author.trim().charAt(0)}
+                  </span>
+                  <div>
+                    <div className="text-[13px] font-bold text-charcoal">{r.author}</div>
+                    <div className="text-[11px] text-muted">{r.type} · {r.date}</div>
+                  </div>
+                </div>
+              </div>
+              <span
+                className="inline-flex items-center gap-0.5"
+                aria-label={`التقييم ${r.rating} من 5`}
+              >
+                {Array.from({ length: 5 }).map((_, star) => (
+                  <StarFilledIcon
+                    key={star}
+                    className={star < r.rating ? "h-3.5 w-3.5 text-amber" : "h-3.5 w-3.5 text-line"}
+                  />
+                ))}
+              </span>
+              <p className="text-[13px] leading-relaxed text-ink">{r.comment}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
