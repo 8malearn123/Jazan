@@ -6,17 +6,18 @@ import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Button } from "@/components/ui/Button";
 import { SearchIcon, CheckIcon, MapIcon } from "@/components/icons";
 import { JazanMap } from "@/components/home/JazanMap";
-import { counts } from "@/lib/stats";
+import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
 
 export function Hero() {
   const { d } = useLocale();
   const [mapOpen, setMapOpen] = useState(false);
+  const live = useLiveCounts();
 
   const stats = [
-    { value: String(counts.heroes), label: d.stats.heroes },
-    { value: String(counts.producers), label: d.stats.producers },
-    { value: String(counts.companies), label: d.stats.companies },
+    { value: String(live.heroes), label: d.stats.heroes },
+    { value: String(live.producers), label: d.stats.producers },
+    { value: String(live.companies), label: d.stats.companies },
   ];
 
   return (

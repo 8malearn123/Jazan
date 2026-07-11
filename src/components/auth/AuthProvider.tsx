@@ -5,6 +5,7 @@ import type { SessionUser, UserRole } from "@/lib/types";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { matchDemoAccount, type DemoAccount } from "@/lib/demo";
+import { addToRegistry } from "@/lib/registry";
 
 // المصادقة: تستخدم Supabase عند ضبط المفاتيح، وإلا تعمل بوضع تجريبي (localStorage).
 
@@ -148,6 +149,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const supabase = createClient();
     if (!supabase) {
       const u: SessionUser = { id: crypto.randomUUID(), name: c.name, role: c.role, email: c.email };
+      addToRegistry({ id: u.id, name: u.name, role: u.role });
       login(u);
       return { user: u };
     }
@@ -158,6 +160,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
     if (error) return { error: error.message };
     const u: SessionUser = { id: data.user?.id ?? "", name: c.name, role: c.role, email: c.email };
+    addToRegistry({ id: u.id, name: u.name, role: u.role });
     // بدون جلسة فعّالة (تفعيل البريد مطلوب) لا يمكن دخول الداشبورد مباشرة.
     if (!data.session) return { user: u, needsEmailConfirmation: true };
     return { user: u };
