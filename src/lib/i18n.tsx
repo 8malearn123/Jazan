@@ -224,6 +224,7 @@ const ar = {
   } as Record<string, string>,
   heroPage: {
     back: "رجوع لتصفّح الأبطال",
+    cvBtn: "السيرة الذاتية",
     portfolio: "معرض الأعمال",
     works: "أعمال",
     about: "نبذة",
@@ -636,6 +637,7 @@ const en: Dict = {
   } as Record<string, string>,
   heroPage: {
     back: "Back to browse heroes",
+    cvBtn: "Résumé",
     portfolio: "Portfolio",
     works: "works",
     about: "About",
