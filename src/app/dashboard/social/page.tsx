@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import {
+  WhatsappIcon,
   XSocialIcon,
   InstagramIcon,
   YoutubeIcon,
   LinkedinIcon,
   TiktokIcon,
+  GithubIcon,
   GlobeIcon,
   EyeIcon,
 } from "@/components/icons";
@@ -22,11 +24,13 @@ import Link from "next/link";
 // شبكات التواصل — روابط حسابات المستخدم، تظهر في صفحته العامة
 
 const platformIcons: Record<string, typeof GlobeIcon> = {
+  whatsapp: WhatsappIcon,
   x: XSocialIcon,
   instagram: InstagramIcon,
   youtube: YoutubeIcon,
   linkedin: LinkedinIcon,
   tiktok: TiktokIcon,
+  github: GithubIcon,
   website: GlobeIcon,
 };
 
