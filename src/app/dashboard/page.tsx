@@ -58,6 +58,16 @@ const chart = [
   { label: "اليوم", h: 104, hot: false, today: true },
 ];
 
+// آخر من تصفّح ملفك — زوار الملف (شركات، عملاء، أسر منتجة)
+const recentVisitors = [
+  { name: "تهامة للتقنية", type: "شركة", time: "قبل ساعة", href: "/companies/c1", tone: "bg-info/12 text-info-ink" },
+  { name: "أم فيصل", type: "عميل", time: "قبل 3 ساعات", href: null, tone: "bg-jazan/10 text-jazan" },
+  { name: "واحة جازان الرقمية", type: "شركة", time: "اليوم", href: "/companies/c2", tone: "bg-info/12 text-info-ink" },
+  { name: "أبو خالد", type: "عميل", time: "أمس", href: null, tone: "bg-jazan/10 text-jazan" },
+  { name: "دار صبيا للنشر", type: "شركة", time: "أمس", href: "/companies/c4", tone: "bg-info/12 text-info-ink" },
+  { name: "أسرة نكهات صبيا", type: "أسرة منتجة", time: "قبل يومين", href: "/producers/pr1", tone: "bg-amber/15 text-amber-dark" },
+] as const;
+
 // آخر من تواصل معك — عام لجميع مزوّدي الخدمات
 const recentRows = [
   { name: "تهامة للتقنية", interest: "مهتم بخدماتك", date: "اليوم" },
@@ -352,6 +362,52 @@ export default function DashboardPage() {
               <span className="text-[12px] font-semibold">{copy.addLabel}</span>
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* آخر من تصفّح ملفك */}
+      <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
+          <h3 className="text-[15px] font-bold text-charcoal">آخر من تصفّح ملفك</h3>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-jazan/10 px-3 py-1.5 text-[12px] font-semibold text-jazan">
+            <EyeIcon width={14} height={14} />
+            <span className="mono">{recentVisitors.length}</span> زوار هذا الأسبوع
+          </span>
+        </div>
+        <div className="grid grid-cols-1 gap-2.5 p-4 sm:grid-cols-2 lg:grid-cols-3">
+          {recentVisitors.map((v) => {
+            const inner = (
+              <>
+                <span
+                  className={cn(
+                    "flex h-10 w-10 flex-none items-center justify-center rounded-full text-[15px] font-bold",
+                    v.tone
+                  )}
+                >
+                  {v.name.trim().charAt(0)}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[14px] font-bold text-charcoal">
+                    {v.name}
+                  </span>
+                  <span className="block text-[12px] text-muted">
+                    {v.type} · {v.time}
+                  </span>
+                </span>
+              </>
+            );
+            const cls =
+              "flex items-center gap-3 rounded-[13px] border border-line bg-surface px-3.5 py-3 no-underline transition-colors";
+            return v.href ? (
+              <Link key={v.name} href={v.href} className={cn(cls, "hover:border-jazan")}>
+                {inner}
+              </Link>
+            ) : (
+              <div key={v.name} className={cls}>
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </div>
 
