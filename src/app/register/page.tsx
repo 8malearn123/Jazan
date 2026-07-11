@@ -20,7 +20,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import { homeForRole } from "@/lib/demo";
 import { site } from "@/lib/site";
-import { counts } from "@/lib/stats";
+import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
 import type { UserRole } from "@/lib/types";
 
@@ -45,10 +45,11 @@ const inputField =
 
 function RegisterForm() {
   const { d, isAr } = useLocale();
+  const live = useLiveCounts();
   const heroStats = [
-    { value: String(counts.heroes), label: d.stats.heroes },
-    { value: String(counts.producers), label: d.stats.producers },
-    { value: String(counts.companies), label: d.stats.companies },
+    { value: String(live.heroes), label: d.stats.heroes },
+    { value: String(live.producers), label: d.stats.producers },
+    { value: String(live.companies), label: d.stats.companies },
   ];
   const roles = roleStyles.map((r) => ({ ...r, ...d.categories[r.value] }));
   const router = useRouter();
