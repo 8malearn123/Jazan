@@ -4,9 +4,13 @@ import { useMemo, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
-import { normalizeText, fuzzyIncludes } from "@/lib/text";
+import { normalizeText } from "@/lib/text";
+import { heroMatches, producerMatches, companyMatches } from "@/lib/search";
+import { producers, companies, jobs } from "@/lib/data";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
 import { HeroBrowseCard } from "./HeroBrowseCard";
+import { ProducerCard } from "../producers/ProducerCard";
+import { CompanyCard } from "../companies/CompanyCard";
 
 type StatusFilter = "all" | AvailabilityStatus;
 
@@ -46,18 +50,25 @@ export function BrowseClient({
     label: d.browse.chips[c.key as keyof typeof d.browse.chips] ?? d.browse.chips.all,
   }));
 
+  const q = normalizeText(query.trim());
+
   const results = useMemo(() => {
-    const q = normalizeText(query.trim());
     return heroes.filter((h) => {
-      const inQuery =
-        !q ||
-        fuzzyIncludes(h.name, q) ||
-        fuzzyIncludes(h.title, q) ||
-        h.skills.some((s) => fuzzyIncludes(s, q));
       const inCity = city === "all" || h.city === city;
-      return inQuery && inCity && matchStatus(h, status);
+      return heroMatches(h, q) && inCity && matchStatus(h, status);
     });
-  }, [heroes, query, city, status]);
+  }, [heroes, q, city, status]);
+
+  // نتائج عابرة للأقسام: أسر منتجة وشركات تقدّم ما يبحث عنه الزائر
+  // (منتجات، خدمات، أكلات، مجالات توظيف) — تظهر فقط عند وجود بحث
+  const producerResults = useMemo(
+    () => (q ? producers.filter((p) => producerMatches(p, q)) : []),
+    [q]
+  );
+  const companyResults = useMemo(
+    () => (q ? companies.filter((c) => companyMatches(c, q, jobs)) : []),
+    [q]
+  );
 
   return (
     <>
@@ -114,7 +125,10 @@ export function BrowseClient({
 
       {/* العدّاد */}
       <p className="mt-5 text-[13px] text-muted">
-        <span className="mono font-semibold text-charcoal">{results.length}</span> {d.browse.result}
+        <span className="mono font-semibold text-charcoal">
+          {results.length + producerResults.length + companyResults.length}
+        </span>{" "}
+        {d.browse.result}
       </p>
 
       {/* الشبكة */}
@@ -124,12 +138,42 @@ export function BrowseClient({
             <HeroBrowseCard key={hero.id} hero={hero} />
           ))}
         </div>
-      ) : (
+      ) : producerResults.length === 0 && companyResults.length === 0 ? (
         <div className="mt-3 rounded-[18px] border border-dashed border-line bg-surface py-16 text-center">
           <p className="text-[15px] font-semibold text-charcoal">{d.browse.emptyTitle}</p>
           <p className="mt-1 text-[13px] text-muted">{d.browse.emptyDesc}</p>
         </div>
-      )}
+      ) : null}
+
+      {/* أسر منتجة تقدّم المنتج / الأكلة المطلوبة */}
+      {producerResults.length > 0 ? (
+        <section className="mt-8">
+          <h2 className="text-[16px] font-extrabold text-charcoal">
+            {d.browse.alsoProducers}{" "}
+            <span className="mono text-[13px] font-medium text-muted">({producerResults.length})</span>
+          </h2>
+          <div className="mt-3 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {producerResults.map((p) => (
+              <ProducerCard key={p.id} producer={p} />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* شركات تقدّم الخدمة أو توظّف في المجال المطلوب */}
+      {companyResults.length > 0 ? (
+        <section className="mt-8">
+          <h2 className="text-[16px] font-extrabold text-charcoal">
+            {d.browse.alsoCompanies}{" "}
+            <span className="mono text-[13px] font-medium text-muted">({companyResults.length})</span>
+          </h2>
+          <div className="mt-3 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {companyResults.map((c) => (
+              <CompanyCard key={c.id} company={c} />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </>
   );
 }
