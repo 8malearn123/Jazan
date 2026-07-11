@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import {
@@ -8,19 +9,98 @@ import {
   WhatsappIcon,
   MapPinIcon,
   StarFilledIcon,
+  XIcon,
 } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import { SocialLinksRow } from "@/components/SocialLinksRow";
 import { useLocale } from "@/lib/i18n";
-import type { Producer } from "@/lib/types";
+import type { Producer, Product } from "@/lib/types";
+
+/** سلة الطلب المصغرة — كمية كل منتج، تُحفظ محلياً لكل أسرة */
+type Cart = Record<string, number>;
+
+function cartStorageKey(producerId: string) {
+  return `jazanheroes.cart.${producerId}`;
+}
+
+/** رسالة واتساب جاهزة بقائمة المنتجات المختارة (بالعربية دائماً لأنها تصل للأسرة) */
+function buildCartMessage(name: string, products: Product[], cart: Cart): string {
+  const lines = products
+    .filter((p) => (cart[p.id] ?? 0) > 0)
+    .map((p) => {
+      const qty = cart[p.id];
+      const price = p.price ? ` — ${p.price * qty} ر.س` : "";
+      return `• ${p.name} ×${qty}${price}`;
+    });
+  const total = products.reduce((sum, p) => sum + (p.price ?? 0) * (cart[p.id] ?? 0), 0);
+  return [
+    `مرحباً، أرغب بطلب المنتجات التالية من ${name}:`,
+    ...lines,
+    `الإجمالي: ${total} ر.س`,
+  ].join("\n");
+}
 
 /** محتوى صفحة الأسرة المنتجة — مكوّن عميل ليدعم تبديل اللغة */
 export function ProducerView({ producer }: { producer: Producer }) {
   const { d } = useLocale();
   const { name, category, city, bio, verified, rating, reviewsCount } = producer;
   const phone = producer.whatsapp ?? site.whatsapp;
-  const products = producer.products ?? [];
+  const products = useMemo(() => producer.products ?? [], [producer.products]);
   const t = d.producerDetail;
+
+  // --- سلة المشتريات ---
+  const [cart, setCart] = useState<Cart>({});
+
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    try {
+      const raw = localStorage.getItem(cartStorageKey(producer.id));
+      if (raw) setCart(JSON.parse(raw) as Cart);
+    } catch {
+      // ignore
+    }
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [producer.id]);
+
+  function updateCart(productId: string, delta: number) {
+    setCart((prev) => {
+      const next = { ...prev };
+      const qty = (next[productId] ?? 0) + delta;
+      if (qty <= 0) delete next[productId];
+      else next[productId] = qty;
+      try {
+        localStorage.setItem(cartStorageKey(producer.id), JSON.stringify(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  }
+
+  function clearCart() {
+    setCart({});
+    try {
+      localStorage.removeItem(cartStorageKey(producer.id));
+    } catch {
+      // ignore
+    }
+  }
+
+  const cartCount = useMemo(
+    () => Object.values(cart).reduce((sum, q) => sum + q, 0),
+    [cart]
+  );
+  const cartTotal = useMemo(
+    () => products.reduce((sum, p) => sum + (p.price ?? 0) * (cart[p.id] ?? 0), 0),
+    [products, cart]
+  );
+
+  // رسالة واتساب: قائمة السلة إن وُجدت، وإلا رسالة عامة
+  const waMessage =
+    cartCount > 0
+      ? buildCartMessage(name, products, cart)
+      : `مرحباً، أرغب بالطلب من ${name}`;
+  const waHref = whatsappLink(phone, waMessage);
 
   return (
     <div className="mt-5 overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)]">
@@ -105,13 +185,18 @@ export function ProducerView({ producer }: { producer: Producer }) {
             {bio}
           </p>
           <a
-            href={whatsappLink(phone, `مرحباً، أرغب بالطلب من ${name}`)}
+            href={waHref}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-6 py-3 text-[15px] font-semibold text-white no-underline shadow-[0_6px_16px_rgba(37,211,102,.28)] transition-[filter] hover:brightness-95"
           >
             <WhatsappIcon className="h-[19px] w-[19px]" />
             {t.orderWa}
+            {cartCount > 0 ? (
+              <span className="mono rounded-full bg-white/25 px-2 py-0.5 text-[12px] font-bold">
+                {cartCount}
+              </span>
+            ) : null}
           </a>
         </div>
 
@@ -119,12 +204,17 @@ export function ProducerView({ producer }: { producer: Producer }) {
         <SocialLinksRow profileId={producer.id} className="mt-4 justify-start" />
 
         {/* قائمة المنتجات */}
-        <h2 className="mt-[34px] mb-[18px] text-xl font-bold text-charcoal">
-          {t.productList}{" "}
-          <span className="font-medium text-muted">
-            (<span className="mono">{products.length}</span>)
-          </span>
-        </h2>
+        <div className="mt-[34px] mb-[18px] flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-xl font-bold text-charcoal">
+            {t.productList}{" "}
+            <span className="font-medium text-muted">
+              (<span className="mono">{products.length}</span>)
+            </span>
+          </h2>
+          {products.length > 0 ? (
+            <p className="text-[13px] text-muted">{t.cartHint}</p>
+          ) : null}
+        </div>
         {products.length === 0 ? (
           <div className="rounded-[18px] border border-dashed border-line bg-cream/40 py-14 text-center">
             <p className="text-[15px] font-semibold text-charcoal">{t.emptyTitle}</p>
@@ -154,18 +244,37 @@ export function ProducerView({ producer }: { producer: Producer }) {
                   {product.price}{" "}
                   <span className="text-[13px] text-muted">{t.sar}</span>
                 </span>
-                <a
-                  href={whatsappLink(
-                    phone,
-                    `مرحباً، أرغب بطلب: ${product.name} من ${name}`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-whatsapp px-3 py-2.5 text-[13px] font-semibold text-white no-underline transition-[filter] hover:brightness-95"
-                >
-                  <WhatsappIcon className="h-[16px] w-[16px]" />
-                  {t.order}
-                </a>
+                {(cart[product.id] ?? 0) === 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => updateCart(product.id, 1)}
+                    className="mt-3 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-whatsapp px-3 py-2.5 text-[13px] font-semibold text-white transition-[filter] hover:brightness-95"
+                  >
+                    + {t.addToCart}
+                  </button>
+                ) : (
+                  <div className="mt-3 flex w-full items-center justify-between rounded-xl border-[1.5px] border-whatsapp bg-whatsapp/10 px-2 py-1.5">
+                    <button
+                      type="button"
+                      onClick={() => updateCart(product.id, 1)}
+                      aria-label={`زيادة ${product.name}`}
+                      className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg bg-whatsapp text-[15px] font-bold text-white transition-[filter] hover:brightness-95"
+                    >
+                      +
+                    </button>
+                    <span className="mono text-[15px] font-bold text-charcoal">
+                      {cart[product.id]}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => updateCart(product.id, -1)}
+                      aria-label={`إنقاص ${product.name}`}
+                      className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg border border-whatsapp bg-surface text-[15px] font-bold text-success-ink transition-colors hover:bg-whatsapp hover:text-white"
+                    >
+                      −
+                    </button>
+                  </div>
+                )}
               </div>
             </article>
           ))}
@@ -181,12 +290,7 @@ export function ProducerView({ producer }: { producer: Producer }) {
             </h2>
             <p className="mt-1.5 text-sm text-muted">{t.readyDesc}</p>
           </div>
-          <a
-            href={whatsappLink(phone, `مرحباً، أرغب بالطلب من ${name}`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-none"
-          >
+          <a href={waHref} target="_blank" rel="noopener noreferrer" className="flex-none">
             <Button variant="whatsapp" size="lg" className="pointer-events-none">
               <WhatsappIcon className="h-5 w-5" />
               {t.contactWa}
@@ -194,6 +298,48 @@ export function ProducerView({ producer }: { producer: Producer }) {
           </a>
         </div>
       </div>
+
+      {/* شريط السلة الثابت — يظهر عند اختيار منتجات */}
+      {cartCount > 0 ? (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-4 py-3 shadow-[0_-8px_28px_rgba(28,42,38,.14)] backdrop-blur">
+          <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[12px] bg-whatsapp/15 text-success-ink">
+                <StoreIcon className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="text-[13px] font-bold text-charcoal">
+                  {t.cartTitle} ·{" "}
+                  <span className="mono">{cartCount}</span> {t.cartItems}
+                </div>
+                <div className="text-[12px] text-muted">
+                  {t.cartTotal}:{" "}
+                  <span className="mono font-bold text-jazan">{cartTotal}</span> {t.sar}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={clearCart}
+                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-line bg-surface px-3.5 py-2.5 text-[13px] font-semibold text-muted transition-colors hover:border-danger-line hover:text-danger"
+              >
+                <XIcon width={14} height={14} />
+                {t.cartClear}
+              </button>
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-5 py-2.5 text-[14px] font-semibold text-white no-underline shadow-[0_6px_16px_rgba(37,211,102,.28)] transition-[filter] hover:brightness-95"
+              >
+                <WhatsappIcon className="h-[17px] w-[17px]" />
+                {t.cartWa}
+              </a>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
