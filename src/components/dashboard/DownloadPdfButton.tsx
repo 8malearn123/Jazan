@@ -4,6 +4,7 @@ import { DownloadIcon } from "@/components/icons";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/cn";
+import { approvedReviews, loadReviewModeration } from "@/lib/reviews";
 
 // زر تحميل الملف الشخصي والإحصائيات كـ PDF.
 // يولّد تقريراً HTML بهوية المنصة ويفتح نافذة الطباعة (حفظ كـ PDF).
@@ -24,13 +25,10 @@ const demoStats = [
   { value: "32", label: "طلبات التواصل", delta: "" },
 ];
 
-const demoReviews = [
-  { author: "تهامة للتقنية", type: "شركة", rating: 5, comment: "تسليم قبل الموعد وجودة عالية في التفاصيل. تجربة تعامل ممتازة وننصح به.", date: "قبل أسبوع" },
-  { author: "أم فيصل", type: "عميل", rating: 5, comment: "تعامل راقي وسرعة في الرد، والنتيجة فاقت التوقع. شكراً من القلب!", date: "قبل أسبوعين" },
-  { author: "متجر الساحل", type: "شركة", rating: 4, comment: "عمل احترافي والتواصل سلس عبر واتساب. نتطلع لتعاون قادم.", date: "قبل شهر" },
-  { author: "واحة جازان الرقمية", type: "شركة", rating: 5, comment: "التزام كامل بالمتطلبات وتسليم مرتّب. شراكة موفقة إن شاء الله.", date: "قبل شهر" },
-  { author: "أبو خالد", type: "عميل", rating: 4, comment: "خدمة جيدة وسعر مناسب، وياليت تكون الردود أسرع شوي في أوقات الذروة.", date: "قبل شهرين" },
-];
+// التقييمات المعتمدة من إدارة المنصة فقط (أحدث 5) — نفس ما يظهر في لوحة التحكم
+function reportReviews() {
+  return approvedReviews(loadReviewModeration()).slice(0, 5);
+}
 
 const demoContacts = [
   { name: "تهامة للتقنية", interest: "مهتم بخدماتك", date: "اليوم" },
@@ -48,7 +46,11 @@ function stars(rating: number): string {
 }
 
 function buildReport(name: string, roleLabel: string, draft: ProfileDraft | null): string {
-  const avg = (demoReviews.reduce((s, r) => s + r.rating, 0) / demoReviews.length).toFixed(1);
+  const reviews = reportReviews();
+  const avg =
+    reviews.length > 0
+      ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
+      : "—";
   const today = new Date().toLocaleDateString("ar-SA", { year: "numeric", month: "long", day: "numeric" });
 
   const infoRows = [
@@ -116,8 +118,8 @@ function buildReport(name: string, roleLabel: string, draft: ProfileDraft | null
       .join("")}
   </div>
 
-  <h2>التقييمات <span class="avg">— المتوسط ${avg} من ${demoReviews.length} تقييمات</span></h2>
-  ${demoReviews
+  <h2>التقييمات <span class="avg">— المتوسط ${avg} من ${reviews.length} تقييمات</span></h2>
+  ${reviews
     .map(
       (r) => `<div class="review">
         <div style="display:flex;justify-content:space-between;align-items:center">
