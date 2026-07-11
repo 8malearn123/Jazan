@@ -50,6 +50,7 @@ export function ProducerView({ producer }: { producer: Producer }) {
 
   // --- سلة المشتريات ---
   const [cart, setCart] = useState<Cart>({});
+  const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect */
@@ -64,6 +65,7 @@ export function ProducerView({ producer }: { producer: Producer }) {
 
   function updateCart(productId: string, delta: number) {
     setCart((prev) => {
+      const wasEmpty = Object.keys(prev).length === 0;
       const next = { ...prev };
       const qty = (next[productId] ?? 0) + delta;
       if (qty <= 0) delete next[productId];
@@ -73,6 +75,8 @@ export function ProducerView({ producer }: { producer: Producer }) {
       } catch {
         // ignore
       }
+      // افتح الصندوق عند أول إضافة حتى يلاحظه العميل
+      if (wasEmpty && delta > 0) setCartOpen(true);
       return next;
     });
   }
@@ -299,45 +303,125 @@ export function ProducerView({ producer }: { producer: Producer }) {
         </div>
       </div>
 
-      {/* شريط السلة الثابت — يظهر عند اختيار منتجات */}
-      {cartCount > 0 ? (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-4 py-3 shadow-[0_-8px_28px_rgba(28,42,38,.14)] backdrop-blur">
-          <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[12px] bg-whatsapp/15 text-success-ink">
-                <StoreIcon className="h-5 w-5" />
-              </span>
-              <div>
-                <div className="text-[13px] font-bold text-charcoal">
-                  {t.cartTitle} ·{" "}
-                  <span className="mono">{cartCount}</span> {t.cartItems}
+      {/* السلة العائمة — صندوق صغير على يمين الشاشة يُفتح ويُغلق */}
+      {products.length > 0 ? (
+        <div className="fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2.5 sm:right-6">
+          {/* الصندوق */}
+          {cartOpen ? (
+            <div className="w-[290px] overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_18px_50px_rgba(28,42,38,.25)]">
+              {/* الترويسة */}
+              <div className="flex items-center justify-between gap-2 border-b border-line bg-cream/70 px-4 py-3">
+                <div className="flex items-center gap-2 text-[13px] font-bold text-charcoal">
+                  <StoreIcon className="h-4 w-4 text-success-ink" />
+                  {t.cartTitle}
+                  {cartCount > 0 ? (
+                    <span className="mono rounded-full bg-whatsapp/15 px-2 py-0.5 text-[11px] font-bold text-success-ink">
+                      {cartCount}
+                    </span>
+                  ) : null}
                 </div>
-                <div className="text-[12px] text-muted">
-                  {t.cartTotal}:{" "}
-                  <span className="mono font-bold text-jazan">{cartTotal}</span> {t.sar}
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setCartOpen(false)}
+                  aria-label={t.cartClose}
+                  className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg border border-line text-muted transition-colors hover:border-jazan hover:text-jazan"
+                >
+                  <XIcon width={14} height={14} />
+                </button>
               </div>
+
+              {/* القائمة */}
+              {cartCount === 0 ? (
+                <p className="px-4 py-6 text-center text-[12px] text-muted">{t.cartEmpty}</p>
+              ) : (
+                <div className="max-h-[240px] overflow-y-auto">
+                  {products
+                    .filter((p) => (cart[p.id] ?? 0) > 0)
+                    .map((p) => (
+                      <div
+                        key={p.id}
+                        className="flex items-center justify-between gap-2 border-b border-line-soft px-4 py-2.5 last:border-0"
+                      >
+                        <div className="min-w-0">
+                          <div className="truncate text-[12px] font-bold text-charcoal">{p.name}</div>
+                          <div className="mono text-[11px] text-muted">
+                            {(p.price ?? 0) * (cart[p.id] ?? 0)} {t.sar}
+                          </div>
+                        </div>
+                        <div className="flex flex-none items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => updateCart(p.id, 1)}
+                            aria-label={`زيادة ${p.name}`}
+                            className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-md bg-whatsapp text-[13px] font-bold text-white transition-[filter] hover:brightness-95"
+                          >
+                            +
+                          </button>
+                          <span className="mono w-5 text-center text-[13px] font-bold text-charcoal">
+                            {cart[p.id]}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => updateCart(p.id, -1)}
+                            aria-label={`إنقاص ${p.name}`}
+                            className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border border-line text-[13px] font-bold text-muted transition-colors hover:border-danger-line hover:text-danger"
+                          >
+                            −
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+
+              {/* المجموع والإجراءات */}
+              {cartCount > 0 ? (
+                <div className="border-t border-line bg-cream/50 px-4 py-3">
+                  <div className="flex items-center justify-between text-[13px]">
+                    <span className="font-semibold text-muted">{t.cartTotal}</span>
+                    <span className="mono font-bold text-jazan">
+                      {cartTotal} <span className="text-[11px] text-muted">{t.sar}</span>
+                    </span>
+                  </div>
+                  <div className="mt-2.5 flex items-center gap-2">
+                    <a
+                      href={waHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-whatsapp px-3 py-2.5 text-[13px] font-semibold text-white no-underline shadow-[0_5px_14px_rgba(37,211,102,.28)] transition-[filter] hover:brightness-95"
+                    >
+                      <WhatsappIcon className="h-4 w-4" />
+                      {t.cartWa}
+                    </a>
+                    <button
+                      type="button"
+                      onClick={clearCart}
+                      title={t.cartClear}
+                      className="cursor-pointer rounded-xl border border-line bg-surface px-3 py-2.5 text-[12px] font-semibold text-muted transition-colors hover:border-danger-line hover:text-danger"
+                    >
+                      {t.cartClear}
+                    </button>
+                  </div>
+                </div>
+              ) : null}
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={clearCart}
-                className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-line bg-surface px-3.5 py-2.5 text-[13px] font-semibold text-muted transition-colors hover:border-danger-line hover:text-danger"
-              >
-                <XIcon width={14} height={14} />
-                {t.cartClear}
-              </button>
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-5 py-2.5 text-[14px] font-semibold text-white no-underline shadow-[0_6px_16px_rgba(37,211,102,.28)] transition-[filter] hover:brightness-95"
-              >
-                <WhatsappIcon className="h-[17px] w-[17px]" />
-                {t.cartWa}
-              </a>
-            </div>
-          </div>
+          ) : null}
+
+          {/* زر الفتح/الإغلاق */}
+          <button
+            type="button"
+            onClick={() => setCartOpen((v) => !v)}
+            aria-label={cartOpen ? t.cartClose : t.cartOpen}
+            title={cartOpen ? t.cartClose : t.cartOpen}
+            className="relative flex h-[52px] w-[52px] cursor-pointer items-center justify-center rounded-full bg-jazan text-white shadow-[0_10px_28px_rgba(15,92,74,.4)] transition-[transform,filter] hover:scale-105 hover:brightness-110"
+          >
+            <StoreIcon className="h-[22px] w-[22px]" />
+            {cartCount > 0 ? (
+              <span className="mono absolute -top-1 -right-1 flex h-6 min-w-6 items-center justify-center rounded-full border-2 border-surface bg-amber px-1 text-[11px] font-bold text-white">
+                {cartCount}
+              </span>
+            ) : null}
+          </button>
         </div>
       ) : null}
     </div>
