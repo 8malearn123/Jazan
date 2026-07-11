@@ -56,9 +56,9 @@ function ReportModal({
           <div className="grid gap-2.5 rounded-[14px] border border-line bg-cream/60 p-4 text-[13px] sm:grid-cols-2">
             <div>
               <div className="text-[11px] font-semibold text-muted">الجهة المُبلَّغ عنها</div>
-              <div className="mt-0.5 font-bold text-charcoal">
-                {report.target}
-                <span className="ms-2 rounded-full bg-info/12 px-2 py-0.5 text-[11px] font-semibold text-info-ink">
+              <div className="mt-0.5 flex flex-wrap items-center gap-2">
+                <span className="font-bold text-charcoal">{report.target}</span>
+                <span className="rounded-full bg-info/12 px-2 py-0.5 text-[11px] font-semibold text-info-ink">
                   {report.targetType}
                 </span>
               </div>
