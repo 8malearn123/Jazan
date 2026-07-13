@@ -6,27 +6,26 @@ import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
 import { normalizeText } from "@/lib/text";
 import { producerMatches } from "@/lib/search";
+import { governorates } from "@/lib/jazan-map";
 import type { Producer } from "@/lib/types";
 import { ProducerCard } from "./ProducerCard";
 
 const categories = ["الكل", "طعام", "حِرف", "عطور"];
 
 export function ProducersClient({ producers }: { producers: Producer[] }) {
-  const { d } = useLocale();
+  const { d, isAr } = useLocale();
   const [query, setQuery] = useState("");
   const [city, setCity] = useState("all");
   const [category, setCategory] = useState("الكل");
 
-  const cities = useMemo(
-    () => Array.from(new Set(producers.map((p) => p.city))).sort(),
-    [producers]
-  );
+  // كل محافظات جازان — نفس قائمة الخريطة التفاعلية
+  const cities = governorates.map((g) => ({ value: g.ar, label: isAr ? g.ar : g.en }));
 
   const results = useMemo(() => {
     const q = normalizeText(query.trim());
     return producers.filter((p) => {
       const inQuery = producerMatches(p, q);
-      const inCity = city === "all" || p.city === city;
+      const inCity = city === "all" || normalizeText(p.city) === normalizeText(city);
       const inCat = category === "الكل" || p.category === category;
       return inQuery && inCity && inCat;
     });
@@ -53,8 +52,8 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
         >
           <option value="all">{d.producersPage.allCities}</option>
           {cities.map((c) => (
-            <option key={c} value={c}>
-              {c}
+            <option key={c.value} value={c.value}>
+              {c.label}
             </option>
           ))}
         </select>

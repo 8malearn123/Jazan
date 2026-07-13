@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
 import { normalizeText } from "@/lib/text";
 import { heroMatches, producerMatches, companyMatches } from "@/lib/search";
+import { governorates } from "@/lib/jazan-map";
 import { producers, companies, jobs } from "@/lib/data";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
 import { HeroBrowseCard } from "./HeroBrowseCard";
@@ -35,15 +36,13 @@ export function BrowseClient({
   heroes: Hero[];
   initialQuery?: string;
 }) {
-  const { d } = useLocale();
+  const { d, isAr } = useLocale();
   const [query, setQuery] = useState(initialQuery);
   const [city, setCity] = useState("all");
   const [status, setStatus] = useState<StatusFilter>("all");
 
-  const cities = useMemo(
-    () => Array.from(new Set(heroes.map((h) => h.city))).sort(),
-    [heroes]
-  );
+  // كل محافظات جازان — نفس قائمة الخريطة التفاعلية
+  const cities = governorates.map((g) => ({ value: g.ar, label: isAr ? g.ar : g.en }));
 
   const chips = chipStyles.map((c) => ({
     ...c,
@@ -54,7 +53,7 @@ export function BrowseClient({
 
   const results = useMemo(() => {
     return heroes.filter((h) => {
-      const inCity = city === "all" || h.city === city;
+      const inCity = city === "all" || normalizeText(h.city) === normalizeText(city);
       return heroMatches(h, q) && inCity && matchStatus(h, status);
     });
   }, [heroes, q, city, status]);
@@ -91,8 +90,8 @@ export function BrowseClient({
         >
           <option value="all">{d.browse.allCities}</option>
           {cities.map((c) => (
-            <option key={c} value={c}>
-              {c}
+            <option key={c.value} value={c.value}>
+              {c.label}
             </option>
           ))}
         </select>
