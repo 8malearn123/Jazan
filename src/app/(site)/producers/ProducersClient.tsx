@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { SearchIcon } from "@/components/icons";
+import { SearchIcon, MapIcon } from "@/components/icons";
+import { JazanMap } from "@/components/home/JazanMap";
 import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
 import { normalizeText } from "@/lib/text";
@@ -15,6 +16,7 @@ const categories = ["الكل", "طعام", "حِرف", "عطور"];
 export function ProducersClient({ producers }: { producers: Producer[] }) {
   const { d, isAr } = useLocale();
   const [query, setQuery] = useState("");
+  const [mapOpen, setMapOpen] = useState(false);
   const [city, setCity] = useState("all");
   const [category, setCategory] = useState("الكل");
 
@@ -57,7 +59,18 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
             </option>
           ))}
         </select>
+        <button
+          type="button"
+          onClick={() => setMapOpen(true)}
+          aria-label={d.map.open}
+          title={d.map.open}
+          className="flex h-[46px] w-[46px] flex-none cursor-pointer items-center justify-center self-end rounded-[13px] border-[1.5px] border-line bg-surface text-jazan transition-colors hover:border-amber hover:bg-amber hover:text-white sm:self-auto"
+        >
+          <MapIcon width={19} height={19} />
+        </button>
       </div>
+
+      <JazanMap open={mapOpen} onClose={() => setMapOpen(false)} />
 
       {/* فئات النشاط */}
       <div className="mt-4 flex flex-wrap items-center gap-[9px]">

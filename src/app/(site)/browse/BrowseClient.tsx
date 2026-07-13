@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { SearchIcon } from "@/components/icons";
+import { SearchIcon, MapIcon } from "@/components/icons";
+import { JazanMap } from "@/components/home/JazanMap";
 import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
 import { normalizeText } from "@/lib/text";
@@ -38,6 +39,7 @@ export function BrowseClient({
 }) {
   const { d, isAr } = useLocale();
   const [query, setQuery] = useState(initialQuery);
+  const [mapOpen, setMapOpen] = useState(false);
   const [city, setCity] = useState("all");
   const [status, setStatus] = useState<StatusFilter>("all");
 
@@ -95,7 +97,18 @@ export function BrowseClient({
             </option>
           ))}
         </select>
+        <button
+          type="button"
+          onClick={() => setMapOpen(true)}
+          aria-label={d.map.open}
+          title={d.map.open}
+          className="flex h-[46px] w-[46px] flex-none cursor-pointer items-center justify-center self-end rounded-[13px] border-[1.5px] border-line bg-surface text-jazan transition-colors hover:border-jazan hover:bg-jazan hover:text-white sm:self-auto"
+        >
+          <MapIcon width={19} height={19} />
+        </button>
       </div>
+
+      <JazanMap open={mapOpen} onClose={() => setMapOpen(false)} />
 
       {/* شرائح الحالة */}
       <div className="mt-4 flex flex-wrap items-center gap-2.5">
