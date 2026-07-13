@@ -15,6 +15,9 @@ import {
   type Review,
   type ReviewModeration,
 } from "@/lib/reviews";
+import { loadPhotos } from "@/lib/photos";
+import { loadWorks } from "@/lib/works";
+import { loadSocialLinks } from "@/lib/social";
 
 // أيقونات محلية صغيرة
 function ChartIcon({ className }: { className?: string }) {
@@ -83,6 +86,38 @@ const recentRows = [
   { name: "واحة جازان الرقمية", interest: "طلب عرض سعر", date: "5 يونيو" },
   { name: "متجر الساحل", interest: "مهتم بالتعاون", date: "1 يونيو" },
 ] as const;
+
+/** اكتمال الملف — يُحسب من بيانات الحساب الفعلية بدل النسبة الثابتة */
+function useProfileCompletion(userId: string | undefined) {
+  const [items, setItems] = useState<{ label: string; done: boolean }[]>([]);
+
+  useEffect(() => {
+    if (!userId) return;
+    /* eslint-disable react-hooks/set-state-in-effect */
+    let draft: { bio?: string; skills?: string[]; whatsapp?: string } | null = null;
+    try {
+      const raw = localStorage.getItem(`jazanheroes.profile.${userId}`);
+      if (raw) draft = JSON.parse(raw);
+    } catch {
+      // ignore
+    }
+    const photos = loadPhotos(userId);
+    const works = loadWorks(userId);
+    const social = loadSocialLinks(userId);
+    setItems([
+      { label: "أضفت صورتك الشخصية", done: Boolean(photos.avatar) },
+      { label: "أضفت نبذة تعريفية", done: Boolean(draft?.bio?.trim()) },
+      { label: "حدّدت مهاراتك", done: (draft?.skills?.length ?? 0) > 0 },
+      { label: "أضفت أعمالك", done: works.length > 0 },
+      { label: "أضفت شبكات التواصل", done: Object.values(social).some((v) => v.trim()) },
+    ]);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [userId]);
+
+  const doneCount = items.filter((i) => i.done).length;
+  const pct = items.length ? Math.round((doneCount / items.length) * 100) : 0;
+  return { items, pct };
+}
 
 // التقييمات — لا يُعرض هنا إلا ما اعتمده مشرف المنصة (تُدار من لوحة الإدارة)
 function useModeratedReviews() {
@@ -184,6 +219,7 @@ export default function DashboardPage() {
   const [reviewsOpen, setReviewsOpen] = useState(false);
   const { approved, pendingCount, avg } = useModeratedReviews();
   const recentReviews = approved.slice(0, 3);
+  const completion = useProfileCompletion(user?.id);
 
   const maxBar = Math.max(...chart.map((b) => b.h));
 
@@ -233,21 +269,19 @@ export default function DashboardPage() {
         <div className="rounded-2xl border border-line bg-surface p-5">
           <div className="flex items-center justify-between">
             <h3 className="text-[15px] font-bold text-charcoal">اكتمال الملف</h3>
-            <span className="mono text-[15px] font-semibold text-jazan">85%</span>
+            <span className="mono text-[15px] font-semibold text-jazan">{completion.pct}%</span>
           </div>
           <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-line-soft">
-            <div className="h-full rounded-full bg-jazan" style={{ width: "85%" }} />
+            <div
+              className="h-full rounded-full bg-jazan transition-[width] duration-500"
+              style={{ width: `${completion.pct}%` }}
+            />
           </div>
           <p className="mt-3 text-[13px] text-muted">
             أكمل ملفك ليظهر بشكل أفضل في نتائج البحث.
           </p>
           <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
-            {[
-              { label: "أضفت صورتك", done: true },
-              { label: "أضفت نبذة تعريفية", done: true },
-              { label: "حدّدت مهاراتك", done: true },
-              { label: "أضف رابط أعمالك", done: false },
-            ].map((item) => (
+            {completion.items.map((item) => (
               <li key={item.label} className="flex items-center gap-2.5">
                 <span
                   className={cn(

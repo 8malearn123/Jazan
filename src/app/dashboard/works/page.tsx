@@ -6,9 +6,9 @@ import { XIcon, ImagesIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 
-// أعمالي — إدارة معرض الأعمال: إضافة، تعديل، حذف (تُحفظ محلياً في الوضع التجريبي)
+import { seedWorks, worksStorageKey as storageKey, type Work } from "@/lib/works";
 
-type Work = { id: string; title: string; desc: string; image?: string };
+// أعمالي — إدارة معرض الأعمال: إضافة، تعديل، حذف (تُحفظ محلياً في الوضع التجريبي)
 
 /**
  * تحويل ملف صورة إلى Data URL مضغوط (أقصى بُعد 900px، JPEG 82%)
@@ -34,16 +34,6 @@ function fileToDataUrl(file: File): Promise<string> {
     };
     img.src = url;
   });
-}
-
-const seedWorks: Work[] = [
-  { id: "w1", title: "واجهة متجر إلكتروني", desc: "تصميم وتطوير واجهة متجر متكاملة." },
-  { id: "w2", title: "تصميم هوية بصرية", desc: "هوية كاملة لعلامة محلية ناشئة." },
-  { id: "w3", title: "لوحة تحكم", desc: "لوحة إدارة ببيانات مباشرة ورسوم بيانية." },
-];
-
-function storageKey(userId: string) {
-  return `jazanheroes.works.${userId}`;
 }
 
 const inputClass =
