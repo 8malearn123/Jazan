@@ -13,15 +13,19 @@ export type MediaSubmission = {
   kind: "شعار" | "صورة منتج" | "صورة غلاف" | "صورة شخصية";
   date: string;
   seedStatus: MediaStatus;
+  /** وصف الطلب كما كتبه صاحبه */
+  note: string;
+  /** تفاصيل تقنية للملف المرفوع */
+  fileInfo: string;
 };
 
 /** طلبات الشعارات والصور الواردة */
 export const mediaSubmissions: MediaSubmission[] = [
-  { id: "m1", title: "شعار جديد للشركة", owner: "تهامة للتقنية", ownerType: "شركة", kind: "شعار", date: "اليوم", seedStatus: "pending" },
-  { id: "m2", title: "صورة طبق عريكة بالعسل", owner: "أسرة نكهات صبيا", ownerType: "أسرة منتجة", kind: "صورة منتج", date: "اليوم", seedStatus: "pending" },
-  { id: "m3", title: "صورة غلاف الملف الشخصي", owner: "محمد عسيري", ownerType: "بطل", kind: "صورة غلاف", date: "أمس", seedStatus: "pending" },
-  { id: "m4", title: "شعار المتجر المحدّث", owner: "متجر الساحل", ownerType: "شركة", kind: "شعار", date: "قبل يومين", seedStatus: "approved" },
-  { id: "m5", title: "صورة عبوة دهن العود", owner: "عطور الساحل", ownerType: "أسرة منتجة", kind: "صورة منتج", date: "قبل 3 أيام", seedStatus: "approved" },
+  { id: "m1", title: "شعار جديد للشركة", owner: "تهامة للتقنية", ownerType: "شركة", kind: "شعار", date: "اليوم", seedStatus: "pending", note: "طوّرنا هويتنا البصرية ونرغب باستبدال الشعار القديم بالجديد في صفحة الشركة ونتائج البحث.", fileInfo: "PNG · 512×512 · 84 كيلوبايت", },
+  { id: "m2", title: "صورة طبق عريكة بالعسل", owner: "أسرة نكهات صبيا", ownerType: "أسرة منتجة", kind: "صورة منتج", date: "اليوم", seedStatus: "pending", note: "صورة حقيقية لطبق العريكة من مطبخنا، نبغى نعرضها على المنتج بدل الصورة المؤقتة.", fileInfo: "JPG · 1200×900 · 340 كيلوبايت", },
+  { id: "m3", title: "صورة غلاف الملف الشخصي", owner: "محمد عسيري", ownerType: "بطل", kind: "صورة غلاف", date: "أمس", seedStatus: "pending", note: "صورة غلاف جديدة لملفي تعرض شاشة من آخر مشروع اشتغلت عليه.", fileInfo: "JPG · 1600×500 · 410 كيلوبايت", },
+  { id: "m4", title: "شعار المتجر المحدّث", owner: "متجر الساحل", ownerType: "شركة", kind: "شعار", date: "قبل يومين", seedStatus: "approved", note: "تحديث بسيط على ألوان شعار المتجر ليتوافق مع الهوية الجديدة.", fileInfo: "PNG · 512×512 · 91 كيلوبايت", },
+  { id: "m5", title: "صورة عبوة دهن العود", owner: "عطور الساحل", ownerType: "أسرة منتجة", kind: "صورة منتج", date: "قبل 3 أيام", seedStatus: "approved", note: "صورة احترافية لعبوة دهن العود الفاخر بإضاءة استوديو.", fileInfo: "JPG · 1000×1000 · 280 كيلوبايت", },
 ];
 
 export type MediaModeration = Record<string, MediaStatus>;

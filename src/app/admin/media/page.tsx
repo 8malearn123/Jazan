@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { XIcon, CheckIcon } from "@/components/icons";
 import { AdminPageHead, TableCard, Th, Td, Pill } from "../_components/AdminTable";
 import { cn } from "@/lib/cn";
 import {
@@ -27,9 +28,119 @@ const ownerTone: Record<string, string> = {
   "بطل": "bg-jazan/10 text-jazan",
 };
 
+
+/** نافذة تفاصيل عنصر الشعارات/الصور — المراجعة قبل القرار */
+function MediaModal({
+  item,
+  status,
+  onClose,
+  onDecide,
+}: {
+  item: (typeof mediaSubmissions)[number];
+  status: MediaStatus;
+  onClose: () => void;
+  onDecide: (id: string, status: MediaStatus) => void;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`تفاصيل ${item.title}`}
+    >
+      <button
+        aria-label="إغلاق"
+        onClick={onClose}
+        className="absolute inset-0 cursor-default bg-black/50 backdrop-blur-[2px]"
+      />
+      <div className="relative z-10 flex max-h-[88vh] w-full max-w-[520px] flex-col overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_24px_70px_rgba(0,0,0,.35)]">
+        <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
+          <div className="flex items-center gap-3">
+            <h2 className="text-[16px] font-extrabold text-charcoal">تفاصيل العنصر</h2>
+            <Pill tone={statusMeta[status].tone}>{statusMeta[status].label}</Pill>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="إغلاق"
+            className="flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-[10px] border border-line text-muted transition-colors hover:border-jazan hover:text-jazan"
+          >
+            <XIcon width={18} height={18} />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto px-5 py-4">
+          {/* معاينة كبيرة */}
+          <ImagePlaceholder shape="rect" label={`${item.kind} — معاينة بالحجم الكامل`} className="h-[190px] w-full rounded-[14px]" />
+
+          <div className="mt-4 grid gap-2.5 rounded-[14px] border border-line bg-cream/60 p-4 text-[13px] sm:grid-cols-2">
+            <div>
+              <div className="text-[11px] font-semibold text-muted">العنصر</div>
+              <div className="mt-0.5 font-bold text-charcoal">{item.title}</div>
+            </div>
+            <div>
+              <div className="text-[11px] font-semibold text-muted">النوع</div>
+              <div className="mt-0.5 font-bold text-charcoal">{item.kind}</div>
+            </div>
+            <div>
+              <div className="text-[11px] font-semibold text-muted">صاحب الطلب</div>
+              <div className="mt-0.5 flex flex-wrap items-center gap-2">
+                <span className="font-bold text-charcoal">{item.owner}</span>
+                <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", ownerTone[item.ownerType])}>
+                  {item.ownerType}
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="text-[11px] font-semibold text-muted">التاريخ</div>
+              <div className="mt-0.5 text-charcoal">{item.date}</div>
+            </div>
+            <div className="sm:col-span-2">
+              <div className="text-[11px] font-semibold text-muted">الملف</div>
+              <div className="mono mt-0.5 text-charcoal">{item.fileInfo}</div>
+            </div>
+          </div>
+
+          <h3 className="mt-4 text-[13px] font-bold text-charcoal">وصف الطلب</h3>
+          <p className="mt-1.5 rounded-[14px] border border-line bg-surface p-3.5 text-[13px] leading-relaxed text-ink">
+            {item.note}
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 border-t border-line px-5 py-4">
+          {status !== "approved" ? (
+            <button
+              onClick={() => onDecide(item.id, "approved")}
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-jazan px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-jazan-dark"
+            >
+              <CheckIcon width={15} height={15} strokeWidth={2.4} />
+              اعتماد ونشر
+            </button>
+          ) : null}
+          {status !== "rejected" ? (
+            <button
+              onClick={() => onDecide(item.id, "rejected")}
+              className="cursor-pointer rounded-xl border border-danger-line bg-surface px-5 py-2.5 text-[13px] font-semibold text-danger transition-colors hover:bg-danger-soft"
+            >
+              رفض
+            </button>
+          ) : null}
+          <button
+            onClick={onClose}
+            className="ms-auto cursor-pointer rounded-xl border border-line bg-surface px-5 py-2.5 text-[13px] font-semibold text-muted transition-colors hover:bg-cream"
+          >
+            إغلاق
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminMediaPage() {
   const [moderation, setModeration] = useState<MediaModeration>({});
   const [toast, setToast] = useState("");
+  const [openId, setOpenId] = useState<string | null>(null);
 
   useEffect(() => {
     /* eslint-disable-next-line react-hooks/set-state-in-effect */
@@ -42,7 +153,10 @@ export default function AdminMediaPage() {
     saveMediaModeration(next);
     setToast(status === "approved" ? "تم اعتماد العنصر — أصبح ظاهراً في المنصة" : "تم رفض العنصر — لن يظهر في المنصة");
     setTimeout(() => setToast(""), 2500);
+    setOpenId(null);
   }
+
+  const openItem = mediaSubmissions.find((m) => m.id === openId) ?? null;
 
   const withStatus = mediaSubmissions.map((m) => ({ item: m, status: mediaStatus(m, moderation) }));
   const pending = withStatus.filter((m) => m.status === "pending");
@@ -89,6 +203,12 @@ export default function AdminMediaPage() {
                     {item.owner} · {item.date}
                   </div>
                   <div className="mt-3 flex gap-2 border-t border-line-soft pt-3">
+                    <button
+                      onClick={() => setOpenId(item.id)}
+                      className="flex-1 cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-charcoal transition-colors hover:border-jazan hover:text-jazan"
+                    >
+                      التفاصيل
+                    </button>
                     <button
                       onClick={() => decide(item.id, "approved")}
                       className="flex-1 cursor-pointer rounded-lg bg-jazan px-3 py-1.5 text-[12px] font-semibold text-white transition-colors hover:bg-jazan-dark"
@@ -141,6 +261,13 @@ export default function AdminMediaPage() {
                       <Pill tone={statusMeta[status].tone}>{statusMeta[status].label}</Pill>
                     </Td>
                     <Td>
+                      <div className="flex gap-2">
+                      <button
+                        onClick={() => setOpenId(item.id)}
+                        className="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[12px] font-semibold text-charcoal transition-colors hover:border-jazan hover:text-jazan"
+                      >
+                        التفاصيل
+                      </button>
                       <button
                         onClick={() => decide(item.id, status === "approved" ? "rejected" : "approved")}
                         className={cn(
@@ -152,6 +279,7 @@ export default function AdminMediaPage() {
                       >
                         {status === "approved" ? "إخفاء" : "اعتماد"}
                       </button>
+                      </div>
                     </Td>
                   </tr>
                 ))}
@@ -160,6 +288,15 @@ export default function AdminMediaPage() {
           </TableCard>
         </div>
       </div>
+
+      {openItem ? (
+        <MediaModal
+          item={openItem}
+          status={mediaStatus(openItem, moderation)}
+          onClose={() => setOpenId(null)}
+          onDecide={decide}
+        />
+      ) : null}
     </div>
   );
 }
