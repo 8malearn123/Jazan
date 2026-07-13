@@ -33,9 +33,11 @@ export function Partners() {
 
         <div className="mt-7 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {partners.map((p) => (
-            <div
+            <Link
               key={p.id}
-              className="jh-cat rounded-[18px] border border-line bg-surface p-6 shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.10)]"
+              href={`/companies/${p.id}`}
+              aria-label={p.name}
+              className="jh-cat block rounded-[18px] border border-line bg-surface p-6 no-underline shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_12px_30px_rgba(28,42,38,.10)]"
             >
               <div className="flex items-center gap-3">
                 <ImagePlaceholder
@@ -59,7 +61,7 @@ export function Partners() {
                   </span>
                 ) : null}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </Container>
