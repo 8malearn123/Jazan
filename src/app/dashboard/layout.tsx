@@ -7,6 +7,7 @@ import { Logo } from "@/components/Logo";
 import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon, ImagesIcon, HeadsetIcon, ShareIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { NotificationBell } from "@/components/dashboard/NotificationBell";
+import { usePhotos } from "@/lib/photos";
 import { DownloadPdfButton } from "@/components/dashboard/DownloadPdfButton";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
@@ -109,6 +110,8 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const { user, ready, logout } = useAuth();
+  // الصورة الشخصية التي رفعها المستخدم (إن وُجدت)
+  const photos = usePhotos(user?.id);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
@@ -174,7 +177,7 @@ export default function DashboardLayout({
                 <CloseIcon />
               </button>
             </div>
-            <UserCard name={user.name} roleLabel={roleLabels[user.role]} initial={initial} />
+            <UserCard name={user.name} roleLabel={roleLabels[user.role]} initial={initial} avatar={photos.avatar} />
             <div className="mt-4">
               <NavLinks items={items} onNavigate={() => setDrawerOpen(false)} />
             </div>
@@ -198,7 +201,7 @@ export default function DashboardLayout({
           <div className="px-2 pb-4">
             <Logo size="sm" />
           </div>
-          <UserCard name={user.name} roleLabel={roleLabels[user.role]} initial={initial} />
+          <UserCard name={user.name} roleLabel={roleLabels[user.role]} initial={initial} avatar={photos.avatar} />
           <div className="mt-4">
             <NavLinks items={items} />
           </div>
@@ -226,9 +229,14 @@ export default function DashboardLayout({
                 <div className="text-sm font-bold text-charcoal">{user.name}</div>
                 <div className="text-[12px] text-muted">{roleLabels[user.role]}</div>
               </div>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-jazan/10 text-[15px] font-bold text-jazan">
-                {initial}
-              </span>
+              {photos.avatar ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={photos.avatar} alt={user.name} className="h-10 w-10 rounded-full object-cover" />
+              ) : (
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-jazan/10 text-[15px] font-bold text-jazan">
+                  {initial}
+                </span>
+              )}
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 rounded-[11px] border-[1.5px] border-line px-3.5 py-2 text-[13px] font-semibold text-charcoal transition-colors hover:bg-black/[.03]"
@@ -250,16 +258,23 @@ function UserCard({
   name,
   roleLabel,
   initial,
+  avatar,
 }: {
   name: string;
   roleLabel: string;
   initial: string;
+  avatar?: string;
 }) {
   return (
     <div className="flex items-center gap-3 rounded-[13px] border border-line bg-cream p-2.5">
-      <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-jazan/10 text-[15px] font-bold text-jazan">
-        {initial}
-      </span>
+      {avatar ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img src={avatar} alt={name} className="h-10 w-10 flex-none rounded-full object-cover" />
+      ) : (
+        <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-jazan/10 text-[15px] font-bold text-jazan">
+          {initial}
+        </span>
+      )}
       <div className="min-w-0 flex-1">
         <div className="truncate text-sm font-bold text-charcoal">{name}</div>
         <div className="truncate text-[12px] text-muted">{roleLabel}</div>

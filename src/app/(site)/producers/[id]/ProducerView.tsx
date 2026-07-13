@@ -13,6 +13,7 @@ import {
 } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import { SocialLinksRow } from "@/components/SocialLinksRow";
+import { usePublicPhotos } from "@/lib/photos";
 import { useLocale } from "@/lib/i18n";
 import type { Producer, Product } from "@/lib/types";
 
@@ -47,6 +48,7 @@ export function ProducerView({ producer }: { producer: Producer }) {
   const phone = producer.whatsapp ?? site.whatsapp;
   const products = useMemo(() => producer.products ?? [], [producer.products]);
   const t = d.producerDetail;
+  const photos = usePublicPhotos(producer.id);
 
   // --- سلة المشتريات ---
   const [cart, setCart] = useState<Cart>({});
@@ -110,19 +112,33 @@ export function ProducerView({ producer }: { producer: Producer }) {
     <div className="mt-5 overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)]">
       {/* الغلاف */}
       <div className="relative">
-        <ImagePlaceholder
-          shape="rect"
-          label={t.coverLabel}
-          className="h-[200px] w-full sm:h-[230px]"
-        />
+        {photos.cover ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={photos.cover} alt={t.coverLabel} className="h-[200px] w-full object-cover sm:h-[230px]" />
+        ) : (
+          <ImagePlaceholder
+            shape="rect"
+            label={t.coverLabel}
+            className="h-[200px] w-full sm:h-[230px]"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/5" />
         <div className="absolute inset-x-5 bottom-5 flex items-end gap-4 sm:inset-x-8">
-          <ImagePlaceholder
-            shape="rounded"
-            radius={18}
-            label={t.logoLabel}
-            className="h-[76px] w-[76px] flex-none border-4 border-surface shadow-[0_8px_22px_rgba(0,0,0,.25)] sm:h-[92px] sm:w-[92px]"
-          />
+          {photos.avatar ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={photos.avatar}
+              alt={t.logoLabel}
+              className="h-[76px] w-[76px] flex-none rounded-[18px] border-4 border-surface object-cover shadow-[0_8px_22px_rgba(0,0,0,.25)] sm:h-[92px] sm:w-[92px]"
+            />
+          ) : (
+            <ImagePlaceholder
+              shape="rounded"
+              radius={18}
+              label={t.logoLabel}
+              className="h-[76px] w-[76px] flex-none border-4 border-surface shadow-[0_8px_22px_rgba(0,0,0,.25)] sm:h-[92px] sm:w-[92px]"
+            />
+          )}
           <div className="pb-1">
             <div className="flex items-center gap-2">
               <h1 className="text-[24px] font-extrabold tracking-[-.4px] text-white sm:text-[30px]">

@@ -11,6 +11,7 @@ import {
 } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import { SocialLinksRow } from "@/components/SocialLinksRow";
+import { usePublicPhotos } from "@/lib/photos";
 import { useLocale } from "@/lib/i18n";
 import type { Company, Job } from "@/lib/types";
 import { CompanyJobCard } from "./CompanyJobCard";
@@ -19,6 +20,7 @@ import { CompanyJobCard } from "./CompanyJobCard";
 export function CompanyView({ company, openJobs }: { company: Company; openJobs: Job[] }) {
   const { d } = useLocale();
   const t = d.companyDetail;
+  const photos = usePublicPhotos(company.id);
 
   const waHref = whatsappLink(
     company.whatsapp ?? site.whatsapp,
@@ -36,20 +38,34 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
     <>
       {/* بطاقة الهوية المؤسسية */}
       <div className="mt-5 overflow-hidden rounded-[20px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)]">
-        {/* غلاف بلون العلامة */}
+        {/* غلاف بلون العلامة أو صورة الغلاف المخصصة */}
         <div className="relative h-[120px] bg-jazan sm:h-[140px]">
-          <div className="absolute inset-0 opacity-[.15] [background:radial-gradient(circle_at_20%_30%,#fff_0,transparent_45%)]" />
+          {photos.cover ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={photos.cover} alt={t.logoLabel} className="absolute inset-0 h-full w-full object-cover" />
+          ) : (
+            <div className="absolute inset-0 opacity-[.15] [background:radial-gradient(circle_at_20%_30%,#fff_0,transparent_45%)]" />
+          )}
         </div>
 
         <div className="px-5 pb-6 sm:px-7">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex items-end gap-4">
-              <ImagePlaceholder
-                shape="rounded"
-                radius={18}
-                label={t.logoLabel}
-                className="-mt-10 h-[88px] w-[88px] flex-none border-[3px] border-surface bg-surface shadow-[0_6px_18px_rgba(28,42,38,.12)] sm:-mt-12 sm:h-[100px] sm:w-[100px]"
-              />
+              {photos.avatar ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={photos.avatar}
+                  alt={t.logoLabel}
+                  className="-mt-10 h-[88px] w-[88px] flex-none rounded-[18px] border-[3px] border-surface bg-surface object-cover shadow-[0_6px_18px_rgba(28,42,38,.12)] sm:-mt-12 sm:h-[100px] sm:w-[100px]"
+                />
+              ) : (
+                <ImagePlaceholder
+                  shape="rounded"
+                  radius={18}
+                  label={t.logoLabel}
+                  className="-mt-10 h-[88px] w-[88px] flex-none border-[3px] border-surface bg-surface shadow-[0_6px_18px_rgba(28,42,38,.12)] sm:-mt-12 sm:h-[100px] sm:w-[100px]"
+                />
+              )}
               <div className="pb-1">
                 <div className="flex flex-wrap items-center gap-2.5">
                   <h1 className="text-[22px] font-extrabold tracking-[-.4px] text-charcoal sm:text-[26px]">
