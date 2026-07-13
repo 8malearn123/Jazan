@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
 import { normalizeText } from "@/lib/text";
 import { companyMatches, jobMatches } from "@/lib/search";
+import { governorates } from "@/lib/jazan-map";
 import {
   approvedOffers,
   loadOfferModeration,
@@ -18,7 +19,7 @@ import { JobRow } from "./JobRow";
 const jobTypes = ["الكل", "دوام كامل", "عن بُعد", "دوام جزئي"];
 
 export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Company[]; jobs: Job[] }) {
-  const { d } = useLocale();
+  const { d, isAr } = useLocale();
   const [query, setQuery] = useState("");
   const [city, setCity] = useState("all");
   const [jobType, setJobType] = useState("الكل");
@@ -32,10 +33,8 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
   }, []);
   const jobs = useMemo(() => [...extraJobs, ...baseJobs], [extraJobs, baseJobs]);
 
-  const cities = useMemo(
-    () => Array.from(new Set(companies.map((c) => c.city).filter(Boolean) as string[])).sort(),
-    [companies]
-  );
+  // كل محافظات جازان — نفس قائمة الخريطة التفاعلية
+  const cities = governorates.map((g) => ({ value: g.ar, label: isAr ? g.ar : g.en }));
 
   const q = normalizeText(query.trim());
 
@@ -43,7 +42,7 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
     () =>
       companies.filter((c) => {
         const inQuery = companyMatches(c, q, jobs);
-        const inCity = city === "all" || c.city === city;
+        const inCity = city === "all" || normalizeText(c.city ?? "") === normalizeText(city);
         return inQuery && inCity;
       }),
     [companies, jobs, q, city]
@@ -80,8 +79,8 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
         >
           <option value="all">{d.companiesPage.allCities}</option>
           {cities.map((c) => (
-            <option key={c} value={c}>
-              {c}
+            <option key={c.value} value={c.value}>
+              {c.label}
             </option>
           ))}
         </select>
