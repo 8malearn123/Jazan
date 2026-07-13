@@ -5,6 +5,11 @@ import Link from "next/link";
 import { governorates, JAZAN_VIEWBOX, type Governorate } from "@/lib/jazan-map";
 import { sampleHeroes, producers, companies } from "@/lib/data";
 import { normalizeText } from "@/lib/text";
+import {
+  loadRegistry,
+  onRegistryChange,
+  type RegisteredMember,
+} from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
 import {
   XIcon,
@@ -20,26 +25,76 @@ type GovMembers = {
   heroes: Hero[];
   producers: Producer[];
   companies: Company[];
+  /** المسجّلون الجدد في هذه المحافظة (من سجل التسجيل الحي) */
+  newHeroes: RegisteredMember[];
+  newProducers: RegisteredMember[];
+  newCompanies: RegisteredMember[];
 };
 
-/** أعضاء كل محافظة — يُحسبون من البيانات بمطابقة اسم المدينة (مع التطبيع العربي) */
+/** إجمالي فئة في المحافظة (البيانات الأساسية + المسجّلون الجدد) */
+function total(m: GovMembers, kind: "heroes" | "producers" | "companies"): number {
+  const extra =
+    kind === "heroes" ? m.newHeroes : kind === "producers" ? m.newProducers : m.newCompanies;
+  return m[kind].length + extra.length;
+}
+
+/**
+ * أعضاء كل محافظة — بيانات المنصة بمطابقة اسم المدينة (مع التطبيع
+ * العربي) + المسجّلون الجدد من سجل التسجيل، ويتحدثون تلقائياً
+ * فور أي تسجيل جديد دون إعادة تحميل.
+ */
 function useGovMembers(): Record<string, GovMembers> {
+  const [registry, setRegistry] = useState<RegisteredMember[]>([]);
+
+  useEffect(() => {
+    const update = () => setRegistry(loadRegistry());
+    update();
+    return onRegistryChange(update);
+  }, []);
+
   return useMemo(() => {
     const members: Record<string, GovMembers> = {};
     for (const g of governorates) {
       const key = normalizeText(g.ar);
+      const inGov = registry.filter((m) => normalizeText(m.city ?? "") === key);
       members[g.id] = {
         heroes: sampleHeroes.filter((h) => normalizeText(h.city) === key),
         producers: producers.filter((p) => normalizeText(p.city) === key),
         companies: companies.filter((c) => normalizeText(c.city ?? "") === key),
+        newHeroes: inGov.filter((m) => m.role === "hero"),
+        newProducers: inGov.filter((m) => m.role === "producer"),
+        newCompanies: inGov.filter((m) => m.role === "company"),
       };
     }
     return members;
-  }, []);
+  }, [registry]);
 }
 
 const VB_W = 520;
 const VB_H = 473;
+
+/** صف عضو مسجّل حديثاً — بدون صفحة عامة بعد */
+function NewMemberRow({ name, sub, tone }: { name: string; sub: string; tone: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-[12px] border border-dashed border-line bg-surface px-3.5 py-2.5">
+      <span
+        className={cn(
+          "flex h-9 w-9 flex-none items-center justify-center rounded-full text-[14px] font-bold",
+          tone
+        )}
+      >
+        {name.trim().charAt(0)}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-bold text-charcoal">{name}</span>
+        <span className="block truncate text-[12px] text-muted">{sub}</span>
+      </span>
+      <span className="flex-none rounded-full bg-success/12 px-2 py-0.5 text-[10px] font-bold text-success-ink">
+        ✦
+      </span>
+    </div>
+  );
+}
 
 /** صف عضو داخل قائمة المحافظة — رابط لملفه */
 function MemberRow({
@@ -108,12 +163,12 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
 
   const hoverM = hovered ? members[hovered.id] : null;
   const hoverAny = hoverM
-    ? hoverM.heroes.length + hoverM.producers.length + hoverM.companies.length > 0
+    ? total(hoverM, "heroes") + total(hoverM, "producers") + total(hoverM, "companies") > 0
     : false;
 
   const selM = selected ? members[selected.id] : null;
   const selAny = selM
-    ? selM.heroes.length + selM.producers.length + selM.companies.length > 0
+    ? total(selM, "heroes") + total(selM, "producers") + total(selM, "companies") > 0
     : false;
 
   const tipLeft = hovered ? `${(hovered.cx / VB_W) * 100}%` : "50%";
@@ -197,17 +252,17 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
                       <div className="mt-2 flex flex-col gap-1.5">
                         <span className="inline-flex items-center gap-2 text-[12px] text-ink">
                           <UsersIcon width={14} height={14} className="text-jazan" />
-                          <span className="mono font-bold text-jazan">{hoverM.heroes.length}</span>
+                          <span className="mono font-bold text-jazan">{total(hoverM, "heroes")}</span>
                           {d.map.heroes}
                         </span>
                         <span className="inline-flex items-center gap-2 text-[12px] text-ink">
                           <StoreIcon width={14} height={14} className="text-amber-dark" />
-                          <span className="mono font-bold text-amber-dark">{hoverM.producers.length}</span>
+                          <span className="mono font-bold text-amber-dark">{total(hoverM, "producers")}</span>
                           {d.map.producers}
                         </span>
                         <span className="inline-flex items-center gap-2 text-[12px] text-ink">
                           <BuildingIcon width={14} height={14} className="text-info-ink" />
-                          <span className="mono font-bold text-info-ink">{hoverM.companies.length}</span>
+                          <span className="mono font-bold text-info-ink">{total(hoverM, "companies")}</span>
                           {d.map.companies}
                         </span>
                       </div>
@@ -244,12 +299,12 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
 
               {selAny ? (
                 <div className="mt-3 flex flex-col gap-4">
-                  {selM.heroes.length > 0 ? (
+                  {total(selM, "heroes") > 0 ? (
                     <div>
                       <div className="mb-2 flex items-center gap-2 text-[12px] font-bold text-jazan">
                         <UsersIcon width={14} height={14} />
                         {d.map.heroes}
-                        <span className="mono">({selM.heroes.length})</span>
+                        <span className="mono">({total(selM, "heroes")})</span>
                       </div>
                       <div className="flex flex-col gap-2">
                         {selM.heroes.map((h) => (
@@ -262,16 +317,24 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
                             onNavigate={handleClose}
                           />
                         ))}
+                        {selM.newHeroes.map((m) => (
+                          <NewMemberRow
+                            key={m.id}
+                            name={m.name}
+                            sub={d.map.newMember}
+                            tone="bg-jazan/10 text-jazan"
+                          />
+                        ))}
                       </div>
                     </div>
                   ) : null}
 
-                  {selM.producers.length > 0 ? (
+                  {total(selM, "producers") > 0 ? (
                     <div>
                       <div className="mb-2 flex items-center gap-2 text-[12px] font-bold text-amber-dark">
                         <StoreIcon width={14} height={14} />
                         {d.map.producers}
-                        <span className="mono">({selM.producers.length})</span>
+                        <span className="mono">({total(selM, "producers")})</span>
                       </div>
                       <div className="flex flex-col gap-2">
                         {selM.producers.map((p) => (
@@ -284,16 +347,24 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
                             onNavigate={handleClose}
                           />
                         ))}
+                        {selM.newProducers.map((m) => (
+                          <NewMemberRow
+                            key={m.id}
+                            name={m.name}
+                            sub={d.map.newMember}
+                            tone="bg-amber/15 text-amber-dark"
+                          />
+                        ))}
                       </div>
                     </div>
                   ) : null}
 
-                  {selM.companies.length > 0 ? (
+                  {total(selM, "companies") > 0 ? (
                     <div>
                       <div className="mb-2 flex items-center gap-2 text-[12px] font-bold text-info-ink">
                         <BuildingIcon width={14} height={14} />
                         {d.map.companies}
-                        <span className="mono">({selM.companies.length})</span>
+                        <span className="mono">({total(selM, "companies")})</span>
                       </div>
                       <div className="flex flex-col gap-2">
                         {selM.companies.map((c) => (
@@ -304,6 +375,14 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
                             sub={c.field}
                             tone="bg-info/12 text-info-ink"
                             onNavigate={handleClose}
+                          />
+                        ))}
+                        {selM.newCompanies.map((m) => (
+                          <NewMemberRow
+                            key={m.id}
+                            name={m.name}
+                            sub={d.map.newMember}
+                            tone="bg-info/12 text-info-ink"
                           />
                         ))}
                       </div>

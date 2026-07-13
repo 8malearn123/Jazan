@@ -11,6 +11,8 @@ export type RegisteredMember = {
   id: string;
   name: string;
   role: UserRole;
+  /** المحافظة المختارة عند التسجيل — تُستخدم في الخريطة التفاعلية */
+  city?: string;
 };
 
 const REGISTRY_KEY = "jazanheroes.registry";

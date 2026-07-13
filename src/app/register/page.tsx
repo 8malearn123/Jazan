@@ -15,10 +15,12 @@ import {
   LockIcon,
   UserIcon,
   EyeIcon,
+  MapPinIcon,
 } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import { homeForRole } from "@/lib/demo";
+import { governorates } from "@/lib/jazan-map";
 import { site } from "@/lib/site";
 import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
@@ -62,6 +64,7 @@ function RegisterForm() {
 
   const [role, setRole] = useState<RoleChoice>(initialRole);
   const [name, setName] = useState("");
+  const [city, setCity] = useState("جيزان");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
@@ -81,6 +84,7 @@ function RegisterForm() {
       email: email.trim(),
       password,
       role,
+      city,
     });
     if (error || !user) {
       setError(d.auth.registerErr);
@@ -219,6 +223,29 @@ function RegisterForm() {
                 className={inputField}
                 autoComplete="name"
               />
+            </div>
+
+            {/* المحافظة — تُستخدم في خريطة جازان والإحصائيات */}
+            <label
+              htmlFor="city"
+              className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
+            >
+              {d.auth.govLabel}
+            </label>
+            <div className={inputWrap}>
+              <MapPinIcon width={18} height={18} className="text-muted" />
+              <select
+                id="city"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className={`${inputField} cursor-pointer bg-transparent`}
+              >
+                {governorates.map((g) => (
+                  <option key={g.id} value={g.ar}>
+                    {isAr ? g.ar : g.en}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* البريد */}
