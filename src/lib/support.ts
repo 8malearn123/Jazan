@@ -7,12 +7,14 @@ export type SupportTicket = {
   id: string;
   userId: string;
   userName: string;
-  role: "hero" | "producer" | "company";
+  role: "hero" | "producer" | "company" | "guest";
   roleLabel: string;
   topic: string;
   message: string;
   date: string;
   status: TicketStatus;
+  /** بريد المرسل (رسائل «تواصل معنا» من الزوار) */
+  email?: string;
   /** رد المدير (عند الرد أو الرفض) */
   reply?: string;
 };
@@ -93,6 +95,7 @@ export function addTicket(input: {
   roleLabel: string;
   topic: string;
   message: string;
+  email?: string;
 }): void {
   const ticket: SupportTicket = {
     ...input,

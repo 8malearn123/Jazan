@@ -25,6 +25,7 @@ const roleTone: Record<string, string> = {
   "أسرة منتجة": "bg-amber/15 text-amber-dark",
   "بطل": "bg-jazan/10 text-jazan",
   "بطل / مستقل": "bg-jazan/10 text-jazan",
+  "زائر": "bg-tag text-muted",
 };
 
 const inputClass =
@@ -90,6 +91,18 @@ function TicketModal({
               <div className="text-[11px] font-semibold text-muted">التاريخ</div>
               <div className="mt-0.5 text-charcoal">{ticket.date}</div>
             </div>
+            {ticket.email ? (
+              <div>
+                <div className="text-[11px] font-semibold text-muted">البريد الإلكتروني</div>
+                <a
+                  href={`mailto:${ticket.email}`}
+                  className="mono mt-0.5 block text-jazan no-underline hover:underline"
+                  dir="ltr"
+                >
+                  {ticket.email}
+                </a>
+              </div>
+            ) : null}
           </div>
 
           <h3 className="mt-4 text-[13px] font-bold text-charcoal">نص الرسالة</h3>
