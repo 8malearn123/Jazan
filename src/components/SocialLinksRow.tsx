@@ -32,24 +32,33 @@ const platformIcons: Record<string, typeof GlobeIcon> = {
 
 /**
  * صف أيقونات شبكات التواصل في الصفحة العامة.
- * يقرأ الروابط التي أضافها صاحب الملف من «شبكات التواصل» في لوحة التحكم.
+ * يعرض روابط الملف الافتراضية (seed)، وإذا عدّل صاحب الحساب روابطه
+ * من «شبكات التواصل» في لوحة التحكم فإنها تحل محلها.
  */
 export function SocialLinksRow({
   profileId,
+  seed,
   className,
 }: {
   profileId: string;
+  seed?: SocialLinks;
   className?: string;
 }) {
-  const [links, setLinks] = useState<SocialLinks>({});
+  const [saved, setSaved] = useState<SocialLinks | null>(null);
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     const demoUser = demoUserForPublicProfile(profileId);
-    if (!demoUser) return;
-    /* eslint-disable-next-line react-hooks/set-state-in-effect */
-    setLinks(loadSocialLinks(demoUser));
+    if (!demoUser) {
+      setSaved(null);
+      return;
+    }
+    const stored = loadSocialLinks(demoUser);
+    setSaved(Object.keys(stored).length > 0 ? stored : null);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [profileId]);
 
+  const links = saved ?? seed ?? {};
   const active = socialPlatforms.filter((p) => links[p.key]?.trim());
   if (active.length === 0) return null;
 
