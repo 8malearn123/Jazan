@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { governorates, JAZAN_VIEWBOX, type Governorate } from "@/lib/jazan-map";
+import { governorates, type Governorate } from "@/lib/jazan-map";
 import { sampleHeroes, producers, companies } from "@/lib/data";
 import { normalizeText } from "@/lib/text";
 import {
@@ -72,6 +72,36 @@ function useGovMembers(): Record<string, GovMembers> {
 
 const VB_W = 520;
 const VB_H = 473;
+const MAX_ZOOM = 6;
+
+type ViewBox = { x: number; y: number; w: number; h: number };
+const BASE_VB: ViewBox = { x: 0, y: 0, w: VB_W, h: VB_H };
+
+/** تثبيت إطار العرض داخل حدود الخريطة */
+function clampVb(vb: ViewBox): ViewBox {
+  const w = Math.min(VB_W, Math.max(VB_W / MAX_ZOOM, vb.w));
+  const h = Math.min(VB_H, Math.max(VB_H / MAX_ZOOM, vb.h));
+  return {
+    w,
+    h,
+    x: Math.min(Math.max(vb.x, 0), VB_W - w),
+    y: Math.min(Math.max(vb.y, 0), VB_H - h),
+  };
+}
+
+/** تكبير/تصغير حول نقطة مركزية (بإحداثيات viewBox) */
+function zoomVb(vb: ViewBox, factor: number, cx?: number, cy?: number): ViewBox {
+  const centerX = cx ?? vb.x + vb.w / 2;
+  const centerY = cy ?? vb.y + vb.h / 2;
+  const w = vb.w / factor;
+  const h = vb.h / factor;
+  return clampVb({
+    w,
+    h,
+    x: centerX - ((centerX - vb.x) / vb.w) * w,
+    y: centerY - ((centerY - vb.y) / vb.h) * h,
+  });
+}
 
 /** صف عضو مسجّل حديثاً — بدون صفحة عامة بعد */
 function NewMemberRow({ name, sub, tone }: { name: string; sub: string; tone: string }) {
@@ -141,10 +171,92 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
   const [hovered, setHovered] = useState<Governorate | null>(null);
   const [selected, setSelected] = useState<Governorate | null>(null);
 
+  // --- السحب والتكبير ---
+  const [vb, setVb] = useState<ViewBox>(BASE_VB);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const drag = useRef<{ id: number; x: number; y: number; vb: ViewBox; moved: boolean } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const pinch = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const zoom = VB_W / vb.w;
+
+  /** تحويل نقطة شاشة إلى إحداثيات viewBox */
+  function toVbPoint(clientX: number, clientY: number) {
+    const rect = svgRef.current?.getBoundingClientRect();
+    if (!rect) return { x: vb.x + vb.w / 2, y: vb.y + vb.h / 2 };
+    return {
+      x: vb.x + ((clientX - rect.left) / rect.width) * vb.w,
+      y: vb.y + ((clientY - rect.top) / rect.height) * vb.h,
+    };
+  }
+
+  function onPointerDown(e: React.PointerEvent) {
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+    pinch.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch.current.size === 1) {
+      drag.current = { id: e.pointerId, x: e.clientX, y: e.clientY, vb, moved: false };
+      setDragging(true);
+    } else {
+      drag.current = null;
+      setDragging(false);
+    }
+  }
+
+  function onPointerMove(e: React.PointerEvent) {
+    const prev = pinch.current.get(e.pointerId);
+    if (!prev) return;
+
+    // قرصة بإصبعين = تكبير/تصغير
+    if (pinch.current.size === 2) {
+      const pts = [...pinch.current.entries()];
+      const other = pts.find(([id]) => id !== e.pointerId)?.[1];
+      if (other) {
+        const before = Math.hypot(prev.x - other.x, prev.y - other.y);
+        const after = Math.hypot(e.clientX - other.x, e.clientY - other.y);
+        if (before > 0) {
+          const mid = toVbPoint((e.clientX + other.x) / 2, (e.clientY + other.y) / 2);
+          setVb((v) => zoomVb(v, after / before, mid.x, mid.y));
+        }
+      }
+      pinch.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      return;
+    }
+
+    pinch.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    // سحب بإصبع/مؤشر واحد = تحريك الخريطة
+    const dstate = drag.current;
+    if (!dstate || dstate.id !== e.pointerId) return;
+    const rect = svgRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const dx = ((e.clientX - dstate.x) / rect.width) * dstate.vb.w;
+    const dy = ((e.clientY - dstate.y) / rect.height) * dstate.vb.h;
+    if (Math.abs(e.clientX - dstate.x) + Math.abs(e.clientY - dstate.y) > 6) dstate.moved = true;
+    setVb(clampVb({ ...dstate.vb, x: dstate.vb.x - dx, y: dstate.vb.y - dy }));
+  }
+
+  function onPointerUp(e: React.PointerEvent) {
+    pinch.current.delete(e.pointerId);
+    if (drag.current?.id === e.pointerId) {
+      // أخّر التصفير حتى يلتقط onClick قيمة moved
+      const moved = drag.current.moved;
+      drag.current = null;
+      setDragging(false);
+      if (moved) suppressClick.current = true;
+      setTimeout(() => (suppressClick.current = false), 0);
+    }
+  }
+  const suppressClick = useRef(false);
+
+  function onWheel(e: React.WheelEvent) {
+    const pt = toVbPoint(e.clientX, e.clientY);
+    setVb((v) => zoomVb(v, e.deltaY < 0 ? 1.18 : 1 / 1.18, pt.x, pt.y));
+  }
+
   // إغلاق مع تصفير الاختيار
   function handleClose() {
     setSelected(null);
     setHovered(null);
+    setVb(BASE_VB);
     onClose();
   }
 
@@ -171,8 +283,9 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
     ? total(selM, "heroes") + total(selM, "producers") + total(selM, "companies") > 0
     : false;
 
-  const tipLeft = hovered ? `${(hovered.cx / VB_W) * 100}%` : "50%";
-  const tipTop = hovered ? `${(hovered.cy / VB_H) * 100}%` : "50%";
+  // موضع التلميح يراعي إطار العرض الحالي (السحب/التكبير)
+  const tipLeft = hovered ? `${((hovered.cx - vb.x) / vb.w) * 100}%` : "50%";
+  const tipTop = hovered ? `${((hovered.cy - vb.y) / vb.h) * 100}%` : "50%";
 
   return (
     <div
@@ -212,29 +325,71 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
           {/* الخريطة */}
           <div className="relative p-4 sm:p-6" onMouseLeave={() => setHovered(null)}>
             <svg
-              viewBox={JAZAN_VIEWBOX}
-              className="h-auto w-full"
+              ref={svgRef}
+              viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
+              className={cn("h-auto w-full touch-none select-none", dragging ? "cursor-grabbing" : "cursor-grab")}
               role="group"
               aria-label={d.map.title}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onPointerCancel={onPointerUp}
+              onWheel={onWheel}
             >
               {governorates.map((g) => (
                 <path
                   key={g.id}
                   d={g.d}
                   onMouseEnter={() => setHovered(g)}
-                  onClick={() => setSelected(g)}
+                  onClick={() => {
+                    if (!suppressClick.current) setSelected(g);
+                  }}
                   aria-label={isAr ? g.ar : g.en}
                   className={cn(
-                    "cursor-pointer stroke-surface stroke-[1.5] transition-[fill] duration-150",
+                    "cursor-pointer stroke-surface transition-[fill] duration-150",
                     selected?.id === g.id
                       ? "fill-jazan"
                       : hovered?.id === g.id
                         ? "fill-jazan/45"
                         : "fill-jazan/20"
                   )}
+                  strokeWidth={1.5 / zoom}
                 />
               ))}
             </svg>
+
+            {/* أزرار التكبير/التصغير */}
+            <div className="absolute bottom-6 start-6 flex flex-col gap-1.5">
+              <button
+                type="button"
+                onClick={() => setVb((v) => zoomVb(v, 1.4))}
+                aria-label="تكبير"
+                title="تكبير"
+                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[10px] border border-line bg-surface text-[18px] font-bold text-charcoal shadow-[0_4px_14px_rgba(28,42,38,.12)] transition-colors hover:border-jazan hover:text-jazan"
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={() => setVb((v) => zoomVb(v, 1 / 1.4))}
+                aria-label="تصغير"
+                title="تصغير"
+                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[10px] border border-line bg-surface text-[18px] font-bold text-charcoal shadow-[0_4px_14px_rgba(28,42,38,.12)] transition-colors hover:border-jazan hover:text-jazan"
+              >
+                −
+              </button>
+              {zoom > 1.01 ? (
+                <button
+                  type="button"
+                  onClick={() => setVb(BASE_VB)}
+                  aria-label="إعادة الضبط"
+                  title="إعادة الضبط"
+                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[10px] border border-line bg-surface text-[13px] font-bold text-charcoal shadow-[0_4px_14px_rgba(28,42,38,.12)] transition-colors hover:border-jazan hover:text-jazan"
+                >
+                  ⟳
+                </button>
+              ) : null}
+            </div>
 
             {/* تلميح التمرير */}
             {hovered && hoverM && hovered.id !== selected?.id ? (
