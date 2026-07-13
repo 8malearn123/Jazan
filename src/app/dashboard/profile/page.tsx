@@ -2,7 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { ImagesIcon, XIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
+import {
+  loadPhotos,
+  savePhotos,
+  imageFileToDataUrl,
+  type ProfilePhotos,
+} from "@/lib/photos";
 import type { UserRole } from "@/lib/types";
 
 const inputClass =
@@ -49,6 +56,45 @@ export default function ProfilePage() {
   const isCompany = role === "company";
 
   const [saved, setSaved] = useState(false);
+
+  // صور الحساب — تُحفظ فور الاختيار وتظهر في الصفحة العامة
+  const [photos, setPhotos] = useState<ProfilePhotos>({});
+  const [photoError, setPhotoError] = useState("");
+
+  useEffect(() => {
+    if (!user) return;
+    /* eslint-disable-next-line react-hooks/set-state-in-effect */
+    setPhotos(loadPhotos(user.id));
+  }, [user]);
+
+  async function pickPhoto(
+    e: React.ChangeEvent<HTMLInputElement>,
+    kind: "avatar" | "cover"
+  ) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file || !user) return;
+    try {
+      const dataUrl = await imageFileToDataUrl(file, kind === "avatar" ? 400 : 1400);
+      const next = { ...photos, [kind]: dataUrl };
+      if (savePhotos(user.id, next)) {
+        setPhotos(next);
+        setPhotoError("");
+      } else {
+        setPhotoError("مساحة التخزين امتلأت — جرّب صورة أصغر.");
+      }
+    } catch {
+      setPhotoError("تعذّرت قراءة الصورة — جرّب ملفاً آخر (JPG أو PNG).");
+    }
+  }
+
+  function removePhoto(kind: "avatar" | "cover") {
+    if (!user) return;
+    const next = { ...photos };
+    delete next[kind];
+    savePhotos(user.id, next);
+    setPhotos(next);
+  }
 
   // الحقول — تُملأ من الجلسة ثم من المسودة المحفوظة (إن وُجدت)
   const [name, setName] = useState("");
@@ -147,15 +193,68 @@ export default function ProfilePage() {
       <h1 className="text-[18px] font-extrabold text-charcoal">ملفي الشخصي</h1>
       <p className="mt-0.5 text-[13px] text-muted">عدّل بياناتك العامة كما تظهر للزوار.</p>
 
-      {/* الصور */}
+      {/* الصور — البروفايل والغلاف، تُحفظ فور الاختيار وتظهر للزوار */}
       <section className="mt-5 overflow-hidden rounded-[16px] border border-line bg-surface">
-        <ImagePlaceholder shape="rect" label="صورة الغلاف" className="h-[120px] w-full" />
-        <div className="flex items-end gap-4 px-5 pb-5">
-          <ImagePlaceholder shape="circle" className="-mt-9 h-[72px] w-[72px] border-[3px] border-surface" />
-          <button className="mb-1 cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 text-[13px] font-semibold text-charcoal transition-colors hover:bg-cream">
-            تغيير الصورة
-          </button>
+        <div className="relative">
+          {photos.cover ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={photos.cover} alt="صورة الغلاف" className="h-[120px] w-full object-cover" />
+          ) : (
+            <ImagePlaceholder shape="rect" label="صورة الغلاف" className="h-[120px] w-full" />
+          )}
+          <div className="absolute end-3 top-3 flex items-center gap-2">
+            <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-line bg-surface/95 px-3 py-1.5 text-[12px] font-semibold text-charcoal shadow transition-colors hover:border-jazan hover:text-jazan">
+              <ImagesIcon width={14} height={14} />
+              {photos.cover ? "تغيير الغلاف" : "إضافة غلاف"}
+              <input type="file" accept="image/*" className="hidden" onChange={(e) => pickPhoto(e, "cover")} />
+            </label>
+            {photos.cover ? (
+              <button
+                type="button"
+                onClick={() => removePhoto("cover")}
+                aria-label="حذف الغلاف"
+                title="حذف الغلاف"
+                className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg border border-danger-line bg-surface/95 text-danger shadow transition-colors hover:bg-danger-soft"
+              >
+                <XIcon width={13} height={13} />
+              </button>
+            ) : null}
+          </div>
         </div>
+        <div className="flex flex-wrap items-end gap-4 px-5 pb-5">
+          <span className="relative inline-block">
+            {photos.avatar ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={photos.avatar}
+                alt="الصورة الشخصية"
+                className="-mt-9 h-[72px] w-[72px] rounded-full border-[3px] border-surface object-cover shadow"
+              />
+            ) : (
+              <ImagePlaceholder shape="circle" className="-mt-9 h-[72px] w-[72px] border-[3px] border-surface" />
+            )}
+            {photos.avatar ? (
+              <button
+                type="button"
+                onClick={() => removePhoto("avatar")}
+                aria-label="حذف الصورة الشخصية"
+                title="حذف الصورة الشخصية"
+                className="absolute -end-1 -top-8 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-danger text-white shadow"
+              >
+                <XIcon width={10} height={10} />
+              </button>
+            ) : null}
+          </span>
+          <label className="mb-1 inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-line bg-surface px-3 py-1.5 text-[13px] font-semibold text-charcoal transition-colors hover:border-jazan hover:text-jazan">
+            <ImagesIcon width={14} height={14} />
+            {photos.avatar ? "تغيير الصورة" : "إضافة صورة"}
+            <input type="file" accept="image/*" className="hidden" onChange={(e) => pickPhoto(e, "avatar")} />
+          </label>
+          <span className="mb-1.5 text-[12px] text-muted">تُحفظ فوراً وتظهر في صفحتك العامة.</span>
+        </div>
+        {photoError ? (
+          <p className="border-t border-line px-5 py-2.5 text-[12px] font-semibold text-danger">{photoError}</p>
+        ) : null}
       </section>
 
       <form onSubmit={handleSave} className="mt-4 rounded-[16px] border border-line bg-surface p-5">

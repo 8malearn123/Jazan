@@ -5,6 +5,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { CheckIcon, WhatsappIcon, MapPinIcon, StarFilledIcon } from "@/components/icons";
 import { SocialLinksRow } from "@/components/SocialLinksRow";
 import { CvButton } from "@/components/hero/CvButton";
+import { usePublicPhotos } from "@/lib/photos";
 import { whatsappLink, site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 import type { Hero } from "@/lib/types";
@@ -21,6 +22,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 /** ترويسة صفحة البطل — بطاقة بروفايل مركزية بشريط إحصائيات */
 export function ProfileHeader({ hero }: { hero: Hero }) {
   const { d } = useLocale();
+  const photos = usePublicPhotos(hero.id);
   const wa = whatsappLink(
     hero.whatsapp ?? site.whatsapp,
     `مرحباً ${hero.name}، شفت ملفك في أبطال جازان`
@@ -30,17 +32,31 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
     <div className="overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_1px_3px_rgba(28,42,38,.06)]">
       {/* الغلاف */}
       <div className="relative">
-        <ImagePlaceholder shape="rect" label="صورة غلاف" className="h-[140px] w-full sm:h-[190px]" />
+        {photos.cover ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={photos.cover} alt="صورة غلاف" className="h-[140px] w-full object-cover sm:h-[190px]" />
+        ) : (
+          <ImagePlaceholder shape="rect" label="صورة غلاف" className="h-[140px] w-full sm:h-[190px]" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-jazan/60 via-jazan/10 to-transparent" />
       </div>
 
       {/* المحتوى — مركزي */}
       <div className="flex flex-col items-center px-5 pb-6 text-center sm:px-8">
-        <ImagePlaceholder
-          shape="circle"
-          label="صورة"
-          className="-mt-14 h-[112px] w-[112px] border-[5px] border-surface shadow-[0_8px_22px_rgba(28,42,38,.16)] sm:-mt-16 sm:h-[128px] sm:w-[128px]"
-        />
+        {photos.avatar ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={photos.avatar}
+            alt={hero.name}
+            className="-mt-14 h-[112px] w-[112px] rounded-full border-[5px] border-surface object-cover shadow-[0_8px_22px_rgba(28,42,38,.16)] sm:-mt-16 sm:h-[128px] sm:w-[128px]"
+          />
+        ) : (
+          <ImagePlaceholder
+            shape="circle"
+            label="صورة"
+            className="-mt-14 h-[112px] w-[112px] border-[5px] border-surface shadow-[0_8px_22px_rgba(28,42,38,.16)] sm:-mt-16 sm:h-[128px] sm:w-[128px]"
+          />
+        )}
 
         <div className="mt-3 flex items-center gap-2.5">
           <h1 className="text-2xl font-extrabold tracking-[-.4px] text-charcoal sm:text-[28px]">
