@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Tag } from "@/components/ui/Tag";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StarFilledIcon } from "@/components/icons";
 import { useLocale } from "@/lib/i18n";
+import { loadWorks, type Work } from "@/lib/works";
+import { demoUserForPublicProfile } from "@/lib/social";
 import type { Hero } from "@/lib/types";
 import { ProfileHeader } from "./ProfileHeader";
 
@@ -25,6 +28,18 @@ export function HeroProfileView({
   worksCount?: number;
 }) {
   const { d } = useLocale();
+
+  // أعمال العضو الفعلية من «أعمالي» (بصورها) — تظهر هنا كما وعدت اللوحة
+  const [works, setWorks] = useState<Work[] | null>(null);
+  useEffect(() => {
+    const demoUser = demoUserForPublicProfile(hero.id);
+    if (!demoUser) return;
+    /* eslint-disable-next-line react-hooks/set-state-in-effect */
+    setWorks(loadWorks(demoUser));
+  }, [hero.id]);
+
+  const shownWorks = works?.slice(0, 5) ?? null;
+
   return (
     <>
       {/* الترويسة */}
@@ -36,25 +51,51 @@ export function HeroProfileView({
         <section className="rounded-[18px] border border-line bg-surface p-6">
           <div className="flex items-center justify-between">
             <SectionTitle>{d.heroPage.portfolio}</SectionTitle>
-            <span className="mono text-[13px] text-muted">{worksCount} {d.heroPage.works}</span>
+            <span className="mono text-[13px] text-muted">
+              {works ? works.length : worksCount} {d.heroPage.works}
+            </span>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <ImagePlaceholder
-              shape="rounded"
-              radius={16}
-              label="عمل مميّز"
-              className="col-span-2 row-span-2 aspect-square w-full sm:aspect-auto"
-            />
-            {Array.from({ length: Math.max(0, worksCount - 2) }).slice(0, 4).map((_, i) => (
+          {shownWorks && shownWorks.length > 0 ? (
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {shownWorks.map((w, i) => {
+                const featured = i === 0;
+                const cls = featured
+                  ? "col-span-2 row-span-2 aspect-square w-full sm:aspect-auto"
+                  : "aspect-square w-full";
+                return (
+                  <figure key={w.id} className={`relative m-0 overflow-hidden rounded-[16px] ${cls}`}>
+                    {w.image ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={w.image} alt={w.title} className="h-full w-full object-cover" />
+                    ) : (
+                      <ImagePlaceholder shape="rounded" radius={16} label={w.title} className="h-full w-full" />
+                    )}
+                    <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2 pt-6 text-[12px] font-bold text-white">
+                      {w.title}
+                    </figcaption>
+                  </figure>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
               <ImagePlaceholder
-                key={i}
                 shape="rounded"
-                radius={14}
-                label={`عمل ${i + 2}`}
-                className="aspect-square w-full"
+                radius={16}
+                label="عمل مميّز"
+                className="col-span-2 row-span-2 aspect-square w-full sm:aspect-auto"
               />
-            ))}
-          </div>
+              {Array.from({ length: Math.max(0, worksCount - 2) }).slice(0, 4).map((_, i) => (
+                <ImagePlaceholder
+                  key={i}
+                  shape="rounded"
+                  radius={14}
+                  label={`عمل ${i + 2}`}
+                  className="aspect-square w-full"
+                />
+              ))}
+            </div>
+          )}
         </section>
 
         {/* نبذة + المهارات */}
