@@ -13,6 +13,7 @@ import {
   StarFilledIcon,
   ImagesIcon,
   BriefcaseIcon,
+  HeadsetIcon,
 } from "@/components/icons";
 import {
   loadReviewModeration,
@@ -21,6 +22,7 @@ import {
 } from "@/lib/reviews";
 import { loadMediaModeration, onMediaModerationChange, pendingMedia } from "@/lib/media";
 import { loadOfferModeration, onOfferModerationChange, pendingOffers } from "@/lib/offers";
+import { newTicketsCount, onTicketsChange } from "@/lib/support";
 
 /** عدّاد معلّق حي — يتحدّث مباشرة عند قرارات المشرف */
 function usePendingCount(count: () => number, subscribe: (l: () => void) => () => void) {
@@ -131,6 +133,7 @@ const navItems: NavItem[] = [
   { href: "/admin/offers", label: "عروض الشركات", icon: BriefcaseIcon },
   { href: "/admin/media", label: "الشعارات والصور", icon: ImagesIcon },
   { href: "/admin/reviews", label: "التقييمات", icon: StarFilledIcon },
+  { href: "/admin/support", label: "الدعم الفني", icon: HeadsetIcon },
   { href: "/admin/reports", label: "البلاغات", icon: FlagIcon, badge: counts.openReports },
   { href: "/admin/settings", label: "الإعدادات", icon: SettingsIcon },
 ];
@@ -149,10 +152,12 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
     () => pendingOffers(loadOfferModeration()).length,
     onOfferModerationChange
   );
+  const newTickets = usePendingCount(newTicketsCount, onTicketsChange);
   const liveBadges: Record<string, number> = {
     "/admin/reviews": pendingReviewsCount,
     "/admin/media": pendingMediaCount,
     "/admin/offers": pendingOffersCount,
+    "/admin/support": newTickets,
   };
   return (
     <nav className="flex flex-col gap-[3px]">
