@@ -87,7 +87,7 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
 
         {/* صف الإجراءات: شبكات التواصل (يمين) · واتساب (وسط) · السيرة الذاتية (يسار) */}
         <div className="mt-5 flex w-full max-w-2xl flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <SocialLinksRow profileId={hero.id} className="flex-none sm:order-first" />
+          <SocialLinksRow profileId={hero.id} seed={hero.socials} className="flex-none sm:order-first" />
           <a
             href={wa}
             target="_blank"

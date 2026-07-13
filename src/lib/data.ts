@@ -14,6 +14,7 @@ import type {
 export const sampleHeroes: Hero[] = [
   {
     id: "h1",
+    socials: { github: "https://github.com/m-asiri", x: "https://x.com/m_asiri", linkedin: "https://linkedin.com/in/m-asiri", website: "https://masiri.dev" },
     name: "محمد عسيري",
     title: "مطوّر واجهات أمامية",
     city: "صبيا",
@@ -51,6 +52,7 @@ export const sampleHeroes: Hero[] = [
   },
   {
     id: "h2",
+    socials: { instagram: "https://instagram.com/noura.design", x: "https://x.com/noura_hakami", linkedin: "https://linkedin.com/in/noura-hakami" },
     name: "نورة حكمي",
     title: "مصمّمة هوية بصرية",
     city: "جيزان",
@@ -80,6 +82,7 @@ export const sampleHeroes: Hero[] = [
   },
   {
     id: "h3",
+    socials: { linkedin: "https://linkedin.com/in/a-malki", github: "https://github.com/a-malki", x: "https://x.com/a_malki" },
     name: "عبدالله مالكي",
     title: "مهندس بيانات",
     city: "أبو عريش",
@@ -92,6 +95,7 @@ export const sampleHeroes: Hero[] = [
   },
   {
     id: "h4",
+    socials: { x: "https://x.com/reem_writes", linkedin: "https://linkedin.com/in/reem-zailai", website: "https://reemwrites.sa" },
     name: "ريم زيلعي",
     title: "كاتبة محتوى",
     city: "جيزان",
@@ -104,6 +108,7 @@ export const sampleHeroes: Hero[] = [
   },
   {
     id: "h5",
+    socials: { instagram: "https://instagram.com/khaled.lens", youtube: "https://youtube.com/@khaledlens", tiktok: "https://tiktok.com/@khaled.lens" },
     name: "خالد فيفي",
     title: "مصوّر فوتوغرافي",
     city: "فيفا",
@@ -125,6 +130,7 @@ export const sampleHeroes: Hero[] = [
   },
   {
     id: "h6",
+    socials: { github: "https://github.com/sara-madkhali", linkedin: "https://linkedin.com/in/sara-madkhali" },
     name: "سارة مدخلي",
     title: "مطوّرة واجهات",
     city: "صامطة",
@@ -137,6 +143,7 @@ export const sampleHeroes: Hero[] = [
   },
   {
     id: "h7",
+    socials: { github: "https://github.com/y-najmi", x: "https://x.com/y_najmi", youtube: "https://youtube.com/@ynajmi" },
     name: "يوسف نجمي",
     title: "مطوّر تطبيقات",
     city: "بيش",
@@ -149,6 +156,7 @@ export const sampleHeroes: Hero[] = [
   },
   {
     id: "h8",
+    socials: { linkedin: "https://linkedin.com/in/amal-shuabi", x: "https://x.com/amal_shuabi" },
     name: "أمل شعبي",
     title: "مديرة مشاريع",
     city: "الدرب",
@@ -164,6 +172,7 @@ export const sampleHeroes: Hero[] = [
 export const producers: Producer[] = [
   {
     id: "pr1",
+    socials: { instagram: "https://instagram.com/nakhat.sabya", tiktok: "https://tiktok.com/@nakhat.sabya", whatsapp: "https://wa.me/966500000201" },
     name: "أسرة نكهات صبيا",
     category: "طعام",
     city: "صبيا",
@@ -183,6 +192,7 @@ export const producers: Producer[] = [
   },
   {
     id: "pr2",
+    socials: { instagram: "https://instagram.com/herfat.jazan", x: "https://x.com/herfat_jazan" },
     name: "حرفة جازان",
     category: "حِرف",
     city: "أبو عريش",
@@ -201,6 +211,7 @@ export const producers: Producer[] = [
   },
   {
     id: "pr3",
+    socials: { instagram: "https://instagram.com/oud.sahel", youtube: "https://youtube.com/@oudsahel" },
     name: "عطور الساحل",
     category: "عطور",
     city: "جيزان",
@@ -221,6 +232,7 @@ export const producers: Producer[] = [
 export const companies: Company[] = [
   {
     id: "c1",
+    socials: { x: "https://x.com/tihama_tech", linkedin: "https://linkedin.com/company/tihama-tech", website: "https://tihama.tech" },
     name: "تهامة للتقنية",
     field: "تطوير برمجيات",
     city: "جيزان",
@@ -231,6 +243,7 @@ export const companies: Company[] = [
   },
   {
     id: "c2",
+    socials: { x: "https://x.com/jazan_oasis", instagram: "https://instagram.com/jazan.oasis" },
     name: "واحة جازان الرقمية",
     field: "تسويق رقمي",
     city: "صبيا",
@@ -240,6 +253,7 @@ export const companies: Company[] = [
   },
   {
     id: "c3",
+    socials: { instagram: "https://instagram.com/sahel.store", tiktok: "https://tiktok.com/@sahel.store", website: "https://sahelstore.sa" },
     name: "متجر الساحل",
     field: "تجارة إلكترونية",
     city: "جيزان",
@@ -249,6 +263,7 @@ export const companies: Company[] = [
   },
   {
     id: "c4",
+    socials: { x: "https://x.com/dar_sabya", website: "https://darsabya.sa" },
     name: "دار صبيا للنشر",
     field: "إعلام ومحتوى",
     city: "صبيا",

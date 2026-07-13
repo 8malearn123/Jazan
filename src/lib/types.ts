@@ -22,6 +22,9 @@ export interface Review {
   date?: string;
 }
 
+/** روابط شبكات التواصل الشخصية (المفتاح = المنصة) */
+export type ProfileSocials = Record<string, string>;
+
 /** بطل (مستقل / باحث عن عمل) */
 export interface Hero {
   id: string;
@@ -40,6 +43,8 @@ export interface Hero {
   verified?: boolean;
   portfolio?: PortfolioItem[];
   reviews?: Review[];
+  /** روابط التواصل الافتراضية — تظهر في الصفحة العامة */
+  socials?: ProfileSocials;
 }
 
 /** منتج لأسرة منتجة */
@@ -65,6 +70,8 @@ export interface Producer {
   whatsapp?: string;
   verified?: boolean;
   products?: Product[];
+  /** روابط التواصل الافتراضية — تظهر في الصفحة العامة */
+  socials?: ProfileSocials;
 }
 
 /** وظيفة / فرصة تنشرها شركة */
@@ -93,6 +100,8 @@ export interface Company {
   verified: boolean;
   whatsapp?: string;
   jobs?: Job[];
+  /** روابط التواصل الافتراضية — تظهر في الصفحة العامة */
+  socials?: ProfileSocials;
 }
 
 /** راعٍ للمنصة */

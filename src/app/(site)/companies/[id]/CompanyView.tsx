@@ -176,7 +176,7 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
                 {t.browseOthers}
               </Link>
             </div>
-            <SocialLinksRow profileId={company.id} className="mt-4 justify-start" />
+            <SocialLinksRow profileId={company.id} seed={company.socials} className="mt-4 justify-start" />
           </div>
         </aside>
       </div>

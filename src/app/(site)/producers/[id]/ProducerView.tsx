@@ -205,7 +205,7 @@ export function ProducerView({ producer }: { producer: Producer }) {
         </div>
 
         {/* شبكات التواصل */}
-        <SocialLinksRow profileId={producer.id} className="mt-4 justify-start" />
+        <SocialLinksRow profileId={producer.id} seed={producer.socials} className="mt-4 justify-start" />
 
         {/* قائمة المنتجات */}
         <div className="mt-[34px] mb-[18px] flex flex-wrap items-center justify-between gap-2">
