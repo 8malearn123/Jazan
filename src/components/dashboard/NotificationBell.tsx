@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BellIcon, CheckIcon, BriefcaseIcon, StarFilledIcon } from "@/components/icons";
+import { BellIcon, CheckIcon, BriefcaseIcon, StarFilledIcon, HeadsetIcon, XIcon } from "@/components/icons";
+import { loadDynamicNotifs, onNotifsChange, type DynamicNotif } from "@/lib/support";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useLocale } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
@@ -15,6 +16,8 @@ const typeStyle: Record<string, { Icon: typeof CheckIcon; wrap: string }> = {
   approved: { Icon: CheckIcon, wrap: "bg-success/15 text-success-ink" },
   selected: { Icon: BriefcaseIcon, wrap: "bg-info/12 text-info-ink" },
   review: { Icon: StarFilledIcon, wrap: "bg-amber/15 text-amber-dark" },
+  support: { Icon: HeadsetIcon, wrap: "bg-success/15 text-success-ink" },
+  "support-rejected": { Icon: XIcon, wrap: "bg-danger-soft text-danger" },
 };
 
 export function NotificationBell() {
@@ -22,6 +25,7 @@ export function NotificationBell() {
   const { d, isAr } = useLocale();
   const [open, setOpen] = useState(false);
   const [readIds, setReadIds] = useState<string[]>([]);
+  const [dynamic, setDynamic] = useState<DynamicNotif[]>([]);
 
   const role = user?.role;
   const storageKey = user ? STORAGE_PREFIX + user.id : null;
@@ -38,10 +42,20 @@ export function NotificationBell() {
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [storageKey]);
 
+  // الإشعارات الديناميكية (ردود الدعم الفني وغيرها) — تتحدث لحظياً
+  useEffect(() => {
+    if (!user) return;
+    const update = () => setDynamic(loadDynamicNotifs(user.id));
+    update();
+    return onNotifsChange(update);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
+
   // المشرف لا يملك إشعارات ديمو
   if (!user || role === "admin") return null;
 
-  const notifs = d.notifs[role as "hero" | "producer" | "company"] ?? [];
+  const staticNotifs = d.notifs[role as "hero" | "producer" | "company"] ?? [];
+  const notifs = [...dynamic, ...staticNotifs];
   const unread = notifs.filter((n) => !readIds.includes(n.id)).length;
 
   function toggle() {

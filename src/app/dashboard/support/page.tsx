@@ -1,8 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { WhatsappIcon, MailIcon, CheckIcon } from "@/components/icons";
+import { useEffect, useState } from "react";
+import { WhatsappIcon, MailIcon, CheckIcon, HeadsetIcon, XIcon } from "@/components/icons";
+import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
+import {
+  addTicket,
+  loadTickets,
+  onTicketsChange,
+  type SupportTicket,
+} from "@/lib/support";
+import { cn } from "@/lib/cn";
 import { site, whatsappLink } from "@/lib/site";
+
+const statusMeta: Record<SupportTicket["status"], { label: string; cls: string }> = {
+  new: { label: "قيد المراجعة", cls: "bg-warn/16 text-warn-ink" },
+  answered: { label: "تم الرد", cls: "bg-success/12 text-success-ink" },
+  rejected: { label: "مرفوض", cls: "bg-danger-soft text-danger" },
+};
 
 // الدعم الفني — التواصل مع إدارة المنصة
 
@@ -19,9 +33,32 @@ const topics = [
 ];
 
 export default function SupportPage() {
+  const { user } = useAuth();
   const [topic, setTopic] = useState(topics[0]);
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+
+  // رسائلي السابقة وردود الإدارة — تتحدث لحظياً
+  const [myTickets, setMyTickets] = useState<SupportTicket[]>([]);
+  useEffect(() => {
+    if (!user) return;
+    const update = () => setMyTickets(loadTickets().filter((t) => t.userId === user.id));
+    update();
+    return onTicketsChange(update);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
+
+  function submitTicket() {
+    if (!user || user.role === "admin") return;
+    addTicket({
+      userId: user.id,
+      userName: user.name,
+      role: user.role,
+      roleLabel: roleLabels[user.role],
+      topic,
+      message: message.trim(),
+    });
+  }
 
   const waHref = whatsappLink(
     site.whatsapp,
@@ -90,7 +127,9 @@ export default function SupportPage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (message.trim()) setSent(true);
+            if (!message.trim()) return;
+            submitTicket();
+            setSent(true);
           }}
           className="mt-4 rounded-[16px] border border-line bg-surface p-5"
         >
@@ -134,6 +173,49 @@ export default function SupportPage() {
           </button>
         </form>
       )}
+
+      {/* رسائلي السابقة وردود الإدارة */}
+      {myTickets.length > 0 ? (
+        <div className="mt-6">
+          <h2 className="text-[15px] font-bold text-charcoal">
+            رسائلك <span className="mono font-medium text-muted">({myTickets.length})</span>
+          </h2>
+          <div className="mt-2.5 flex flex-col gap-3">
+            {myTickets.map((t) => (
+              <div key={t.id} className="rounded-[16px] border border-line bg-surface p-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="text-[13px] font-bold text-charcoal">{t.topic}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] text-muted">{t.date}</span>
+                    <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-semibold", statusMeta[t.status].cls)}>
+                      {statusMeta[t.status].label}
+                    </span>
+                  </div>
+                </div>
+                <p className="mt-2 text-[13px] leading-relaxed text-ink">{t.message}</p>
+                {t.reply ? (
+                  <div
+                    className={cn(
+                      "mt-3 rounded-[12px] border p-3",
+                      t.status === "rejected" ? "border-danger-line bg-danger-soft/40" : "border-success/30 bg-success/8"
+                    )}
+                  >
+                    <div className="flex items-center gap-1.5 text-[12px] font-bold text-charcoal">
+                      {t.status === "rejected" ? (
+                        <XIcon width={13} height={13} className="text-danger" />
+                      ) : (
+                        <HeadsetIcon width={13} height={13} className="text-success-ink" />
+                      )}
+                      رد إدارة المنصة
+                    </div>
+                    <p className="mt-1 text-[13px] leading-relaxed text-ink">{t.reply}</p>
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
