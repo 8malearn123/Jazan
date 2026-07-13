@@ -284,8 +284,13 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
     : false;
 
   // موضع التلميح يراعي إطار العرض الحالي (السحب/التكبير)
-  const tipLeft = hovered ? `${((hovered.cx - vb.x) / vb.w) * 100}%` : "50%";
-  const tipTop = hovered ? `${((hovered.cy - vb.y) / vb.h) * 100}%` : "50%";
+  // مع تثبيته داخل حدود الخريطة حتى لا ينقص النص عند الحواف
+  const tipXPct = hovered ? ((hovered.cx - vb.x) / vb.w) * 100 : 50;
+  const tipYPct = hovered ? ((hovered.cy - vb.y) / vb.h) * 100 : 50;
+  const tipLeft = `clamp(135px, ${tipXPct}%, calc(100% - 135px))`;
+  const tipTop = `${Math.min(Math.max(tipYPct, 0), 100)}%`;
+  // قرب أعلى الخريطة يظهر التلميح تحت المؤشر بدل فوقه
+  const tipBelow = tipYPct < 42;
 
   return (
     <div
@@ -391,13 +396,19 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
               ) : null}
             </div>
 
-            {/* تلميح التمرير */}
+            {/* تلميح التمرير — يظهر تحت المؤشر قرب أعلى الخريطة وفوقه في باقيها */}
             {hovered && hoverM && hovered.id !== selected?.id ? (
               <div
-                className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full"
+                className={cn(
+                  "pointer-events-none absolute z-10 -translate-x-1/2",
+                  tipBelow ? "translate-y-[14px]" : "-translate-y-full"
+                )}
                 style={{ left: tipLeft, top: tipTop }}
                 dir={isAr ? "rtl" : "ltr"}
               >
+                {tipBelow ? (
+                  <span className="mx-auto block h-2.5 w-2.5 translate-y-[6px] rotate-45 border-s border-t border-line bg-surface" />
+                ) : null}
                 <div className="w-max max-w-[240px] rounded-[14px] border border-line bg-surface px-4 py-3 shadow-[0_12px_32px_rgba(0,0,0,.25)]">
                   <div className="text-[14px] font-extrabold text-charcoal">
                     {isAr ? hovered.ar : hovered.en}
@@ -431,7 +442,9 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
                     </p>
                   )}
                 </div>
-                <span className="mx-auto block h-2.5 w-2.5 -translate-y-[6px] rotate-45 border-b border-e border-line bg-surface" />
+                {!tipBelow ? (
+                  <span className="mx-auto block h-2.5 w-2.5 -translate-y-[6px] rotate-45 border-b border-e border-line bg-surface" />
+                ) : null}
               </div>
             ) : null}
           </div>
