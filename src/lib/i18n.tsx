@@ -118,6 +118,7 @@ const ar = {
     close: "إغلاق",
     clickHint: "اضغط لعرض الحسابات",
     membersIn: "المسجّلون في",
+    newMember: "انضم حديثاً",
     backToMap: "رجوع للخريطة",
   },
   browse: {
@@ -178,6 +179,7 @@ const ar = {
     asideRegisterDesc: "سجّل بإيميلك، ابنِ صفحتك الاحترافية، واستقبل الفرص مباشرة عبر واتساب.",
     fullName: "الاسم الكامل",
     namePh: "محمد عسيري",
+    govLabel: "المحافظة",
     email: "البريد الإلكتروني",
     password: "كلمة المرور",
     passwordHint: "8 أحرف على الأقل، وتشمل رقماً واحداً.",
@@ -531,6 +533,7 @@ const en: Dict = {
     close: "Close",
     clickHint: "Tap to view profiles",
     membersIn: "Members in",
+    newMember: "Newly joined",
     backToMap: "Back to map",
   },
   browse: {
@@ -591,6 +594,7 @@ const en: Dict = {
     asideRegisterDesc: "Sign up with your email, build your professional page, and receive opportunities directly on WhatsApp.",
     fullName: "Full name",
     namePh: "Mohammed Asiri",
+    govLabel: "Governorate",
     email: "Email",
     password: "Password",
     passwordHint: "At least 8 characters, including one number.",
