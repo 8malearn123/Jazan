@@ -24,7 +24,6 @@ import { loadMediaModeration, onMediaModerationChange, pendingMedia } from "@/li
 import { loadOfferModeration, onOfferModerationChange, pendingOffers } from "@/lib/offers";
 import { newTicketsCount, onTicketsChange } from "@/lib/support";
 
-/** عدّاد معلّق حي — يتحدّث مباشرة عند قرارات المشرف */
 function usePendingCount(count: () => number, subscribe: (l: () => void) => () => void) {
   const [value, setValue] = useState(0);
   useEffect(() => {
@@ -36,7 +35,6 @@ function usePendingCount(count: () => number, subscribe: (l: () => void) => () =
   return value;
 }
 
-/** أيقونة منزل (الصفحة الرئيسية) */
 function HomeIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -56,7 +54,6 @@ function HomeIcon({ className }: { className?: string }) {
   );
 }
 
-/** أيقونة درع (التوثيق) */
 function ShieldIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -76,7 +73,6 @@ function ShieldIcon({ className }: { className?: string }) {
   );
 }
 
-/** أيقونة بلاغ / تنبيه */
 function FlagIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -96,7 +92,6 @@ function FlagIcon({ className }: { className?: string }) {
   );
 }
 
-/** أيقونة إعدادات */
 function SettingsIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -220,7 +215,6 @@ function SidebarHeader() {
   );
 }
 
-/** الشريط الجانبي لسطح المكتب */
 export function AdminSidebar() {
   return (
     <aside className="hidden w-[250px] flex-none flex-col bg-[#1c2a26] px-4 py-[22px] lg:flex">
@@ -231,7 +225,6 @@ export function AdminSidebar() {
   );
 }
 
-/** درج التنقّل للجوال */
 export function AdminMobileNav() {
   const [open, setOpen] = useState(false);
 

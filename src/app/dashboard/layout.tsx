@@ -13,7 +13,6 @@ import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import type { UserRole } from "@/lib/types";
 
-// أيقونات محلية صغيرة
 function SettingsIcon({ className }: { className?: string }) {
   return (
     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -46,7 +45,6 @@ type NavItem = {
   badge?: string;
 };
 
-// روابط التنقّل في الداشبورد
 function navForRole(role: UserRole): NavItem[] {
   const items: NavItem[] = [
     { href: "/dashboard", label: "لوحة التحكم", Icon: GridIcon },
@@ -110,7 +108,6 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const { user, ready, logout } = useAuth();
-  // الصورة الشخصية التي رفعها المستخدم (إن وُجدت)
   const photos = usePhotos(user?.id);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -136,7 +133,6 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* الشريط العلوي للجوال */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-surface px-4 py-3 lg:hidden">
         <Logo size="sm" />
         <div className="flex items-center gap-2">
@@ -158,7 +154,6 @@ export default function DashboardLayout({
         </div>
       </header>
 
-      {/* درج التنقّل للجوال */}
       {drawerOpen ? (
         <div className="fixed inset-0 z-40 lg:hidden">
           <button
@@ -196,7 +191,6 @@ export default function DashboardLayout({
       ) : null}
 
       <div className="mx-auto flex w-full max-w-[1280px] gap-0 lg:gap-6 lg:p-6">
-        {/* الشريط الجانبي لسطح المكتب */}
         <aside className="sticky top-6 hidden h-[calc(100vh-3rem)] w-[248px] flex-none flex-col rounded-2xl border border-line bg-surface p-4 lg:flex">
           <div className="px-2 pb-4">
             <Logo size="sm" />
@@ -217,9 +211,7 @@ export default function DashboardLayout({
           </div>
         </aside>
 
-        {/* المحتوى */}
         <main className="min-w-0 flex-1 px-4 py-5 lg:px-0 lg:py-0">
-          {/* الشريط العلوي لسطح المكتب */}
           <div className="mb-5 hidden items-center justify-between rounded-2xl border border-line bg-surface px-5 py-3.5 lg:flex">
             <Logo size="sm" />
             <div className="flex items-center gap-4">

@@ -14,7 +14,6 @@ import { AdminPageHead } from "../_components/AdminTable";
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
-/** حقول روابط تابعنا */
 const followFields: {
   key: keyof SiteSocialLinks;
   label: string;
@@ -61,7 +60,6 @@ export default function AdminSettingsPage() {
     <div className="mx-auto w-full max-w-[820px] space-y-5">
       <AdminPageHead title="الإعدادات" subtitle="إعدادات المنصة العامة" />
 
-      {/* معلومات المنصة */}
       <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">معلومات المنصة</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -80,7 +78,6 @@ export default function AdminSettingsPage() {
         </div>
       </section>
 
-      {/* تابعنا — روابط حسابات المنصة */}
       <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">تابعنا</h2>
         <p className="mt-0.5 text-[13px] text-muted">
@@ -112,7 +109,6 @@ export default function AdminSettingsPage() {
         </div>
       </section>
 
-      {/* خيارات التشغيل */}
       <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">خيارات التشغيل</h2>
         <div className="mt-3 divide-y divide-line">

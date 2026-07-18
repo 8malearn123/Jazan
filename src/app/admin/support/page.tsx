@@ -12,8 +12,6 @@ import {
   type TicketStatus,
 } from "@/lib/support";
 
-// الدعم الفني — رسائل الأعضاء (مشاكل، استفسارات، طلبات) والرد عليها
-
 const statusMeta: Record<TicketStatus, { label: string; tone: "warn" | "success" | "muted" }> = {
   new: { label: "جديدة", tone: "warn" },
   answered: { label: "تم الرد", tone: "success" },
@@ -31,7 +29,6 @@ const roleTone: Record<string, string> = {
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan";
 
-/** نافذة تفاصيل التذكرة — عرض الرسالة كاملة والرد أو الرفض */
 function TicketModal({
   ticket,
   onClose,
@@ -202,7 +199,6 @@ export default function AdminSupportPage() {
         </div>
       ) : null}
 
-      {/* الرسائل الجديدة */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">بانتظار الرد</h2>
         {pending.length === 0 ? (
@@ -245,7 +241,6 @@ export default function AdminSupportPage() {
         )}
       </div>
 
-      {/* السجل */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">
           سجل الرسائل <span className="mono font-medium text-muted">({decided.length})</span>

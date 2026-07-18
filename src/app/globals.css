@@ -5,7 +5,6 @@
   --font-sans: var(--font-alexandria), system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), "IBM Plex Mono", monospace;
 
-  /* Brand palette — أبطال جازان */
   --color-jazan: #0f5c4a;
   --color-jazan-dark: #0c4a3c;
   --color-amber: #e8932e;
@@ -17,7 +16,6 @@
   --color-muted: #6b7770;
   --color-line: #e7e2d9;
 
-  /* أسطح ومكوّنات (تتبدّل مع الوضع الداكن) */
   --color-surface: #ffffff;
   --color-tag: #f3f0e9;
   --color-line-soft: #f0ede6;
@@ -33,14 +31,11 @@
   --color-warn-ink: #b06a00;
   --color-whatsapp: #25d366;
 
-  /* ألوان الخطر (رفض / حذف) */
   --color-danger: #b3261e;
   --color-danger-line: #e8c9c9;
   --color-danger-soft: #fdf3f3;
 }
 
-/* ===== الوضع الداكن =====
-   الألوان كلها متغيّرات، فيكفي تبديل قيمها تحت .dark */
 .dark {
   --color-jazan: #2f9478;
   --color-jazan-dark: #257a63;

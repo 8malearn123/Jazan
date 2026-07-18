@@ -5,7 +5,6 @@ import { WhatsappIcon, BriefcaseIcon, ClockIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 
-/** لون شارة نوع الفرصة */
 function typeBadgeClass(type?: string) {
   switch (type) {
     case "عن بُعد":
@@ -18,7 +17,6 @@ function typeBadgeClass(type?: string) {
   }
 }
 
-/** بطاقة فرصة ضمن صفحة الشركة — مطابقة لـ company.html (قائمة الفرص) */
 export function CompanyJobCard({
   job,
   companyName,
@@ -84,7 +82,6 @@ export function CompanyJobCard({
         </div>
       </div>
 
-      {/* الإجراءات */}
       <div className="mt-4 flex flex-wrap gap-2.5">
         <a
           href={waHref}

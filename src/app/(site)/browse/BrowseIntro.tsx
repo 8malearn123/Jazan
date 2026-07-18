@@ -3,7 +3,6 @@
 import { counts } from "@/lib/stats";
 import { useLocale } from "@/lib/i18n";
 
-/** عنوان صفحة تصفّح الأبطال (قابل للترجمة) */
 export function BrowseIntro() {
   const { d } = useLocale();
 

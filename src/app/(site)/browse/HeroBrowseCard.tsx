@@ -8,7 +8,6 @@ import { cn } from "@/lib/cn";
 import { useLocale } from "@/lib/i18n";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
 
-/** شارة التوفّر المُصغّرة المعروضة فوق الغلاف */
 const overlayPillStyle: Record<AvailabilityStatus, { dot: string; text: string }> = {
   freelance: { dot: "bg-success", text: "text-success-ink" },
   job: { dot: "bg-info", text: "text-info-ink" },
@@ -16,7 +15,6 @@ const overlayPillStyle: Record<AvailabilityStatus, { dot: string; text: string }
   producer: { dot: "bg-amber", text: "text-warn-ink" },
 };
 
-/** بطاقة بطل في شبكة التصفّح — مطابقة لـ browse.html (FRAME 1) */
 export function HeroBrowseCard({ hero }: { hero: Hero }) {
   const { d } = useLocale();
   const pill = { ...overlayPillStyle[hero.status], label: d.status[hero.status] };
@@ -25,7 +23,6 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
 
   return (
     <div className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-1 hover:border-jazan hover:shadow-[0_14px_34px_rgba(28,42,38,.12)]">
-      {/* الغلاف + شارة التوفّر */}
       <div className="relative">
         <ImagePlaceholder shape="rect" className="h-[84px] w-full" />
         <span
@@ -39,7 +36,6 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
         </span>
       </div>
 
-      {/* الجسم */}
       <div className="flex flex-1 flex-col p-4">
         <ImagePlaceholder
           shape="circle"
@@ -58,7 +54,6 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
           {hero.title} · {hero.city}
         </div>
 
-        {/* المهارات */}
         <div className="mt-[11px] flex flex-wrap gap-1.5">
           {shownSkills.map((skill) => (
             <span
@@ -75,7 +70,6 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
           )}
         </div>
 
-        {/* الأزرار */}
         <div className="mt-auto flex gap-2 pt-3.5">
           <Link
             href={`/heroes/${hero.id}`}

@@ -1,5 +1,3 @@
-// التقييمات — لا يظهر أي تقييم في لوحة العضو أو صفحته إلا بعد اعتماد مشرف المنصة.
-// قرارات المشرف (اعتماد/رفض) تُحفظ محلياً في الوضع التجريبي.
 
 export type ReviewStatus = "pending" | "approved" | "rejected";
 
@@ -10,14 +8,9 @@ export type Review = {
   rating: number;
   comment: string;
   date: string;
-  /** الحالة الافتراضية قبل أي قرار من المشرف */
   seedStatus: ReviewStatus;
 };
 
-/**
- * جميع التقييمات الواردة على الملف — القديمة سبق اعتمادها،
- * والجديدة تصل بحالة «قيد المراجعة» ولا تُعرض حتى يوافق المشرف.
- */
 export const allReviews: Review[] = [
   { id: "rv1", author: "مؤسسة النخبة للتسويق", type: "شركة", rating: 5, comment: "سرعة إنجاز ودقة عالية، والتقارير كانت واضحة أولاً بأول. تجربة يعتمد عليها.", date: "اليوم", seedStatus: "pending" },
   { id: "rv2", author: "أبو راكان", type: "عميل", rating: 4, comment: "النتيجة النهائية ممتازة والتواصل مريح، أنصح بالتعامل معه.", date: "أمس", seedStatus: "pending" },
@@ -31,7 +24,6 @@ export const allReviews: Review[] = [
   { id: "rv10", author: "مؤسسة الشاطئ", type: "شركة", rating: 5, comment: "احترافية عالية من أول تواصل حتى التسليم. يستاهل التقييم الكامل.", date: "قبل 4 أشهر", seedStatus: "approved" },
 ];
 
-/** قرارات المشرف المحفوظة: معرّف التقييم ← الحالة */
 export type ReviewModeration = Record<string, ReviewStatus>;
 
 const MODERATION_KEY = "jazanheroes.reviews.moderation";
@@ -55,7 +47,6 @@ export function saveReviewModeration(moderation: ReviewModeration): void {
   }
 }
 
-/** الاشتراك في تغيّر قرارات المشرف (لتحديث الشارات مباشرة) */
 export function onReviewModerationChange(listener: () => void): () => void {
   window.addEventListener(MODERATION_EVENT, listener);
   window.addEventListener("storage", listener);
@@ -65,17 +56,14 @@ export function onReviewModerationChange(listener: () => void): () => void {
   };
 }
 
-/** الحالة الفعلية للتقييم بعد تطبيق قرار المشرف (إن وُجد) */
 export function reviewStatus(review: Review, moderation: ReviewModeration): ReviewStatus {
   return moderation[review.id] ?? review.seedStatus;
 }
 
-/** التقييمات المعتمدة فقط — هي وحدها التي تظهر للأعضاء والزوار */
 export function approvedReviews(moderation: ReviewModeration): Review[] {
   return allReviews.filter((r) => reviewStatus(r, moderation) === "approved");
 }
 
-/** التقييمات التي تنتظر قرار المشرف */
 export function pendingReviews(moderation: ReviewModeration): Review[] {
   return allReviews.filter((r) => reviewStatus(r, moderation) === "pending");
 }

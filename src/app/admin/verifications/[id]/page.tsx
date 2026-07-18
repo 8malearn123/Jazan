@@ -37,7 +37,6 @@ export default async function VerificationPreviewPage({
   const req = getPendingVerification(id);
   if (!req) notFound();
 
-  // نبني ملف بطل من بيانات الطلب لعرضه تماماً كصفحة العرض العامة
   const previewHero: Hero = {
     id: req.id,
     name: req.name,
@@ -52,7 +51,6 @@ export default async function VerificationPreviewPage({
 
   return (
     <div className="mx-auto w-full max-w-4xl pb-10">
-      {/* رجوع */}
       <Link
         href="/admin/verifications"
         className="inline-flex items-center gap-2 text-sm font-medium text-muted no-underline transition-colors hover:text-jazan"
@@ -61,7 +59,6 @@ export default async function VerificationPreviewPage({
         رجوع لطلبات التوثيق
       </Link>
 
-      {/* شريط قرار التوثيق */}
       <div className="mt-4 flex flex-col gap-3 rounded-[16px] border border-amber/40 bg-amber/[.07] p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="text-[14px] font-bold text-charcoal">
@@ -74,7 +71,6 @@ export default async function VerificationPreviewPage({
         <VerificationActions id={req.id} />
       </div>
 
-      {/* الملف — مطابق لصفحة عرض البطل */}
       <div className="mt-4">
         <HeroProfileView hero={previewHero} bio={bio} />
       </div>

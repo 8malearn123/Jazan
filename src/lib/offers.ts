@@ -1,18 +1,13 @@
-// طلبات عروض الشركات (وظائف وفرص جديدة) — لا يُنشر أي عرض في صفحة
-// الشركات إلا بعد موافقة المدير. القرارات تُحفظ محلياً في الوضع التجريبي.
 
 import type { Job } from "./types";
 
 export type OfferStatus = "pending" | "approved" | "rejected";
 
 export type CompanyOffer = Job & {
-  /** الحالة الافتراضية قبل قرار المدير */
   seedStatus: OfferStatus;
-  /** وصف العرض كما أرسلته الشركة */
   desc: string;
 };
 
-/** طلبات العروض الواردة من الشركات */
 export const companyOffers: CompanyOffer[] = [
   {
     id: "of1",
@@ -95,7 +90,6 @@ export function pendingOffers(moderation: OfferModeration): CompanyOffer[] {
   return companyOffers.filter((o) => offerStatus(o, moderation) === "pending");
 }
 
-/** العروض المعتمدة — تُنشر في قائمة أحدث الوظائف بصفحة الشركات */
 export function approvedOffers(moderation: OfferModeration): Job[] {
   return companyOffers
     .filter((o) => offerStatus(o, moderation) === "approved")

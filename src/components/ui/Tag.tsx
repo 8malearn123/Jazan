@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-/** وسم مهارة */
 export function Tag({
   children,
   className,

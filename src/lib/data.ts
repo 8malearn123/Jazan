@@ -8,9 +8,6 @@ import type {
   AdminReport,
 } from "./types";
 
-// بيانات تجريبية مؤقتة — تُستبدل بقاعدة بيانات حقيقية في مرحلة الباك-إند
-// أرقام الواتساب هنا أرقام تجريبية للعرض فقط.
-
 export const sampleHeroes: Hero[] = [
   {
     id: "h1",
@@ -306,17 +303,14 @@ export const jobs: Job[] = [
   },
 ];
 
-/** يجلب بطلاً بالمعرّف */
 export function getHero(id: string): Hero | undefined {
   return sampleHeroes.find((h) => h.id === id);
 }
 
-/** يجلب أسرة منتجة بالمعرّف */
 export function getProducer(id: string): Producer | undefined {
   return producers.find((p) => p.id === id);
 }
 
-/** يجلب شركة بالمعرّف */
 export function getCompany(id: string): Company | undefined {
   return companies.find((c) => c.id === id);
 }
@@ -329,7 +323,6 @@ export const sponsors: Sponsor[] = [
   { id: "s5", name: "راعٍ ٥" },
 ];
 
-// طلبات التوثيق المعلّقة (لوحة المشرف)
 export const pendingVerifications: PendingVerification[] = [
   { id: "pv1", name: "سعيد قحطاني", role: "hero", city: "جيزان", date: "قبل ساعتين" },
   { id: "pv2", name: "مخبز ريف جازان", role: "producer", city: "بيش", date: "قبل 4 ساعات" },
@@ -339,12 +332,10 @@ export const pendingVerifications: PendingVerification[] = [
   { id: "pv6", name: "تهامة للتقنية", role: "company", city: "جيزان", date: "قبل 3 أيام" },
 ];
 
-/** يجلب طلب توثيق بالمعرّف */
 export function getPendingVerification(id: string): PendingVerification | undefined {
   return pendingVerifications.find((p) => p.id === id);
 }
 
-// البلاغات (لوحة المشرف)
 export const reports: AdminReport[] = [
   {
     id: "r1",

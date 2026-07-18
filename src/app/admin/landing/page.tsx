@@ -11,8 +11,6 @@ import {
   type LandingContent,
 } from "@/lib/landing";
 
-// الصفحة الرئيسية — المدير يحرّر نصوص الواجهة (Landing) وتظهر مباشرة للزوار
-
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan";
 
@@ -78,7 +76,6 @@ export default function AdminLandingPage() {
           ))}
         </div>
 
-        {/* معاينة مباشرة */}
         <div className="mt-5 rounded-[14px] border border-dashed border-line bg-cream/60 p-5">
           <div className="text-[11px] font-semibold text-muted">معاينة</div>
           <span className="mt-2 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1 text-[12px] font-semibold text-jazan">

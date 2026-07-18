@@ -3,7 +3,6 @@
 import { useLocale } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
-/** زر تبديل اللغة عربي/إنجليزي */
 export function LangToggle({ className }: { className?: string }) {
   const { isAr, toggle } = useLocale();
 

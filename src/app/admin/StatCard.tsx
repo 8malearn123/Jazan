@@ -1,6 +1,5 @@
 import { cn } from "@/lib/cn";
 
-/** بطاقة إحصائية في لوحة المشرف */
 export function StatCard({
   label,
   value,
@@ -9,9 +8,7 @@ export function StatCard({
 }: {
   label: string;
   value: string | number;
-  /** لون الشريط الجانبي (border-right) */
   accent: string;
-  /** لون النقطة بجانب التسمية */
   dot: string;
 }) {
   return (

@@ -8,12 +8,6 @@ import { cn } from "@/lib/cn";
 
 import { seedWorks, worksStorageKey as storageKey, type Work } from "@/lib/works";
 
-// أعمالي — إدارة معرض الأعمال: إضافة، تعديل، حذف (تُحفظ محلياً في الوضع التجريبي)
-
-/**
- * تحويل ملف صورة إلى Data URL مضغوط (أقصى بُعد 900px، JPEG 82%)
- * حتى لا تتجاوز الأعمال سعة التخزين المحلي في الوضع التجريبي.
- */
 function fileToDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -44,13 +38,11 @@ export default function WorksPage() {
   const [works, setWorks] = useState<Work[]>([]);
   const [loaded, setLoaded] = useState(false);
 
-  // نموذج الإضافة
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [newImage, setNewImage] = useState<string | null>(null);
   const [imgError, setImgError] = useState("");
 
-  // التعديل
   const [editId, setEditId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDesc, setEditDesc] = useState("");
@@ -81,7 +73,6 @@ export default function WorksPage() {
     }
   }
 
-  /** قراءة ملف صورة من input وتحويله مضغوطاً */
   async function pickImage(e: React.ChangeEvent<HTMLInputElement>, set: (v: string) => void) {
     const file = e.target.files?.[0];
     e.target.value = "";
@@ -135,7 +126,6 @@ export default function WorksPage() {
         أضف أعمالك ونماذجك وعدّلها — تظهر في ملفك العام أمام الزوار.
       </p>
 
-      {/* نموذج الإضافة */}
       <form onSubmit={addWork} className="mt-5 rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[14px] font-bold text-charcoal">إضافة عمل جديد</h2>
         <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_1.4fr_auto]">
@@ -160,7 +150,6 @@ export default function WorksPage() {
           </button>
         </div>
 
-        {/* صورة العمل (اختيارية) */}
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border-[1.5px] border-line bg-surface px-4 py-2 text-[13px] font-semibold text-charcoal transition-colors hover:border-jazan hover:text-jazan">
             <ImagesIcon width={16} height={16} />
@@ -194,7 +183,6 @@ export default function WorksPage() {
         ) : null}
       </form>
 
-      {/* الشبكة */}
       <div className="mt-5 flex items-center justify-between">
         <h2 className="text-[14px] font-bold text-charcoal">
           الأعمال <span className="mono font-medium text-muted">({works.length})</span>

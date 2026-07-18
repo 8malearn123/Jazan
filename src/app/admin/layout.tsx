@@ -32,7 +32,6 @@ export default function AdminLayout({
     );
   }
 
-  // أثناء إعادة التوجيه (مستخدم غير مصرّح له)
   if (!user || user.role !== "admin") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-cream">
@@ -51,7 +50,6 @@ export default function AdminLayout({
       <AdminSidebar />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* الشريط العلوي */}
         <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-surface px-5 py-3 sm:px-8">
           <div className="flex items-center gap-3">
             <AdminMobileNav />

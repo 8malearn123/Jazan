@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowLeftIcon } from "@/components/icons";
 import { useLocale } from "@/lib/i18n";
 
-/** رابط الرجوع لصفحات التصفّح — نصه حسب اللغة والسهم ينقلب مع الاتجاه */
 export function BackLink({ to }: { to: "heroes" | "producers" | "companies" }) {
   const { d } = useLocale();
   const map = {

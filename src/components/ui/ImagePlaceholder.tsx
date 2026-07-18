@@ -2,10 +2,6 @@ import { cn } from "@/lib/cn";
 
 type Shape = "rect" | "rounded" | "circle";
 
-/**
- * عنصر نائب للصور (مكان الصورة في التصميم).
- * يُستبدل بصورة حقيقية في مرحلة لاحقة.
- */
 export function ImagePlaceholder({
   label,
   shape = "rounded",

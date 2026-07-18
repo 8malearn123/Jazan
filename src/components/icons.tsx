@@ -13,7 +13,6 @@ const base = {
   viewBox: "0 0 24 24",
 };
 
-/** نجمة الشعار */
 export function StarIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -162,7 +161,6 @@ export function UserIcon(props: IconProps) {
   );
 }
 
-/** أيقونة العين — مرّر off لإظهار خط الشطب (إخفاء) */
 export function EyeIcon({ off, ...props }: IconProps & { off?: boolean }) {
   return (
     <svg {...base} {...props}>
@@ -191,7 +189,6 @@ export function ClockIcon(props: IconProps) {
   );
 }
 
-/** نجمة تقييم ممتلئة */
 export function StarFilledIcon(props: IconProps) {
   return (
     <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" stroke="none" {...props}>
@@ -200,7 +197,6 @@ export function StarFilledIcon(props: IconProps) {
   );
 }
 
-/** صور / معرض أعمال */
 export function ImagesIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -211,7 +207,6 @@ export function ImagesIcon(props: IconProps) {
   );
 }
 
-/** سماعة دعم فني */
 export function HeadsetIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -221,7 +216,6 @@ export function HeadsetIcon(props: IconProps) {
   );
 }
 
-/** مشاركة / شبكات */
 export function ShareIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -233,7 +227,6 @@ export function ShareIcon(props: IconProps) {
   );
 }
 
-/** كرة أرضية — موقع إلكتروني */
 export function GlobeIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -244,7 +237,6 @@ export function GlobeIcon(props: IconProps) {
   );
 }
 
-/** شعار X (تويتر) */
 export function XSocialIcon(props: IconProps) {
   return (
     <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" stroke="none" {...props}>
@@ -253,7 +245,6 @@ export function XSocialIcon(props: IconProps) {
   );
 }
 
-/** لينكدإن */
 export function LinkedinIcon(props: IconProps) {
   return (
     <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" stroke="none" {...props}>
@@ -262,7 +253,6 @@ export function LinkedinIcon(props: IconProps) {
   );
 }
 
-/** جيت هب */
 export function GithubIcon(props: IconProps) {
   return (
     <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" stroke="none" {...props}>
@@ -271,7 +261,6 @@ export function GithubIcon(props: IconProps) {
   );
 }
 
-/** تيك توك */
 export function TiktokIcon(props: IconProps) {
   return (
     <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" stroke="none" {...props}>
@@ -280,7 +269,6 @@ export function TiktokIcon(props: IconProps) {
   );
 }
 
-/** تحميل */
 export function DownloadIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -290,7 +278,6 @@ export function DownloadIcon(props: IconProps) {
   );
 }
 
-/** جرس الإشعارات */
 export function BellIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -300,7 +287,6 @@ export function BellIcon(props: IconProps) {
   );
 }
 
-/** خريطة مطوية */
 export function MapIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -310,7 +296,6 @@ export function MapIcon(props: IconProps) {
   );
 }
 
-/** إغلاق (X) */
 export function XIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -319,7 +304,6 @@ export function XIcon(props: IconProps) {
   );
 }
 
-/** شمس — الوضع الفاتح */
 export function SunIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -329,7 +313,6 @@ export function SunIcon(props: IconProps) {
   );
 }
 
-/** قمر — الوضع الداكن */
 export function MoonIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
@@ -338,7 +321,6 @@ export function MoonIcon(props: IconProps) {
   );
 }
 
-/** أيقونة واتساب (ممتلئة) */
 export function WhatsappIcon(props: IconProps) {
   return (
     <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" {...props}>

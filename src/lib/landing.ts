@@ -1,8 +1,5 @@
 "use client";
 
-// محتوى الصفحة الرئيسية (Landing) — يحرّره المدير من لوحة الإدارة
-// ويظهر مباشرة في الواجهة الرئيسية (النص العربي).
-
 import { useEffect, useState } from "react";
 
 export type LandingContent = {
@@ -12,7 +9,6 @@ export type LandingContent = {
   desc: string;
 };
 
-/** النص الافتراضي — نفس نصوص الواجهة الحالية */
 export const defaultLanding: LandingContent = {
   tagline: "منصة جازان المجتمعية للمواهب",
   title1: "مواهب جازان",
@@ -41,7 +37,6 @@ export function saveLanding(content: LandingContent): void {
   }
 }
 
-/** المحتوى الحي — يتحدث فور حفظ المدير */
 export function useLanding(): LandingContent {
   const [content, setContent] = useState<LandingContent>(defaultLanding);
 

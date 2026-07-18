@@ -3,7 +3,6 @@ import { createServerClient } from "@supabase/ssr";
 import { SUPABASE_ANON_KEY, SUPABASE_URL, isSupabaseConfigured } from "@/lib/supabase/config";
 
 export async function middleware(request: NextRequest) {
-  // بدون مفاتيح Supabase: لا شيء يُفعَّل.
   if (!isSupabaseConfigured) return NextResponse.next();
 
   let response = NextResponse.next({ request });
@@ -23,7 +22,6 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  // تحديث الجلسة إن وُجدت.
   await supabase.auth.getUser();
 
   return response;

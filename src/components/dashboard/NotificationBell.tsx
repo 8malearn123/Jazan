@@ -7,9 +7,6 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { useLocale } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
-// جرس الإشعارات — يظهر للبطل والأسرة المنتجة والشركة في لوحة التحكم.
-// حالة القراءة تُحفظ في localStorage لكل مستخدم.
-
 const STORAGE_PREFIX = "jazanheroes.notifs.read.";
 
 const typeStyle: Record<string, { Icon: typeof CheckIcon; wrap: string }> = {
@@ -42,7 +39,6 @@ export function NotificationBell() {
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [storageKey]);
 
-  // الإشعارات الديناميكية (ردود الدعم الفني وغيرها) — تتحدث لحظياً
   useEffect(() => {
     if (!user) return;
     const update = () => setDynamic(loadDynamicNotifs(user.id));
@@ -51,7 +47,6 @@ export function NotificationBell() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
-  // المشرف لا يملك إشعارات ديمو
   if (!user || role === "admin") return null;
 
   const staticNotifs = d.notifs[role as "hero" | "producer" | "company"] ?? [];
@@ -62,7 +57,6 @@ export function NotificationBell() {
     const next = !open;
     setOpen(next);
     if (next && storageKey) {
-      // فتح القائمة يحدّد الكل كمقروء
       const all = notifs.map((n) => n.id);
       setReadIds(all);
       try {
@@ -97,7 +91,6 @@ export function NotificationBell() {
 
       {open ? (
         <>
-          {/* طبقة إغلاق عند النقر خارج القائمة */}
           <button
             aria-hidden
             tabIndex={-1}

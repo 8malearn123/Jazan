@@ -2,10 +2,6 @@
 
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 
-// نظام ترجمة خفيف: قاموسان (عربي/إنجليزي) + سياق React.
-// اللغة تُحفظ في localStorage وتُطبّق lang/dir على <html>
-// (سكربت مبكر في layout يطبّقها قبل الرسم لتفادي الوميض).
-
 export type Locale = "ar" | "en";
 const STORAGE_KEY = "jazanheroes.locale";
 
@@ -841,7 +837,6 @@ const dictionaries: Record<Locale, Dict> = { ar, en };
 
 type LocaleContextValue = {
   locale: Locale;
-  /** القاموس الحالي */
   d: Dict;
   isAr: boolean;
   setLocale: (l: Locale) => void;

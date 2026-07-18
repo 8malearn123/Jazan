@@ -26,7 +26,6 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
   const [city, setCity] = useState("all");
   const [jobType, setJobType] = useState("الكل");
 
-  // عروض الشركات المعتمدة من الإدارة تُنشر هنا مع الوظائف الأساسية
   const [extraJobs, setExtraJobs] = useState<Job[]>([]);
   useEffect(() => {
     const update = () => setExtraJobs(approvedOffers(loadOfferModeration()));
@@ -35,7 +34,6 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
   }, []);
   const jobs = useMemo(() => [...extraJobs, ...baseJobs], [extraJobs, baseJobs]);
 
-  // كل محافظات جازان — نفس قائمة الخريطة التفاعلية
   const cities = governorates.map((g) => ({ value: g.ar, label: isAr ? g.ar : g.en }));
 
   const q = normalizeText(query.trim());
@@ -62,7 +60,6 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
 
   return (
     <>
-      {/* البحث + المدينة */}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="flex flex-1 items-center gap-2.5 rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 focus-within:border-jazan">
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-muted" />
@@ -99,7 +96,6 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
 
       <JazanMap open={mapOpen} onClose={() => setMapOpen(false)} />
 
-      {/* شبكة الشركات */}
       <p className="mt-5 text-[13px] text-muted">
         <span className="mono font-semibold text-charcoal">{filteredCompanies.length}</span> {d.companiesPage.company}
       </p>
@@ -115,11 +111,9 @@ export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Comp
         </div>
       )}
 
-      {/* أحدث الوظائف */}
       <section className="mt-12">
         <h2 className="text-xl font-bold text-charcoal sm:text-2xl">{d.companiesPage.latestJobs}</h2>
 
-        {/* شرائح نوع الدوام */}
         <div className="mt-4 flex flex-wrap items-center gap-2.5">
           {jobTypes.map((t) => (
             <button

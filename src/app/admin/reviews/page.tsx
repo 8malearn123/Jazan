@@ -14,8 +14,6 @@ import {
   type ReviewStatus,
 } from "@/lib/reviews";
 
-// مراجعة التقييمات — لا يظهر أي تقييم للأعضاء أو الزوار إلا بعد اعتماده من هنا
-
 const statusMeta: Record<ReviewStatus, { label: string; tone: "warn" | "success" | "muted" }> = {
   pending: { label: "قيد المراجعة", tone: "warn" },
   approved: { label: "معتمد", tone: "success" },
@@ -115,7 +113,6 @@ export default function AdminReviewsPage() {
         </div>
       ) : null}
 
-      {/* بانتظار الموافقة */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">بانتظار الموافقة</h2>
         {pending.length === 0 ? (
@@ -131,7 +128,6 @@ export default function AdminReviewsPage() {
         )}
       </div>
 
-      {/* سجل التقييمات */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">
           سجل التقييمات <span className="mono font-medium text-muted">({decided.length})</span>

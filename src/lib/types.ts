@@ -1,19 +1,14 @@
-// أنواع البيانات الأساسية لمنصة أبطال جازان
 
-/** حالة التوفّر للبطل */
 export type AvailabilityStatus = "freelance" | "job" | "both" | "producer";
 
-/** دور المستخدم في المنصة */
 export type UserRole = "hero" | "producer" | "company" | "admin";
 
-/** عنصر في معرض الأعمال */
 export interface PortfolioItem {
   id: string;
   title: string;
   imageUrl?: string;
 }
 
-/** تقييم */
 export interface Review {
   id: string;
   author: string;
@@ -22,10 +17,8 @@ export interface Review {
   date?: string;
 }
 
-/** روابط شبكات التواصل الشخصية (المفتاح = المنصة) */
 export type ProfileSocials = Record<string, string>;
 
-/** بطل (مستقل / باحث عن عمل) */
 export interface Hero {
   id: string;
   name: string;
@@ -43,11 +36,9 @@ export interface Hero {
   verified?: boolean;
   portfolio?: PortfolioItem[];
   reviews?: Review[];
-  /** روابط التواصل الافتراضية — تظهر في الصفحة العامة */
   socials?: ProfileSocials;
 }
 
-/** منتج لأسرة منتجة */
 export interface Product {
   id: string;
   name: string;
@@ -56,11 +47,10 @@ export interface Product {
   category?: string;
 }
 
-/** أسرة منتجة / صانع */
 export interface Producer {
   id: string;
   name: string;
-  category: string; // طعام · حِرف · عطور
+  category: string;
   city: string;
   bio?: string;
   rating?: number;
@@ -70,24 +60,21 @@ export interface Producer {
   whatsapp?: string;
   verified?: boolean;
   products?: Product[];
-  /** روابط التواصل الافتراضية — تظهر في الصفحة العامة */
   socials?: ProfileSocials;
 }
 
-/** وظيفة / فرصة تنشرها شركة */
 export interface Job {
   id: string;
   title: string;
   companyName: string;
   companyId?: string;
   city: string;
-  type?: string; // دوام كامل · جزئي · عن بُعد
+  type?: string;
   salary?: string;
   postedAt?: string;
   tags?: string[];
 }
 
-/** شركة / جهة */
 export interface Company {
   id: string;
   name: string;
@@ -100,24 +87,20 @@ export interface Company {
   verified: boolean;
   whatsapp?: string;
   jobs?: Job[];
-  /** روابط التواصل الافتراضية — تظهر في الصفحة العامة */
   socials?: ProfileSocials;
 }
 
-/** راعٍ للمنصة */
 export interface Sponsor {
   id: string;
   name: string;
   logoUrl?: string;
 }
 
-/** إحصائية */
 export interface Stat {
   value: string;
   label: string;
 }
 
-/** مستخدم مُسجّل (مصادقة مبدئية) */
 export interface SessionUser {
   id: string;
   name: string;
@@ -125,7 +108,6 @@ export interface SessionUser {
   email?: string;
 }
 
-/** طلب توثيق معلّق (لوحة المشرف) */
 export interface PendingVerification {
   id: string;
   name: string;
@@ -134,20 +116,15 @@ export interface PendingVerification {
   date: string;
 }
 
-/** بلاغ (لوحة المشرف) */
 export interface AdminReport {
   id: string;
   target: string;
-  /** نوع الجهة المُبلَّغ عنها */
   targetType: string;
-  /** رابط الصفحة العامة للجهة (إن وُجدت) */
   targetHref?: string;
   reason: string;
   reporter: string;
   date: string;
   status: "open" | "resolved";
-  /** نص البلاغ كما كتبه المُبلِّغ */
   message: string;
-  /** اقتباس من المحتوى المُبلَّغ عنه */
   content: string;
 }

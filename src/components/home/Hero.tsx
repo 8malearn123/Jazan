@@ -16,7 +16,6 @@ export function Hero() {
   const live = useLiveCounts();
   const landing = useLanding();
 
-  // النص العربي يحرّره المدير من لوحة الإدارة؛ الإنجليزية من القاموس
   const copy = isAr
     ? landing
     : { tagline: d.hero.tagline, title1: d.hero.title1, title2: d.hero.title2, desc: d.hero.desc };

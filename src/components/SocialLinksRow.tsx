@@ -30,11 +30,6 @@ const platformIcons: Record<string, typeof GlobeIcon> = {
   website: GlobeIcon,
 };
 
-/**
- * صف أيقونات شبكات التواصل في الصفحة العامة.
- * يعرض روابط الملف الافتراضية (seed)، وإذا عدّل صاحب الحساب روابطه
- * من «شبكات التواصل» في لوحة التحكم فإنها تحل محلها.
- */
 export function SocialLinksRow({
   profileId,
   seed,

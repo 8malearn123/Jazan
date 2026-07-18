@@ -1,8 +1,5 @@
 "use client";
 
-// روابط «تابعنا» الرسمية للمنصة — يحددها المدير من الإعدادات
-// وتظهر في قسم تابعنا أسفل الصفحة الرئيسية (التذييل).
-
 import { useEffect, useState } from "react";
 import { site } from "./site";
 
@@ -15,7 +12,6 @@ export type SiteSocialLinks = {
 const STORAGE_KEY = "jazanheroes.site.social";
 const CHANGE_EVENT = "jazanheroes:site-social";
 
-/** الروابط الافتراضية قبل أي تعديل من المدير */
 export const defaultSiteSocial: SiteSocialLinks = {
   whatsapp: `https://wa.me/${site.whatsapp}`,
   instagram: "https://instagram.com/jazanheroes",
@@ -40,7 +36,6 @@ export function saveSiteSocial(links: SiteSocialLinks): void {
   }
 }
 
-/** روابط تابعنا الحية — تتحدث فوراً عند حفظ المدير للإعدادات */
 export function useSiteSocial(): SiteSocialLinks {
   const [links, setLinks] = useState<SiteSocialLinks>(defaultSiteSocial);
 

@@ -1,10 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-/**
- * حاوية بعرض أقصى وحشوة جانبية متجاوبة.
- * جوال: 20px · آيباد: 32px · لابتوب: 44px — بعرض أقصى 1280px (مطابق للتصميم).
- */
 export function Container({
   children,
   className,

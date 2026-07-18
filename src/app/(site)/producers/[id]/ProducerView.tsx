@@ -17,14 +17,12 @@ import { usePublicPhotos } from "@/lib/photos";
 import { useLocale } from "@/lib/i18n";
 import type { Producer, Product } from "@/lib/types";
 
-/** سلة الطلب المصغرة — كمية كل منتج، تُحفظ محلياً لكل أسرة */
 type Cart = Record<string, number>;
 
 function cartStorageKey(producerId: string) {
   return `jazanheroes.cart.${producerId}`;
 }
 
-/** رسالة واتساب جاهزة بقائمة المنتجات المختارة (بالعربية دائماً لأنها تصل للأسرة) */
 function buildCartMessage(name: string, products: Product[], cart: Cart): string {
   const lines = products
     .filter((p) => (cart[p.id] ?? 0) > 0)
@@ -41,7 +39,6 @@ function buildCartMessage(name: string, products: Product[], cart: Cart): string
   ].join("\n");
 }
 
-/** محتوى صفحة الأسرة المنتجة — مكوّن عميل ليدعم تبديل اللغة */
 export function ProducerView({ producer }: { producer: Producer }) {
   const { d } = useLocale();
   const { name, category, city, bio, verified, rating, reviewsCount } = producer;
@@ -50,7 +47,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
   const t = d.producerDetail;
   const photos = usePublicPhotos(producer.id);
 
-  // --- سلة المشتريات ---
   const [cart, setCart] = useState<Cart>({});
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -77,7 +73,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
       } catch {
         // ignore
       }
-      // افتح الصندوق عند أول إضافة حتى يلاحظه العميل
       if (wasEmpty && delta > 0) setCartOpen(true);
       return next;
     });
@@ -101,7 +96,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
     [products, cart]
   );
 
-  // رسالة واتساب: قائمة السلة إن وُجدت، وإلا رسالة عامة
   const waMessage =
     cartCount > 0
       ? buildCartMessage(name, products, cart)
@@ -110,7 +104,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
 
   return (
     <div className="mt-5 overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)]">
-      {/* الغلاف */}
       <div className="relative">
         {photos.cover ? (
           /* eslint-disable-next-line @next/next/no-img-element */
@@ -179,7 +172,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
       </div>
 
       <div className="p-5 sm:p-8">
-        {/* شريط معلومات المتجر */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
             { label: t.category, value: d.prodCat[category] ?? category, Icon: StoreIcon },
@@ -199,7 +191,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
           ))}
         </div>
 
-        {/* المقدّمة + الطلب */}
         <div className="mt-6 flex flex-wrap items-center justify-between gap-6">
           <p className="max-w-[560px] text-[15px] leading-8 text-ink sm:text-base">
             {bio}
@@ -220,10 +211,8 @@ export function ProducerView({ producer }: { producer: Producer }) {
           </a>
         </div>
 
-        {/* شبكات التواصل */}
         <SocialLinksRow profileId={producer.id} seed={producer.socials} className="mt-4 justify-start" />
 
-        {/* قائمة المنتجات */}
         <div className="mt-[34px] mb-[18px] flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-xl font-bold text-charcoal">
             {t.productList}{" "}
@@ -300,7 +289,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
           ))}
         </div>
 
-        {/* قسم التواصل */}
         <div className="mt-10 flex flex-col items-center gap-5 rounded-[18px] border border-line bg-cream px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-start">
           <div>
             <h2 className="text-lg font-bold text-charcoal">
@@ -319,13 +307,10 @@ export function ProducerView({ producer }: { producer: Producer }) {
         </div>
       </div>
 
-      {/* السلة العائمة — صندوق صغير على يمين الشاشة يُفتح ويُغلق */}
       {products.length > 0 ? (
         <div className="fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2.5 sm:right-6">
-          {/* الصندوق */}
           {cartOpen ? (
             <div className="w-[290px] overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_18px_50px_rgba(28,42,38,.25)]">
-              {/* الترويسة */}
               <div className="flex items-center justify-between gap-2 border-b border-line bg-cream/70 px-4 py-3">
                 <div className="flex items-center gap-2 text-[13px] font-bold text-charcoal">
                   <StoreIcon className="h-4 w-4 text-success-ink" />
@@ -346,7 +331,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
                 </button>
               </div>
 
-              {/* القائمة */}
               {cartCount === 0 ? (
                 <p className="px-4 py-6 text-center text-[12px] text-muted">{t.cartEmpty}</p>
               ) : (
@@ -390,7 +374,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
                 </div>
               )}
 
-              {/* المجموع والإجراءات */}
               {cartCount > 0 ? (
                 <div className="border-t border-line bg-cream/50 px-4 py-3">
                   <div className="flex items-center justify-between text-[13px]">
@@ -423,7 +406,6 @@ export function ProducerView({ producer }: { producer: Producer }) {
             </div>
           ) : null}
 
-          {/* زر الفتح/الإغلاق */}
           <button
             type="button"
             onClick={() => setCartOpen((v) => !v)}

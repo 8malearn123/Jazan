@@ -6,7 +6,6 @@ import { site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 import { StarIcon } from "./icons";
 
-/** شعار المنصة (نجمة + الاسم) */
 export function Logo({
   size = "md",
   className,

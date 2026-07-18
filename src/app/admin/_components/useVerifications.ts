@@ -4,10 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { pendingVerifications } from "@/lib/data";
 import type { PendingVerification } from "@/lib/types";
 
-// حالة موحّدة لطلبات التوثيق في لوحة المشرف.
-// القرارات تُحفظ في localStorage (الوضع التجريبي) لتبقى متسقة
-// بين لوحة المعلومات وصفحة التوثيق وصفحة المعاينة.
-
 const STORAGE_KEY = "jazanheroes.admin.verifications";
 
 type Decision = "approved" | "rejected";

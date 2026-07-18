@@ -43,7 +43,6 @@ export function BrowseClient({
   const [city, setCity] = useState("all");
   const [status, setStatus] = useState<StatusFilter>("all");
 
-  // كل محافظات جازان — نفس قائمة الخريطة التفاعلية
   const cities = governorates.map((g) => ({ value: g.ar, label: isAr ? g.ar : g.en }));
 
   const chips = chipStyles.map((c) => ({
@@ -60,8 +59,6 @@ export function BrowseClient({
     });
   }, [heroes, q, city, status]);
 
-  // نتائج عابرة للأقسام: أسر منتجة وشركات تقدّم ما يبحث عنه الزائر
-  // (منتجات، خدمات، أكلات، مجالات توظيف) — تظهر فقط عند وجود بحث
   const producerResults = useMemo(
     () => (q ? producers.filter((p) => producerMatches(p, q)) : []),
     [q]
@@ -73,7 +70,6 @@ export function BrowseClient({
 
   return (
     <>
-      {/* البحث + المدينة */}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="flex flex-1 items-center gap-2.5 rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 focus-within:border-jazan">
           <SearchIcon className="h-[19px] w-[19px] shrink-0 text-muted" />
@@ -110,7 +106,6 @@ export function BrowseClient({
 
       <JazanMap open={mapOpen} onClose={() => setMapOpen(false)} />
 
-      {/* شرائح الحالة */}
       <div className="mt-4 flex flex-wrap items-center gap-2.5">
         {chips.map((chip) => {
           const active = status === chip.key;
@@ -135,7 +130,6 @@ export function BrowseClient({
         })}
       </div>
 
-      {/* العدّاد */}
       <p className="mt-5 text-[13px] text-muted">
         <span className="mono font-semibold text-charcoal">
           {results.length + producerResults.length + companyResults.length}
@@ -143,7 +137,6 @@ export function BrowseClient({
         {d.browse.result}
       </p>
 
-      {/* الشبكة */}
       {results.length > 0 ? (
         <div className="mt-3 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {results.map((hero) => (
@@ -157,7 +150,6 @@ export function BrowseClient({
         </div>
       ) : null}
 
-      {/* أسر منتجة تقدّم المنتج / الأكلة المطلوبة */}
       {producerResults.length > 0 ? (
         <section className="mt-8">
           <h2 className="text-[16px] font-extrabold text-charcoal">
@@ -172,7 +164,6 @@ export function BrowseClient({
         </section>
       ) : null}
 
-      {/* شركات تقدّم الخدمة أو توظّف في المجال المطلوب */}
       {companyResults.length > 0 ? (
         <section className="mt-8">
           <h2 className="text-[16px] font-extrabold text-charcoal">

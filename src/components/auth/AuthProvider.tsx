@@ -7,8 +7,6 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { matchDemoAccount, type DemoAccount } from "@/lib/demo";
 import { addToRegistry } from "@/lib/registry";
 
-// المصادقة: تستخدم Supabase عند ضبط المفاتيح، وإلا تعمل بوضع تجريبي (localStorage).
-
 const STORAGE_KEY = "jazanheroes.session";
 
 type Credentials = { email: string; password: string };
@@ -16,22 +14,16 @@ type SignUpInput = { name: string; email: string; password: string; role: UserRo
 type Result = {
   user?: SessionUser;
   error?: string;
-  /** أُنشئ الحساب لكن يلزم تأكيد البريد قبل الدخول (وضع Supabase) */
   needsEmailConfirmation?: boolean;
 };
 
 type AuthContextValue = {
   user: SessionUser | null;
   ready: boolean;
-  /** تسجيل الدخول */
   signIn: (c: Credentials) => Promise<Result>;
-  /** إنشاء حساب */
   signUp: (c: SignUpInput) => Promise<Result>;
-  /** دخول سريع بحساب ديمو */
   loginDemo: (account: DemoAccount) => SessionUser;
-  /** تسجيل الخروج */
   logout: () => Promise<void>;
-  /** ضبط جلسة مباشرة (للوضع التجريبي) */
   login: (user: SessionUser) => void;
 };
 
@@ -41,7 +33,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [ready, setReady] = useState(false);
 
-  // --- وضع Supabase ---
   useEffect(() => {
     if (!isSupabaseConfigured) return;
     const supabase = createClient();
@@ -83,7 +74,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  // --- الوضع التجريبي (بدون مفاتيح) ---
   useEffect(() => {
     if (isSupabaseConfigured) return;
     /* eslint-disable react-hooks/set-state-in-effect */
@@ -120,7 +110,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = useCallback(async (c: Credentials): Promise<Result> => {
     const supabase = createClient();
     if (!supabase) {
-      // وضع تجريبي — تعرّف على حسابات الديمو
       const demo = matchDemoAccount(c.email, c.password);
       const u: SessionUser = demo
         ? { id: `demo-${demo.role}`, name: demo.name, role: demo.role, email: demo.email }
@@ -161,7 +150,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) return { error: error.message };
     const u: SessionUser = { id: data.user?.id ?? "", name: c.name, role: c.role, email: c.email };
     addToRegistry({ id: u.id, name: u.name, role: u.role, city: c.city });
-    // بدون جلسة فعّالة (تفعيل البريد مطلوب) لا يمكن دخول الداشبورد مباشرة.
     if (!data.session) return { user: u, needsEmailConfirmation: true };
     return { user: u };
   }, [login]);
@@ -190,7 +178,6 @@ export function useAuth(): AuthContextValue {
   return ctx;
 }
 
-/** أسماء الأدوار بالعربية */
 export const roleLabels: Record<UserRole, string> = {
   hero: "بطل / مستقل",
   producer: "أسرة منتجة",

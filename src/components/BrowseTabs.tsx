@@ -6,7 +6,6 @@ import { useLocale } from "@/lib/i18n";
 
 type TabKey = "heroes" | "producers" | "jobs";
 
-/** شريط تبويب التصفّح المشترك (الأبطال · الأسر المنتجة · الوظائف) */
 export function BrowseTabs({ active }: { active: TabKey }) {
   const { d } = useLocale();
 

@@ -1,4 +1,3 @@
-// روابط شبكات التواصل — تُحفظ محلياً في الوضع التجريبي وتظهر في الصفحة العامة
 
 export type SocialLinks = Record<string, string>;
 
@@ -36,11 +35,6 @@ export function saveSocialLinks(userId: string, links: SocialLinks): void {
   }
 }
 
-/**
- * ربط الملفات العامة التجريبية بحسابات الديمو المقابلة لها
- * (نفس الأشخاص في البيانات التجريبية) — حتى تظهر روابط
- * التواصل التي يضيفها المستخدم في صفحته العامة.
- */
 const publicToDemoUser: Record<string, string> = {
   h1: "demo-hero",
   pr1: "demo-producer",
