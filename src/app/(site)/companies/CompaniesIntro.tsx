@@ -3,7 +3,6 @@
 import { counts } from "@/lib/stats";
 import { useLocale } from "@/lib/i18n";
 
-/** عنوان صفحة الشركات والوظائف (قابل للترجمة) */
 export function CompaniesIntro() {
   const { d } = useLocale();
 

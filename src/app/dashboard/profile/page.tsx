@@ -15,13 +15,11 @@ import type { UserRole } from "@/lib/types";
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
-/** الحد الأقصى لحجم المرفق: 2 ميجابايت */
 const MAX_FILE_BYTES = 2 * 1024 * 1024;
 const ACCEPT = ".pdf,.png,.jpg,.jpeg";
 
 type Attachment = { name: string; size: number };
 
-/** بيانات الملف القابلة للتعديل — تُحفظ محلياً في الوضع التجريبي */
 type ProfileDraft = {
   name: string;
   title: string;
@@ -31,7 +29,6 @@ type ProfileDraft = {
   skills: string[];
 };
 
-/** وسوم مبدئية مناسبة لكل دور */
 const seedSkills: Record<UserRole, string[]> = {
   hero: ["React", "TypeScript"],
   producer: ["طعام منزلي", "حلويات شعبية"],
@@ -57,7 +54,6 @@ export default function ProfilePage() {
 
   const [saved, setSaved] = useState(false);
 
-  // صور الحساب — تُحفظ فور الاختيار وتظهر في الصفحة العامة
   const [photos, setPhotos] = useState<ProfilePhotos>({});
   const [photoError, setPhotoError] = useState("");
 
@@ -96,7 +92,6 @@ export default function ProfilePage() {
     setPhotos(next);
   }
 
-  // الحقول — تُملأ من الجلسة ثم من المسودة المحفوظة (إن وُجدت)
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [city, setCity] = useState("");
@@ -159,7 +154,6 @@ export default function ProfilePage() {
     }
   }
 
-  // المرفقات (خفيفة الحجم)
   const [files, setFiles] = useState<Attachment[]>([]);
   const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
@@ -193,7 +187,6 @@ export default function ProfilePage() {
       <h1 className="text-[18px] font-extrabold text-charcoal">ملفي الشخصي</h1>
       <p className="mt-0.5 text-[13px] text-muted">عدّل بياناتك العامة كما تظهر للزوار.</p>
 
-      {/* الصور — البروفايل والغلاف، تُحفظ فور الاختيار وتظهر للزوار */}
       <section className="mt-5 overflow-hidden rounded-[16px] border border-line bg-surface">
         <div className="relative">
           {photos.cover ? (
@@ -310,7 +303,6 @@ export default function ProfilePage() {
             />
           </div>
 
-          {/* المهارات كوسوم */}
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">{skillsLabel}</label>
             <div className="flex flex-wrap items-center gap-2 rounded-xl border-[1.5px] border-line bg-surface p-2 focus-within:border-jazan">
@@ -344,7 +336,6 @@ export default function ProfilePage() {
             <p className="mt-1.5 text-[12px] text-muted">اكتب كل مهارة واضغط Enter لإضافتها كوسم منفصل.</p>
           </div>
 
-          {/* المرفقات */}
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
               المرفقات <span className="font-normal text-muted">(سيرة ذاتية / نماذج أعمال — حتى 2 ميجابايت)</span>

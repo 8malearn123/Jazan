@@ -1,6 +1,5 @@
 import { cn } from "@/lib/cn";
 
-/** ترويسة صفحة في لوحة الأدمن */
 export function AdminPageHead({
   title,
   subtitle,
@@ -16,7 +15,6 @@ export function AdminPageHead({
   );
 }
 
-/** بطاقة تحوي جدولاً قابلاً للتمرير أفقياً */
 export function TableCard({ children }: { children: React.ReactNode }) {
   return (
     <div className="overflow-hidden rounded-[16px] border border-line bg-surface">
@@ -33,7 +31,6 @@ export function Td({ children, className }: { children: React.ReactNode; classNa
   return <td className={cn("px-4 py-3 text-[13px] text-ink", className)}>{children}</td>;
 }
 
-/** وسم حالة عام */
 export function Pill({
   children,
   tone = "muted",

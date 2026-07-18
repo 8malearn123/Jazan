@@ -3,7 +3,6 @@
 import { counts } from "@/lib/stats";
 import { useLocale } from "@/lib/i18n";
 
-/** عنوان صفحة الأسر المنتجة (قابل للترجمة) */
 export function ProducersIntro() {
   const { d } = useLocale();
 

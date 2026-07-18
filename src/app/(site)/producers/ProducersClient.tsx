@@ -20,7 +20,6 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
   const [city, setCity] = useState("all");
   const [category, setCategory] = useState("الكل");
 
-  // كل محافظات جازان — نفس قائمة الخريطة التفاعلية
   const cities = governorates.map((g) => ({ value: g.ar, label: isAr ? g.ar : g.en }));
 
   const results = useMemo(() => {
@@ -35,7 +34,6 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
 
   return (
     <>
-      {/* البحث + المدينة */}
       <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="flex flex-1 items-center gap-3 rounded-[13px] border-[1.5px] border-line bg-surface px-4 py-3 focus-within:border-amber">
           <SearchIcon className="h-[19px] w-[19px] flex-none text-muted" />
@@ -72,7 +70,6 @@ export function ProducersClient({ producers }: { producers: Producer[] }) {
 
       <JazanMap open={mapOpen} onClose={() => setMapOpen(false)} />
 
-      {/* فئات النشاط */}
       <div className="mt-4 flex flex-wrap items-center gap-[9px]">
         {categories.map((cat) => (
           <button

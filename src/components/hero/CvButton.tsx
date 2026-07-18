@@ -5,8 +5,6 @@ import { site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 import type { Hero } from "@/lib/types";
 
-// زر السيرة الذاتية — يفتح سيرة منسّقة بهوية المنصة مع زر تحميل PDF (طباعة)
-
 function esc(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

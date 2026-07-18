@@ -16,7 +16,6 @@ import { useLocale } from "@/lib/i18n";
 import type { Company, Job } from "@/lib/types";
 import { CompanyJobCard } from "./CompanyJobCard";
 
-/** محتوى صفحة الشركة — مكوّن عميل ليدعم تبديل اللغة */
 export function CompanyView({ company, openJobs }: { company: Company; openJobs: Job[] }) {
   const { d } = useLocale();
   const t = d.companyDetail;
@@ -36,9 +35,7 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
 
   return (
     <>
-      {/* بطاقة الهوية المؤسسية */}
       <div className="mt-5 overflow-hidden rounded-[20px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)]">
-        {/* غلاف بلون العلامة أو صورة الغلاف المخصصة */}
         <div className="relative h-[120px] bg-jazan sm:h-[140px]">
           {photos.cover ? (
             /* eslint-disable-next-line @next/next/no-img-element */
@@ -104,7 +101,6 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
             </a>
           </div>
 
-          {/* شريط الإحصائيات */}
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label} className="flex items-center gap-3 rounded-[14px] border border-line bg-cream/50 p-3.5">
@@ -121,11 +117,8 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
         </div>
       </div>
 
-      {/* المحتوى */}
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* عمود رئيسي: الوظائف هي البطل */}
         <div className="lg:col-span-2">
-          {/* عن الشركة */}
           <section className="rounded-[18px] border border-line bg-surface p-6">
             <h2 className="text-[17px] font-bold text-charcoal">{t.about}</h2>
             <p className="mt-3 text-[15px] leading-[1.9] text-ink">
@@ -133,7 +126,6 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
             </p>
           </section>
 
-          {/* الفرص المتاحة */}
           <div className="mt-6 flex items-center justify-between">
             <h2 className="text-xl font-bold text-charcoal">
               {t.jobs}{" "}
@@ -154,9 +146,7 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
           </div>
         </div>
 
-        {/* عمود جانبي */}
         <aside className="flex flex-col gap-5">
-          {/* بيئة العمل */}
           <div className="rounded-[18px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)]">
             <h3 className="text-base font-bold text-charcoal">{t.environment}</h3>
             <div className="mt-3 grid grid-cols-2 gap-2.5">
@@ -166,7 +156,6 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
             </div>
           </div>
 
-          {/* التواصل */}
           <div className="rounded-[18px] border border-line bg-surface p-5 shadow-[0_1px_2px_rgba(28,42,38,.04)]">
             <h3 className="text-base font-bold text-charcoal">{t.contactUs}</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted">

@@ -3,7 +3,6 @@ import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { Hero } from "@/lib/types";
 
-/** بطاقة بطل — تُستخدم في الرئيسية وصفحة التصفّح */
 export function HeroCard({ hero }: { hero: Hero }) {
   return (
     <Link

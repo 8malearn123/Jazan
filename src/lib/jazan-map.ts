@@ -1,14 +1,9 @@
-// حدود محافظات منطقة جازان — مبسّطة من بيانات geoBoundaries (gbOpen, ADM2)
-// الإسقاط: متساوي المستطيلات داخل viewBox 0 0 520 473
 
 export type Governorate = {
   id: string;
-  /** الاسم بالعربية — يُطابق حقل المدينة في البيانات */
   ar: string;
   en: string;
-  /** مسار SVG */
   d: string;
-  /** مركز تقريبي لعرض التلميح */
   cx: number;
   cy: number;
 };

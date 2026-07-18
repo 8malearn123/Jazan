@@ -14,8 +14,6 @@ import {
   type MediaStatus,
 } from "@/lib/media";
 
-// الشعارات والصور — لا يُعرض شعار أو صورة في المنصة إلا بعد اعتمادها من هنا
-
 const statusMeta: Record<MediaStatus, { label: string; tone: "warn" | "success" | "muted" }> = {
   pending: { label: "قيد المراجعة", tone: "warn" },
   approved: { label: "معتمد", tone: "success" },
@@ -28,8 +26,6 @@ const ownerTone: Record<string, string> = {
   "بطل": "bg-jazan/10 text-jazan",
 };
 
-
-/** نافذة تفاصيل عنصر الشعارات/الصور — المراجعة قبل القرار */
 function MediaModal({
   item,
   status,
@@ -70,7 +66,6 @@ function MediaModal({
         </div>
 
         <div className="overflow-y-auto px-5 py-4">
-          {/* معاينة كبيرة */}
           <ImagePlaceholder shape="rect" label={`${item.kind} — معاينة بالحجم الكامل`} className="h-[190px] w-full rounded-[14px]" />
 
           <div className="mt-4 grid gap-2.5 rounded-[14px] border border-line bg-cream/60 p-4 text-[13px] sm:grid-cols-2">
@@ -179,7 +174,6 @@ export default function AdminMediaPage() {
         </div>
       ) : null}
 
-      {/* بانتظار الموافقة */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">بانتظار الموافقة</h2>
         {pending.length === 0 ? (
@@ -229,7 +223,6 @@ export default function AdminMediaPage() {
         )}
       </div>
 
-      {/* السجل */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">
           سجل العناصر <span className="mono font-medium text-muted">({decided.length})</span>

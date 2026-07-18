@@ -21,8 +21,6 @@ export function ContactForm() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) return;
-    // الرسالة تصل صندوق «الدعم الفني» في لوحة المدير.
-    // إن كان المرسل عضواً مسجّلاً يصله رد المدير كإشعار وفي صفحة دعمه.
     const member = user && user.role !== "admin" ? user : null;
     addTicket({
       userId: member ? member.id : `guest-${email.trim().toLowerCase()}`,

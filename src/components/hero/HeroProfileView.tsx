@@ -14,10 +14,6 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-[17px] font-bold text-charcoal">{children}</h2>;
 }
 
-/**
- * عرض ملف البطل الكامل — يُستخدم في الصفحة العامة وفي معاينة المشرف
- * ليكونا متطابقين تماماً.
- */
 export function HeroProfileView({
   hero,
   bio,
@@ -29,7 +25,6 @@ export function HeroProfileView({
 }) {
   const { d } = useLocale();
 
-  // أعمال العضو الفعلية من «أعمالي» (بصورها) — تظهر هنا كما وعدت اللوحة
   const [works, setWorks] = useState<Work[] | null>(null);
   useEffect(() => {
     const demoUser = demoUserForPublicProfile(hero.id);
@@ -42,12 +37,9 @@ export function HeroProfileView({
 
   return (
     <>
-      {/* الترويسة */}
       <ProfileHeader hero={hero} />
 
-      {/* المحتوى */}
       <div className="mt-5 flex flex-col gap-5">
-        {/* معرض الأعمال — الأبرز */}
         <section className="rounded-[18px] border border-line bg-surface p-6">
           <div className="flex items-center justify-between">
             <SectionTitle>{d.heroPage.portfolio}</SectionTitle>
@@ -98,7 +90,6 @@ export function HeroProfileView({
           )}
         </section>
 
-        {/* نبذة + المهارات */}
         <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
           <section className="rounded-[18px] border border-line bg-surface p-6">
             <SectionTitle>{d.heroPage.about}</SectionTitle>
@@ -115,7 +106,6 @@ export function HeroProfileView({
           </section>
         </div>
 
-        {/* التقييمات */}
         {hero.reviews?.length ? (
           <section className="rounded-[18px] border border-line bg-surface p-6">
             <div className="flex items-center justify-between">

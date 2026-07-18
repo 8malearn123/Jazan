@@ -92,7 +92,6 @@ function RegisterForm() {
       return;
     }
     if (needsEmailConfirmation) {
-      // Supabase يرسل رابط تفعيل — لا جلسة بعد، فلا نوجّه للداشبورد.
       setConfirmEmailSent(true);
       setLoading(false);
       return;
@@ -102,7 +101,6 @@ function RegisterForm() {
 
   return (
     <main className="flex min-h-screen flex-col bg-sand md:flex-row">
-      {/* لوحة العلامة التجارية */}
       <aside className="relative flex flex-col justify-between overflow-hidden bg-jazan p-8 md:w-[42%] md:p-12">
         <Link href="/" className="flex items-center gap-3 no-underline">
           <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-white/[.12]">
@@ -138,7 +136,6 @@ function RegisterForm() {
         <span className="pointer-events-none absolute top-10 start-[-40px] h-32 w-32 rounded-full bg-amber/10" />
       </aside>
 
-      {/* لوحة النموذج */}
       <section className="flex flex-1 flex-col justify-center bg-cream px-6 py-10 sm:px-10 md:px-14">
         <div className="mx-auto w-full max-w-[460px]">
           <div className="mb-8 md:hidden">
@@ -159,7 +156,6 @@ function RegisterForm() {
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6" noValidate>
-            {/* اختيار الدور */}
             <span className="mb-3 block text-[13px] font-semibold text-charcoal">
               {d.auth.howJoin}
             </span>
@@ -205,7 +201,6 @@ function RegisterForm() {
               })}
             </div>
 
-            {/* الاسم الكامل */}
             <label
               htmlFor="name"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
@@ -225,7 +220,6 @@ function RegisterForm() {
               />
             </div>
 
-            {/* المحافظة — تُستخدم في خريطة جازان والإحصائيات */}
             <label
               htmlFor="city"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
@@ -248,7 +242,6 @@ function RegisterForm() {
               </select>
             </div>
 
-            {/* البريد */}
             <label
               htmlFor="email"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
@@ -269,7 +262,6 @@ function RegisterForm() {
               />
             </div>
 
-            {/* كلمة المرور */}
             <label
               htmlFor="password"
               className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"

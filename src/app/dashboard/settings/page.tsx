@@ -17,7 +17,6 @@ export default function DashboardSettingsPage() {
         <p className="mt-0.5 text-[13px] text-muted">إدارة حسابك.</p>
       </div>
 
-      {/* الحساب */}
       <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">معلومات الحساب</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -32,7 +31,6 @@ export default function DashboardSettingsPage() {
         </div>
       </section>
 
-      {/* كلمة المرور */}
       <section className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">تغيير كلمة المرور</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -47,7 +45,6 @@ export default function DashboardSettingsPage() {
         </div>
       </section>
 
-      {/* حفظ */}
       <div className="flex items-center gap-3">
         <button
           onClick={() => {

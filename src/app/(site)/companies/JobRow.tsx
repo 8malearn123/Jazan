@@ -5,7 +5,6 @@ import type { Job } from "@/lib/types";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { useLocale } from "@/lib/i18n";
 
-/** لون شارة نوع الفرصة حسب النوع */
 function typeBadgeClass(type?: string) {
   switch (type) {
     case "عن بُعد":
@@ -18,7 +17,6 @@ function typeBadgeClass(type?: string) {
   }
 }
 
-/** صف وظيفة في قائمة "أحدث الوظائف" — مطابق لإطار التصفّح في browse.html */
 export function JobRow({ job }: { job: Job }) {
   const { d } = useLocale();
   const { title, companyName, companyId, city, type, tags, salary } = job;

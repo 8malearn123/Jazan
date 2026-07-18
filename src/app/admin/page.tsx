@@ -8,8 +8,6 @@ import { sampleHeroes, companies, producers } from "@/lib/data";
 import { useVerifications } from "./_components/useVerifications";
 import { counts } from "@/lib/stats";
 
-/* ===== أيقونات محلية صغيرة ===== */
-
 function UserBadgeIcon() {
   return (
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -47,8 +45,6 @@ function DotsIcon() {
     </svg>
   );
 }
-
-/* ===== مكوّنات مساعدة ===== */
 
 type RoleKey = "hero" | "producer" | "company";
 
@@ -130,8 +126,6 @@ function Avatar({ shape }: { shape: "circle" | "rounded" }) {
   );
 }
 
-/* ===== أحدث المستخدمين (مزيج من البيانات الموجودة) ===== */
-
 type RecentRow = {
   id: string;
   name: string;
@@ -148,15 +142,11 @@ const recentUsers: RecentRow[] = [
   { id: sampleHeroes[5].id, name: sampleHeroes[5].name, email: "sara@email.com", role: "hero", joined: "مايو 2026", active: false },
 ];
 
-/* ===== الصفحة ===== */
-
 export default function AdminDashboardPage() {
-  // طلبات التوثيق — حالة موحّدة مع صفحة التوثيق (تُحفظ محلياً)
   const { pending, resolve, toast } = useVerifications();
 
   return (
     <div className="mx-auto w-full max-w-[1200px] space-y-5">
-      {/* العنوان */}
       <div>
         <h1 className="text-[18px] font-extrabold text-charcoal">لوحة المعلومات</h1>
         <p className="mt-0.5 text-[13px] text-muted">
@@ -164,7 +154,6 @@ export default function AdminDashboardPage() {
         </p>
       </div>
 
-      {/* بطاقات الإحصائيات */}
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         <StatCard label="إجمالي الأبطال" value={counts.heroes} accent="#0F5C4A" dot="bg-jazan" />
         <StatCard label="الأسر المنتجة" value={counts.producers} accent="#E8932E" dot="bg-amber" />
@@ -172,14 +161,12 @@ export default function AdminDashboardPage() {
         <StatCard label="طلبات التوثيق المعلّقة" value={pending.length} accent="#F59E0B" dot="bg-warn" />
       </div>
 
-      {/* تنبيه الإجراء */}
       {toast ? (
         <div className="rounded-xl bg-success/12 px-4 py-2.5 text-[13px] font-semibold text-success-ink">
           ✓ {toast}
         </div>
       ) : null}
 
-      {/* جدول طلبات التوثيق المعلّقة */}
       <section className="overflow-hidden rounded-[18px] border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4 sm:px-6">
           <div>
@@ -203,7 +190,6 @@ export default function AdminDashboardPage() {
         ) : (
           <div className="overflow-x-auto">
             <div className="min-w-[760px]">
-              {/* رأس الجدول */}
               <div className="grid grid-cols-[2fr_1.1fr_1fr_230px] gap-3.5 border-b border-line bg-cream px-5 py-3 text-[12px] font-bold text-muted sm:px-6">
                 <span>الاسم / النوع</span>
                 <span>الدور</span>
@@ -211,7 +197,6 @@ export default function AdminDashboardPage() {
                 <span className="text-start">الإجراءات</span>
               </div>
 
-              {/* الصفوف */}
               {pending.map((row, i) => (
                 <div
                   key={row.id}
@@ -266,7 +251,6 @@ export default function AdminDashboardPage() {
         )}
       </section>
 
-      {/* جدول أحدث المستخدمين */}
       <section className="overflow-hidden rounded-[18px] border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4 sm:px-6">
           <div>

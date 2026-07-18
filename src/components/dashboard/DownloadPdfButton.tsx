@@ -6,9 +6,6 @@ import { site } from "@/lib/site";
 import { cn } from "@/lib/cn";
 import { approvedReviews, loadReviewModeration } from "@/lib/reviews";
 
-// زر تحميل الملف الشخصي والإحصائيات كـ PDF.
-// يولّد تقريراً HTML بهوية المنصة ويفتح نافذة الطباعة (حفظ كـ PDF).
-
 type ProfileDraft = {
   name?: string;
   title?: string;
@@ -18,14 +15,12 @@ type ProfileDraft = {
   skills?: string[];
 };
 
-// بيانات العرض التجريبية — نفس أرقام لوحة التحكم
 const demoStats = [
   { value: "1,240", label: "مشاهدات الملف", delta: "+18%" },
   { value: "86", label: "نقرات واتساب", delta: "+9%" },
   { value: "32", label: "طلبات التواصل", delta: "" },
 ];
 
-// التقييمات المعتمدة من إدارة المنصة فقط (أحدث 5) — نفس ما يظهر في لوحة التحكم
 function reportReviews() {
   return approvedReviews(loadReviewModeration()).slice(0, 5);
 }

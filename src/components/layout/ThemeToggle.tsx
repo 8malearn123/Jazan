@@ -6,13 +6,7 @@ import { cn } from "@/lib/cn";
 
 const STORAGE_KEY = "jazanheroes.theme";
 
-/**
- * زر التبديل بين الوضع الفاتح والداكن.
- * الوضع يُطبَّق كـ class على <html> (سكربت مبكر في layout يمنع الوميض)
- * ويُحفظ الاختيار في localStorage.
- */
 export function ThemeToggle({ className }: { className?: string }) {
-  // null قبل أول render على المتصفح — لتفادي اختلاف الترطيب (hydration)
   const [dark, setDark] = useState<boolean | null>(null);
 
   useEffect(() => {

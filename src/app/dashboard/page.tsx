@@ -19,7 +19,6 @@ import { loadPhotos } from "@/lib/photos";
 import { loadWorks } from "@/lib/works";
 import { loadSocialLinks } from "@/lib/social";
 
-// أيقونات محلية صغيرة
 function ChartIcon({ className }: { className?: string }) {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -43,7 +42,6 @@ function PlusIcon({ className }: { className?: string }) {
   );
 }
 
-// نصوص موحّدة تناسب جميع مزوّدي الخدمات (أبطال، أسر منتجة، شركات)
 const copy = {
   worksTitle: "أعمالي ونماذجي",
   addLabel: "أضف عملاً",
@@ -69,7 +67,6 @@ const chart = [
   { label: "اليوم", h: 104, hot: false, today: true },
 ];
 
-// آخر من تصفّح ملفك — زوار الملف (شركات، عملاء، أسر منتجة)
 const recentVisitors = [
   { name: "تهامة للتقنية", type: "شركة", time: "قبل ساعة", href: "/companies/c1", tone: "bg-info/12 text-info-ink" },
   { name: "أم فيصل", type: "عميل", time: "قبل 3 ساعات", href: null, tone: "bg-jazan/10 text-jazan" },
@@ -79,7 +76,6 @@ const recentVisitors = [
   { name: "أسرة نكهات صبيا", type: "أسرة منتجة", time: "قبل يومين", href: "/producers/pr1", tone: "bg-amber/15 text-amber-dark" },
 ] as const;
 
-// آخر من تواصل معك — عام لجميع مزوّدي الخدمات
 const recentRows = [
   { name: "تهامة للتقنية", interest: "مهتم بخدماتك", date: "اليوم" },
   { name: "أبو خالد", interest: "استفسار عن الأسعار", date: "أمس" },
@@ -87,7 +83,6 @@ const recentRows = [
   { name: "متجر الساحل", interest: "مهتم بالتعاون", date: "1 يونيو" },
 ] as const;
 
-/** اكتمال الملف — يُحسب من بيانات الحساب الفعلية بدل النسبة الثابتة */
 function useProfileCompletion(userId: string | undefined) {
   const [items, setItems] = useState<{ label: string; done: boolean }[]>([]);
 
@@ -119,7 +114,6 @@ function useProfileCompletion(userId: string | undefined) {
   return { items, pct };
 }
 
-// التقييمات — لا يُعرض هنا إلا ما اعتمده مشرف المنصة (تُدار من لوحة الإدارة)
 function useModeratedReviews() {
   const [moderation, setModeration] = useState<ReviewModeration>({});
 
@@ -138,7 +132,6 @@ function useModeratedReviews() {
   return { approved, pendingCount, avg };
 }
 
-/** نجوم من 5 */
 function Stars({ rating, size = "h-3.5 w-3.5" }: { rating: number; size?: string }) {
   return (
     <span className="inline-flex items-center gap-0.5" aria-label={`التقييم ${rating} من 5`}>
@@ -152,7 +145,6 @@ function Stars({ rating, size = "h-3.5 w-3.5" }: { rating: number; size?: string
   );
 }
 
-/** نافذة كل التقييمات (المعتمدة فقط) */
 function AllReviewsModal({
   open,
   onClose,
@@ -225,7 +217,6 @@ export default function DashboardPage() {
 
   return (
     <div className="pb-10">
-      {/* الترحيب */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-[18px] font-extrabold text-charcoal">
@@ -241,7 +232,6 @@ export default function DashboardPage() {
         </span>
       </div>
 
-      {/* بطاقات الإحصائيات */}
       <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-3">
         {stats.map((s) => (
           <div key={s.label} className="rounded-[14px] border border-line bg-surface p-4">
@@ -263,9 +253,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* اكتمال الملف + حالة التوفّر */}
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr]">
-        {/* اكتمال الملف */}
         <div className="rounded-2xl border border-line bg-surface p-5">
           <div className="flex items-center justify-between">
             <h3 className="text-[15px] font-bold text-charcoal">اكتمال الملف</h3>
@@ -305,7 +293,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* حالة التوفّر */}
         <div className="rounded-2xl border border-line bg-surface p-5">
           <h3 className="text-[15px] font-bold text-charcoal">{copy.availTitle}</h3>
           <div className="mt-4 flex items-center justify-between rounded-xl border border-line bg-cream px-4 py-3">
@@ -348,9 +335,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* الرسم البياني + معرض الأعمال */}
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr]">
-        {/* الرسم البياني */}
         <div className="rounded-2xl border border-line bg-surface p-5">
           <div className="flex items-center justify-between">
             <div>
@@ -385,7 +370,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* معرض الأعمال */}
         <div className="rounded-2xl border border-line bg-surface p-5">
           <div className="flex items-center justify-between">
             <h3 className="text-[15px] font-bold text-charcoal">{copy.worksTitle}</h3>
@@ -408,7 +392,6 @@ export default function DashboardPage() {
                 </Link>
               </div>
             ))}
-            {/* زر الإضافة */}
             <Link
               href="/dashboard/profile"
               className="flex aspect-[4/3] w-full flex-col items-center justify-center gap-1.5 rounded-[12px] border-[1.5px] border-dashed border-line text-muted no-underline transition-colors hover:border-jazan hover:bg-jazan/[.03] hover:text-jazan"
@@ -420,7 +403,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* آخر من تصفّح ملفك */}
       <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
           <h3 className="text-[15px] font-bold text-charcoal">آخر من تصفّح ملفك</h3>
@@ -466,13 +448,11 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* الجدول */}
       <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <h3 className="text-[15px] font-bold text-charcoal">{copy.tableTitle}</h3>
         </div>
 
-        {/* رأس الجدول — سطح المكتب */}
         <div className="hidden grid-cols-[1.4fr_1.4fr_110px_120px] gap-3 bg-cream px-5 py-3 text-[12px] font-bold text-muted sm:grid">
           <span>الاسم</span>
           <span>الاهتمام</span>
@@ -499,7 +479,6 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* آخر التقييمات */}
       <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4">
           <h3 className="text-[15px] font-bold text-charcoal">آخر التقييمات</h3>

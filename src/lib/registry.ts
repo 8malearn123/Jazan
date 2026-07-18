@@ -1,8 +1,5 @@
 "use client";
 
-// سجل الأعضاء الجدد — كل تسجيل جديد (بطل / أسرة منتجة / شركة) يُضاف هنا،
-// وأرقام الصفحة الرئيسية تتحدث منه تلقائياً وبشكل لحظي.
-
 import { useEffect, useState } from "react";
 import { counts } from "./stats";
 import type { UserRole } from "./types";
@@ -11,7 +8,6 @@ export type RegisteredMember = {
   id: string;
   name: string;
   role: UserRole;
-  /** المحافظة المختارة عند التسجيل — تُستخدم في الخريطة التفاعلية */
   city?: string;
 };
 
@@ -27,7 +23,6 @@ export function loadRegistry(): RegisteredMember[] {
   }
 }
 
-/** يضيف عضواً جديداً للسجل (يتجاهل المكرر) ويبلّغ كل المكونات المستمعة */
 export function addToRegistry(member: RegisteredMember): void {
   if (member.role === "admin") return;
   try {
@@ -40,7 +35,6 @@ export function addToRegistry(member: RegisteredMember): void {
   }
 }
 
-/** الاشتراك في تغيّر السجل (يشمل التبويبات الأخرى عبر حدث storage) */
 export function onRegistryChange(listener: () => void): () => void {
   window.addEventListener(REGISTRY_EVENT, listener);
   window.addEventListener("storage", listener);
@@ -59,10 +53,6 @@ function extraCounts() {
   };
 }
 
-/**
- * الأعداد الحيّة: بيانات المنصة الأساسية + الأعضاء الجدد المسجّلين.
- * تتحدث تلقائياً فور أي تسجيل جديد دون إعادة تحميل الصفحة.
- */
 export function useLiveCounts() {
   const [extra, setExtra] = useState({ heroes: 0, producers: 0, companies: 0 });
 

@@ -56,7 +56,6 @@ export default function RootLayout({
       className={`${alexandria.variable} ${plexMono.variable}`}
     >
       <body>
-        {/* يطبّق الوضع الداكن واللغة قبل الرسم لتفادي الوميض */}
         <script
           dangerouslySetInnerHTML={{
             __html: `try{var t=localStorage.getItem("jazanheroes.theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");var l=localStorage.getItem("jazanheroes.locale");if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr"}}catch(e){}`,

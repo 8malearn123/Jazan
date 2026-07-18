@@ -1,8 +1,5 @@
 "use client";
 
-// صور الحساب (البروفايل + الغلاف) — يغيّرها صاحب الحساب من ملفه الشخصي
-// وتظهر في لوحته وصفحته العامة. تُحفظ محلياً مضغوطة في الوضع التجريبي.
-
 import { useEffect, useState } from "react";
 import { demoUserForPublicProfile } from "./social";
 
@@ -42,7 +39,6 @@ export function onPhotosChange(listener: () => void): () => void {
   };
 }
 
-/** صور حساب المستخدم الحالي — تتحدث لحظياً */
 export function usePhotos(userId: string | undefined): ProfilePhotos {
   const [photos, setPhotos] = useState<ProfilePhotos>({});
   useEffect(() => {
@@ -54,7 +50,6 @@ export function usePhotos(userId: string | undefined): ProfilePhotos {
   return photos;
 }
 
-/** صور الملف العام — عبر ربط الملفات التجريبية بحسابات الديمو */
 export function usePublicPhotos(profileId: string): ProfilePhotos {
   const [photos, setPhotos] = useState<ProfilePhotos>({});
   useEffect(() => {
@@ -67,10 +62,6 @@ export function usePublicPhotos(profileId: string): ProfilePhotos {
   return photos;
 }
 
-/**
- * تحويل ملف صورة إلى Data URL مضغوط حتى لا يتجاوز سعة التخزين المحلي.
- * @param maxDim أقصى بُعد بالبكسل (400 للبروفايل، 1400 للغلاف)
- */
 export function imageFileToDataUrl(file: File, maxDim: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();

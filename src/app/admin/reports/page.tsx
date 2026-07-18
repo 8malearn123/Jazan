@@ -7,9 +7,6 @@ import type { AdminReport } from "@/lib/types";
 import { XIcon, EyeIcon, CheckIcon } from "@/components/icons";
 import { AdminPageHead, TableCard, Th, Td, Pill } from "../_components/AdminTable";
 
-// البلاغات — زر «معالجة» يفتح تفاصيل البلاغ كاملة قبل اتخاذ الإجراء
-
-/** نافذة تفاصيل البلاغ */
 function ReportModal({
   report,
   onClose,
@@ -35,7 +32,6 @@ function ReportModal({
         className="absolute inset-0 cursor-default bg-black/50 backdrop-blur-[2px]"
       />
       <div className="relative z-10 flex max-h-[88vh] w-full max-w-[560px] flex-col overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_24px_70px_rgba(0,0,0,.35)]">
-        {/* الترويسة */}
         <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
           <div className="flex items-center gap-3">
             <h2 className="text-[16px] font-extrabold text-charcoal">تفاصيل البلاغ</h2>
@@ -51,7 +47,6 @@ function ReportModal({
           </button>
         </div>
 
-        {/* المحتوى */}
         <div className="overflow-y-auto px-5 py-4">
           <div className="grid gap-2.5 rounded-[14px] border border-line bg-cream/60 p-4 text-[13px] sm:grid-cols-2">
             <div>
@@ -101,7 +96,6 @@ function ReportModal({
           )}
         </div>
 
-        {/* الإجراءات */}
         <div className="flex flex-wrap items-center gap-2 border-t border-line px-5 py-4">
           {open ? (
             <button

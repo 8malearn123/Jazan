@@ -4,7 +4,6 @@ import { WhatsappIcon } from "@/components/icons";
 import { site, whatsappLink } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 
-/** زر واتساب ثابت أسفل الشاشة (للجوال) */
 export function WhatsappFab() {
   const { d } = useLocale();
 

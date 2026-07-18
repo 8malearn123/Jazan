@@ -7,18 +7,15 @@ import { CheckIcon, StarFilledIcon } from "@/components/icons";
 import { whatsappLink, site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 
-/** بطاقة أسرة منتجة / صانع — مطابقة لإطار التصفّح في التصميم */
 export function ProducerCard({ producer }: { producer: Producer }) {
   const { d } = useLocale();
   const { id, name, category, city, bio, verified, rating, reviewsCount } = producer;
 
   return (
     <article className="group overflow-hidden rounded-[18px] border border-line bg-surface shadow-[0_1px_2px_rgba(28,42,38,.04)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_14px_32px_rgba(28,42,38,.12)]">
-      {/* الغلاف */}
       <ImagePlaceholder shape="rect" className="h-[140px] w-full" />
 
       <div className="p-[18px]">
-        {/* الشعار + فئة النشاط */}
         <div className="flex items-start justify-between">
           <ImagePlaceholder
             shape="rounded"
@@ -31,7 +28,6 @@ export function ProducerCard({ producer }: { producer: Producer }) {
           </span>
         </div>
 
-        {/* الاسم + التحقّق */}
         <div className="mt-3 flex items-center gap-2">
           <h3 className="text-[17px] font-bold text-charcoal">{name}</h3>
           {verified ? (
@@ -44,12 +40,10 @@ export function ProducerCard({ producer }: { producer: Producer }) {
           ) : null}
         </div>
 
-        {/* الفئة · المدينة */}
         <div className="mt-[3px] text-[13px] text-muted">
           {bio ?? (d.prodCat[category] ?? category)} · {city}
         </div>
 
-        {/* التقييم */}
         {rating ? (
           <div className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-charcoal">
             <StarFilledIcon className="h-3.5 w-3.5 text-amber" />
@@ -60,7 +54,6 @@ export function ProducerCard({ producer }: { producer: Producer }) {
           </div>
         ) : null}
 
-        {/* الإجراءات */}
         <div className="mt-4 flex gap-2">
           <Link
             href={`/producers/${id}`}

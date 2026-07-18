@@ -10,7 +10,6 @@ export function SiteFooter() {
   const { d, isAr } = useLocale();
   const followLinks = useSiteSocial();
 
-  // روابط تابعنا — يحددها المدير من إعدادات لوحة الإدارة
   const socials = [
     { label: "واتساب", Icon: WhatsappIcon, href: followLinks.whatsapp },
     { label: "انستقرام", Icon: InstagramIcon, href: followLinks.instagram },

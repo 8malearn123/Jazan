@@ -21,8 +21,6 @@ import {
 } from "@/lib/social";
 import Link from "next/link";
 
-// شبكات التواصل — روابط حسابات المستخدم، تظهر في صفحته العامة
-
 const platformIcons: Record<string, typeof GlobeIcon> = {
   whatsapp: WhatsappIcon,
   x: XSocialIcon,
@@ -34,7 +32,6 @@ const platformIcons: Record<string, typeof GlobeIcon> = {
   website: GlobeIcon,
 };
 
-/** الصفحة العامة المقابلة لحساب الديمو */
 const publicPageForDemo: Record<string, string> = {
   "demo-hero": "/heroes/h1",
   "demo-producer": "/producers/pr1",
@@ -62,7 +59,6 @@ export default function SocialPage() {
   function handleSave(e: React.FormEvent) {
     e.preventDefault();
     if (!user) return;
-    // احفظ الروابط غير الفارغة فقط
     const clean: SocialLinks = {};
     for (const [k, v] of Object.entries(links)) {
       if (v.trim()) clean[k] = v.trim();

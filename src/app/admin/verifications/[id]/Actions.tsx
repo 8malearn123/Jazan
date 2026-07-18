@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useVerifications } from "../../_components/useVerifications";
 
-/** أزرار قبول/رفض في صفحة معاينة الطلب — تحدّث الحالة الموحّدة ثم تعود للقائمة */
 export function VerificationActions({ id }: { id: string }) {
   const router = useRouter();
   const { resolve } = useVerifications();

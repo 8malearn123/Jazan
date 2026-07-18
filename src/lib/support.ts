@@ -1,5 +1,3 @@
-// تذاكر الدعم الفني — رسائل الأعضاء (مشكلة/استفسار/طلب) تصل لصندوق
-// وارد المدير، وردّه أو رفضه يصل للعضو كإشعار في الجرس وفي صفحة الدعم.
 
 export type TicketStatus = "new" | "answered" | "rejected";
 
@@ -13,13 +11,10 @@ export type SupportTicket = {
   message: string;
   date: string;
   status: TicketStatus;
-  /** بريد المرسل (رسائل «تواصل معنا» من الزوار) */
   email?: string;
-  /** رد المدير (عند الرد أو الرفض) */
   reply?: string;
 };
 
-/** تذاكر تجريبية أولية حتى يجد المدير محتوى للمراجعة */
 const seedTickets: SupportTicket[] = [
   {
     id: "t1",
@@ -87,7 +82,6 @@ export function onTicketsChange(listener: () => void): () => void {
   };
 }
 
-/** إرسال تذكرة جديدة من عضو */
 export function addTicket(input: {
   userId: string;
   userName: string;
@@ -106,7 +100,6 @@ export function addTicket(input: {
   saveTickets([ticket, ...loadTickets()]);
 }
 
-/** قرار المدير: رد أو رفض — يحفظ الرد ويرسل إشعاراً لصاحب التذكرة */
 export function decideTicket(id: string, status: "answered" | "rejected", reply: string): void {
   const tickets = loadTickets();
   const ticket = tickets.find((t) => t.id === id);
@@ -128,8 +121,6 @@ export function decideTicket(id: string, status: "answered" | "rejected", reply:
 export function newTicketsCount(): number {
   return loadTickets().filter((t) => t.status === "new").length;
 }
-
-// ---- إشعارات ديناميكية (تصل لجرس العضو) ----
 
 export type DynamicNotif = {
   id: string;

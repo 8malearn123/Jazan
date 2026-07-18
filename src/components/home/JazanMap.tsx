@@ -25,24 +25,17 @@ type GovMembers = {
   heroes: Hero[];
   producers: Producer[];
   companies: Company[];
-  /** المسجّلون الجدد في هذه المحافظة (من سجل التسجيل الحي) */
   newHeroes: RegisteredMember[];
   newProducers: RegisteredMember[];
   newCompanies: RegisteredMember[];
 };
 
-/** إجمالي فئة في المحافظة (البيانات الأساسية + المسجّلون الجدد) */
 function total(m: GovMembers, kind: "heroes" | "producers" | "companies"): number {
   const extra =
     kind === "heroes" ? m.newHeroes : kind === "producers" ? m.newProducers : m.newCompanies;
   return m[kind].length + extra.length;
 }
 
-/**
- * أعضاء كل محافظة — بيانات المنصة بمطابقة اسم المدينة (مع التطبيع
- * العربي) + المسجّلون الجدد من سجل التسجيل، ويتحدثون تلقائياً
- * فور أي تسجيل جديد دون إعادة تحميل.
- */
 function useGovMembers(): Record<string, GovMembers> {
   const [registry, setRegistry] = useState<RegisteredMember[]>([]);
 
@@ -77,7 +70,6 @@ const MAX_ZOOM = 6;
 type ViewBox = { x: number; y: number; w: number; h: number };
 const BASE_VB: ViewBox = { x: 0, y: 0, w: VB_W, h: VB_H };
 
-/** تثبيت إطار العرض داخل حدود الخريطة */
 function clampVb(vb: ViewBox): ViewBox {
   const w = Math.min(VB_W, Math.max(VB_W / MAX_ZOOM, vb.w));
   const h = Math.min(VB_H, Math.max(VB_H / MAX_ZOOM, vb.h));
@@ -89,7 +81,6 @@ function clampVb(vb: ViewBox): ViewBox {
   };
 }
 
-/** تكبير/تصغير حول نقطة مركزية (بإحداثيات viewBox) */
 function zoomVb(vb: ViewBox, factor: number, cx?: number, cy?: number): ViewBox {
   const centerX = cx ?? vb.x + vb.w / 2;
   const centerY = cy ?? vb.y + vb.h / 2;
@@ -103,7 +94,6 @@ function zoomVb(vb: ViewBox, factor: number, cx?: number, cy?: number): ViewBox 
   });
 }
 
-/** صف عضو مسجّل حديثاً — بدون صفحة عامة بعد */
 function NewMemberRow({ name, sub, tone }: { name: string; sub: string; tone: string }) {
   return (
     <div className="flex items-center gap-3 rounded-[12px] border border-dashed border-line bg-surface px-3.5 py-2.5">
@@ -126,7 +116,6 @@ function NewMemberRow({ name, sub, tone }: { name: string; sub: string; tone: st
   );
 }
 
-/** صف عضو داخل قائمة المحافظة — رابط لملفه */
 function MemberRow({
   href,
   name,
@@ -171,7 +160,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
   const [hovered, setHovered] = useState<Governorate | null>(null);
   const [selected, setSelected] = useState<Governorate | null>(null);
 
-  // --- السحب والتكبير ---
   const [vb, setVb] = useState<ViewBox>(BASE_VB);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const drag = useRef<{ id: number; x: number; y: number; vb: ViewBox; moved: boolean } | null>(null);
@@ -179,7 +167,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
   const pinch = useRef<Map<number, { x: number; y: number }>>(new Map());
   const zoom = VB_W / vb.w;
 
-  /** تحويل نقطة شاشة إلى إحداثيات viewBox */
   function toVbPoint(clientX: number, clientY: number) {
     const rect = svgRef.current?.getBoundingClientRect();
     if (!rect) return { x: vb.x + vb.w / 2, y: vb.y + vb.h / 2 };
@@ -205,7 +192,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
     const prev = pinch.current.get(e.pointerId);
     if (!prev) return;
 
-    // قرصة بإصبعين = تكبير/تصغير
     if (pinch.current.size === 2) {
       const pts = [...pinch.current.entries()];
       const other = pts.find(([id]) => id !== e.pointerId)?.[1];
@@ -223,7 +209,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
 
     pinch.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
-    // سحب بإصبع/مؤشر واحد = تحريك الخريطة
     const dstate = drag.current;
     if (!dstate || dstate.id !== e.pointerId) return;
     const rect = svgRef.current?.getBoundingClientRect();
@@ -237,7 +222,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
   function onPointerUp(e: React.PointerEvent) {
     pinch.current.delete(e.pointerId);
     if (drag.current?.id === e.pointerId) {
-      // أخّر التصفير حتى يلتقط onClick قيمة moved
       const moved = drag.current.moved;
       drag.current = null;
       setDragging(false);
@@ -252,7 +236,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
     setVb((v) => zoomVb(v, e.deltaY < 0 ? 1.18 : 1 / 1.18, pt.x, pt.y));
   }
 
-  // إغلاق مع تصفير الاختيار
   function handleClose() {
     setSelected(null);
     setHovered(null);
@@ -260,7 +243,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
     onClose();
   }
 
-  // إغلاق بمفتاح Escape
   useEffect(() => {
     if (!open) return;
     function onKey(e: KeyboardEvent) {
@@ -283,13 +265,10 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
     ? total(selM, "heroes") + total(selM, "producers") + total(selM, "companies") > 0
     : false;
 
-  // موضع التلميح يراعي إطار العرض الحالي (السحب/التكبير)
-  // مع تثبيته داخل حدود الخريطة حتى لا ينقص النص عند الحواف
   const tipXPct = hovered ? ((hovered.cx - vb.x) / vb.w) * 100 : 50;
   const tipYPct = hovered ? ((hovered.cy - vb.y) / vb.h) * 100 : 50;
   const tipLeft = `clamp(135px, ${tipXPct}%, calc(100% - 135px))`;
   const tipTop = `${Math.min(Math.max(tipYPct, 0), 100)}%`;
-  // قرب أعلى الخريطة يظهر التلميح تحت المؤشر بدل فوقه
   const tipBelow = tipYPct < 42;
 
   return (
@@ -299,16 +278,13 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
       aria-modal="true"
       aria-label={d.map.title}
     >
-      {/* الخلفية */}
       <button
         aria-label={d.map.close}
         onClick={handleClose}
         className="absolute inset-0 cursor-default bg-black/50 backdrop-blur-[2px]"
       />
 
-      {/* البطاقة */}
       <div className="relative z-10 flex max-h-[92vh] w-full max-w-[640px] flex-col overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_24px_70px_rgba(0,0,0,.35)]">
-        {/* الترويسة */}
         <div className="flex items-start justify-between gap-3 border-b border-line px-5 py-4 sm:px-6">
           <div>
             <h2 className="text-[17px] font-extrabold text-charcoal sm:text-[19px]">
@@ -327,7 +303,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
         </div>
 
         <div className="overflow-y-auto">
-          {/* الخريطة */}
           <div className="relative p-4 sm:p-6" onMouseLeave={() => setHovered(null)}>
             <svg
               ref={svgRef}
@@ -363,7 +338,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
               ))}
             </svg>
 
-            {/* أزرار التكبير/التصغير */}
             <div className="absolute bottom-6 start-6 flex flex-col gap-1.5">
               <button
                 type="button"
@@ -396,7 +370,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
               ) : null}
             </div>
 
-            {/* تلميح التمرير — يظهر تحت المؤشر قرب أعلى الخريطة وفوقه في باقيها */}
             {hovered && hoverM && hovered.id !== selected?.id ? (
               <div
                 className={cn(
@@ -449,7 +422,6 @@ export function JazanMap({ open, onClose }: { open: boolean; onClose: () => void
             ) : null}
           </div>
 
-          {/* لوحة الحسابات للمحافظة المختارة */}
           {selected && selM ? (
             <div className="border-t border-line px-4 pb-5 pt-4 sm:px-6">
               <div className="flex items-center justify-between gap-3">

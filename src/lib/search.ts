@@ -1,10 +1,7 @@
-// مطابقة البحث الموحّدة — تغطي الاسم والمسمى والمهارات والمنتجات
-// والخدمات ومجالات التوظيف، مع مرونة الحروف العربية (fuzzyIncludes).
 
 import { fuzzyIncludes } from "./text";
 import type { Hero, Producer, Company, Job } from "./types";
 
-/** بطل: الاسم، المسمى، النبذة، المهارات */
 export function heroMatches(h: Hero, q: string): boolean {
   return (
     !q ||
@@ -15,7 +12,6 @@ export function heroMatches(h: Hero, q: string): boolean {
   );
 }
 
-/** أسرة منتجة: الاسم، الفئة، النبذة، أسماء المنتجات وفئاتها */
 export function producerMatches(p: Producer, q: string): boolean {
   return (
     !q ||
@@ -28,7 +24,6 @@ export function producerMatches(p: Producer, q: string): boolean {
   );
 }
 
-/** وظيفة: المسمى، الشركة، نوع الدوام، الوسوم */
 export function jobMatches(j: Job, q: string): boolean {
   return (
     !q ||
@@ -39,11 +34,6 @@ export function jobMatches(j: Job, q: string): boolean {
   );
 }
 
-/**
- * شركة: الاسم، المجال، النبذة، ووظائفها (مسمى/نوع/وسوم).
- * الوظائف مخزنة في قائمة مستقلة مرتبطة بـ companyId، لذا تُمرَّر
- * القائمة العامة اختيارياً لتشمل المطابقة مجالات التوظيف.
- */
 export function companyMatches(c: Company, q: string, allJobs?: Job[]): boolean {
   if (!q) return true;
   const companyJobs = [

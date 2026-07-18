@@ -14,16 +14,12 @@ import {
   type OfferStatus,
 } from "@/lib/offers";
 
-// عروض الشركات — طلبات نشر الوظائف والفرص، تُنشر في صفحة الشركات بعد الموافقة
-
 const statusMeta: Record<OfferStatus, { label: string; tone: "warn" | "success" | "muted" }> = {
   pending: { label: "قيد المراجعة", tone: "warn" },
   approved: { label: "منشور", tone: "success" },
   rejected: { label: "مرفوض", tone: "muted" },
 };
 
-
-/** نافذة تفاصيل عرض الشركة — المراجعة الكاملة قبل القرار */
 function OfferModal({
   offer,
   status,
@@ -194,7 +190,6 @@ export default function AdminOffersPage() {
         </div>
       ) : null}
 
-      {/* بانتظار الموافقة */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">بانتظار الموافقة</h2>
         {pending.length === 0 ? (
@@ -266,7 +261,6 @@ export default function AdminOffersPage() {
         )}
       </div>
 
-      {/* السجل */}
       <div>
         <h2 className="text-[14px] font-bold text-charcoal">
           سجل الطلبات <span className="mono font-medium text-muted">({decided.length})</span>

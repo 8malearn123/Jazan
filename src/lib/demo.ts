@@ -1,6 +1,5 @@
 import type { UserRole } from "./types";
 
-/** حساب تجريبي جاهز للاختبار */
 export interface DemoAccount {
   role: UserRole;
   name: string;
@@ -10,10 +9,6 @@ export interface DemoAccount {
   hint: string;
 }
 
-/**
- * حسابات الديمو — للتجربة والاختبار.
- * تعمل في الوضع التجريبي مباشرة (بدون باك-إند).
- */
 export const demoAccounts: DemoAccount[] = [
   {
     role: "hero",
@@ -49,12 +44,10 @@ export const demoAccounts: DemoAccount[] = [
   },
 ];
 
-/** المسار الذي يُوجَّه إليه المستخدم بعد الدخول حسب دوره */
 export function homeForRole(role: UserRole): string {
   return role === "admin" ? "/admin" : "/dashboard";
 }
 
-/** يبحث عن حساب ديمو يطابق البريد وكلمة المرور */
 export function matchDemoAccount(email: string, password: string): DemoAccount | undefined {
   const e = email.trim().toLowerCase();
   return demoAccounts.find((a) => a.email === e && a.password === password);

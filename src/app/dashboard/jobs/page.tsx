@@ -92,7 +92,6 @@ export default function JobsManagementPage() {
         </div>
       ) : null}
 
-      {/* نموذج إضافة وظيفة */}
       <form onSubmit={addJob} className="rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[15px] font-bold text-charcoal">نشر وظيفة جديدة</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -144,7 +143,6 @@ export default function JobsManagementPage() {
         </button>
       </form>
 
-      {/* قائمة الوظائف */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-[15px] font-bold text-charcoal">وظائفي المنشورة</h2>
@@ -204,7 +202,6 @@ export default function JobsManagementPage() {
                 </div>
               </div>
 
-              {/* المتقدّمون */}
               {expanded === job.id ? (
                 <div className="border-t border-line bg-cream/40 p-5">
                   <div className="text-[13px] font-bold text-charcoal">المتقدّمون على هذه الوظيفة</div>

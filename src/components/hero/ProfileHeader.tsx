@@ -19,7 +19,6 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-/** ترويسة صفحة البطل — بطاقة بروفايل مركزية بشريط إحصائيات */
 export function ProfileHeader({ hero }: { hero: Hero }) {
   const { d } = useLocale();
   const photos = usePublicPhotos(hero.id);
@@ -30,7 +29,6 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
 
   return (
     <div className="overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_1px_3px_rgba(28,42,38,.06)]">
-      {/* الغلاف */}
       <div className="relative">
         {photos.cover ? (
           /* eslint-disable-next-line @next/next/no-img-element */
@@ -41,7 +39,6 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
         <div className="absolute inset-0 bg-gradient-to-t from-jazan/60 via-jazan/10 to-transparent" />
       </div>
 
-      {/* المحتوى — مركزي */}
       <div className="flex flex-col items-center px-5 pb-6 text-center sm:px-8">
         {photos.avatar ? (
           /* eslint-disable-next-line @next/next/no-img-element */
@@ -93,7 +90,6 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
           ) : null}
         </div>
 
-        {/* شريط الإحصائيات */}
         <div className="mt-5 flex flex-wrap items-center justify-center divide-x divide-x-reverse divide-line rounded-2xl border border-line bg-cream/60 py-2">
           {hero.years != null && <Stat value={`+${hero.years}`} label={d.heroPage.yearsExp} />}
           <Stat value={`${hero.skills.length}`} label={d.heroPage.skillsStat} />
@@ -101,7 +97,6 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
           <Stat value={hero.city} label={d.heroPage.cityStat} />
         </div>
 
-        {/* صف الإجراءات: شبكات التواصل (يمين) · واتساب (وسط) · السيرة الذاتية (يسار) */}
         <div className="mt-5 flex w-full max-w-2xl flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <SocialLinksRow profileId={hero.id} seed={hero.socials} className="flex-none sm:order-first" />
           <a

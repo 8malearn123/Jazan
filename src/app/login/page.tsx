@@ -54,7 +54,6 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen flex-col bg-sand md:flex-row">
-      {/* لوحة العلامة التجارية */}
       <aside className="relative flex flex-col justify-between overflow-hidden bg-jazan p-8 md:w-[46%] md:p-12">
         <Link href="/" className="flex items-center gap-3 no-underline">
           <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-white/[.12]">
@@ -90,7 +89,6 @@ export default function LoginPage() {
         <span className="pointer-events-none absolute top-10 start-[-40px] h-32 w-32 rounded-full bg-amber/10" />
       </aside>
 
-      {/* لوحة النموذج */}
       <section className="flex flex-1 flex-col justify-center bg-cream px-6 py-10 sm:px-10 md:px-14">
         <div className="mx-auto w-full max-w-[420px]">
           <div className="mb-8 md:hidden">
@@ -183,7 +181,6 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {/* حسابات الديمو — دخول سريع للتجربة */}
           <div className="mt-7">
             <div className="flex items-center gap-3">
               <span className="h-px flex-1 bg-line" />

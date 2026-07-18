@@ -26,7 +26,6 @@ export async function generateMetadata({
   };
 }
 
-/** يبني فرصاً تجريبية لشركة معيّنة */
 function sampleJobsFor(companyId: string, companyName: string): Job[] {
   return [
     {

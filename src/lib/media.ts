@@ -1,25 +1,18 @@
-// اعتماد الشعارات والصور — أي شعار أو صورة يرفعها عضو لا تُعرض
-// في المنصة إلا بعد موافقة المدير. القرارات تُحفظ محلياً في الوضع التجريبي.
 
 export type MediaStatus = "pending" | "approved" | "rejected";
 
 export type MediaSubmission = {
   id: string;
-  /** وصف العنصر */
   title: string;
-  /** صاحب الطلب */
   owner: string;
   ownerType: "بطل" | "أسرة منتجة" | "شركة";
   kind: "شعار" | "صورة منتج" | "صورة غلاف" | "صورة شخصية";
   date: string;
   seedStatus: MediaStatus;
-  /** وصف الطلب كما كتبه صاحبه */
   note: string;
-  /** تفاصيل تقنية للملف المرفوع */
   fileInfo: string;
 };
 
-/** طلبات الشعارات والصور الواردة */
 export const mediaSubmissions: MediaSubmission[] = [
   { id: "m1", title: "شعار جديد للشركة", owner: "تهامة للتقنية", ownerType: "شركة", kind: "شعار", date: "اليوم", seedStatus: "pending", note: "طوّرنا هويتنا البصرية ونرغب باستبدال الشعار القديم بالجديد في صفحة الشركة ونتائج البحث.", fileInfo: "PNG · 512×512 · 84 كيلوبايت", },
   { id: "m2", title: "صورة طبق عريكة بالعسل", owner: "أسرة نكهات صبيا", ownerType: "أسرة منتجة", kind: "صورة منتج", date: "اليوم", seedStatus: "pending", note: "صورة حقيقية لطبق العريكة من مطبخنا، نبغى نعرضها على المنتج بدل الصورة المؤقتة.", fileInfo: "JPG · 1200×900 · 340 كيلوبايت", },

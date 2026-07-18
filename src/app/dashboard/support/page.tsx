@@ -18,8 +18,6 @@ const statusMeta: Record<SupportTicket["status"], { label: string; cls: string }
   rejected: { label: "مرفوض", cls: "bg-danger-soft text-danger" },
 };
 
-// الدعم الفني — التواصل مع إدارة المنصة
-
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan";
 
@@ -38,7 +36,6 @@ export default function SupportPage() {
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
 
-  // رسائلي السابقة وردود الإدارة — تتحدث لحظياً
   const [myTickets, setMyTickets] = useState<SupportTicket[]>([]);
   useEffect(() => {
     if (!user) return;
@@ -72,7 +69,6 @@ export default function SupportPage() {
         فريق إدارة المنصة جاهز لمساعدتك — أرسل رسالتك أو تواصل مباشرة.
       </p>
 
-      {/* قنوات مباشرة */}
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         <a
           href={waHref}
@@ -102,7 +98,6 @@ export default function SupportPage() {
         </a>
       </div>
 
-      {/* نموذج الرسالة */}
       {sent ? (
         <div className="mt-4 flex flex-col items-center rounded-[16px] border border-line bg-surface p-10 text-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-success/15 text-success">
@@ -174,7 +169,6 @@ export default function SupportPage() {
         </form>
       )}
 
-      {/* رسائلي السابقة وردود الإدارة */}
       {myTickets.length > 0 ? (
         <div className="mt-6">
           <h2 className="text-[15px] font-bold text-charcoal">
