@@ -1,6 +1,5 @@
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { WhatsappFab } from "@/components/layout/WhatsappFab";
 
 export default function SiteLayout({
   children,
@@ -11,7 +10,6 @@ export default function SiteLayout({
     <>
       <SiteHeader />
       <main>{children}</main>
-      <WhatsappFab />
       <SiteFooter />
     </>
   );
