@@ -47,6 +47,7 @@ const ar = {
     specsAvail: "تخصصات متاحة",
     specs: "برمجة · تصميم · حِرف",
     imgLabel: "صورة الهيرو — مواهب جازان",
+    monthBadge: "بطل الشهر",
   },
   categories: {
     start: "ابدأ الآن",
@@ -479,6 +480,7 @@ const en: Dict = {
     specsAvail: "Available specialties",
     specs: "Coding · Design · Crafts",
     imgLabel: "Hero image — Jazan talents",
+    monthBadge: "Hero of the Month",
   },
   categories: {
     start: "Start now",
