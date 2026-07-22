@@ -54,6 +54,29 @@ function HomeIcon({ className }: { className?: string }) {
   );
 }
 
+function TrophyIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      width="19"
+      height="19"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+      <path d="M4 22h16" />
+      <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+      <path d="M14 14.66V17c0 .55.47.98.97 1.21 1.18.54 2.03 2.03 2.03 3.79" />
+      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+    </svg>
+  );
+}
+
 function ShieldIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -121,6 +144,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { href: "/admin", label: "لوحة المعلومات", icon: GridIcon },
   { href: "/admin/landing", label: "الصفحة الرئيسية", icon: HomeIcon },
+  { href: "/admin/hero-month", label: "بطل الشهر", icon: TrophyIcon },
   { href: "/admin/verifications", label: "التوثيق والطلبات", icon: ShieldIcon, badge: counts.pending },
   { href: "/admin/users", label: "المستخدمون", icon: UsersIcon },
   { href: "/admin/companies", label: "الشركات", icon: BuildingIcon },
