@@ -6,13 +6,40 @@ import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/Button";
 import { ArrowLeftIcon } from "@/components/icons";
 import { useLocale } from "@/lib/i18n";
+import { createClient } from "@/lib/supabase/client";
 
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
 
 export default function ForgotPasswordPage() {
   const { d } = useLocale();
+  const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const target = email.trim();
+    if (!target || loading) return;
+    setError("");
+    setLoading(true);
+
+    const supabase = createClient();
+    if (supabase) {
+      const { error: sbError } = await supabase.auth.resetPasswordForEmail(target, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (sbError) {
+        setError(d.auth.forgotErr);
+        setLoading(false);
+        return;
+      }
+    }
+
+    setLoading(false);
+    setSent(true);
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-cream px-5 py-12">
@@ -42,21 +69,35 @@ export default function ForgotPasswordPage() {
               <p className="mt-2 text-[15px] leading-7 text-muted">
                 {d.auth.forgotDesc}
               </p>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSent(true);
-                }}
-                className="mt-6 flex flex-col gap-4"
-              >
+              <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
                 <div>
-                  <label className="mb-2 block text-[13px] font-semibold text-charcoal">
+                  <label htmlFor="email" className="mb-2 block text-[13px] font-semibold text-charcoal">
                     {d.auth.email}
                   </label>
-                  <input required type="email" className={inputClass} placeholder="you@example.com" />
+                  <input
+                    id="email"
+                    required
+                    type="email"
+                    dir="ltr"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={`mono text-start ${inputClass}`}
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                  />
                 </div>
-                <Button type="submit" variant="primary" className="w-full">
-                  {d.auth.forgotBtn}
+                {error ? (
+                  <p className="rounded-lg bg-warn/12 px-3 py-2 text-[13px] font-medium text-warn-ink">
+                    {error}
+                  </p>
+                ) : null}
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-full"
+                  disabled={!email.trim() || loading}
+                >
+                  {loading ? d.auth.sending : d.auth.forgotBtn}
                 </Button>
               </form>
             </>
