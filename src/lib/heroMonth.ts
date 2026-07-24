@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createClient } from "./supabase/client";
 
 export type HeroOfMonth = {
   name: string;
@@ -18,6 +19,8 @@ export const defaultHeroOfMonth: HeroOfMonth = {
 
 const STORAGE_KEY = "jazanheroes.heroMonth";
 const CHANGE_EVENT = "jazanheroes:heroMonth";
+const REMOTE_TABLE = "site_content";
+const REMOTE_KEY = "hero_month";
 
 export function currentMonthLabel(): string {
   try {
@@ -50,6 +53,46 @@ export function saveHeroOfMonth(value: HeroOfMonth): boolean {
   }
 }
 
+export async function fetchHeroOfMonthRemote(): Promise<HeroOfMonth | null> {
+  const supabase = createClient();
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from(REMOTE_TABLE)
+      .select("value")
+      .eq("key", REMOTE_KEY)
+      .maybeSingle();
+    if (error || !data?.value) return null;
+    return { ...defaultHeroOfMonth, ...(data.value as Partial<HeroOfMonth>) };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Publishes locally (always) and to Supabase when configured.
+ * remote: true = published globally, false = Supabase write failed,
+ * null = Supabase not configured (demo mode).
+ */
+export async function publishHeroOfMonth(
+  value: HeroOfMonth
+): Promise<{ local: boolean; remote: boolean | null }> {
+  const local = saveHeroOfMonth(value);
+  const supabase = createClient();
+  if (!supabase) return { local, remote: null };
+  try {
+    const { error } = await supabase
+      .from(REMOTE_TABLE)
+      .upsert(
+        { key: REMOTE_KEY, value, updated_at: new Date().toISOString() },
+        { onConflict: "key" }
+      );
+    return { local, remote: !error };
+  } catch {
+    return { local, remote: false };
+  }
+}
+
 export function onHeroOfMonthChange(listener: () => void): () => void {
   window.addEventListener(CHANGE_EVENT, listener);
   window.addEventListener("storage", listener);
@@ -64,7 +107,21 @@ export function useHeroOfMonth(): HeroOfMonth {
   useEffect(() => {
     const update = () => setValue(loadHeroOfMonth());
     update();
-    return onHeroOfMonthChange(update);
+    const unsubscribe = onHeroOfMonthChange(update);
+    let cancelled = false;
+    fetchHeroOfMonthRemote().then((remote) => {
+      if (!remote || cancelled) return;
+      setValue(remote);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
+      } catch {
+        // keep in-memory value only
+      }
+    });
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
   }, []);
   return value;
 }
