@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { SearchIcon, CheckIcon, MapIcon } from "@/components/icons";
+import { SearchIcon, MapIcon } from "@/components/icons";
 import { JazanMap } from "@/components/home/JazanMap";
 import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
@@ -129,24 +129,6 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="jh-float absolute -bottom-4 -start-2 flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 px-4 shadow-[0_12px_30px_rgba(28,42,38,.12)] sm:-start-3 sm:p-3.5 sm:px-[18px]">
-            <span className="flex h-9 w-9 items-center justify-center rounded-[11px] bg-success/15 sm:h-10 sm:w-10">
-              <CheckIcon width={20} height={20} className="text-success" strokeWidth={2.2} />
-            </span>
-            <div>
-              <div className="text-[13px] font-bold text-charcoal sm:text-sm">
-                {d.hero.contacted}
-              </div>
-              <div className="text-[11px] text-muted sm:text-xs">{d.hero.viaWa}</div>
-            </div>
-          </div>
-
-          <div className="jh-float-slow absolute -top-4 -end-2 rounded-2xl border border-line bg-surface px-3.5 py-2.5 shadow-[0_10px_26px_rgba(28,42,38,.10)] sm:-end-3 sm:px-4 sm:py-3">
-            <div className="text-[11px] text-muted sm:text-xs">{d.hero.specsAvail}</div>
-            <div className="text-sm font-bold text-jazan sm:text-[15px]">
-              {d.hero.specs}
-            </div>
-          </div>
         </div>
       </Container>
     </section>
