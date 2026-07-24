@@ -7,8 +7,9 @@ import { AdminPageHead } from "../_components/AdminTable";
 import {
   currentMonthLabel,
   defaultHeroOfMonth,
+  fetchHeroOfMonthRemote,
   loadHeroOfMonth,
-  saveHeroOfMonth,
+  publishHeroOfMonth,
   type HeroOfMonth,
 } from "@/lib/heroMonth";
 
@@ -38,13 +39,21 @@ function imageFileToDataUrl(file: File, maxDim: number): Promise<string> {
 
 export default function AdminHeroMonthPage() {
   const [content, setContent] = useState<HeroOfMonth>(defaultHeroOfMonth);
-  const [saved, setSaved] = useState(false);
+  const [savedMsg, setSavedMsg] = useState("");
   const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     /* eslint-disable-next-line react-hooks/set-state-in-effect */
     setContent(loadHeroOfMonth());
+    let cancelled = false;
+    fetchHeroOfMonthRemote().then((remote) => {
+      if (remote && !cancelled) setContent(remote);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function handleFile(file: File | undefined) {
@@ -58,21 +67,34 @@ export default function AdminHeroMonthPage() {
     }
   }
 
-  function handleSave(e: React.FormEvent) {
+  async function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    const ok = saveHeroOfMonth({
+    if (saving) return;
+    setSaving(true);
+    setError("");
+    setSavedMsg("");
+    const { local, remote } = await publishHeroOfMonth({
       name: content.name.trim() || defaultHeroOfMonth.name,
       title: content.title.trim() || defaultHeroOfMonth.title,
       month: content.month.trim(),
       image: content.image,
     });
-    if (!ok) {
-      setError("تعذّر الحفظ — قد تكون الصورة كبيرة جداً على مساحة التخزين. جرّب صورة أصغر.");
+    setSaving(false);
+    if (!local && remote !== true) {
+      setError("تعذّر الحفظ — قد تكون الصورة كبيرة جداً. جرّب صورة أصغر.");
       return;
     }
-    setError("");
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    if (remote === true) {
+      setSavedMsg("✓ تم النشر لجميع الزوار — من كل الأجهزة");
+    } else if (remote === null) {
+      setSavedMsg("✓ تم الحفظ على هذا المتصفح فقط — أضف مفاتيح Supabase ليظهر لجميع الزوار");
+    } else {
+      setError(
+        "حُفظ محلياً، لكن تعذّر النشر لقاعدة البيانات — تأكد من تنفيذ ملف supabase/site_content.sql في مشروع Supabase."
+      );
+      return;
+    }
+    setTimeout(() => setSavedMsg(""), 4000);
   }
 
   return (
@@ -166,12 +188,13 @@ export default function AdminHeroMonthPage() {
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <button
             type="submit"
-            className="cursor-pointer rounded-xl bg-jazan px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-jazan-dark"
+            disabled={saving}
+            className="cursor-pointer rounded-xl bg-jazan px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-jazan-dark disabled:opacity-60"
           >
-            حفظ ونشر
+            {saving ? "جارٍ النشر…" : "حفظ ونشر"}
           </button>
-          {saved ? (
-            <span className="text-[13px] font-semibold text-success-ink">✓ تم النشر — ظاهر الآن للزوار</span>
+          {savedMsg ? (
+            <span className="text-[13px] font-semibold text-success-ink">{savedMsg}</span>
           ) : null}
           <Link
             href="/"
