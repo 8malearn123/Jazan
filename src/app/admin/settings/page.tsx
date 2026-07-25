@@ -32,10 +32,14 @@ const initialToggles = [
   { key: "maintenance", label: "وضع الصيانة", on: false },
 ];
 
+const PLATFORM_PREFIX = "jazanheroes.";
+const SESSION_KEY = "jazanheroes.session";
+
 export default function AdminSettingsPage() {
   const [toggles, setToggles] = useState(initialToggles);
   const [social, setSocial] = useState<SiteSocialLinks>(defaultSiteSocial);
   const [saved, setSaved] = useState(false);
+  const [cleaned, setCleaned] = useState(0);
 
   useEffect(() => {
     /* eslint-disable-next-line react-hooks/set-state-in-effect */
@@ -44,6 +48,27 @@ export default function AdminSettingsPage() {
 
   function flip(key: string) {
     setToggles((list) => list.map((t) => (t.key === key ? { ...t, on: !t.on } : t)));
+  }
+
+  function handleCleanup() {
+    const confirmed = window.confirm(
+      "سيتم مسح كل البيانات التجريبية المخزّنة على هذا المتصفح:\n" +
+        "التسجيلات الجديدة، قرارات الاعتماد، التقييمات، رسائل الدعم، الصور، السلال، وبطل الشهر.\n\n" +
+        "ستعود المنصة لحالتها الافتراضية وسيبقى دخولك كمدير. هل أنت متأكد؟"
+    );
+    if (!confirmed) return;
+    try {
+      const keys: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith(PLATFORM_PREFIX) && key !== SESSION_KEY) keys.push(key);
+      }
+      keys.forEach((key) => localStorage.removeItem(key));
+      setCleaned(keys.length);
+      setTimeout(() => window.location.reload(), 1200);
+    } catch {
+      setCleaned(-1);
+    }
   }
 
   function handleSave() {
@@ -126,6 +151,32 @@ export default function AdminSettingsPage() {
               </button>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="rounded-[16px] border border-warn/40 bg-warn/[.04] p-5">
+        <h2 className="text-[15px] font-bold text-charcoal">تنظيف البيانات</h2>
+        <p className="mt-0.5 text-[13px] leading-relaxed text-muted">
+          مسح كل البيانات التجريبية المخزّنة على هذا المتصفح وإعادة المنصة لحالتها الافتراضية:
+          التسجيلات الجديدة، قرارات اعتماد التقييمات والصور والعروض، رسائل الدعم الفني، صور الملفات،
+          سلال المشتريات، تعديلات الصفحة الرئيسية وبطل الشهر. يبقى تسجيل دخولك كمدير.
+        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={handleCleanup}
+            className="cursor-pointer rounded-xl bg-warn px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:brightness-95"
+          >
+            إعادة تعيين بيانات المنصة
+          </button>
+          {cleaned > 0 ? (
+            <span className="text-[13px] font-semibold text-success-ink">
+              ✓ تم مسح {cleaned} سجلاً — جارٍ تحديث الصفحة…
+            </span>
+          ) : null}
+          {cleaned === -1 ? (
+            <span className="text-[13px] font-semibold text-warn-ink">تعذّر التنظيف — أعد المحاولة.</span>
+          ) : null}
         </div>
       </section>
 
