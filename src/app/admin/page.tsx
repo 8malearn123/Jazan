@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 import { EyeIcon } from "@/components/icons";
 import { StatCard } from "./StatCard";
-import { sampleHeroes, companies, producers } from "@/lib/data";
 import { useVerifications } from "./_components/useVerifications";
-import { counts } from "@/lib/stats";
+import { loadRegistry, onRegistryChange, useLiveCounts, type RegisteredMember } from "@/lib/registry";
 
 function UserBadgeIcon() {
   return (
@@ -135,15 +135,31 @@ type RecentRow = {
   active: boolean;
 };
 
-const recentUsers: RecentRow[] = [
-  { id: sampleHeroes[0].id, name: sampleHeroes[0].name, email: "mohammed@email.com", role: "hero", joined: "يناير 2026", active: true },
-  { id: producers[0].id, name: producers[0].name, email: "sabya@email.com", role: "producer", joined: "فبراير 2026", active: true },
-  { id: companies[0].id, name: companies[0].name, email: "hr@tihama.sa", role: "company", joined: "مارس 2026", active: true },
-  { id: sampleHeroes[5].id, name: sampleHeroes[5].name, email: "sara@email.com", role: "hero", joined: "مايو 2026", active: false },
-];
+function useRecentUsers(): RecentRow[] {
+  const [members, setMembers] = useState<RegisteredMember[]>([]);
+  useEffect(() => {
+    const update = () => setMembers(loadRegistry());
+    update();
+    return onRegistryChange(update);
+  }, []);
+  return members
+    .filter((m) => m.role !== "admin")
+    .slice(-6)
+    .reverse()
+    .map((m) => ({
+      id: m.id,
+      name: m.name,
+      email: m.city ? `المحافظة: ${m.city}` : "—",
+      role: m.role as RoleKey,
+      joined: "جديد",
+      active: true,
+    }));
+}
 
 export default function AdminDashboardPage() {
   const { pending, resolve, toast } = useVerifications();
+  const live = useLiveCounts();
+  const recentUsers = useRecentUsers();
 
   return (
     <div className="mx-auto w-full max-w-[1200px] space-y-5">
@@ -155,9 +171,9 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-        <StatCard label="إجمالي الأبطال" value={counts.heroes} accent="#0F5C4A" dot="bg-jazan" />
-        <StatCard label="الأسر المنتجة" value={counts.producers} accent="#E8932E" dot="bg-amber" />
-        <StatCard label="الشركات" value={counts.companies} accent="#2D7FF9" dot="bg-info" />
+        <StatCard label="إجمالي الأبطال" value={live.heroes} accent="#0F5C4A" dot="bg-jazan" />
+        <StatCard label="الأسر المنتجة" value={live.producers} accent="#E8932E" dot="bg-amber" />
+        <StatCard label="الشركات" value={live.companies} accent="#2D7FF9" dot="bg-info" />
         <StatCard label="طلبات التوثيق المعلّقة" value={pending.length} accent="#F59E0B" dot="bg-warn" />
       </div>
 
@@ -277,6 +293,11 @@ export default function AdminDashboardPage() {
               <span className="text-start">إجراء</span>
             </div>
 
+            {recentUsers.length === 0 ? (
+              <p className="px-5 py-8 text-center text-[13px] text-muted sm:px-6">
+                لا يوجد أعضاء منضمّون بعد — سيظهر هنا كل عضو جديد فور تسجيله.
+              </p>
+            ) : null}
             {recentUsers.map((u, i) => (
               <div
                 key={u.id}

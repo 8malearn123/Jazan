@@ -15,42 +15,7 @@ export type SupportTicket = {
   reply?: string;
 };
 
-const seedTickets: SupportTicket[] = [
-  {
-    id: "t1",
-    userId: "demo-producer",
-    userName: "أسرة نكهات صبيا",
-    role: "producer",
-    roleLabel: "أسرة منتجة",
-    topic: "استفسار عام",
-    message: "السلام عليكم، نبغى نعرف طريقة توثيق حسابنا كأسرة منتجة، وهل التوثيق يرفع ترتيبنا في نتائج البحث؟",
-    date: "اليوم",
-    status: "new",
-  },
-  {
-    id: "t2",
-    userId: "demo-company",
-    userName: "تهامة للتقنية",
-    role: "company",
-    roleLabel: "شركة",
-    topic: "مشكلة تقنية",
-    message: "عند محاولة نشر وظيفة جديدة تظهر رسالة خطأ ولا يكتمل النشر. جربنا من متصفحين مختلفين ونفس المشكلة.",
-    date: "أمس",
-    status: "new",
-  },
-  {
-    id: "t3",
-    userId: "demo-hero",
-    userName: "محمد عسيري",
-    role: "hero",
-    roleLabel: "بطل",
-    topic: "اقتراح تطوير",
-    message: "اقترح إضافة إمكانية رفع فيديو قصير تعريفي في الملف الشخصي بجانب معرض الأعمال.",
-    date: "قبل 3 أيام",
-    status: "answered",
-    reply: "شكراً لاقتراحك! أضفناه لقائمة التطويرات القادمة وسنعلن عنه فور جاهزيته.",
-  },
-];
+const seedTickets: SupportTicket[] = [];
 
 const TICKETS_KEY = "jazanheroes.support.tickets";
 const TICKETS_EVENT = "jazanheroes:support";

@@ -9,6 +9,7 @@ import { useLocale } from "@/lib/i18n";
 
 export function Partners() {
   const { d } = useLocale();
+  if (partners.length === 0) return null;
 
   return (
     <section className="pb-12">
