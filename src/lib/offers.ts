@@ -8,47 +8,7 @@ export type CompanyOffer = Job & {
   desc: string;
 };
 
-export const companyOffers: CompanyOffer[] = [
-  {
-    id: "of1",
-    desc: "نبحث عن مصمم جرافيك لتنفيذ حملة رمضان كاملة: هوية الحملة، منشورات يومية لمنصات التواصل، وتصاميم إعلانات ممولة. العمل عن بُعد مع اجتماع أسبوعي في مقرنا بجيزان، لمدة شهرين قابلة للتمديد.",
-    title: "مصمم جرافيك للحملات الرمضانية",
-    companyName: "واحة جازان الرقمية",
-    companyId: "c2",
-    city: "جيزان",
-    type: "دوام جزئي",
-    salary: "٤٬٥٠٠ ريال",
-    postedAt: "اليوم",
-    tags: ["تصميم", "حملات"],
-    seedStatus: "pending",
-  },
-  {
-    id: "of2",
-    desc: "مطلوب مطوّر Flutter بخبرة سنتين فأكثر للانضمام لفريق تطبيق توصيل جديد يخدم منطقة جازان. المهام تشمل بناء واجهات التطبيق وربط الخرائط والدفع الإلكتروني. دوام كامل من مكتبنا في صبيا مع إمكانية يومين عن بُعد.",
-    title: "مطوّر Flutter لتطبيق توصيل",
-    companyName: "تهامة للتقنية",
-    companyId: "c1",
-    city: "صبيا",
-    type: "دوام كامل",
-    salary: "٩٬٠٠٠ ريال",
-    postedAt: "أمس",
-    tags: ["Flutter", "تطبيقات"],
-    seedStatus: "pending",
-  },
-  {
-    id: "of3",
-    desc: "وظيفة منسّق شحن وتغليف في مستودعنا بجيزان: تجهيز الطلبات، متابعة شركات الشحن، وضبط المخزون. يشترط إجادة استخدام أنظمة نقاط البيع، والأولوية لسكان جيزان وضواحيها.",
-    title: "منسّق شحن وتغليف",
-    companyName: "متجر الساحل",
-    companyId: "c3",
-    city: "جيزان",
-    type: "دوام كامل",
-    salary: "٥٬٥٠٠ ريال",
-    postedAt: "قبل يومين",
-    tags: ["لوجستيات"],
-    seedStatus: "pending",
-  },
-];
+export const companyOffers: CompanyOffer[] = [];
 
 export type OfferModeration = Record<string, OfferStatus>;
 

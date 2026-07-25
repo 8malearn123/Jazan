@@ -8,6 +8,7 @@ import { useLocale } from "@/lib/i18n";
 
 export function Sponsors() {
   const { d } = useLocale();
+  if (sponsors.length === 0) return null;
 
   return (
     <section className="pb-16">

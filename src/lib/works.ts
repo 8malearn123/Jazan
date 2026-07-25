@@ -1,11 +1,7 @@
 
 export type Work = { id: string; title: string; desc: string; image?: string };
 
-export const seedWorks: Work[] = [
-  { id: "w1", title: "واجهة متجر إلكتروني", desc: "تصميم وتطوير واجهة متجر متكاملة." },
-  { id: "w2", title: "تصميم هوية بصرية", desc: "هوية كاملة لعلامة محلية ناشئة." },
-  { id: "w3", title: "لوحة تحكم", desc: "لوحة إدارة ببيانات مباشرة ورسوم بيانية." },
-];
+export const seedWorks: Work[] = [];
 
 export function worksStorageKey(userId: string): string {
   return `jazanheroes.works.${userId}`;
