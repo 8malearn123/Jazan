@@ -1,21 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { Button } from "@/components/ui/Button";
-import { StarIcon, MailIcon, LockIcon, EyeIcon } from "@/components/icons";
+import { StarIcon, EyeIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { demoAccounts, homeForRole } from "@/lib/demo";
 import { site } from "@/lib/site";
 import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
 
-const inputWrap =
-  "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
-const inputField =
-  "min-w-0 flex-1 bg-transparent text-[15px] text-charcoal outline-none placeholder:text-muted/60";
+const REMEMBER_KEY = "jazanheroes.login.email";
+
+const inputClass =
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3.5 text-[14.5px] text-charcoal outline-none transition-[border-color,box-shadow] placeholder:text-muted/60 focus:border-jazan focus:shadow-[0_0_0_3px_rgba(15,92,74,.12)]";
 
 export default function LoginPage() {
   const { d, isAr } = useLocale();
@@ -25,19 +24,47 @@ export default function LoginPage() {
     { value: String(live.producers), label: d.stats.producers },
     { value: String(live.companies), label: d.stats.companies },
   ];
+  const perks = isAr
+    ? [
+        { title: "ملف مهني جاهز للمشاركة", sub: "رابط واحد يعرض أعمالك ومهاراتك" },
+        { title: "فرص عمل محلية موثّقة", sub: "وظائف ومشاريع من جهات داخل جازان" },
+        { title: "بازار الأسر المنتجة", sub: "اعرض منتجاتك واستقبل الطلبات مباشرة" },
+      ]
+    : [
+        { title: "A shareable professional profile", sub: "One link that showcases your work and skills" },
+        { title: "Verified local opportunities", sub: "Jobs and projects from employers in Jazan" },
+        { title: "Producing-families bazaar", sub: "Show your products and receive orders directly" },
+      ];
   const router = useRouter();
   const { signIn, loginDemo } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
+  const [remember, setRemember] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(REMEMBER_KEY);
+      /* eslint-disable-next-line react-hooks/set-state-in-effect */
+      if (saved) setEmail(saved);
+    } catch {
+      // ignore
+    }
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim() || !password.trim() || loading) return;
     setError("");
     setLoading(true);
+    try {
+      if (remember) localStorage.setItem(REMEMBER_KEY, email.trim());
+      else localStorage.removeItem(REMEMBER_KEY);
+    } catch {
+      // ignore
+    }
     const { user, error } = await signIn({ email: email.trim(), password });
     if (error || !user) {
       setError(d.auth.loginErr);
@@ -53,135 +80,137 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-sand md:flex-row">
-      <aside className="relative flex flex-col justify-between overflow-hidden bg-jazan p-8 md:w-[46%] md:p-12">
-        <Link href="/" className="flex items-center gap-3 no-underline">
-          <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-white/[.12]">
-            <StarIcon width={26} height={26} className="text-amber" strokeWidth={2.1} />
-          </span>
-          <span className="text-xl font-extrabold text-white md:text-[21px]">
-            {isAr ? site.name : "Jazan Heroes"}
-          </span>
-        </Link>
-
-        <div className="my-10 md:my-0">
-          <h2 className="text-balance text-[30px] font-extrabold leading-[1.25] tracking-[-.5px] text-white md:text-[34px]">
-            {d.auth.asideLoginTitle1}
-            <br />
-            {d.auth.asideLoginTitle2}
-          </h2>
-          <p className="mt-4 max-w-[340px] text-[15px] leading-[1.8] text-white/70 md:text-base">
-            {d.auth.asideLoginDesc}
-          </p>
-          <div className="mt-7 flex items-center gap-6">
-            {heroStats.map((s) => (
-              <div key={s.label}>
-                <div className="mono text-2xl font-semibold text-amber">
-                  {s.value}
-                </div>
-                <div className="text-[13px] text-white/60">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <span className="pointer-events-none absolute -bottom-16 start-[-60px] h-52 w-52 rounded-full bg-white/[.04]" />
-        <span className="pointer-events-none absolute top-10 start-[-40px] h-32 w-32 rounded-full bg-amber/10" />
-      </aside>
-
-      <section className="flex flex-1 flex-col justify-center bg-cream px-6 py-10 sm:px-10 md:px-14">
-        <div className="mx-auto w-full max-w-[420px]">
-          <div className="mb-8 md:hidden">
+    <main className="grid min-h-screen bg-sand lg:grid-cols-2">
+      {/* Form side */}
+      <section className="flex flex-col items-center justify-center px-6 py-10 sm:px-10">
+        <div className="w-full max-w-[412px]">
+          <div className="mb-8 flex justify-center lg:hidden">
             <Logo size="md" />
           </div>
 
-          <h1 className="text-[26px] font-extrabold tracking-[-.4px] text-charcoal md:text-[28px]">
-            {d.auth.loginTitle}
-          </h1>
-          <p className="mt-2 text-[15px] text-muted">
-            {d.auth.noAccount}{" "}
-            <Link
-              href="/register"
-              className="font-semibold text-jazan no-underline hover:underline"
-            >
-              {d.auth.registerLink}
-            </Link>
-          </p>
+          <div className="text-center">
+            <h1 className="text-[29px] font-extrabold tracking-[-.5px] text-charcoal">
+              {d.auth.loginTitle}
+            </h1>
+            <p className="mt-2 text-[14.5px] leading-[1.7] text-muted">
+              {isAr
+                ? "أدخل بريدك وكلمة المرور للوصول إلى حسابك"
+                : "Enter your email and password to access your account"}
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="mt-6" noValidate>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-[13px] font-semibold text-charcoal"
-            >
-              {d.auth.email}
-            </label>
-            <div className={inputWrap}>
-              <MailIcon width={18} height={18} className="text-muted" />
+          <form onSubmit={handleSubmit} className="mt-7 flex flex-col gap-4" noValidate>
+            <label className="flex flex-col gap-2">
+              <span className="text-[13.5px] font-semibold text-charcoal">{d.auth.email}</span>
               <input
-                id="email"
                 type="email"
                 dir="ltr"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="mohammed@email.com"
-                className={`mono text-start ${inputField}`}
+                placeholder="name@example.com"
+                className={`text-start ${inputClass}`}
                 autoComplete="email"
               />
-            </div>
-
-            <label
-              htmlFor="password"
-              className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
-            >
-              {d.auth.password}
             </label>
-            <div className={inputWrap}>
-              <LockIcon width={18} height={18} className="text-muted" />
-              <input
-                id="password"
-                type={showPass ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className={inputField}
-                autoComplete="current-password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPass((v) => !v)}
-                aria-label={showPass ? d.auth.hidePass : d.auth.showPass}
-                className="text-muted/70 transition-colors hover:text-muted"
-              >
-                <EyeIcon off={showPass} width={18} height={18} />
-              </button>
-            </div>
 
-            <div className="mt-2.5 text-start">
-              <Link
-                href="/forgot-password"
-                className="text-[13px] font-semibold text-jazan no-underline hover:underline"
+            <label className="flex flex-col gap-2">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-[13.5px] font-semibold text-charcoal">{d.auth.password}</span>
+                <Link
+                  href="/forgot-password"
+                  className="text-[12.5px] font-medium text-jazan no-underline transition-colors hover:text-amber"
+                >
+                  {d.auth.forgot}
+                </Link>
+              </div>
+              <div className="relative flex">
+                <input
+                  type={showPass ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className={`pe-12 ${inputClass}`}
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPass((v) => !v)}
+                  aria-label={showPass ? d.auth.hidePass : d.auth.showPass}
+                  className="absolute bottom-0 end-3 top-0 flex cursor-pointer items-center text-muted transition-colors hover:text-jazan"
+                >
+                  <EyeIcon off={showPass} width={19} height={19} />
+                </button>
+              </div>
+            </label>
+
+            <button
+              type="button"
+              onClick={() => setRemember((v) => !v)}
+              className="flex cursor-pointer items-center gap-2.5 self-start"
+            >
+              <span
+                className={`flex h-[18px] w-[18px] items-center justify-center rounded-[5px] border-[1.5px] transition-colors ${
+                  remember ? "border-jazan bg-jazan" : "border-[#c9c4b7] bg-surface"
+                }`}
               >
-                {d.auth.forgot}
-              </Link>
-            </div>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FAF8F4"
+                  strokeWidth="3.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={remember ? "opacity-100" : "opacity-0"}
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span className="text-[13px] text-charcoal/80">
+                {isAr ? "تذكّرني" : "Remember me"}
+              </span>
+            </button>
 
             {error ? (
-              <p className="mt-4 rounded-lg bg-warn/12 px-3 py-2 text-[13px] font-medium text-warn-ink">
-                {error}
-              </p>
+              <div className="flex items-center gap-2.5 rounded-[11px] border border-warn/30 bg-warn/12 px-3.5 py-3">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  className="shrink-0 text-warn-ink"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4M12 16h.01" />
+                </svg>
+                <span className="text-[13px] font-medium text-warn-ink">{error}</span>
+              </div>
             ) : null}
 
-            <Button
+            <button
               type="submit"
-              size="lg"
-              className="mt-5 w-full"
               disabled={!email.trim() || !password.trim() || loading}
+              className="cursor-pointer rounded-xl bg-jazan p-[15px] text-center text-[15px] font-bold text-white shadow-[0_2px_8px_rgba(15,92,74,.22)] transition-[background-color,transform] hover:bg-jazan-dark active:translate-y-px disabled:opacity-60"
             >
               {loading ? d.auth.loggingIn : d.auth.loginBtn}
-            </Button>
+            </button>
+
+            <p className="text-center text-[13.5px] leading-[1.8] text-muted">
+              {d.auth.noAccount}{" "}
+              <Link
+                href="/register"
+                className="font-bold text-jazan no-underline transition-colors hover:text-amber"
+              >
+                {d.auth.registerLink}
+              </Link>
+            </p>
           </form>
 
-          <div className="mt-7">
+          <div className="mt-6">
             <div className="flex items-center gap-3">
               <span className="h-px flex-1 bg-line" />
               <span className="text-[12px] font-medium text-muted">{d.auth.tryDemo}</span>
@@ -193,7 +222,7 @@ export default function LoginPage() {
                   key={acc.role}
                   type="button"
                   onClick={() => handleDemo(acc)}
-                  className="flex flex-col items-start rounded-xl border border-line bg-surface px-3.5 py-2.5 text-start transition-colors hover:border-jazan hover:bg-jazan/[.03]"
+                  className="flex cursor-pointer flex-col items-start rounded-xl border border-line bg-surface px-3.5 py-2.5 text-start transition-colors hover:border-jazan hover:bg-jazan/[.03]"
                 >
                   <span className="text-[13px] font-bold text-charcoal">{d.demo[acc.role].label}</span>
                   <span className="text-[11px] text-muted">{d.demo[acc.role].hint}</span>
@@ -202,18 +231,100 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <p className="mt-5 text-center text-[12px] leading-[1.7] text-muted/70">
+          <p className="mt-6 text-center text-[11.5px] leading-[1.9] text-muted/70">
             {d.auth.terms1}{" "}
-            <Link href="/terms" className="text-muted hover:underline">
+            <Link href="/terms" className="text-muted underline">
               {d.auth.termsLink}
             </Link>{" "}
             {d.auth.and}
-            <Link href="/privacy" className="text-muted hover:underline">
+            <Link href="/privacy" className="text-muted underline">
               {d.auth.privacyLink}
             </Link>
           </p>
         </div>
       </section>
+
+      {/* Brand side */}
+      <aside className="relative hidden flex-col justify-between overflow-hidden bg-jazan p-14 lg:flex">
+        <svg
+          width="520"
+          height="520"
+          viewBox="0 0 100 100"
+          fill="none"
+          className="pointer-events-none absolute -top-[90px] left-[-140px] opacity-[.07]"
+        >
+          <path d="M50 5 L88 19 V50 C88 74 71 91 50 97 C29 91 12 74 12 50 V19 Z" fill="#FAF8F4" />
+        </svg>
+        <svg
+          width="300"
+          height="300"
+          viewBox="0 0 100 100"
+          fill="none"
+          className="pointer-events-none absolute -bottom-[70px] right-[-60px] opacity-[.06]"
+        >
+          <path d="M50 5 L88 19 V50 C88 74 71 91 50 97 C29 91 12 74 12 50 V19 Z" fill="#E8932E" />
+        </svg>
+
+        <div className="relative flex max-w-[460px] flex-col gap-5">
+          <Link href="/" className="flex items-center gap-3 self-start no-underline">
+            <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-white/[.12]">
+              <StarIcon width={26} height={26} className="text-amber" strokeWidth={2.1} />
+            </span>
+            <span className="text-xl font-extrabold text-white">
+              {isAr ? site.name : "Jazan Heroes"}
+            </span>
+          </Link>
+
+          <div className="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-white/20 bg-white/[.12] px-3.5 py-[7px] text-[12.5px] font-semibold text-white">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+            {isAr
+              ? "متاحة للجميع — مستقلين، أسر منتجة، جهات عمل"
+              : "Open to all — freelancers, producing families, employers"}
+          </div>
+          <h2 className="text-balance text-[40px] font-extrabold leading-[1.35] tracking-[-.8px] text-white">
+            {isAr ? "مواهب جازان في مكان واحد" : "Jazan's talent, in one place"}
+          </h2>
+          <p className="text-[15.5px] leading-[1.95] text-white/[.76]">
+            {isAr
+              ? "سجّل دخولك لإدارة ملفك، متابعة الطلبات، والتقديم على الفرص في منطقة جازان."
+              : "Sign in to manage your profile, follow orders, and apply for opportunities across the Jazan region."}
+          </p>
+        </div>
+
+        <div className="relative flex flex-col gap-4">
+          {perks.map((perk) => (
+            <div key={perk.title} className="flex items-start gap-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-white/[.14]">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#E8932E"
+                  strokeWidth="2.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <div className="flex flex-col gap-[3px] pt-[3px]">
+                <div className="text-[14.5px] font-semibold text-white">{perk.title}</div>
+                <div className="text-[13px] leading-[1.7] text-white/[.66]">{perk.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="relative flex gap-8 pt-2">
+          {heroStats.map((s) => (
+            <div key={s.label} className="flex flex-col gap-1">
+              <div className="mono text-[26px] font-medium text-amber">{s.value}</div>
+              <div className="text-[12.5px] text-white/60">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </aside>
     </main>
   );
 }

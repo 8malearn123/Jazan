@@ -9,6 +9,7 @@ import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
 import { useLanding } from "@/lib/landing";
 import { currentMonthLabel, useHeroOfMonth } from "@/lib/heroMonth";
+import { useHeroArt } from "@/lib/heroArt";
 
 export function Hero() {
   const { d, isAr } = useLocale();
@@ -16,6 +17,7 @@ export function Hero() {
   const live = useLiveCounts();
   const landing = useLanding();
   const heroMonth = useHeroOfMonth();
+  const heroArt = useHeroArt();
   const [autoMonth, setAutoMonth] = useState("");
   useEffect(() => {
     /* eslint-disable-next-line react-hooks/set-state-in-effect */
@@ -101,7 +103,7 @@ export function Hero() {
           <div className="relative h-[230px] w-full overflow-hidden rounded-[24px] border border-line bg-[#0f5c4a] sm:h-[340px] lg:h-[420px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={heroMonth.image || "/hero-of-month.svg"}
+              src={heroMonth.image || heroArt || "/hero-of-month.svg"}
               alt={`${d.hero.monthBadge} — ${heroMonth.name}`}
               className="h-full w-full object-cover"
             />

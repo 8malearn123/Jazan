@@ -12,6 +12,7 @@ import {
   publishHeroOfMonth,
   type HeroOfMonth,
 } from "@/lib/heroMonth";
+import { fetchHeroArtRemote, loadHeroArt, publishHeroArt } from "@/lib/heroArt";
 
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan";
@@ -27,7 +28,9 @@ function imageFileToDataUrl(file: File, maxDim: number): Promise<string> {
       canvas.height = Math.round(img.height * scale);
       canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
       URL.revokeObjectURL(url);
-      resolve(canvas.toDataURL("image/jpeg", 0.82));
+      // PNG يحافظ على الشفافية (مهم للأيقونات فوق خلفية البطاقة الخضراء)
+      if (file.type === "image/png") resolve(canvas.toDataURL("image/png"));
+      else resolve(canvas.toDataURL("image/jpeg", 0.82));
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
@@ -44,12 +47,22 @@ export default function AdminHeroMonthPage() {
   const [saving, setSaving] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const [art, setArt] = useState("");
+  const [artMsg, setArtMsg] = useState("");
+  const [artError, setArtError] = useState("");
+  const [artSaving, setArtSaving] = useState(false);
+  const artFileRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     /* eslint-disable-next-line react-hooks/set-state-in-effect */
     setContent(loadHeroOfMonth());
+    setArt(loadHeroArt());
     let cancelled = false;
     fetchHeroOfMonthRemote().then((remote) => {
       if (remote && !cancelled) setContent(remote);
+    });
+    fetchHeroArtRemote().then((remote) => {
+      if (remote !== null && !cancelled) setArt(remote);
     });
     return () => {
       cancelled = true;
@@ -65,6 +78,42 @@ export default function AdminHeroMonthPage() {
     } catch {
       setError("تعذّر قراءة الصورة — جرّب ملفاً آخر بصيغة JPG أو PNG.");
     }
+  }
+
+  async function handleArtFile(file: File | undefined) {
+    if (!file) return;
+    setArtError("");
+    setArtMsg("");
+    try {
+      const dataUrl = await imageFileToDataUrl(file, 1000);
+      setArt(dataUrl);
+    } catch {
+      setArtError("تعذّر قراءة الصورة — جرّب ملفاً آخر بصيغة JPG أو PNG.");
+    }
+  }
+
+  async function handleArtSave() {
+    if (artSaving) return;
+    setArtSaving(true);
+    setArtError("");
+    setArtMsg("");
+    const { local, remote } = await publishHeroArt(art);
+    setArtSaving(false);
+    if (!local && remote !== true) {
+      setArtError("تعذّر الحفظ — قد تكون الصورة كبيرة جداً. جرّب صورة أصغر.");
+      return;
+    }
+    if (remote === true) {
+      setArtMsg("✓ تم النشر لجميع الزوار — من كل الأجهزة");
+    } else if (remote === null) {
+      setArtMsg("✓ تم الحفظ على هذا المتصفح فقط — أضف مفاتيح Supabase ليظهر لجميع الزوار");
+    } else {
+      setArtError(
+        "حُفظ محلياً، لكن تعذّر النشر لقاعدة البيانات — تأكد من تنفيذ ملف supabase/site_content.sql في مشروع Supabase."
+      );
+      return;
+    }
+    setTimeout(() => setArtMsg(""), 4000);
   }
 
   async function handleSave(e: React.FormEvent) {
@@ -206,6 +255,70 @@ export default function AdminHeroMonthPage() {
           </Link>
         </div>
       </form>
+
+      <div className="rounded-[16px] border border-line bg-surface p-5">
+        <div className="text-[15px] font-bold text-charcoal">رسمة الهيرو الافتراضية</div>
+        <p className="mt-1 text-[13px] leading-relaxed text-muted">
+          الصورة التي تظهر في بطاقة الهيرو بالصفحة الرئيسية عندما لا تكون هناك صورة بطل شهر
+          مرفوعة. ارفع صورتك الخاصة (يُفضَّل PNG بخلفية شفافة) أو أبقِ الرسمة المدمجة.
+        </p>
+        <div className="mt-4 grid gap-5 sm:grid-cols-[220px_1fr]">
+          <div className="relative h-[220px] w-full overflow-hidden rounded-[14px] border border-line bg-[#0f5c4a]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={art || "/hero-of-month.svg"}
+              alt="معاينة رسمة الهيرو الافتراضية"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col items-start justify-center gap-2.5">
+            <input
+              ref={artFileRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                handleArtFile(e.target.files?.[0]);
+                e.target.value = "";
+              }}
+            />
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => artFileRef.current?.click()}
+                className="cursor-pointer rounded-[10px] bg-jazan px-3.5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-jazan-dark"
+              >
+                رفع صورة
+              </button>
+              {art ? (
+                <button
+                  type="button"
+                  onClick={() => setArt("")}
+                  className="cursor-pointer rounded-[10px] border border-line bg-surface px-3.5 py-2 text-[13px] font-semibold text-charcoal transition-colors hover:border-jazan"
+                >
+                  استعادة الرسمة المدمجة
+                </button>
+              ) : null}
+              <button
+                type="button"
+                onClick={handleArtSave}
+                disabled={artSaving}
+                className="cursor-pointer rounded-[10px] border border-jazan bg-jazan/[.06] px-3.5 py-2 text-[13px] font-semibold text-jazan transition-colors hover:bg-jazan hover:text-white disabled:opacity-60"
+              >
+                {artSaving ? "جارٍ النشر…" : "حفظ ونشر"}
+              </button>
+            </div>
+            {artMsg ? (
+              <span className="text-[13px] font-semibold text-success-ink">{artMsg}</span>
+            ) : null}
+            {artError ? (
+              <p className="rounded-lg bg-warn/12 px-3 py-2 text-[13px] font-medium text-warn-ink">
+                {artError}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </div>
 
       <p className="text-[12px] leading-relaxed text-muted">
         ملاحظة: كل بداية شهر اختر البطل الأكثر نجاحاً وتفاعلاً في المنصة، وارفع صورته وحدّث اسمه ووصفه.

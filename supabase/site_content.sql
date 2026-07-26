@@ -15,14 +15,14 @@ create policy "site_content_read"
   on public.site_content for select
   using (true);
 
--- الكتابة مسموحة فقط على مفتاح بطل الشهر
+-- الكتابة مسموحة فقط على مفاتيح محتوى الموقع (بطل الشهر ورسمة الهيرو)
 drop policy if exists "site_content_insert" on public.site_content;
 create policy "site_content_insert"
   on public.site_content for insert
-  with check (key = 'hero_month');
+  with check (key in ('hero_month', 'hero_art'));
 
 drop policy if exists "site_content_update" on public.site_content;
 create policy "site_content_update"
   on public.site_content for update
-  using (key = 'hero_month')
-  with check (key = 'hero_month');
+  using (key in ('hero_month', 'hero_art'))
+  with check (key in ('hero_month', 'hero_art'));
