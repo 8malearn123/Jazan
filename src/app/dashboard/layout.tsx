@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon, ImagesIcon, HeadsetIcon, ShareIcon } from "@/components/icons";
+import { GridIcon, UsersIcon, MenuIcon, BriefcaseIcon, ImagesIcon, HeadsetIcon, ShareIcon, PenIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { NotificationBell } from "@/components/dashboard/NotificationBell";
 import { usePhotos } from "@/lib/photos";
@@ -50,6 +50,7 @@ function navForRole(role: UserRole): NavItem[] {
     { href: "/dashboard", label: "لوحة التحكم", Icon: GridIcon },
     { href: "/dashboard/profile", label: "ملفي الشخصي", Icon: UsersIcon },
     { href: "/dashboard/works", label: "أعمالي", Icon: ImagesIcon },
+    { href: "/dashboard/posts", label: "مدونتي", Icon: PenIcon },
     { href: "/dashboard/support", label: "الدعم الفني", Icon: HeadsetIcon },
     { href: "/dashboard/social", label: "شبكات التواصل", Icon: ShareIcon },
   ];

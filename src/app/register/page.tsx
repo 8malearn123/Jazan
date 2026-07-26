@@ -4,18 +4,13 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { Button } from "@/components/ui/Button";
 import {
   StarIcon,
   UsersIcon,
   StoreIcon,
   BuildingIcon,
   CheckIcon,
-  MailIcon,
-  LockIcon,
-  UserIcon,
   EyeIcon,
-  MapPinIcon,
 } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
@@ -31,19 +26,16 @@ type RoleChoice = Extract<UserRole, "hero" | "producer" | "company">;
 const roleStyles: {
   value: RoleChoice;
   Icon: typeof UsersIcon;
-  accent: string;
   iconBg: string;
   iconText: string;
 }[] = [
-  { value: "hero", Icon: UsersIcon, accent: "text-jazan", iconBg: "bg-jazan/10", iconText: "text-jazan" },
-  { value: "producer", Icon: StoreIcon, accent: "text-amber-dark", iconBg: "bg-amber/14", iconText: "text-amber-dark" },
-  { value: "company", Icon: BuildingIcon, accent: "text-info-ink", iconBg: "bg-info/12", iconText: "text-info-ink" },
+  { value: "hero", Icon: UsersIcon, iconBg: "bg-jazan/10", iconText: "text-jazan" },
+  { value: "producer", Icon: StoreIcon, iconBg: "bg-amber/14", iconText: "text-amber-dark" },
+  { value: "company", Icon: BuildingIcon, iconBg: "bg-info/12", iconText: "text-info-ink" },
 ];
 
-const inputWrap =
-  "flex items-center gap-2.5 rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 transition-[border-color,box-shadow] focus-within:border-jazan focus-within:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
-const inputField =
-  "min-w-0 flex-1 bg-transparent text-[15px] text-charcoal outline-none placeholder:text-muted/60";
+const inputClass =
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3.5 text-[14.5px] text-charcoal outline-none transition-[border-color,box-shadow] placeholder:text-muted/60 focus:border-jazan focus:shadow-[0_0_0_3px_rgba(15,92,74,.12)]";
 
 function RegisterForm() {
   const { d, isAr } = useLocale();
@@ -53,6 +45,17 @@ function RegisterForm() {
     { value: String(live.producers), label: d.stats.producers },
     { value: String(live.companies), label: d.stats.companies },
   ];
+  const perks = isAr
+    ? [
+        { title: "ملف احترافي في دقائق", sub: "صفحة تعريفية جاهزة تشاركها برابط واحد" },
+        { title: "تواصل مباشر عبر واتساب", sub: "العملاء وأصحاب الفرص يصلونك بضغطة زر" },
+        { title: "حضور في مجتمع جازان", sub: "مكانك الطبيعي بين مواهب المنطقة وفرصها" },
+      ]
+    : [
+        { title: "A professional profile in minutes", sub: "A ready page you share with one link" },
+        { title: "Direct WhatsApp contact", sub: "Clients and employers reach you in one tap" },
+        { title: "Presence in Jazan's community", sub: "Your place among the region's talent" },
+      ];
   const roles = roleStyles.map((r) => ({ ...r, ...d.categories[r.value] }));
   const router = useRouter();
   const { signUp } = useAuth();
@@ -100,139 +103,173 @@ function RegisterForm() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-sand md:flex-row">
-      <aside className="relative flex flex-col justify-between overflow-hidden bg-jazan p-8 md:w-[42%] md:p-12">
-        <Link href="/" className="flex items-center gap-3 no-underline">
-          <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-white/[.12]">
-            <StarIcon width={26} height={26} className="text-amber" strokeWidth={2.1} />
-          </span>
-          <span className="text-xl font-extrabold text-white md:text-[21px]">
-            {isAr ? site.name : "Jazan Heroes"}
-          </span>
-        </Link>
+    <main className="grid min-h-screen bg-sand lg:grid-cols-2">
+      {/* Brand side — يمين في RTL */}
+      <aside className="relative hidden flex-col justify-between overflow-hidden bg-jazan p-14 lg:flex">
+        <svg
+          width="520"
+          height="520"
+          viewBox="0 0 100 100"
+          fill="none"
+          className="pointer-events-none absolute -top-[90px] left-[-140px] opacity-[.07]"
+        >
+          <path d="M50 5 L88 19 V50 C88 74 71 91 50 97 C29 91 12 74 12 50 V19 Z" fill="#FAF8F4" />
+        </svg>
+        <svg
+          width="300"
+          height="300"
+          viewBox="0 0 100 100"
+          fill="none"
+          className="pointer-events-none absolute -bottom-[70px] right-[-60px] opacity-[.06]"
+        >
+          <path d="M50 5 L88 19 V50 C88 74 71 91 50 97 C29 91 12 74 12 50 V19 Z" fill="#E8932E" />
+        </svg>
 
-        <div className="my-10 md:my-0">
-          <h2 className="text-balance text-[30px] font-extrabold leading-[1.25] tracking-[-.5px] text-white md:text-[34px]">
-            {d.auth.asideRegisterTitle1}
-            <br />
-            {d.auth.asideRegisterTitle2}
+        <div className="relative flex max-w-[460px] flex-col gap-5">
+          <Link href="/" className="flex items-center gap-3 self-start no-underline">
+            <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-white/[.12]">
+              <StarIcon width={26} height={26} className="text-amber" strokeWidth={2.1} />
+            </span>
+            <span className="text-xl font-extrabold text-white">
+              {isAr ? site.name : "Jazan Heroes"}
+            </span>
+          </Link>
+
+          <div className="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-white/20 bg-white/[.12] px-3.5 py-[7px] text-[12.5px] font-semibold text-white">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+            {isAr ? "التسجيل مجاني — ويستغرق أقل من دقيقة" : "Free to join — takes under a minute"}
+          </div>
+          <h2 className="text-balance text-[40px] font-extrabold leading-[1.35] tracking-[-.8px] text-white">
+            {isAr ? "انضم لمجتمع مواهب جازان" : "Join Jazan's talent community"}
           </h2>
-          <p className="mt-4 max-w-[340px] text-[15px] leading-[1.8] text-white/70 md:text-base">
+          <p className="text-[15.5px] leading-[1.95] text-white/[.76]">
             {d.auth.asideRegisterDesc}
           </p>
-          <div className="mt-7 flex items-center gap-6">
-            {heroStats.map((s) => (
-              <div key={s.label}>
-                <div className="mono text-2xl font-semibold text-amber">
-                  {s.value}
-                </div>
-                <div className="text-[13px] text-white/60">{s.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
 
-        <span className="pointer-events-none absolute -bottom-16 start-[-60px] h-52 w-52 rounded-full bg-white/[.04]" />
-        <span className="pointer-events-none absolute top-10 start-[-40px] h-32 w-32 rounded-full bg-amber/10" />
+        <div className="relative flex flex-col gap-4">
+          {perks.map((perk) => (
+            <div key={perk.title} className="flex items-start gap-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-white/[.14]">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#E8932E"
+                  strokeWidth="2.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <div className="flex flex-col gap-[3px] pt-[3px]">
+                <div className="text-[14.5px] font-semibold text-white">{perk.title}</div>
+                <div className="text-[13px] leading-[1.7] text-white/[.66]">{perk.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="relative flex gap-8 pt-2">
+          {heroStats.map((s) => (
+            <div key={s.label} className="flex flex-col gap-1">
+              <div className="mono text-[26px] font-medium text-amber">{s.value}</div>
+              <div className="text-[12.5px] text-white/60">{s.label}</div>
+            </div>
+          ))}
+        </div>
       </aside>
 
-      <section className="flex flex-1 flex-col justify-center bg-cream px-6 py-10 sm:px-10 md:px-14">
-        <div className="mx-auto w-full max-w-[460px]">
-          <div className="mb-8 md:hidden">
+      {/* Form side */}
+      <section className="flex flex-col items-center justify-center px-6 py-10 sm:px-10">
+        <div className="w-full max-w-[460px]">
+          <div className="mb-8 flex justify-center lg:hidden">
             <Logo size="md" />
           </div>
 
-          <h1 className="text-[26px] font-extrabold tracking-[-.4px] text-charcoal md:text-[28px]">
-            {d.auth.registerTitle}
-          </h1>
-          <p className="mt-2 text-[15px] text-muted">
-            {d.auth.haveAccount}{" "}
-            <Link
-              href="/login"
-              className="font-semibold text-jazan no-underline hover:underline"
-            >
-              {d.auth.loginLink}
-            </Link>
-          </p>
+          <div className="text-center">
+            <h1 className="text-[29px] font-extrabold tracking-[-.5px] text-charcoal">
+              {d.auth.registerTitle}
+            </h1>
+            <p className="mt-2 text-[14.5px] leading-[1.7] text-muted">
+              {d.auth.haveAccount}{" "}
+              <Link
+                href="/login"
+                className="font-bold text-jazan no-underline transition-colors hover:text-amber"
+              >
+                {d.auth.loginLink}
+              </Link>
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="mt-6" noValidate>
-            <span className="mb-3 block text-[13px] font-semibold text-charcoal">
-              {d.auth.howJoin}
-            </span>
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-              {roles.map((r) => {
-                const active = role === r.value;
-                return (
-                  <button
-                    key={r.value}
-                    type="button"
-                    onClick={() => setRole(r.value)}
-                    aria-pressed={active}
-                    className={cn(
-                      "group relative flex flex-row items-center gap-3 rounded-2xl border-[1.5px] bg-surface p-3.5 text-start transition-[border-color,box-shadow,transform] sm:flex-col sm:items-start sm:gap-0 sm:p-4",
-                      active
-                        ? "border-jazan shadow-[0_10px_26px_rgba(15,92,74,.12)]"
-                        : "border-line hover:-translate-y-0.5 hover:border-jazan/40 hover:shadow-[0_10px_26px_rgba(28,42,38,.08)]"
-                    )}
-                  >
-                    <span
+          <form onSubmit={handleSubmit} className="mt-7 flex flex-col gap-4" noValidate>
+            <div>
+              <span className="mb-2 block text-[13.5px] font-semibold text-charcoal">
+                {d.auth.howJoin}
+              </span>
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+                {roles.map((r) => {
+                  const active = role === r.value;
+                  return (
+                    <button
+                      key={r.value}
+                      type="button"
+                      onClick={() => setRole(r.value)}
+                      aria-pressed={active}
                       className={cn(
-                        "flex h-11 w-11 flex-none items-center justify-center rounded-[14px] sm:mb-3",
-                        r.iconBg
+                        "group relative flex cursor-pointer flex-row items-center gap-3 rounded-2xl border-[1.5px] bg-surface p-3.5 text-start transition-[border-color,box-shadow,transform] sm:flex-col sm:items-start sm:gap-0 sm:p-4",
+                        active
+                          ? "border-jazan shadow-[0_10px_26px_rgba(15,92,74,.12)]"
+                          : "border-line hover:-translate-y-0.5 hover:border-jazan/40 hover:shadow-[0_10px_26px_rgba(28,42,38,.08)]"
                       )}
                     >
-                      <r.Icon className={r.iconText} width={24} height={24} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-[15px] font-bold text-charcoal sm:text-base">
-                        {r.title}
+                      <span
+                        className={cn(
+                          "flex h-11 w-11 flex-none items-center justify-center rounded-[14px] sm:mb-3",
+                          r.iconBg
+                        )}
+                      >
+                        <r.Icon className={r.iconText} width={24} height={24} />
                       </span>
-                      <span className="mt-1 hidden text-[12px] leading-[1.55] text-muted sm:block">
-                        {r.desc}
+                      <span className="min-w-0">
+                        <span className="block text-[15px] font-bold text-charcoal sm:text-base">
+                          {r.title}
+                        </span>
+                        <span className="mt-1 hidden text-[12px] leading-[1.55] text-muted sm:block">
+                          {r.desc}
+                        </span>
                       </span>
-                    </span>
-                    {active ? (
-                      <span className="absolute end-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-jazan text-white">
-                        <CheckIcon width={13} height={13} strokeWidth={2.6} />
-                      </span>
-                    ) : null}
-                  </button>
-                );
-              })}
+                      {active ? (
+                        <span className="absolute end-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-jazan text-white">
+                          <CheckIcon width={13} height={13} strokeWidth={2.6} />
+                        </span>
+                      ) : null}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            <label
-              htmlFor="name"
-              className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
-            >
-              {d.auth.fullName}
-            </label>
-            <div className={inputWrap}>
-              <UserIcon width={18} height={18} className="text-muted" />
+            <label className="flex flex-col gap-2">
+              <span className="text-[13.5px] font-semibold text-charcoal">{d.auth.fullName}</span>
               <input
-                id="name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={d.auth.namePh}
-                className={inputField}
+                className={inputClass}
                 autoComplete="name"
               />
-            </div>
-
-            <label
-              htmlFor="city"
-              className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
-            >
-              {d.auth.govLabel}
             </label>
-            <div className={inputWrap}>
-              <MapPinIcon width={18} height={18} className="text-muted" />
+
+            <label className="flex flex-col gap-2">
+              <span className="text-[13.5px] font-semibold text-charcoal">{d.auth.govLabel}</span>
               <select
-                id="city"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className={`${inputField} cursor-pointer bg-transparent`}
+                className={`${inputClass} cursor-pointer`}
               >
                 {governorates.map((g) => (
                   <option key={g.id} value={g.ar}>
@@ -240,66 +277,67 @@ function RegisterForm() {
                   </option>
                 ))}
               </select>
-            </div>
-
-            <label
-              htmlFor="email"
-              className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
-            >
-              {d.auth.email}
             </label>
-            <div className={inputWrap}>
-              <MailIcon width={18} height={18} className="text-muted" />
+
+            <label className="flex flex-col gap-2">
+              <span className="text-[13.5px] font-semibold text-charcoal">{d.auth.email}</span>
               <input
-                id="email"
                 type="email"
                 dir="ltr"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="mohammed@email.com"
-                className={`mono text-start ${inputField}`}
+                placeholder="name@example.com"
+                className={`text-start ${inputClass}`}
                 autoComplete="email"
               />
-            </div>
-
-            <label
-              htmlFor="password"
-              className="mb-2 mt-[18px] block text-[13px] font-semibold text-charcoal"
-            >
-              {d.auth.password}
             </label>
-            <div className={inputWrap}>
-              <LockIcon width={18} height={18} className="text-muted" />
-              <input
-                id="password"
-                type={showPass ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className={inputField}
-                autoComplete="new-password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPass((v) => !v)}
-                aria-label={showPass ? d.auth.hidePass : d.auth.showPass}
-                className="text-muted/70 transition-colors hover:text-muted"
-              >
-                <EyeIcon off={showPass} width={18} height={18} />
-              </button>
-            </div>
-            <p className="mt-[7px] text-[12px] text-muted/70">
-              {d.auth.passwordHint}
-            </p>
+
+            <label className="flex flex-col gap-2">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-[13.5px] font-semibold text-charcoal">{d.auth.password}</span>
+                <span className="text-[12px] text-muted/80">{d.auth.passwordHint}</span>
+              </div>
+              <div className="relative flex">
+                <input
+                  type={showPass ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className={`pe-12 ${inputClass}`}
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPass((v) => !v)}
+                  aria-label={showPass ? d.auth.hidePass : d.auth.showPass}
+                  className="absolute bottom-0 end-3 top-0 flex cursor-pointer items-center text-muted transition-colors hover:text-jazan"
+                >
+                  <EyeIcon off={showPass} width={19} height={19} />
+                </button>
+              </div>
+            </label>
 
             {error ? (
-              <p className="mt-4 rounded-lg bg-warn/12 px-3 py-2 text-[13px] font-medium text-warn-ink">
-                {error}
-              </p>
+              <div className="flex items-center gap-2.5 rounded-[11px] border border-warn/30 bg-warn/12 px-3.5 py-3">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  className="shrink-0 text-warn-ink"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4M12 16h.01" />
+                </svg>
+                <span className="text-[13px] font-medium text-warn-ink">{error}</span>
+              </div>
             ) : null}
 
             {confirmEmailSent ? (
-              <p className="mt-4 rounded-lg bg-success/12 px-3 py-2.5 text-[13px] font-medium leading-relaxed text-success-ink">
+              <p className="rounded-[11px] border border-success/30 bg-success/12 px-3.5 py-3 text-[13px] font-medium leading-relaxed text-success-ink">
                 {d.auth.confirmPrefix}
                 <span className="mono font-semibold" dir="ltr">{email.trim()}</span>
                 {d.auth.confirmSuffix}
@@ -310,23 +348,22 @@ function RegisterForm() {
               </p>
             ) : null}
 
-            <Button
+            <button
               type="submit"
-              size="lg"
-              className="mt-6 w-full"
               disabled={!canSubmit || loading || confirmEmailSent}
+              className="cursor-pointer rounded-xl bg-jazan p-[15px] text-center text-[15px] font-bold text-white shadow-[0_2px_8px_rgba(15,92,74,.22)] transition-[background-color,transform] hover:bg-jazan-dark active:translate-y-px disabled:opacity-60"
             >
               {loading ? d.auth.creating : d.auth.createBtn}
-            </Button>
+            </button>
           </form>
 
-          <p className="mt-5 text-center text-[12px] leading-[1.7] text-muted/70">
+          <p className="mt-6 text-center text-[11.5px] leading-[1.9] text-muted/70">
             {d.auth.terms1}{" "}
-            <Link href="/terms" className="text-muted hover:underline">
+            <Link href="/terms" className="text-muted underline">
               {d.auth.termsLink}
             </Link>{" "}
             {d.auth.and}
-            <Link href="/privacy" className="text-muted hover:underline">
+            <Link href="/privacy" className="text-muted underline">
               {d.auth.privacyLink}
             </Link>
           </p>
