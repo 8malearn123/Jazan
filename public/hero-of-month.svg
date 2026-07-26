@@ -2,89 +2,122 @@
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#1b5a4a"/>
-      <stop offset="1" stop-color="#134438"/>
+      <stop offset="1" stop-color="#123f34"/>
     </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".42" r=".62">
+      <stop offset="0" stop-color="#2a7a64"/>
+      <stop offset="1" stop-color="#2a7a64" stop-opacity="0"/>
+    </radialGradient>
     <linearGradient id="ghutra" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#e9e5da"/>
+      <stop offset="1" stop-color="#e7e2d6"/>
+    </linearGradient>
+    <linearGradient id="drape" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4f1e9"/>
+      <stop offset="1" stop-color="#d9d3c4"/>
     </linearGradient>
     <linearGradient id="thobe" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#fdfcf9"/>
-      <stop offset="1" stop-color="#e8e4d9"/>
+      <stop offset="1" stop-color="#e7e3d7"/>
     </linearGradient>
-    <radialGradient id="gold" cx=".35" cy=".3" r=".9">
-      <stop offset="0" stop-color="#f3d47c"/>
-      <stop offset=".55" stop-color="#d9a83f"/>
-      <stop offset="1" stop-color="#a97a1f"/>
+    <radialGradient id="skin" cx=".42" cy=".36" r=".85">
+      <stop offset="0" stop-color="#f6c99c"/>
+      <stop offset=".7" stop-color="#efb887"/>
+      <stop offset="1" stop-color="#dfa06a"/>
     </radialGradient>
-    <g id="star8">
-      <path d="M0 -60 L14 -34 L42 -42 L34 -14 L60 0 L34 14 L42 42 L14 34 L0 60 L-14 34 L-42 42 L-34 14 L-60 0 L-34 -14 L-42 -42 L-14 -34 Z"
-        fill="none" stroke="#0e3a2f" stroke-width="7"/>
-    </g>
   </defs>
 
   <rect width="800" height="640" fill="url(#bg)"/>
+  <rect width="800" height="640" fill="url(#glow)"/>
 
-  <g opacity=".5">
-    <use href="#star8" transform="translate(90 120) scale(1.5)"/>
-    <use href="#star8" transform="translate(330 40) scale(1.1)"/>
-    <use href="#star8" transform="translate(690 90) scale(1.7)"/>
-    <use href="#star8" transform="translate(60 420) scale(1.2)"/>
-    <use href="#star8" transform="translate(740 400) scale(1.35)"/>
-    <use href="#star8" transform="translate(210 600) scale(1.4)"/>
-    <use href="#star8" transform="translate(620 620) scale(1.1)"/>
+  <g fill="none" stroke="#0e3a2f" stroke-width="5" opacity=".35">
+    <circle cx="400" cy="310" r="252"/>
+    <circle cx="400" cy="310" r="222"/>
   </g>
 
-  <g fill="none" stroke="#0e3a2f" stroke-width="5" opacity=".45">
-    <circle cx="400" cy="320" r="238"/>
-    <circle cx="400" cy="320" r="208"/>
-  </g>
+  <ellipse cx="400" cy="606" rx="330" ry="42" fill="#0c352b" opacity=".75"/>
 
-  <ellipse cx="400" cy="600" rx="330" ry="45" fill="#0c352b" opacity=".8"/>
+  <g transform="translate(400 330)">
 
-  <g transform="translate(400 340)">
-    <path d="M-215 290 C-215 130 -120 60 0 60 C120 60 215 130 215 290 L215 300 L-215 300 Z" fill="url(#thobe)"/>
+    <!-- ghutra side drapes -->
+    <path d="M-48 -210 C-96 -178 -108 -70 -94 26 C-84 90 -60 128 -32 124 L-44 -110 Z" fill="url(#drape)"/>
+    <path d="M48 -210 C96 -178 108 -70 94 26 C84 90 60 128 32 124 L44 -110 Z" fill="url(#drape)"/>
+    <path d="M-84 -56 C-90 12 -84 66 -68 108" stroke="#c9c2b0" stroke-width="4.5" fill="none" opacity=".5"/>
+    <path d="M84 -56 C90 12 84 66 68 108" stroke="#c9c2b0" stroke-width="4.5" fill="none" opacity=".5"/>
 
-    <path d="M-42 66 C-30 84 30 84 42 66 L42 96 C28 112 -28 112 -42 96 Z" fill="#efebe0"/>
-    <path d="M-11 96 L11 96 L13 300 L-13 300 Z" fill="#f6f4ee"/>
-    <path d="M-11 96 L-11 300 M11 96 L11 300" stroke="#cfc9ba" stroke-width="1.6" stroke-dasharray="4 4"/>
-    <circle cx="0" cy="130" r="6" fill="#ded9cc"/>
-    <circle cx="0" cy="172" r="6" fill="#ded9cc"/>
-    <circle cx="0" cy="214" r="6" fill="#ded9cc"/>
-    <circle cx="0" cy="256" r="6" fill="#ded9cc"/>
+    <!-- torso -->
+    <path d="M-172 300 C-176 108 -102 16 0 16 C102 16 176 108 172 300 Z" fill="url(#thobe)"/>
+    <path d="M-132 58 C-146 108 -152 180 -152 300 M132 58 C146 108 152 180 152 300" stroke="#d6d0c1" stroke-width="4" fill="none" opacity=".6"/>
 
-    <path d="M-30 18 C-30 46 -14 58 0 58 C14 58 30 46 30 18 L30 -8 L-30 -8 Z" fill="#eab88b"/>
-    <ellipse cx="0" cy="6" rx="27" ry="11" fill="#d09c6c" opacity=".45"/>
+    <!-- neck -->
+    <path d="M-24 -70 C-12 -50 12 -50 24 -70 L24 -26 C10 -14 -10 -14 -24 -26 Z" fill="#e9ab77"/>
+    <path d="M-24 -58 C-10 -46 10 -46 24 -58 L24 -46 C10 -36 -10 -36 -24 -46 Z" fill="#d08f5c" opacity=".55"/>
 
-    <path d="M-90 -110 C-98 -50 -102 30 -80 112 C-66 164 -38 178 -22 170 C-42 122 -50 40 -46 -60 Z" fill="url(#ghutra)"/>
-    <path d="M90 -110 C98 -50 102 30 80 112 C66 164 38 178 22 170 C42 122 50 40 46 -60 Z" fill="url(#ghutra)"/>
+    <!-- collar & placket -->
+    <path d="M-38 -36 C-14 -20 14 -20 38 -36 L38 -6 C14 10 -14 10 -38 -6 Z" fill="#fbfaf6" stroke="#d8d3c6" stroke-width="2.5"/>
+    <path d="M-10 2 L10 2 L12 150 L-12 150 Z" fill="#f7f5ef"/>
+    <path d="M-10 2 L-11 150 M10 2 L11 150" stroke="#d3cdbd" stroke-width="2" fill="none"/>
+    <circle cx="0" cy="34" r="5.5" fill="#ddd7c8"/>
+    <circle cx="0" cy="72" r="5.5" fill="#ddd7c8"/>
+    <circle cx="0" cy="110" r="5.5" fill="#ddd7c8"/>
 
-    <ellipse cx="0" cy="-66" rx="64" ry="68" fill="#f2c092"/>
+    <!-- head -->
+    <g transform="translate(0 -134) scale(1.12)">
+      <ellipse cx="-62" cy="8" rx="11" ry="16" fill="#e6a570"/>
+      <ellipse cx="62" cy="8" rx="11" ry="16" fill="#e6a570"/>
+      <ellipse cx="0" cy="0" rx="62" ry="66" fill="url(#skin)"/>
 
-    <path d="M-90 -108 C-90 -186 -50 -220 0 -220 C50 -220 90 -186 90 -108 C90 -98 89 -92 87 -87 C70 -104 44 -111 0 -111 C-44 -111 -70 -104 -87 -87 C-89 -92 -90 -98 -90 -108 Z" fill="url(#ghutra)"/>
+      <!-- beard along jaw, framing mouth -->
+      <path d="M-56 -10 C-62 36 -36 66 0 68 C36 66 62 36 56 -10 C50 2 43 8 35 11 C45 30 28 48 0 48 C-28 48 -45 30 -35 11 C-43 8 -50 2 -56 -10 Z" fill="#241a10"/>
 
-    <path d="M-76 -114 C-50 -152 50 -152 76 -114" stroke="#2b2620" stroke-width="22" fill="none" stroke-linecap="round"/>
-    <path d="M-68 -102 C-45 -134 45 -134 68 -102" stroke="#15100d" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <!-- mustache -->
+      <path d="M-27 13 C-16 21 16 21 27 13 C15 6 -15 6 -27 13 Z" fill="#241a10"/>
+      <!-- smiling mouth -->
+      <path d="M-22 18 C-10 28 10 28 22 18 C16 36 -16 36 -22 18 Z" fill="#ffffff" stroke="#1a120a" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- soul patch -->
+      <path d="M-7 36 C-3 41 3 41 7 36 L5 46 C2 49 -2 49 -5 46 Z" fill="#241a10"/>
 
-    <path d="M-38 -84 C-28 -90 -14 -90 -8 -86" stroke="#3a2c1e" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-    <path d="M38 -84 C28 -90 14 -90 8 -86" stroke="#3a2c1e" stroke-width="6.5" fill="none" stroke-linecap="round"/>
-    <ellipse cx="-23" cy="-72" rx="11" ry="8.5" fill="#ffffff"/>
-    <ellipse cx="23" cy="-72" rx="11" ry="8.5" fill="#ffffff"/>
-    <circle cx="-23" cy="-72" r="5.5" fill="#3b2a1c"/>
-    <circle cx="23" cy="-72" r="5.5" fill="#3b2a1c"/>
-    <circle cx="-21" cy="-74" r="1.8" fill="#ffffff"/>
-    <circle cx="25" cy="-74" r="1.8" fill="#ffffff"/>
-    <path d="M0 -64 C3.5 -54 4 -47 -2 -43" stroke="#d99f6b" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M-20 -28 C-10 -17 10 -17 20 -28 C14 -12 -14 -12 -20 -28 Z" fill="#ffffff" stroke="#b97e50" stroke-width="3" stroke-linejoin="round"/>
-    <ellipse cx="-42" cy="-44" rx="8" ry="5.5" fill="#e8a674" opacity=".5"/>
-    <ellipse cx="42" cy="-44" rx="8" ry="5.5" fill="#e8a674" opacity=".5"/>
+      <!-- eyebrows -->
+      <path d="M-37 -29 C-28 -36 -12 -36 -6 -31" stroke="#241a10" stroke-width="8.5" fill="none" stroke-linecap="round"/>
+      <path d="M37 -29 C28 -36 12 -36 6 -31" stroke="#241a10" stroke-width="8.5" fill="none" stroke-linecap="round"/>
 
-    <g transform="translate(150 128)">
-      <path d="M0 -62 L14 -54 L30 -58 L38 -44 L54 -40 L54 -24 L64 -12 L56 2 L58 18 L44 26 L38 42 L22 42 L10 54 L-4 46 L-20 50 L-30 36 L-46 32 L-46 16 L-56 4 L-48 -10 L-50 -26 L-36 -34 L-30 -50 L-14 -50 Z" fill="url(#gold)"/>
-      <circle r="40" fill="none" stroke="#8a6114" stroke-width="3" opacity=".8"/>
-      <circle r="46" fill="none" stroke="#f7e3a5" stroke-width="2" opacity=".7"/>
-      <path d="M-18 -2 L-6 12 L22 -18" stroke="#6f4d0e" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M-18 -6 L-6 8 L22 -22" stroke="#fdf3cd" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- eyes -->
+      <ellipse cx="-22" cy="-13" rx="12.5" ry="9.5" fill="#ffffff"/>
+      <ellipse cx="22" cy="-13" rx="12.5" ry="9.5" fill="#ffffff"/>
+      <circle cx="-21" cy="-13" r="6" fill="#4a2f18"/>
+      <circle cx="23" cy="-13" r="6" fill="#4a2f18"/>
+      <circle cx="-21" cy="-13" r="2.8" fill="#1c120a"/>
+      <circle cx="23" cy="-13" r="2.8" fill="#1c120a"/>
+      <circle cx="-19" cy="-15" r="1.7" fill="#ffffff"/>
+      <circle cx="25" cy="-15" r="1.7" fill="#ffffff"/>
+
+      <!-- nose -->
+      <path d="M1 -6 C4 1 4 7 -2 11" stroke="#d68f5f" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+      <!-- blush -->
+      <ellipse cx="-42" cy="2" rx="8.5" ry="6" fill="#e59a63" opacity=".45"/>
+      <ellipse cx="42" cy="2" rx="8.5" ry="6" fill="#e59a63" opacity=".45"/>
+
+      <!-- ghutra over skull, edge dips at center of forehead -->
+      <path d="M-64 -26 C-40 -44 -14 -48 0 -39 C14 -48 40 -44 64 -26 C76 -58 68 -98 44 -116 C22 -131 -22 -131 -44 -116 C-68 -98 -76 -58 -64 -26 Z" fill="url(#ghutra)"/>
+
+      <!-- agal: doubled black cord -->
+      <path d="M-52 -95 C-28 -113 28 -113 52 -95" stroke="#2a231c" stroke-width="15" fill="none" stroke-linecap="round"/>
+      <path d="M-58 -79 C-32 -99 32 -99 58 -79" stroke="#15100c" stroke-width="15" fill="none" stroke-linecap="round"/>
+      <path d="M-46 -99 C-26 -112 26 -112 46 -99" stroke="#4a4138" stroke-width="3" fill="none" opacity=".7"/>
+    </g>
+
+    <!-- crossed arms -->
+    <path d="M-132 82 C-104 136 -26 162 80 154" stroke="#e9e5d9" stroke-width="58" fill="none" stroke-linecap="round"/>
+    <path d="M-108 118 C-54 150 18 158 82 152" stroke="#d9d3c4" stroke-width="5" fill="none" opacity=".7"/>
+    <path d="M132 82 C108 132 30 168 -72 160" stroke="#f6f4ee" stroke-width="60" fill="none" stroke-linecap="round"/>
+    <path d="M108 120 C54 156 -18 164 -70 160" stroke="#dcd6c8" stroke-width="4" fill="none" opacity=".6"/>
+
+    <!-- visible hand resting on the upper arm -->
+    <g transform="translate(-94 148) rotate(-18)">
+      <ellipse cx="0" cy="0" rx="27" ry="18" fill="#efb887"/>
+      <path d="M-11 -14 C-8 -5 -8 7 -11 15 M1 -17 C4 -6 4 7 1 17 M13 -14 C16 -5 16 5 13 13" stroke="#d99c66" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="-20" cy="4" rx="7" ry="10" fill="#e6a570"/>
     </g>
   </g>
 </svg>
