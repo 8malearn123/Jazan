@@ -127,3 +127,52 @@ body {
 .jh-float-slow {
   animation: jhFloat 6s ease-in-out infinite 0.8s;
 }
+
+@keyframes jhSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.jh-spin-slow {
+  animation: jhSpin 36s linear infinite;
+}
+
+@keyframes jhTwinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.75);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+.jh-twinkle {
+  animation: jhTwinkle 2.8s ease-in-out infinite;
+}
+
+@keyframes jhPulseSoft {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+.jh-pulse-soft {
+  animation: jhPulseSoft 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jh-float,
+  .jh-float-slow,
+  .jh-spin-slow,
+  .jh-twinkle,
+  .jh-pulse-soft {
+    animation: none;
+  }
+}
