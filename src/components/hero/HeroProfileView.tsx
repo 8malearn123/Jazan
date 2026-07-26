@@ -6,6 +6,7 @@ import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { StarFilledIcon } from "@/components/icons";
 import { useLocale } from "@/lib/i18n";
 import { loadWorks, type Work } from "@/lib/works";
+import { fetchPosts, formatPostDate, type Post } from "@/lib/posts";
 import { demoUserForPublicProfile } from "@/lib/social";
 import type { Hero } from "@/lib/types";
 import { ProfileHeader } from "./ProfileHeader";
@@ -23,7 +24,7 @@ export function HeroProfileView({
   bio: string;
   worksCount?: number;
 }) {
-  const { d } = useLocale();
+  const { d, isAr } = useLocale();
 
   const [works, setWorks] = useState<Work[] | null>(null);
   useEffect(() => {
@@ -31,6 +32,17 @@ export function HeroProfileView({
     if (!demoUser) return;
     /* eslint-disable-next-line react-hooks/set-state-in-effect */
     setWorks(loadWorks(demoUser));
+  }, [hero.id]);
+
+  const [posts, setPosts] = useState<Post[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    fetchPosts(demoUserForPublicProfile(hero.id) ?? hero.id).then((list) => {
+      if (!cancelled) setPosts(list);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [hero.id]);
 
   const shownWorks = works?.slice(0, 5) ?? null;
@@ -105,6 +117,40 @@ export function HeroProfileView({
             </div>
           </section>
         </div>
+
+        {posts.length > 0 ? (
+          <section className="rounded-[18px] border border-line bg-surface p-6">
+            <div className="flex items-center justify-between">
+              <SectionTitle>{isAr ? "المدونة" : "Blog"}</SectionTitle>
+              <span className="mono text-[13px] text-muted">
+                {posts.length} {isAr ? "منشور" : "posts"}
+              </span>
+            </div>
+            <div className="mt-4 flex flex-col gap-3">
+              {posts.map((post) => (
+                <article
+                  key={post.id}
+                  className="rounded-[14px] border border-line bg-cream/40 p-4"
+                >
+                  <time className="text-[12px] font-medium text-muted">
+                    {formatPostDate(post.createdAt, isAr)}
+                  </time>
+                  <p className="mt-1.5 whitespace-pre-line text-[14.5px] leading-[1.9] text-ink">
+                    {post.content}
+                  </p>
+                  {post.image ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={post.image}
+                      alt=""
+                      className="mt-3 max-h-[320px] w-full rounded-[12px] border border-line object-cover"
+                    />
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {hero.reviews?.length ? (
           <section className="rounded-[18px] border border-line bg-surface p-6">
