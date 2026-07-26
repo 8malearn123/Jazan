@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { StarIcon, EyeIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { demoAccounts, homeForRole } from "@/lib/demo";
+import { homeForRole } from "@/lib/demo";
 import { site } from "@/lib/site";
 import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
@@ -36,7 +36,7 @@ export default function LoginPage() {
         { title: "Producing-families bazaar", sub: "Show your products and receive orders directly" },
       ];
   const router = useRouter();
-  const { signIn, loginDemo } = useAuth();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
@@ -74,15 +74,10 @@ export default function LoginPage() {
     router.push(homeForRole(user.role));
   }
 
-  function handleDemo(account: (typeof demoAccounts)[number]) {
-    const user = loginDemo(account);
-    router.push(homeForRole(user.role));
-  }
-
   return (
     <main className="grid min-h-screen bg-sand lg:grid-cols-2">
-      {/* Form side */}
-      <section className="flex flex-col items-center justify-center px-6 py-10 sm:px-10">
+      {/* Form side — placed after the brand aside in RTL so the green side sits on the right */}
+      <section className="flex flex-col items-center justify-center px-6 py-10 sm:px-10 lg:order-last">
         <div className="w-full max-w-[412px]">
           <div className="mb-8 flex justify-center lg:hidden">
             <Logo size="md" />
@@ -210,27 +205,6 @@ export default function LoginPage() {
             </p>
           </form>
 
-          <div className="mt-6">
-            <div className="flex items-center gap-3">
-              <span className="h-px flex-1 bg-line" />
-              <span className="text-[12px] font-medium text-muted">{d.auth.tryDemo}</span>
-              <span className="h-px flex-1 bg-line" />
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-2.5">
-              {demoAccounts.map((acc) => (
-                <button
-                  key={acc.role}
-                  type="button"
-                  onClick={() => handleDemo(acc)}
-                  className="flex cursor-pointer flex-col items-start rounded-xl border border-line bg-surface px-3.5 py-2.5 text-start transition-colors hover:border-jazan hover:bg-jazan/[.03]"
-                >
-                  <span className="text-[13px] font-bold text-charcoal">{d.demo[acc.role].label}</span>
-                  <span className="text-[11px] text-muted">{d.demo[acc.role].hint}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
           <p className="mt-6 text-center text-[11.5px] leading-[1.9] text-muted/70">
             {d.auth.terms1}{" "}
             <Link href="/terms" className="text-muted underline">
@@ -245,7 +219,7 @@ export default function LoginPage() {
       </section>
 
       {/* Brand side */}
-      <aside className="relative hidden flex-col justify-between overflow-hidden bg-jazan p-14 lg:flex">
+      <aside className="relative hidden flex-col justify-between overflow-hidden bg-jazan p-14 lg:order-first lg:flex">
         <svg
           width="520"
           height="520"
