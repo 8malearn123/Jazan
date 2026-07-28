@@ -257,3 +257,47 @@ export async function savePhotoRemote(
     // أفضل جهد — الصورة المحلية تبقى
   }
 }
+
+/** أقسام صفحة البطل الغنية — يعبّئها من لوحته وتظهر للزوار */
+export type HeroService = { name: string; desc: string; price: string };
+export type HeroTimelineEntry = { years: string; role: string; desc: string };
+export type HeroCert = { name: string; year: string };
+export type HeroDetails = {
+  availabilityText?: string;
+  cvUrl?: string;
+  services?: HeroService[];
+  timeline?: HeroTimelineEntry[];
+  certs?: HeroCert[];
+};
+
+export async function fetchHeroDetails(heroId: string): Promise<HeroDetails | null> {
+  const supabase = createClient();
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from("hero_profiles")
+      .select("details")
+      .eq("profile_id", heroId)
+      .maybeSingle();
+    if (error || !data) return null;
+    return ((data as { details: HeroDetails | null }).details ?? null);
+  } catch {
+    return null;
+  }
+}
+
+export async function saveHeroDetails(
+  heroId: string,
+  details: HeroDetails
+): Promise<boolean | null> {
+  const supabase = createClient();
+  if (!supabase) return null;
+  try {
+    const { error } = await supabase
+      .from("hero_profiles")
+      .upsert({ profile_id: heroId, details }, { onConflict: "profile_id" });
+    return !error;
+  } catch {
+    return false;
+  }
+}

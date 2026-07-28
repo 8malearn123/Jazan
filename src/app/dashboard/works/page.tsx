@@ -6,7 +6,7 @@ import { XIcon, ImagesIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 
-import { seedWorks, worksStorageKey as storageKey, type Work } from "@/lib/works";
+import { createWork, deleteWork, fetchWorks, updateWork, type Work } from "@/lib/works";
 
 function fileToDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -40,8 +40,10 @@ export default function WorksPage() {
 
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
+  const [newCategory, setNewCategory] = useState("");
   const [newImage, setNewImage] = useState<string | null>(null);
   const [imgError, setImgError] = useState("");
+  const [busy, setBusy] = useState(false);
 
   const [editId, setEditId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
@@ -50,28 +52,16 @@ export default function WorksPage() {
 
   useEffect(() => {
     if (!user) return;
-    /* eslint-disable react-hooks/set-state-in-effect */
-    try {
-      const raw = localStorage.getItem(storageKey(user.id));
-      setWorks(raw ? (JSON.parse(raw) as Work[]) : seedWorks);
-    } catch {
-      setWorks(seedWorks);
-    }
-    setLoaded(true);
-    /* eslint-enable react-hooks/set-state-in-effect */
+    let cancelled = false;
+    fetchWorks(user.id).then((list) => {
+      if (cancelled) return;
+      setWorks(list);
+      setLoaded(true);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [user]);
-
-  function persist(next: Work[]) {
-    setWorks(next);
-    if (user) {
-      try {
-        localStorage.setItem(storageKey(user.id), JSON.stringify(next));
-        setImgError("");
-      } catch {
-        setImgError("مساحة التخزين امتلأت — احذف بعض الصور القديمة وحاول مجدداً.");
-      }
-    }
-  }
 
   async function pickImage(e: React.ChangeEvent<HTMLInputElement>, set: (v: string) => void) {
     const file = e.target.files?.[0];
@@ -85,13 +75,27 @@ export default function WorksPage() {
     }
   }
 
-  function addWork(e: React.FormEvent) {
+  async function addWork(e: React.FormEvent) {
     e.preventDefault();
     const title = newTitle.trim();
-    if (!title) return;
-    persist([{ id: `w${Date.now()}`, title, desc: newDesc.trim(), image: newImage ?? undefined }, ...works]);
+    if (!title || !user || busy) return;
+    setBusy(true);
+    setImgError("");
+    const created = await createWork(user.id, {
+      title,
+      desc: newDesc.trim(),
+      category: newCategory.trim() || undefined,
+      image: newImage ?? undefined,
+    });
+    setBusy(false);
+    if (!created) {
+      setImgError("تعذّرت الإضافة — تأكد من تنفيذ ملف supabase/hero_page.sql أو جرّب صورة أصغر.");
+      return;
+    }
+    setWorks((prev) => [created, ...prev]);
     setNewTitle("");
     setNewDesc("");
+    setNewCategory("");
     setNewImage(null);
   }
 
@@ -102,20 +106,30 @@ export default function WorksPage() {
     setEditImage(w.image ?? null);
   }
 
-  function saveEdit() {
-    if (!editId) return;
-    persist(
-      works.map((w) =>
-        w.id === editId
-          ? { ...w, title: editTitle.trim() || w.title, desc: editDesc.trim(), image: editImage ?? undefined }
-          : w
-      )
-    );
+  async function saveEdit() {
+    if (!editId || !user) return;
+    const current = works.find((w) => w.id === editId);
+    if (!current) return;
+    const next = {
+      title: editTitle.trim() || current.title,
+      desc: editDesc.trim(),
+      category: current.category,
+      image: editImage ?? undefined,
+    };
+    const ok = await updateWork(user.id, editId, next);
+    if (!ok) {
+      setImgError("تعذّر الحفظ — أعد المحاولة.");
+      return;
+    }
+    setWorks((prev) => prev.map((w) => (w.id === editId ? { ...w, ...next } : w)));
     setEditId(null);
   }
 
-  function removeWork(id: string) {
-    persist(works.filter((w) => w.id !== id));
+  async function removeWork(id: string) {
+    if (!user) return;
+    const ok = await deleteWork(user.id, id);
+    if (!ok) return;
+    setWorks((prev) => prev.filter((w) => w.id !== id));
     if (editId === id) setEditId(null);
   }
 
@@ -128,7 +142,7 @@ export default function WorksPage() {
 
       <form onSubmit={addWork} className="mt-5 rounded-[16px] border border-line bg-surface p-5">
         <h2 className="text-[14px] font-bold text-charcoal">إضافة عمل جديد</h2>
-        <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_1.4fr_auto]">
+        <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_1.2fr_.7fr_auto]">
           <input
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
@@ -141,12 +155,18 @@ export default function WorksPage() {
             placeholder="وصف مختصر (اختياري)"
             className={inputClass}
           />
+          <input
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+            placeholder="تصنيف (اختياري)"
+            className={inputClass}
+          />
           <button
             type="submit"
-            disabled={!newTitle.trim()}
+            disabled={!newTitle.trim() || busy}
             className="cursor-pointer rounded-xl bg-jazan px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-jazan-dark disabled:cursor-not-allowed disabled:opacity-40"
           >
-            + إضافة
+            {busy ? "…" : "+ إضافة"}
           </button>
         </div>
 

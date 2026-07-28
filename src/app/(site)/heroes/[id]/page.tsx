@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { BackLink } from "@/components/BackLink";
-import { HeroProfileView } from "@/components/hero/HeroProfileView";
+import { HeroPortfolioView } from "@/components/hero/HeroPortfolioView";
 import { sampleHeroes, getHero } from "@/lib/data";
 import { getDbHero } from "@/lib/members-server";
 
@@ -43,7 +43,7 @@ export default async function HeroProfilePage({
         <BackLink to="heroes" />
 
         <div className="mt-4">
-          <HeroProfileView hero={hero} bio={bio} />
+          <HeroPortfolioView hero={hero} bio={bio} />
         </div>
       </div>
     </Container>

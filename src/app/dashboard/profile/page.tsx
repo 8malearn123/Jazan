@@ -10,7 +10,16 @@ import {
   imageFileToDataUrl,
   type ProfilePhotos,
 } from "@/lib/photos";
-import { fetchOwnProfile, saveOwnProfile, savePhotoRemote } from "@/lib/members";
+import {
+  fetchOwnProfile,
+  saveOwnProfile,
+  savePhotoRemote,
+  fetchHeroDetails,
+  saveHeroDetails,
+  type HeroCert,
+  type HeroService,
+  type HeroTimelineEntry,
+} from "@/lib/members";
 import type { UserRole } from "@/lib/types";
 
 const inputClass =
@@ -106,6 +115,12 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
 
+  const [availabilityText, setAvailabilityText] = useState("");
+  const [cvUrl, setCvUrl] = useState("");
+  const [services, setServices] = useState<HeroService[]>([]);
+  const [timeline, setTimeline] = useState<HeroTimelineEntry[]>([]);
+  const [certs, setCerts] = useState<HeroCert[]>([]);
+
   useEffect(() => {
     if (!user) return;
     /* eslint-disable react-hooks/set-state-in-effect */
@@ -141,6 +156,16 @@ export default function ProfilePage() {
       if (remote.status) setStatus(remote.status);
       if (remote.skills && remote.skills.length) setSkills(remote.skills);
     });
+    if (user.role === "hero") {
+      fetchHeroDetails(user.id).then((dts) => {
+        if (!dts || cancelled) return;
+        setAvailabilityText(dts.availabilityText ?? "");
+        setCvUrl(dts.cvUrl ?? "");
+        setServices(dts.services ?? []);
+        setTimeline(dts.timeline ?? []);
+        setCerts(dts.certs ?? []);
+      });
+    }
     return () => {
       cancelled = true;
     };
@@ -166,8 +191,18 @@ export default function ProfilePage() {
       status,
       skills,
     });
+    let detailsOk: boolean | null = true;
+    if (user.role === "hero") {
+      detailsOk = await saveHeroDetails(user.id, {
+        availabilityText: availabilityText.trim() || undefined,
+        cvUrl: cvUrl.trim() || undefined,
+        services: services.filter((s) => s.name.trim()),
+        timeline: timeline.filter((t) => t.role.trim()),
+        certs: certs.filter((c) => c.name.trim()),
+      });
+    }
     setSaving(false);
-    if (remote === false) {
+    if (remote === false || detailsOk === false) {
       setSaveError(
         "حُفظ محلياً لكن تعذّر الحفظ في قاعدة البيانات — أعد المحاولة أو تأكد من اتصالك."
       );
@@ -333,20 +368,190 @@ export default function ProfilePage() {
             />
           </div>
           {!isCompany && !isProducer ? (
-            <div className="sm:col-span-2">
-              <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
-                حالة التوفر <span className="font-normal text-muted">— تظهر شارةً في ملفك العام</span>
-              </label>
-              <select
-                className={`${inputClass} cursor-pointer`}
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option value="freelance">متاح للعمل الحر</option>
-                <option value="job">أبحث عن وظيفة</option>
-                <option value="both">متاح للاثنين — عمل حر ووظيفة</option>
-              </select>
-            </div>
+            <>
+              <div>
+                <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
+                  حالة التوفر <span className="font-normal text-muted">— تظهر شارةً في ملفك العام</span>
+                </label>
+                <select
+                  className={`${inputClass} cursor-pointer`}
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="freelance">متاح للعمل الحر</option>
+                  <option value="job">أبحث عن وظيفة</option>
+                  <option value="both">متاح للاثنين — عمل حر ووظيفة</option>
+                </select>
+              </div>
+              <div>
+                <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
+                  أوقات التوفر <span className="font-normal text-muted">(اختياري)</span>
+                </label>
+                <input
+                  className={inputClass}
+                  value={availabilityText}
+                  onChange={(e) => setAvailabilityText(e.target.value)}
+                  placeholder="مثال: السبت–الخميس · ٤–١٠ مساءً"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
+                  رابط السيرة الذاتية <span className="font-normal text-muted">(اختياري — يظهر زراً في صفحتك)</span>
+                </label>
+                <input
+                  className={inputClass}
+                  dir="ltr"
+                  value={cvUrl}
+                  onChange={(e) => setCvUrl(e.target.value)}
+                  placeholder="https://..."
+                />
+              </div>
+
+              <div className="sm:col-span-2 rounded-[14px] border border-line bg-cream/40 p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[13px] font-bold text-charcoal">
+                    الخدمات والأسعار <span className="font-normal text-muted">— تظهر قسماً في صفحتك العامة</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setServices((s) => [...s, { name: "", desc: "", price: "" }])}
+                    className="cursor-pointer rounded-[10px] border-[1.5px] border-jazan/40 px-3 py-1.5 text-[12px] font-semibold text-jazan transition-colors hover:bg-jazan hover:text-white"
+                  >
+                    + خدمة
+                  </button>
+                </div>
+                {services.map((s, i) => (
+                  <div key={i} className="mt-3 grid gap-2 sm:grid-cols-[1fr_1.6fr_.5fr_auto]">
+                    <input
+                      className={inputClass}
+                      value={s.name}
+                      onChange={(e) =>
+                        setServices((list) => list.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))
+                      }
+                      placeholder="اسم الخدمة"
+                    />
+                    <input
+                      className={inputClass}
+                      value={s.desc}
+                      onChange={(e) =>
+                        setServices((list) => list.map((x, j) => (j === i ? { ...x, desc: e.target.value } : x)))
+                      }
+                      placeholder="وصف مختصر"
+                    />
+                    <input
+                      className={inputClass}
+                      value={s.price}
+                      onChange={(e) =>
+                        setServices((list) => list.map((x, j) => (j === i ? { ...x, price: e.target.value } : x)))
+                      }
+                      placeholder="السعر"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setServices((list) => list.filter((_, j) => j !== i))}
+                      aria-label="حذف الخدمة"
+                      className="cursor-pointer rounded-[10px] border border-danger-line px-3 text-[13px] font-semibold text-danger transition-colors hover:bg-danger-soft"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="sm:col-span-2 rounded-[14px] border border-line bg-cream/40 p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[13px] font-bold text-charcoal">
+                    الخبرات <span className="font-normal text-muted">— خط زمني في صفحتك العامة</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setTimeline((t) => [...t, { years: "", role: "", desc: "" }])}
+                    className="cursor-pointer rounded-[10px] border-[1.5px] border-jazan/40 px-3 py-1.5 text-[12px] font-semibold text-jazan transition-colors hover:bg-jazan hover:text-white"
+                  >
+                    + خبرة
+                  </button>
+                </div>
+                {timeline.map((t, i) => (
+                  <div key={i} className="mt-3 grid gap-2 sm:grid-cols-[.6fr_1fr_1.4fr_auto]">
+                    <input
+                      className={inputClass}
+                      value={t.years}
+                      onChange={(e) =>
+                        setTimeline((list) => list.map((x, j) => (j === i ? { ...x, years: e.target.value } : x)))
+                      }
+                      placeholder="2022 — 2024"
+                    />
+                    <input
+                      className={inputClass}
+                      value={t.role}
+                      onChange={(e) =>
+                        setTimeline((list) => list.map((x, j) => (j === i ? { ...x, role: e.target.value } : x)))
+                      }
+                      placeholder="المسمى / الدور"
+                    />
+                    <input
+                      className={inputClass}
+                      value={t.desc}
+                      onChange={(e) =>
+                        setTimeline((list) => list.map((x, j) => (j === i ? { ...x, desc: e.target.value } : x)))
+                      }
+                      placeholder="وصف مختصر"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setTimeline((list) => list.filter((_, j) => j !== i))}
+                      aria-label="حذف الخبرة"
+                      className="cursor-pointer rounded-[10px] border border-danger-line px-3 text-[13px] font-semibold text-danger transition-colors hover:bg-danger-soft"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="sm:col-span-2 rounded-[14px] border border-line bg-cream/40 p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[13px] font-bold text-charcoal">
+                    الشهادات والاعتمادات <span className="font-normal text-muted">(اختياري)</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setCerts((c) => [...c, { name: "", year: "" }])}
+                    className="cursor-pointer rounded-[10px] border-[1.5px] border-jazan/40 px-3 py-1.5 text-[12px] font-semibold text-jazan transition-colors hover:bg-jazan hover:text-white"
+                  >
+                    + شهادة
+                  </button>
+                </div>
+                {certs.map((c, i) => (
+                  <div key={i} className="mt-3 grid gap-2 sm:grid-cols-[1.6fr_.5fr_auto]">
+                    <input
+                      className={inputClass}
+                      value={c.name}
+                      onChange={(e) =>
+                        setCerts((list) => list.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))
+                      }
+                      placeholder="اسم الشهادة أو الاعتماد"
+                    />
+                    <input
+                      className={inputClass}
+                      value={c.year}
+                      onChange={(e) =>
+                        setCerts((list) => list.map((x, j) => (j === i ? { ...x, year: e.target.value } : x)))
+                      }
+                      placeholder="السنة"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setCerts((list) => list.filter((_, j) => j !== i))}
+                      aria-label="حذف الشهادة"
+                      className="cursor-pointer rounded-[10px] border border-danger-line px-3 text-[13px] font-semibold text-danger transition-colors hover:bg-danger-soft"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : null}
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">نبذة تعريفية</label>
