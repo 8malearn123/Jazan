@@ -135,3 +135,125 @@ export function useDbCompanies(): Company[] {
 export function useDbMembers(): MemberRow[] {
   return useFetched(fetchDbMembers);
 }
+
+/** بيانات الملف الشخصي التي يملكها العضو ويحرّرها من لوحته */
+export type OwnProfile = {
+  name?: string;
+  city?: string;
+  whatsapp?: string;
+  bio?: string;
+  title?: string;
+  status?: string;
+  skills?: string[];
+};
+
+export async function fetchOwnProfile(userId: string): Promise<OwnProfile | null> {
+  const supabase = createClient();
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select(
+        "name, city, whatsapp, bio, hero_profiles(title, status, skills), producer_profiles(category)"
+      )
+      .eq("id", userId)
+      .maybeSingle();
+    if (error || !data) return null;
+    const row = data as unknown as {
+      name: string | null;
+      city: string | null;
+      whatsapp: string | null;
+      bio: string | null;
+      hero_profiles?:
+        | { title: string | null; status: string | null; skills: string[] | null }
+        | { title: string | null; status: string | null; skills: string[] | null }[]
+        | null;
+      producer_profiles?: { category: string | null } | { category: string | null }[] | null;
+    };
+    const hp = Array.isArray(row.hero_profiles) ? row.hero_profiles[0] : row.hero_profiles;
+    const pp = Array.isArray(row.producer_profiles)
+      ? row.producer_profiles[0]
+      : row.producer_profiles;
+    return {
+      name: row.name ?? undefined,
+      city: row.city ?? undefined,
+      whatsapp: row.whatsapp ?? undefined,
+      bio: row.bio ?? undefined,
+      title: hp?.title ?? pp?.category ?? undefined,
+      status: hp?.status ?? undefined,
+      skills: hp?.skills ?? undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/** حفظ الملف الشخصي في قاعدة البيانات — يعيد null عندما لا يوجد Supabase */
+export async function saveOwnProfile(
+  userId: string,
+  role: string,
+  p: {
+    name: string;
+    city: string;
+    whatsapp: string;
+    bio: string;
+    title: string;
+    status: string;
+    skills: string[];
+  }
+): Promise<boolean | null> {
+  const supabase = createClient();
+  if (!supabase) return null;
+  try {
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        name: p.name,
+        city: p.city || null,
+        whatsapp: p.whatsapp || null,
+        bio: p.bio || null,
+      })
+      .eq("id", userId);
+    if (error) return false;
+
+    if (role === "hero") {
+      const { error: heroErr } = await supabase.from("hero_profiles").upsert(
+        {
+          profile_id: userId,
+          title: p.title || null,
+          status: p.status || "both",
+          skills: p.skills,
+        },
+        { onConflict: "profile_id" }
+      );
+      if (heroErr) return false;
+    } else if (role === "producer") {
+      const { error: prodErr } = await supabase.from("producer_profiles").upsert(
+        { profile_id: userId, category: p.title || null },
+        { onConflict: "profile_id" }
+      );
+      if (prodErr) return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** مزامنة الصورة الشخصية/الغلاف مع قاعدة البيانات (أفضل جهد) */
+export async function savePhotoRemote(
+  userId: string,
+  kind: "avatar" | "cover",
+  dataUrl: string | null
+): Promise<void> {
+  const supabase = createClient();
+  if (!supabase) return;
+  try {
+    await supabase
+      .from("profiles")
+      .update(kind === "avatar" ? { avatar_url: dataUrl } : { cover_url: dataUrl })
+      .eq("id", userId);
+  } catch {
+    // أفضل جهد — الصورة المحلية تبقى
+  }
+}
