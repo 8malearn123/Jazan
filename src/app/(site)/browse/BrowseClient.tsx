@@ -9,6 +9,7 @@ import { normalizeText } from "@/lib/text";
 import { heroMatches, producerMatches, companyMatches } from "@/lib/search";
 import { governorates } from "@/lib/jazan-map";
 import { producers, companies, jobs } from "@/lib/data";
+import { useDbHeroes } from "@/lib/members";
 import type { Hero, AvailabilityStatus } from "@/lib/types";
 import { HeroBrowseCard } from "./HeroBrowseCard";
 import { ProducerCard } from "../producers/ProducerCard";
@@ -31,13 +32,15 @@ function matchStatus(hero: Hero, f: StatusFilter): boolean {
 }
 
 export function BrowseClient({
-  heroes,
+  heroes: seedHeroes,
   initialQuery = "",
 }: {
   heroes: Hero[];
   initialQuery?: string;
 }) {
   const { d, isAr } = useLocale();
+  const dbHeroes = useDbHeroes();
+  const heroes = useMemo(() => [...dbHeroes, ...seedHeroes], [dbHeroes, seedHeroes]);
   const [query, setQuery] = useState(initialQuery);
   const [mapOpen, setMapOpen] = useState(false);
   const [city, setCity] = useState("all");

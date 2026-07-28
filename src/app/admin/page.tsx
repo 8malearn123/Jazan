@@ -7,6 +7,7 @@ import { EyeIcon } from "@/components/icons";
 import { StatCard } from "./StatCard";
 import { useVerifications } from "./_components/useVerifications";
 import { loadRegistry, onRegistryChange, useLiveCounts, type RegisteredMember } from "@/lib/registry";
+import { useDbMembers } from "@/lib/members";
 
 function UserBadgeIcon() {
   return (
@@ -137,13 +138,31 @@ type RecentRow = {
 
 function useRecentUsers(): RecentRow[] {
   const [members, setMembers] = useState<RegisteredMember[]>([]);
+  const dbMembers = useDbMembers();
   useEffect(() => {
     const update = () => setMembers(loadRegistry());
     update();
     return onRegistryChange(update);
   }, []);
-  return members
+
+  // أعضاء قاعدة البيانات الحقيقيون أولاً (الأحدث مقدَّم)، ثم المحليون
+  const dbRows: RecentRow[] = dbMembers
     .filter((m) => m.role !== "admin")
+    .slice(0, 6)
+    .map((m) => ({
+      id: m.id,
+      name: m.name,
+      email: m.email ?? (m.city ? `المحافظة: ${m.city}` : "—"),
+      role: m.role as RoleKey,
+      joined: new Date(m.createdAt).toLocaleDateString("ar-SA-u-ca-gregory", {
+        month: "long",
+        day: "numeric",
+      }),
+      active: true,
+    }));
+
+  const localRows: RecentRow[] = members
+    .filter((m) => m.role !== "admin" && !dbRows.some((r) => r.id === m.id))
     .slice(-6)
     .reverse()
     .map((m) => ({
@@ -154,6 +173,8 @@ function useRecentUsers(): RecentRow[] {
       joined: "جديد",
       active: true,
     }));
+
+  return [...dbRows, ...localRows].slice(0, 6);
 }
 
 export default function AdminDashboardPage() {

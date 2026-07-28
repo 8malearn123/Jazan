@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { BackLink } from "@/components/BackLink";
 import { producers, getProducer } from "@/lib/data";
+import { getDbProducer } from "@/lib/members-server";
 import { ProducerView } from "./ProducerView";
 
 export function generateStaticParams() {
@@ -15,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const producer = getProducer(id);
+  const producer = getProducer(id) ?? (await getDbProducer(id));
   if (!producer) return { title: "غير موجود — أبطال جازان" };
   return {
     title: `${producer.name} — أبطال جازان`,
@@ -29,7 +30,7 @@ export default async function ProducerPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const producer = getProducer(id);
+  const producer = getProducer(id) ?? (await getDbProducer(id));
   if (!producer) notFound();
 
   return (

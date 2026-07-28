@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { counts } from "./stats";
+import { fetchDbCounts, type DbCounts } from "./members";
 import type { UserRole } from "./types";
 
 export type RegisteredMember = {
@@ -55,13 +56,31 @@ function extraCounts() {
 
 export function useLiveCounts() {
   const [extra, setExtra] = useState({ heroes: 0, producers: 0, companies: 0 });
+  const [db, setDb] = useState<DbCounts | null>(null);
 
   useEffect(() => {
     const update = () => setExtra(extraCounts());
     update();
-    return onRegistryChange(update);
+    let cancelled = false;
+    fetchDbCounts().then((c) => {
+      if (c && !cancelled) setDb(c);
+    });
+    const unsubscribe = onRegistryChange(update);
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
   }, []);
 
+  // مع قاعدة البيانات: الأعداد الحقيقية من جدول profiles؛
+  // بدونها: البيانات المدمجة + المسجّلون محلياً (الوضع التجريبي)
+  if (db) {
+    return {
+      heroes: counts.heroes + db.heroes,
+      producers: counts.producers + db.producers,
+      companies: counts.companies + db.companies,
+    };
+  }
   return {
     heroes: counts.heroes + extra.heroes,
     producers: counts.producers + extra.producers,

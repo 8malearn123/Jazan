@@ -13,14 +13,20 @@ import {
   loadOfferModeration,
   onOfferModerationChange,
 } from "@/lib/offers";
+import { useDbCompanies } from "@/lib/members";
 import type { Company, Job } from "@/lib/types";
 import { CompanyCard } from "./CompanyCard";
 import { JobRow } from "./JobRow";
 
 const jobTypes = ["الكل", "دوام كامل", "عن بُعد", "دوام جزئي"];
 
-export function CompaniesClient({ companies, jobs: baseJobs }: { companies: Company[]; jobs: Job[] }) {
+export function CompaniesClient({ companies: seedCompanies, jobs: baseJobs }: { companies: Company[]; jobs: Job[] }) {
   const { d, isAr } = useLocale();
+  const dbCompanies = useDbCompanies();
+  const companies = useMemo(
+    () => [...dbCompanies, ...seedCompanies],
+    [dbCompanies, seedCompanies]
+  );
   const [query, setQuery] = useState("");
   const [mapOpen, setMapOpen] = useState(false);
   const [city, setCity] = useState("all");
