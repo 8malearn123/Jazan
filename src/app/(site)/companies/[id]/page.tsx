@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { BackLink } from "@/components/BackLink";
 import { companies, getCompany } from "@/lib/data";
+import { getDbCompany } from "@/lib/members-server";
 import type { Job } from "@/lib/types";
 import { CompanyView } from "./CompanyView";
 
@@ -16,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const company = getCompany(id);
+  const company = getCompany(id) ?? (await getDbCompany(id));
   if (!company) return { title: "شركة غير موجودة · أبطال جازان" };
   return {
     title: `${company.name} · أبطال جازان`,
@@ -81,13 +82,17 @@ export default async function CompanyPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const company = getCompany(id);
+  const dataCompany = getCompany(id);
+  const company = dataCompany ?? (await getDbCompany(id));
   if (!company) notFound();
 
-  const openJobs = (company.jobs ?? sampleJobsFor(company.id, company.name)).slice(
-    0,
-    Math.max(company.openings, 1)
-  );
+  // شركات قاعدة البيانات لا تُعرض لها وظائف تجريبية
+  const openJobs = dataCompany
+    ? (company.jobs ?? sampleJobsFor(company.id, company.name)).slice(
+        0,
+        Math.max(company.openings, 1)
+      )
+    : (company.jobs ?? []);
 
   return (
     <Container className="py-8 sm:py-10 lg:py-12">

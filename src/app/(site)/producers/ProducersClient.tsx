@@ -8,13 +8,19 @@ import { useLocale } from "@/lib/i18n";
 import { normalizeText } from "@/lib/text";
 import { producerMatches } from "@/lib/search";
 import { governorates } from "@/lib/jazan-map";
+import { useDbProducers } from "@/lib/members";
 import type { Producer } from "@/lib/types";
 import { ProducerCard } from "./ProducerCard";
 
 const categories = ["الكل", "طعام", "حِرف", "عطور"];
 
-export function ProducersClient({ producers }: { producers: Producer[] }) {
+export function ProducersClient({ producers: seedProducers }: { producers: Producer[] }) {
   const { d, isAr } = useLocale();
+  const dbProducers = useDbProducers();
+  const producers = useMemo(
+    () => [...dbProducers, ...seedProducers],
+    [dbProducers, seedProducers]
+  );
   const [query, setQuery] = useState("");
   const [mapOpen, setMapOpen] = useState(false);
   const [city, setCity] = useState("all");

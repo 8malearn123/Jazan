@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { BackLink } from "@/components/BackLink";
 import { HeroProfileView } from "@/components/hero/HeroProfileView";
 import { sampleHeroes, getHero } from "@/lib/data";
+import { getDbHero } from "@/lib/members-server";
 
 export function generateStaticParams() {
   return sampleHeroes.map((h) => ({ id: h.id }));
@@ -15,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const hero = getHero(id);
+  const hero = getHero(id) ?? (await getDbHero(id));
   if (!hero) return { title: "البطل غير موجود · أبطال جازان" };
   return {
     title: `${hero.name} · ${hero.title} · أبطال جازان`,
@@ -29,7 +30,7 @@ export default async function HeroProfilePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const hero = getHero(id);
+  const hero = getHero(id) ?? (await getDbHero(id));
   if (!hero) notFound();
 
   const bio =

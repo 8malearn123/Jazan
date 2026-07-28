@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { sampleHeroes, producers, companies } from "@/lib/data";
+import { useDbMembers } from "@/lib/members";
 import { CheckIcon } from "@/components/icons";
 import { AdminPageHead, TableCard, Th, Td, Pill } from "../_components/AdminTable";
 
@@ -16,7 +17,13 @@ type Row = {
   verified: boolean;
 };
 
-const rows: Row[] = [
+const roleMeta = {
+  hero: { label: "بطل" as const, tone: "info" as const, path: "heroes" },
+  producer: { label: "أسرة منتجة" as const, tone: "amber" as const, path: "producers" },
+  company: { label: "شركة" as const, tone: "info" as const, path: "companies" },
+};
+
+const seedRows: Row[] = [
   ...sampleHeroes.map((h) => ({
     id: `h-${h.id}`,
     name: h.name,
@@ -48,6 +55,24 @@ const rows: Row[] = [
 
 export default function AdminUsersPage() {
   const [suspended, setSuspended] = useState<Record<string, boolean>>({});
+  const dbMembers = useDbMembers();
+  const rows = useMemo<Row[]>(() => {
+    const dbRows = dbMembers
+      .filter((m) => m.role !== "admin")
+      .map((m) => {
+        const meta = roleMeta[m.role as keyof typeof roleMeta] ?? roleMeta.hero;
+        return {
+          id: m.id,
+          name: m.name,
+          role: meta.label,
+          tone: meta.tone,
+          city: m.city ?? "—",
+          href: `/${meta.path}/${m.id}`,
+          verified: m.verified,
+        };
+      });
+    return [...dbRows, ...seedRows];
+  }, [dbMembers]);
 
   function toggle(id: string) {
     setSuspended((s) => ({ ...s, [id]: !s[id] }));
