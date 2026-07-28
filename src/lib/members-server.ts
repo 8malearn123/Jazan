@@ -1,4 +1,5 @@
-import { createClient } from "./supabase/server";
+import { createServerClient } from "@supabase/ssr";
+import { SUPABASE_ANON_KEY, SUPABASE_URL, isSupabaseConfigured } from "./supabase/config";
 import {
   HERO_SELECT,
   PRODUCER_SELECT,
@@ -17,13 +18,29 @@ import type { Company, Hero, Producer } from "./types";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+// عميل عام بلا كوكيز — القراءة هنا عامة (سياسة public_read) ولا تحتاج جلسة،
+// وقراءة الكوكيز داخل صفحة مولّدة مسبقاً ترمي DYNAMIC_SERVER_USAGE
+function createPublicClient() {
+  if (!isSupabaseConfigured) return null;
+  return createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    cookies: {
+      getAll() {
+        return [];
+      },
+      setAll() {
+        // لا جلسة — لا شيء يُكتب
+      },
+    },
+  });
+}
+
 async function fetchProfile(
   id: string,
   role: "hero" | "producer" | "company",
   select: string
 ): Promise<ProfileRow | null> {
   if (!UUID_RE.test(id)) return null;
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   if (!supabase) return null;
   try {
     const { data, error } = await supabase
