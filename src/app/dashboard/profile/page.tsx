@@ -10,6 +10,7 @@ import {
   imageFileToDataUrl,
   type ProfilePhotos,
 } from "@/lib/photos";
+import { fetchOwnProfile, saveOwnProfile, savePhotoRemote } from "@/lib/members";
 import type { UserRole } from "@/lib/types";
 
 const inputClass =
@@ -79,6 +80,7 @@ export default function ProfilePage() {
       } else {
         setPhotoError("مساحة التخزين امتلأت — جرّب صورة أصغر.");
       }
+      savePhotoRemote(user.id, kind, dataUrl);
     } catch {
       setPhotoError("تعذّرت قراءة الصورة — جرّب ملفاً آخر (JPG أو PNG).");
     }
@@ -90,6 +92,7 @@ export default function ProfilePage() {
     delete next[kind];
     savePhotos(user.id, next);
     setPhotos(next);
+    savePhotoRemote(user.id, kind, null);
   }
 
   const [name, setName] = useState("");
@@ -97,8 +100,11 @@ export default function ProfilePage() {
   const [city, setCity] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [bio, setBio] = useState("");
+  const [status, setStatus] = useState("both");
   const [skills, setSkills] = useState<string[]>([]);
   const [skillInput, setSkillInput] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     if (!user) return;
@@ -113,25 +119,59 @@ export default function ProfilePage() {
         setWhatsapp(draft.whatsapp ?? "");
         setBio(draft.bio ?? "");
         setSkills(draft.skills ?? seedSkills[user.role]);
-        return;
+      } else {
+        setName(user.name);
+        setSkills(seedSkills[user.role]);
       }
+    } catch {
+      setName(user.name);
+      setSkills(seedSkills[user.role]);
+    }
+    /* eslint-enable react-hooks/set-state-in-effect */
+
+    // بيانات قاعدة البيانات (إن وُجدت) تتقدّم على المسودة المحلية
+    let cancelled = false;
+    fetchOwnProfile(user.id).then((remote) => {
+      if (!remote || cancelled) return;
+      if (remote.name) setName(remote.name);
+      if (remote.title) setTitle(remote.title);
+      if (remote.city) setCity(remote.city);
+      if (remote.whatsapp) setWhatsapp(remote.whatsapp);
+      if (remote.bio) setBio(remote.bio);
+      if (remote.status) setStatus(remote.status);
+      if (remote.skills && remote.skills.length) setSkills(remote.skills);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  async function handleSave(e: React.FormEvent) {
+    e.preventDefault();
+    if (!user || saving) return;
+    setSaving(true);
+    setSaveError("");
+    const draft: ProfileDraft = { name, title, city, whatsapp, bio, skills };
+    try {
+      localStorage.setItem(storageKey(user.id), JSON.stringify(draft));
     } catch {
       // ignore
     }
-    setName(user.name);
-    setSkills(seedSkills[user.role]);
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, [user]);
-
-  function handleSave(e: React.FormEvent) {
-    e.preventDefault();
-    if (user) {
-      const draft: ProfileDraft = { name, title, city, whatsapp, bio, skills };
-      try {
-        localStorage.setItem(storageKey(user.id), JSON.stringify(draft));
-      } catch {
-        // ignore
-      }
+    const remote = await saveOwnProfile(user.id, user.role, {
+      name,
+      city,
+      whatsapp,
+      bio,
+      title,
+      status,
+      skills,
+    });
+    setSaving(false);
+    if (remote === false) {
+      setSaveError(
+        "حُفظ محلياً لكن تعذّر الحفظ في قاعدة البيانات — أعد المحاولة أو تأكد من اتصالك."
+      );
+      return;
     }
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
@@ -292,6 +332,22 @@ export default function ProfilePage() {
               placeholder="9665XXXXXXXX"
             />
           </div>
+          {!isCompany && !isProducer ? (
+            <div className="sm:col-span-2">
+              <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">
+                حالة التوفر <span className="font-normal text-muted">— تظهر شارةً في ملفك العام</span>
+              </label>
+              <select
+                className={`${inputClass} cursor-pointer`}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="freelance">متاح للعمل الحر</option>
+                <option value="job">أبحث عن وظيفة</option>
+                <option value="both">متاح للاثنين — عمل حر ووظيفة</option>
+              </select>
+            </div>
+          ) : null}
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">نبذة تعريفية</label>
             <textarea
@@ -391,14 +447,24 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="mt-5 flex items-center gap-3">
+        <div className="mt-5 flex flex-wrap items-center gap-3">
           <button
             type="submit"
-            className="cursor-pointer rounded-xl bg-jazan px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-jazan-dark"
+            disabled={saving}
+            className="cursor-pointer rounded-xl bg-jazan px-6 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-jazan-dark disabled:opacity-60"
           >
-            حفظ التغييرات
+            {saving ? "جارٍ الحفظ…" : "حفظ التغييرات"}
           </button>
-          {saved ? <span className="text-[13px] font-semibold text-success-ink">✓ تم الحفظ</span> : null}
+          {saved ? (
+            <span className="text-[13px] font-semibold text-success-ink">
+              ✓ تم الحفظ — يظهر في ملفك العام لجميع الزوار
+            </span>
+          ) : null}
+          {saveError ? (
+            <span className="rounded-lg bg-warn/12 px-3 py-2 text-[13px] font-medium text-warn-ink">
+              {saveError}
+            </span>
+          ) : null}
         </div>
       </form>
     </div>

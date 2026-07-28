@@ -77,7 +77,10 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
           <span className="inline-flex items-center gap-1.5 text-sm text-muted">
             <MapPinIcon className="h-4 w-4" />
             {hero.city}
-            {d.heroPage.region}
+            {/* لا تُضاف لاحقة «، جازان» إذا كانت المدينة هي جازان نفسها */}
+            {hero.city.includes("جازان") || hero.city.includes("جيزان")
+              ? null
+              : d.heroPage.region}
           </span>
           {hero.rating ? (
             <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal">
