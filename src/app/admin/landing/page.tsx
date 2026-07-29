@@ -23,7 +23,13 @@ function imageFileToDataUrl(file: File, maxDim: number): Promise<string> {
       canvas.height = Math.round(img.height * scale);
       canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
       URL.revokeObjectURL(url);
-      // PNG يحافظ على الشفافية (مهم لرسمة الهيرو الطافية)
+      // WebP يدعم الشفافية بحجم أصغر بكثير من PNG — فتُجلب الصورة أسرع.
+      // نتحقق من دعم المتصفح قبل اعتماده، وإلا نعود إلى PNG/JPEG.
+      const webp = canvas.toDataURL("image/webp", 0.9);
+      if (webp.startsWith("data:image/webp")) {
+        resolve(webp);
+        return;
+      }
       if (file.type === "image/png") resolve(canvas.toDataURL("image/png"));
       else resolve(canvas.toDataURL("image/jpeg", 0.82));
     };
@@ -73,7 +79,7 @@ export default function AdminLandingPage() {
     setArtError("");
     setArtMsg("");
     try {
-      setArt(await imageFileToDataUrl(file, 1000));
+      setArt(await imageFileToDataUrl(file, 900));
     } catch {
       setArtError("تعذّر قراءة الصورة — جرّب ملفاً آخر بصيغة JPG أو PNG.");
     }

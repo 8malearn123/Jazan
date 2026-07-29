@@ -142,6 +142,8 @@ export function Hero() {
           <img
             src={heroArt || "/hero-art.svg"}
             alt={isAr ? "باحث عن فرص من جازان" : "A Forsa member"}
+            fetchPriority="high"
+            decoding="async"
             className={`jh-float relative z-10 h-[300px] w-auto max-w-full object-contain drop-shadow-[0_24px_36px_rgba(28,42,38,.18)] transition-opacity duration-500 sm:h-[400px] lg:h-[470px] ${
               artReady ? "opacity-100" : "opacity-0"
             }`}
