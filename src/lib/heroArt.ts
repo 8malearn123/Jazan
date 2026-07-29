@@ -85,26 +85,39 @@ export function onHeroArtChange(listener: () => void): () => void {
   };
 }
 
-export function useHeroArt(): string {
+/**
+ * `ready` تصبح true بعد حسم الصورة النهائية (المحلية ثم البعيدة)، حتى لا
+ * تُعرض الرسمة المدمجة لحظةً ثم تُستبدل بصورة المدير — وميض مزعج للزائر.
+ */
+export function useHeroArt(): { image: string; ready: boolean } {
   const [value, setValue] = useState("");
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
     const update = () => setValue(loadHeroArt());
     update();
     const unsubscribe = onHeroArtChange(update);
     let cancelled = false;
-    fetchHeroArtRemote().then((remote) => {
-      if (remote === null || cancelled) return;
-      setValue(remote);
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ image: remote }));
-      } catch {
-        // keep in-memory value only
-      }
-    });
+    fetchHeroArtRemote()
+      .then((remote) => {
+        if (cancelled) return;
+        if (remote !== null) {
+          setValue(remote);
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ image: remote }));
+          } catch {
+            // keep in-memory value only
+          }
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setReady(true);
+      });
     return () => {
       cancelled = true;
       unsubscribe();
     };
   }, []);
-  return value;
+
+  return { image: value, ready };
 }
