@@ -21,7 +21,7 @@ export default function NotFound() {
           الصفحة الرئيسية
         </Button>
         <Button href="/browse" variant="ghost">
-          تصفّح الأبطال
+          تصفّح الباحثين عن فرص
         </Button>
       </div>
     </main>

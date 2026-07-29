@@ -7,7 +7,7 @@ type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-jazan text-white shadow-[0_6px_16px_rgba(15,92,74,.22)] hover:bg-jazan-dark",
+    "bg-jazan text-white shadow-[0_6px_16px_rgba(166,63,43,.22)] hover:bg-jazan-dark",
   secondary:
     "bg-surface text-jazan border-[1.5px] border-jazan hover:bg-jazan/5",
   ghost:

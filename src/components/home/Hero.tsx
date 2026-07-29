@@ -98,7 +98,7 @@ export function Hero() {
             className="jh-pulse-soft pointer-events-none absolute h-[280px] w-[280px] rounded-full sm:h-[380px] sm:w-[380px] lg:h-[440px] lg:w-[440px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(15,92,74,.16) 0%, rgba(232,147,46,.10) 45%, transparent 70%)",
+                "radial-gradient(circle, rgba(166,63,43,.16) 0%, rgba(232,147,46,.10) 45%, transparent 70%)",
             }}
           />
 
@@ -141,7 +141,7 @@ export function Hero() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={heroArt || "/hero-art.svg"}
-            alt={isAr ? "بطل من أبطال جازان" : "A Jazan hero"}
+            alt={isAr ? "باحث عن فرص من جازان" : "A Forsa member"}
             className="jh-float relative z-10 h-[300px] w-auto max-w-full object-contain drop-shadow-[0_24px_36px_rgba(28,42,38,.18)] sm:h-[400px] lg:h-[470px]"
           />
         </div>

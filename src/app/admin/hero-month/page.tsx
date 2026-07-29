@@ -157,7 +157,7 @@ export default function AdminHeroMonthPage() {
         <div className="grid gap-5 sm:grid-cols-[220px_1fr]">
           <div>
             <div className="text-[13px] font-semibold text-charcoal">صورة البطل</div>
-            <div className="relative mt-2 h-[220px] w-full overflow-hidden rounded-[14px] border border-line bg-[#0f5c4a]">
+            <div className="relative mt-2 h-[220px] w-full overflow-hidden rounded-[14px] border border-line bg-[#a63f2b]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={content.image || "/hero-of-month.svg"}
@@ -263,7 +263,7 @@ export default function AdminHeroMonthPage() {
           مرفوعة. ارفع صورتك الخاصة (يُفضَّل PNG بخلفية شفافة) أو أبقِ الرسمة المدمجة.
         </p>
         <div className="mt-4 grid gap-5 sm:grid-cols-[220px_1fr]">
-          <div className="relative h-[220px] w-full overflow-hidden rounded-[14px] border border-line bg-[#0f5c4a]">
+          <div className="relative h-[220px] w-full overflow-hidden rounded-[14px] border border-line bg-[#a63f2b]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={art || "/hero-of-month.svg"}

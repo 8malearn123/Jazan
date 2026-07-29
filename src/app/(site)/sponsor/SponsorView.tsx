@@ -11,7 +11,7 @@ const benefitIcons = [UsersIcon, StarIcon, CheckIcon];
 export function SponsorView() {
   const { d } = useLocale();
   const t = d.sponsorPage;
-  const wa = whatsappLink(site.whatsapp, "السلام عليكم، أرغب في رعاية منصة أبطال جازان");
+  const wa = whatsappLink(site.whatsapp, "السلام عليكم، أرغب في رعاية منصة فرصة");
 
   return (
     <>
@@ -82,7 +82,7 @@ export function SponsorView() {
                 key={tier.name}
                 className={`flex flex-col rounded-[20px] border bg-surface p-7 ${
                   tier.highlight
-                    ? "border-jazan shadow-[0_14px_34px_rgba(15,92,74,.14)]"
+                    ? "border-jazan shadow-[0_14px_34px_rgba(166,63,43,.14)]"
                     : "border-line shadow-[0_1px_2px_rgba(28,42,38,.04)]"
                 }`}
               >

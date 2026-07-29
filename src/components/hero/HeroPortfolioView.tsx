@@ -100,8 +100,8 @@ export function HeroPortfolioView({ hero, bio }: { hero: Hero; bio: string }) {
   function submitRequest(e: React.FormEvent) {
     e.preventDefault();
     const msg = isAr
-      ? `طلب خدمة جديد من منصة أبطال جازان:\nالاسم: ${reqName}\nالجوال: ${reqPhone}\nالخدمة: ${reqService}`
-      : `New service request from Jazan Heroes:\nName: ${reqName}\nPhone: ${reqPhone}\nService: ${reqService}`;
+      ? `طلب خدمة جديد من منصة فرصة:\nالاسم: ${reqName}\nالجوال: ${reqPhone}\nالخدمة: ${reqService}`
+      : `New service request from Forsa:\nName: ${reqName}\nPhone: ${reqPhone}\nService: ${reqService}`;
     openWhatsApp(msg);
     setReqSent(true);
   }
@@ -167,7 +167,7 @@ export function HeroPortfolioView({ hero, bio }: { hero: Hero; bio: string }) {
           </div>
 
           <div className="mt-5 text-[11px] font-bold uppercase tracking-[2px] text-amber">
-            {isAr ? "أبطال جازان · Jazan Heroes" : "Jazan Heroes · أبطال جازان"}
+            {isAr ? "فرصة · Forsa" : "Forsa · فرصة"}
           </div>
           <h1 className="mt-2 text-[36px] font-extrabold leading-[1.1] tracking-[-.8px] text-charcoal sm:text-[44px]">
             {hero.name}
@@ -227,7 +227,7 @@ export function HeroPortfolioView({ hero, bio }: { hero: Hero; bio: string }) {
               <button
                 type="button"
                 onClick={() => openWhatsApp()}
-                className="inline-flex cursor-pointer items-center gap-2.5 rounded-xl bg-jazan px-7 py-3 text-[15px] font-bold text-white shadow-[0_2px_8px_rgba(15,92,74,.22)] transition-[background-color,transform] hover:bg-jazan-dark active:translate-y-px"
+                className="inline-flex cursor-pointer items-center gap-2.5 rounded-xl bg-jazan px-7 py-3 text-[15px] font-bold text-white shadow-[0_2px_8px_rgba(166,63,43,.22)] transition-[background-color,transform] hover:bg-jazan-dark active:translate-y-px"
               >
                 <WhatsappIcon width={18} height={18} />
                 {isAr ? "تواصل عبر واتساب" : "Contact on WhatsApp"}

@@ -62,7 +62,7 @@ export function JobRow({ job }: { job: Job }) {
 
       <Link
         href={companyId ? `/companies/${companyId}` : "/companies"}
-        className="shrink-0 rounded-[11px] bg-jazan px-5 py-2.5 text-center text-sm font-semibold text-white no-underline shadow-[0_6px_16px_rgba(15,92,74,.22)] transition-[transform,background] duration-150 hover:-translate-y-px hover:bg-jazan-dark"
+        className="shrink-0 rounded-[11px] bg-jazan px-5 py-2.5 text-center text-sm font-semibold text-white no-underline shadow-[0_6px_16px_rgba(166,63,43,.22)] transition-[transform,background] duration-150 hover:-translate-y-px hover:bg-jazan-dark"
       >
         {d.cards.apply}
       </Link>

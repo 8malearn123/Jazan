@@ -9,7 +9,7 @@ import { useLocale } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(166,63,43,.08)]";
 
 export default function ForgotPasswordPage() {
   const { d } = useLocale();

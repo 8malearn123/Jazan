@@ -6,7 +6,7 @@ import { ProducersClient } from "./ProducersClient";
 import { ProducersIntro } from "./ProducersIntro";
 
 export const metadata: Metadata = {
-  title: "الأسر المنتجة والصُنّاع — أبطال جازان",
+  title: "الأسر المنتجة والصُنّاع — فرصة",
   description:
     "طعام منزلي، حِرف يدوية وعطور من جازان — تصفّح الأسر المنتجة والصُنّاع وتواصل معهم مباشرة.",
 };

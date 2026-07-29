@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import {
-  StarIcon,
   UsersIcon,
   StoreIcon,
   BuildingIcon,
@@ -16,7 +15,6 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 import { homeForRole } from "@/lib/demo";
 import { governorates } from "@/lib/jazan-map";
-import { site } from "@/lib/site";
 import { useLiveCounts } from "@/lib/registry";
 import { useLocale } from "@/lib/i18n";
 import type { UserRole } from "@/lib/types";
@@ -35,7 +33,7 @@ const roleStyles: {
 ];
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3.5 text-[14.5px] text-charcoal outline-none transition-[border-color,box-shadow] placeholder:text-muted/60 focus:border-jazan focus:shadow-[0_0_0_3px_rgba(15,92,74,.12)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3.5 text-[14.5px] text-charcoal outline-none transition-[border-color,box-shadow] placeholder:text-muted/60 focus:border-jazan focus:shadow-[0_0_0_3px_rgba(166,63,43,.12)]";
 
 function RegisterForm() {
   const { d, isAr } = useLocale();
@@ -122,17 +120,13 @@ function RegisterForm() {
           fill="none"
           className="pointer-events-none absolute -bottom-[70px] right-[-60px] opacity-[.06]"
         >
-          <path d="M50 5 L88 19 V50 C88 74 71 91 50 97 C29 91 12 74 12 50 V19 Z" fill="#E8932E" />
+          <path d="M50 5 L88 19 V50 C88 74 71 91 50 97 C29 91 12 74 12 50 V19 Z" fill="#72A98F" />
         </svg>
 
         <div className="relative flex max-w-[460px] flex-col gap-5">
-          <Link href="/" className="flex items-center gap-3 self-start no-underline">
-            <span className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-white/[.12]">
-              <StarIcon width={26} height={26} className="text-amber" strokeWidth={2.1} />
-            </span>
-            <span className="text-xl font-extrabold text-white">
-              {isAr ? site.name : "Jazan Heroes"}
-            </span>
+          <Link href="/" className="self-start no-underline">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/forsa-logo-white.svg" alt="فرصة — FORSA" className="h-[54px] w-auto" />
           </Link>
 
           <div className="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-white/20 bg-white/[.12] px-3.5 py-[7px] text-[12.5px] font-semibold text-white">
@@ -156,7 +150,7 @@ function RegisterForm() {
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#E8932E"
+                  stroke="#72A98F"
                   strokeWidth="2.6"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -221,7 +215,7 @@ function RegisterForm() {
                       className={cn(
                         "group relative flex cursor-pointer flex-row items-center gap-3 rounded-2xl border-[1.5px] bg-surface p-3.5 text-start transition-[border-color,box-shadow,transform] sm:flex-col sm:items-start sm:gap-0 sm:p-4",
                         active
-                          ? "border-jazan shadow-[0_10px_26px_rgba(15,92,74,.12)]"
+                          ? "border-jazan shadow-[0_10px_26px_rgba(166,63,43,.12)]"
                           : "border-line hover:-translate-y-0.5 hover:border-jazan/40 hover:shadow-[0_10px_26px_rgba(28,42,38,.08)]"
                       )}
                     >
@@ -351,7 +345,7 @@ function RegisterForm() {
             <button
               type="submit"
               disabled={!canSubmit || loading || confirmEmailSent}
-              className="cursor-pointer rounded-xl bg-jazan p-[15px] text-center text-[15px] font-bold text-white shadow-[0_2px_8px_rgba(15,92,74,.22)] transition-[background-color,transform] hover:bg-jazan-dark active:translate-y-px disabled:opacity-60"
+              className="cursor-pointer rounded-xl bg-jazan p-[15px] text-center text-[15px] font-bold text-white shadow-[0_2px_8px_rgba(166,63,43,.22)] transition-[background-color,transform] hover:bg-jazan-dark active:translate-y-px disabled:opacity-60"
             >
               {loading ? d.auth.creating : d.auth.createBtn}
             </button>

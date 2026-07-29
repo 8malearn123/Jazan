@@ -1,9 +1,9 @@
-# أبطال جازان | Jazan Heroes
+# فرصة | FORSA
 
-منصة جازان المجتمعية للمواهب — تربط المستقلين والباحثين عن عمل، والأسر المنتجة
+فرصتك لها مكان — منصة جازان المجتمعية للفرص — تربط المستقلين والباحثين عن عمل، والأسر المنتجة
 والصُنّاع، بالشركات والجهات في منطقة جازان، مع تواصل مباشر عبر واتساب.
 
-A community talent platform for the Jazan region, built with [Next.js](https://nextjs.org).
+FORSA — a community opportunities platform for the Jazan region, built with [Next.js](https://nextjs.org).
 
 ## التقنيات | Tech Stack
 

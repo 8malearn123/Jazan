@@ -22,7 +22,7 @@ export function ContactView() {
       Icon: WhatsappIcon,
       label: t.whatsapp,
       value: t.whatsappValue,
-      href: whatsappLink(site.whatsapp, "السلام عليكم، لدي استفسار عن منصة أبطال جازان"),
+      href: whatsappLink(site.whatsapp, "السلام عليكم، لدي استفسار عن منصة فرصة"),
       wrap: "bg-whatsapp/15 text-whatsapp",
     },
     {

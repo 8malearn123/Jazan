@@ -23,7 +23,7 @@ export function CompanyView({ company, openJobs }: { company: Company; openJobs:
 
   const waHref = whatsappLink(
     company.whatsapp ?? site.whatsapp,
-    `مرحباً ${company.name}، تواصلت معكم عبر منصة أبطال جازان`
+    `مرحباً ${company.name}، تواصلت معكم عبر منصة فرصة`
   );
 
   const stats = [

@@ -17,9 +17,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const hero = getHero(id) ?? (await getDbHero(id));
-  if (!hero) return { title: "البطل غير موجود · أبطال جازان" };
+  if (!hero) return { title: "البطل غير موجود · فرصة" };
   return {
-    title: `${hero.name} · ${hero.title} · أبطال جازان`,
+    title: `${hero.name} · ${hero.title} · فرصة`,
     description: hero.bio ?? `${hero.title} من ${hero.city}، جازان.`,
   };
 }

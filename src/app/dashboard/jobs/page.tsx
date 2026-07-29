@@ -15,7 +15,7 @@ type Job = {
 };
 
 const inputClass =
-  "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(15,92,74,.08)]";
+  "w-full rounded-xl border-[1.5px] border-line bg-surface px-3.5 py-2.5 text-[14px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(166,63,43,.08)]";
 
 const jobTypes = ["دوام كامل", "دوام جزئي", "عن بُعد", "عقد مستقل"];
 

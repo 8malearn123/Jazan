@@ -3,7 +3,7 @@ import { FaqView } from "./FaqView";
 
 export const metadata: Metadata = {
   title: "الأسئلة الشائعة",
-  description: "إجابات لأكثر الأسئلة شيوعاً حول منصة أبطال جازان.",
+  description: "إجابات لأكثر الأسئلة شيوعاً حول منصة فرصة.",
 };
 
 export default function FaqPage() {

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { StarIcon, WhatsappIcon, InstagramIcon, YoutubeIcon } from "@/components/icons";
+import { WhatsappIcon, InstagramIcon, YoutubeIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
 import { useSiteSocial } from "@/lib/siteSocial";
@@ -38,16 +38,12 @@ export function SiteFooter() {
   ];
 
   return (
-    <footer className="bg-[#1c2a26] px-5 pb-8 pt-12 sm:px-8">
+    <footer className="bg-[#26201d] px-5 pb-8 pt-12 sm:px-8">
       <div className="mx-auto w-full max-w-7xl">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-3">
-              <span className="flex h-[38px] w-[38px] items-center justify-center rounded-[11px] bg-jazan">
-                <StarIcon width={22} height={22} className="text-amber" strokeWidth={2.1} />
-              </span>
-              <span className="text-[19px] font-extrabold text-white">{isAr ? site.name : "Jazan Heroes"}</span>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/forsa-logo-white.svg" alt="فرصة — FORSA" className="h-[52px] w-auto" />
             <p className="mt-4 max-w-[300px] text-sm leading-8 text-white/55">
               {d.footer.about}
             </p>
@@ -91,7 +87,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-9 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-white/45 sm:flex-row">
-          <span>© {site.year} {isAr ? site.name : "Jazan Heroes"} — {d.footer.rights}</span>
+          <span>© {site.year} {isAr ? site.name : "Forsa"} — {d.footer.rights}</span>
           <span>{d.footer.made}</span>
         </div>
       </div>

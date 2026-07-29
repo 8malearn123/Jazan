@@ -47,7 +47,7 @@ export default async function VerificationPreviewPage({
     verified: false,
   };
 
-  const bio = `${req.name} من ${req.city}، تقدّم بطلب توثيق حسابه على منصة أبطال جازان. هذه معاينة لملفه كما سيظهر للزوّار بعد الاعتماد.`;
+  const bio = `${req.name} من ${req.city}، تقدّم بطلب توثيق حسابه على منصة فرصة. هذه معاينة لملفه كما سيظهر للزوّار بعد الاعتماد.`;
 
   return (
     <div className="mx-auto w-full max-w-4xl pb-10">

@@ -411,7 +411,7 @@ export function ProducerView({ producer }: { producer: Producer }) {
             onClick={() => setCartOpen((v) => !v)}
             aria-label={cartOpen ? t.cartClose : t.cartOpen}
             title={cartOpen ? t.cartClose : t.cartOpen}
-            className="relative flex h-[52px] w-[52px] cursor-pointer items-center justify-center rounded-full bg-jazan text-white shadow-[0_10px_28px_rgba(15,92,74,.4)] transition-[transform,filter] hover:scale-105 hover:brightness-110"
+            className="relative flex h-[52px] w-[52px] cursor-pointer items-center justify-center rounded-full bg-jazan text-white shadow-[0_10px_28px_rgba(166,63,43,.4)] transition-[transform,filter] hover:scale-105 hover:brightness-110"
           >
             <StoreIcon className="h-[22px] w-[22px]" />
             {cartCount > 0 ? (

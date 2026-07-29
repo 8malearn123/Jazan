@@ -87,7 +87,7 @@ export function CompanyJobCard({
           href={waHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-[11px] bg-jazan px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-[0_6px_16px_rgba(15,92,74,.22)] transition-[transform,background] duration-150 hover:-translate-y-px hover:bg-jazan-dark"
+          className="rounded-[11px] bg-jazan px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-[0_6px_16px_rgba(166,63,43,.22)] transition-[transform,background] duration-150 hover:-translate-y-px hover:bg-jazan-dark"
         >
           {d.companyDetail.apply}
         </a>

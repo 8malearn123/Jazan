@@ -18,9 +18,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const company = getCompany(id) ?? (await getDbCompany(id));
-  if (!company) return { title: "شركة غير موجودة · أبطال جازان" };
+  if (!company) return { title: "شركة غير موجودة · فرصة" };
   return {
-    title: `${company.name} · أبطال جازان`,
+    title: `${company.name} · فرصة`,
     description:
       company.about ??
       `${company.name} — ${company.field}${company.city ? ` · ${company.city}` : ""}. تصفّح الفرص المتاحة وتقدّم مباشرة.`,

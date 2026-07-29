@@ -37,7 +37,7 @@ function esc(s: string): string {
 }
 
 function stars(rating: number): string {
-  return `<span style="color:#e8932e;letter-spacing:2px;">${"★".repeat(rating)}</span><span style="color:#d9d5cc;letter-spacing:2px;">${"★".repeat(5 - rating)}</span>`;
+  return `<span style="color:#72a98f;letter-spacing:2px;">${"★".repeat(rating)}</span><span style="color:#d9d5cc;letter-spacing:2px;">${"★".repeat(5 - rating)}</span>`;
 }
 
 function buildReport(name: string, roleLabel: string, draft: ProfileDraft | null): string {
@@ -66,17 +66,17 @@ function buildReport(name: string, roleLabel: string, draft: ProfileDraft | null
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Alexandria',system-ui,sans-serif;color:#1c2a26;background:#fff;padding:32px 36px;font-size:13px;line-height:1.7}
-  .head{display:flex;justify-content:space-between;align-items:center;background:#0f5c4a;color:#fff;border-radius:16px;padding:20px 24px}
+  .head{display:flex;justify-content:space-between;align-items:center;background:#a63f2b;color:#fff;border-radius:16px;padding:20px 24px}
   .head .brand{font-size:20px;font-weight:800}
-  .head .brand span{color:#e8932e}
+  .head .brand span{color:#72a98f}
   .head .meta{text-align:start;font-size:11px;opacity:.85}
   h1{font-size:22px;font-weight:800;margin-top:22px}
   .sub{color:#6b7770;margin-top:2px}
-  .badge{display:inline-block;background:rgba(15,92,74,.1);color:#0f5c4a;border-radius:99px;padding:3px 12px;font-weight:600;font-size:12px;margin-top:6px}
-  h2{font-size:15px;font-weight:800;margin:26px 0 10px;color:#0f5c4a;border-bottom:2px solid #e7e2d9;padding-bottom:6px}
+  .badge{display:inline-block;background:rgba(166,63,43,.1);color:#a63f2b;border-radius:99px;padding:3px 12px;font-weight:600;font-size:12px;margin-top:6px}
+  h2{font-size:15px;font-weight:800;margin:26px 0 10px;color:#a63f2b;border-bottom:2px solid #e7e2d9;padding-bottom:6px}
   .stats{display:flex;gap:12px}
   .stat{flex:1;border:1.5px solid #e7e2d9;border-radius:14px;padding:14px 16px}
-  .stat .v{font-size:22px;font-weight:800;color:#0f5c4a}
+  .stat .v{font-size:22px;font-weight:800;color:#a63f2b}
   .stat .d{color:#15784a;font-size:11px;font-weight:600}
   .stat .l{color:#6b7770;font-size:12px}
   table{width:100%;border-collapse:collapse}
