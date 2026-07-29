@@ -32,18 +32,19 @@ export type ProfileRow = {
   cover_url: string | null;
   verified: boolean | null;
   created_at: string;
+  publish_status?: string | null;
   hero_profiles?: HeroProfileJoin | HeroProfileJoin[] | null;
   producer_profiles?: ProducerProfileJoin | ProducerProfileJoin[] | null;
 };
 
 export const HERO_SELECT =
-  "id, name, email, role, city, bio, whatsapp, avatar_url, cover_url, verified, created_at, hero_profiles(title, status, years, skills, rating, reviews_count)";
+  "id, name, email, role, city, bio, whatsapp, avatar_url, cover_url, verified, created_at, publish_status, hero_profiles(title, status, years, skills, rating, reviews_count)";
 
 export const PRODUCER_SELECT =
-  "id, name, email, role, city, bio, whatsapp, avatar_url, cover_url, verified, created_at, producer_profiles(category, rating, reviews_count)";
+  "id, name, email, role, city, bio, whatsapp, avatar_url, cover_url, verified, created_at, publish_status, producer_profiles(category, rating, reviews_count)";
 
 export const PROFILE_SELECT =
-  "id, name, email, role, city, bio, whatsapp, avatar_url, cover_url, verified, created_at";
+  "id, name, email, role, city, bio, whatsapp, avatar_url, cover_url, verified, created_at, publish_status";
 
 function first<T>(value: T | T[] | null | undefined): T | null {
   if (Array.isArray(value)) return value[0] ?? null;
@@ -73,6 +74,7 @@ export function rowToHero(row: ProfileRow): Hero {
     bio: row.bio ?? undefined,
     whatsapp: row.whatsapp ?? undefined,
     verified: !!row.verified,
+    publishStatus: row.publish_status ?? undefined,
   };
 }
 
@@ -90,6 +92,7 @@ export function rowToProducer(row: ProfileRow): Producer {
     coverUrl: row.cover_url ?? undefined,
     whatsapp: row.whatsapp ?? undefined,
     verified: !!row.verified,
+    publishStatus: row.publish_status ?? undefined,
     products: [],
   };
 }
@@ -106,6 +109,7 @@ export function rowToCompany(row: ProfileRow): Company {
     openings: 0,
     verified: !!row.verified,
     whatsapp: row.whatsapp ?? undefined,
+    publishStatus: row.publish_status ?? undefined,
     jobs: [],
   };
 }

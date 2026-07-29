@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
+import { countPendingReviews } from "@/lib/publish";
 import { counts } from "@/lib/stats";
 import {
   GridIcon,
@@ -145,7 +146,7 @@ const navItems: NavItem[] = [
   { href: "/admin", label: "لوحة المعلومات", icon: GridIcon },
   { href: "/admin/landing", label: "الصفحة الرئيسية", icon: HomeIcon },
   { href: "/admin/hero-month", label: "بطل الشهر", icon: TrophyIcon },
-  { href: "/admin/verifications", label: "التوثيق والطلبات", icon: ShieldIcon, badge: counts.pending },
+  { href: "/admin/verifications", label: "مراجعة الملفات", icon: ShieldIcon, badge: counts.pending },
   { href: "/admin/users", label: "المستخدمون", icon: UsersIcon },
   { href: "/admin/companies", label: "الشركات", icon: BuildingIcon },
   { href: "/admin/producers", label: "الأسر المنتجة", icon: StoreIcon },
@@ -172,7 +173,18 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
     onOfferModerationChange
   );
   const newTickets = usePendingCount(newTicketsCount, onTicketsChange);
+  const [pendingProfiles, setPendingProfiles] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    countPendingReviews().then((n) => {
+      if (!cancelled) setPendingProfiles(n);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname]);
   const liveBadges: Record<string, number> = {
+    "/admin/verifications": pendingProfiles,
     "/admin/reviews": pendingReviewsCount,
     "/admin/media": pendingMediaCount,
     "/admin/offers": pendingOffersCount,

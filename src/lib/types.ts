@@ -37,6 +37,8 @@ export interface Hero {
   portfolio?: PortfolioItem[];
   reviews?: Review[];
   socials?: ProfileSocials;
+  /** حالة النشر في قاعدة البيانات — approved فقط يظهر في التصفّح */
+  publishStatus?: string;
 }
 
 export interface Product {
@@ -61,6 +63,8 @@ export interface Producer {
   verified?: boolean;
   products?: Product[];
   socials?: ProfileSocials;
+  /** حالة النشر في قاعدة البيانات — approved فقط يظهر في التصفّح */
+  publishStatus?: string;
 }
 
 export interface Job {
@@ -88,6 +92,8 @@ export interface Company {
   whatsapp?: string;
   jobs?: Job[];
   socials?: ProfileSocials;
+  /** حالة النشر في قاعدة البيانات — approved فقط يظهر في التصفّح */
+  publishStatus?: string;
 }
 
 export interface Sponsor {
