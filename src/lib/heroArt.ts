@@ -97,6 +97,7 @@ export function useHeroArt(): { image: string; ready: boolean } {
     // ١) النسخة المخزّنة محلياً تظهر فوراً — بلا انتظار الشبكة إطلاقاً
     const cached = loadHeroArt();
     if (cached) {
+      /* eslint-disable-next-line react-hooks/set-state-in-effect */
       setValue(cached);
       setReady(true);
     }
