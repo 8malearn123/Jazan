@@ -28,17 +28,17 @@ export function Sponsors() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             {sponsors.map((s) => {
               const tile =
-                "flex h-[132px] w-[176px] items-center justify-center overflow-hidden rounded-[14px] border border-line bg-cream p-4 transition-[border-color,box-shadow,transform]";
+                "flex h-[96px] w-[170px] items-center justify-center overflow-hidden rounded-[14px] border border-line bg-cream transition-[border-color,box-shadow,transform]";
               const inner = s.logo ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={s.logo}
                   alt={s.name}
                   title={s.name}
-                  className="max-h-full max-w-full rounded-[8px] object-contain"
+                  className="h-full w-full object-contain"
                 />
               ) : (
-                <span className="line-clamp-2 text-center text-[14px] font-bold leading-snug text-charcoal">
+                <span className="line-clamp-2 px-3 text-center text-[14px] font-bold leading-snug text-charcoal">
                   {s.name}
                 </span>
               );

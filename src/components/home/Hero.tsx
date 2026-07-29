@@ -15,7 +15,7 @@ export function Hero() {
   const [mapOpen, setMapOpen] = useState(false);
   const live = useLiveCounts();
   const landing = useLanding();
-  const heroArt = useHeroArt();
+  const { image: heroArt, ready: artReady } = useHeroArt();
 
   const copy = isAr
     ? landing
@@ -137,12 +137,14 @@ export function Hero() {
           <span aria-hidden className="jh-float pointer-events-none absolute end-[4%] top-[48%] h-3 w-3 rounded-full bg-amber/70" />
           <span aria-hidden className="jh-float-slow pointer-events-none absolute start-[3%] top-[36%] h-2.5 w-2.5 rounded-full bg-jazan/40" />
 
-          {/* الشخصية */}
+          {/* الشخصية — تظهر بعد حسم الصورة النهائية لتفادي وميض الاستبدال */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={heroArt || "/hero-art.svg"}
             alt={isAr ? "باحث عن فرص من جازان" : "A Forsa member"}
-            className="jh-float relative z-10 h-[300px] w-auto max-w-full object-contain drop-shadow-[0_24px_36px_rgba(28,42,38,.18)] sm:h-[400px] lg:h-[470px]"
+            className={`jh-float relative z-10 h-[300px] w-auto max-w-full object-contain drop-shadow-[0_24px_36px_rgba(28,42,38,.18)] transition-opacity duration-500 sm:h-[400px] lg:h-[470px] ${
+              artReady ? "opacity-100" : "opacity-0"
+            }`}
           />
         </div>
       </Container>
