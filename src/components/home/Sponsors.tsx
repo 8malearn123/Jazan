@@ -24,18 +24,21 @@ export function Sponsors() {
             </p>
           </div>
 
-          <div className="mt-7 grid grid-cols-2 items-center gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          {/* توسيط مرن: يبقى متّزناً مع راعٍ واحد أو عشرة */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             {sponsors.map((s) => {
-              const logo = s.logo ? (
+              const tile =
+                "flex h-[96px] w-[170px] items-center justify-center overflow-hidden rounded-[14px] border border-line bg-cream p-3.5 transition-[border-color,box-shadow,transform]";
+              const inner = s.logo ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={s.logo}
                   alt={s.name}
-                  className="h-full w-full object-contain p-2"
                   title={s.name}
+                  className="max-h-full max-w-full rounded-[8px] object-contain"
                 />
               ) : (
-                <span className="flex h-full w-full items-center justify-center px-2 text-center text-[13px] font-bold text-muted">
+                <span className="line-clamp-2 text-center text-[14px] font-bold leading-snug text-charcoal">
                   {s.name}
                 </span>
               );
@@ -46,16 +49,13 @@ export function Sponsors() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.name}
-                  className="h-[74px] w-full overflow-hidden rounded-[12px] border border-line bg-cream/50 transition-colors hover:border-jazan"
+                  className={`${tile} hover:-translate-y-0.5 hover:border-jazan/50 hover:shadow-[0_10px_26px_rgba(28,42,38,.08)]`}
                 >
-                  {logo}
+                  {inner}
                 </a>
               ) : (
-                <div
-                  key={s.id}
-                  className="h-[74px] w-full overflow-hidden rounded-[12px] border border-line bg-cream/50"
-                >
-                  {logo}
+                <div key={s.id} className={tile}>
+                  {inner}
                 </div>
               );
             })}
