@@ -10,15 +10,30 @@ import { AdminPageHead, TableCard, Th, Td, Pill } from "../_components/AdminTabl
 type Row = {
   id: string;
   name: string;
-  role: "بطل" | "أسرة منتجة" | "شركة";
+  role: "باحث عن فرص" | "أسرة منتجة" | "شركة";
   tone: "info" | "amber";
   city: string;
   href: string;
   verified: boolean;
+  publishStatus?: string;
+};
+
+const statusLabel: Record<string, string> = {
+  draft: "مسودة — غير منشور",
+  pending: "بانتظار المراجعة",
+  approved: "منشور",
+  rejected: "يحتاج تعديلاً",
+};
+
+const statusTone: Record<string, "success" | "amber" | "muted" | "warn"> = {
+  draft: "muted",
+  pending: "amber",
+  approved: "success",
+  rejected: "warn",
 };
 
 const roleMeta = {
-  hero: { label: "بطل" as const, tone: "info" as const, path: "heroes" },
+  hero: { label: "باحث عن فرص" as const, tone: "info" as const, path: "heroes" },
   producer: { label: "أسرة منتجة" as const, tone: "amber" as const, path: "producers" },
   company: { label: "شركة" as const, tone: "info" as const, path: "companies" },
 };
@@ -27,7 +42,7 @@ const seedRows: Row[] = [
   ...sampleHeroes.map((h) => ({
     id: `h-${h.id}`,
     name: h.name,
-    role: "بطل" as const,
+    role: "باحث عن فرص" as const,
     tone: "info" as const,
     city: h.city,
     href: `/heroes/${h.id}`,
@@ -69,6 +84,7 @@ export default function AdminUsersPage() {
           city: m.city ?? "—",
           href: `/${meta.path}/${m.id}`,
           verified: m.verified,
+          publishStatus: m.publishStatus,
         };
       });
     return [...dbRows, ...seedRows];
@@ -82,7 +98,7 @@ export default function AdminUsersPage() {
     <div className="mx-auto w-full max-w-[1200px] space-y-5">
       <AdminPageHead
         title="المستخدمون"
-        subtitle={`${rows.length} مستخدم مسجّل في المنصة`}
+        subtitle={`${rows.length} مستخدم مسجّل · ${rows.filter((r) => r.publishStatus === "approved").length} منشور`}
       />
       <TableCard>
         <table className="w-full min-w-[680px] border-collapse">
@@ -122,7 +138,9 @@ export default function AdminUsersPage() {
                     {isSuspended ? (
                       <Pill tone="muted">موقوف</Pill>
                     ) : (
-                      <Pill tone="success">نشط</Pill>
+                      <Pill tone={statusTone[r.publishStatus ?? "draft"] ?? "muted"}>
+                        {statusLabel[r.publishStatus ?? "draft"] ?? "مسودة"}
+                      </Pill>
                     )}
                   </Td>
                   <Td>
