@@ -18,6 +18,7 @@ import {
 import { loadPhotos } from "@/lib/photos";
 import { loadWorks } from "@/lib/works";
 import { loadSocialLinks } from "@/lib/social";
+import { PublishGate } from "@/components/dashboard/PublishGate";
 
 function ChartIcon({ className }: { className?: string }) {
   return (
@@ -226,13 +227,14 @@ export default function DashboardPage() {
             هذي نظرة على أداء ملفك آخر 30 يوم
           </p>
         </div>
-        <span className="inline-flex w-max items-center gap-2 rounded-full bg-success/12 px-3.5 py-2 text-[13px] font-semibold text-success-ink">
-          <CheckIcon width={15} height={15} strokeWidth={2.4} />
-          الملف معتمد · منشور
-        </span>
+        <PublishGate compact />
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-3">
+      <div className="mt-5">
+        <PublishGate />
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-3">
         {stats.map((s) => (
           <div key={s.label} className="rounded-[14px] border border-line bg-surface p-4">
             <div className="flex items-center justify-between">

@@ -135,8 +135,38 @@ export function HeroPortfolioView({ hero, bio }: { hero: Hero; bio: string }) {
     request: numberOf("request"),
   };
 
+  const unpublished = hero.publishStatus && hero.publishStatus !== "approved";
+
   return (
     <div className="flex flex-col gap-14 pb-6">
+      {unpublished ? (
+        <div className="flex items-start gap-3 rounded-[16px] border border-warn/40 bg-warn/[.10] px-5 py-4">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            className="mt-0.5 shrink-0 text-warn-ink"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v4M12 16h.01" />
+          </svg>
+          <div>
+            <div className="text-[14px] font-bold text-warn-ink">
+              {hero.publishStatus === "pending"
+                ? "هذا الملف قيد المراجعة"
+                : "هذا الملف غير منشور بعد"}
+            </div>
+            <p className="mt-0.5 text-[13px] leading-relaxed text-warn-ink/85">
+              لا يظهر في التصفّح ولا في نتائج البحث حتى تعتمده الإدارة — هذه معاينة فقط.
+            </p>
+          </div>
+        </div>
+      ) : null}
+
       {/* بطاقة الملف */}
       <header className={cn(cardClass, "overflow-hidden")}>
         <div className="relative h-[190px] bg-jazan sm:h-[240px]">

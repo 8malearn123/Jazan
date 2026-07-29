@@ -29,6 +29,7 @@ export async function fetchDbHeroes(): Promise<Hero[]> {
       .from("profiles")
       .select(HERO_SELECT)
       .eq("role", "hero")
+      .eq("publish_status", "approved")
       .order("created_at", { ascending: false });
     if (error || !data) return [];
     return (data as unknown as ProfileRow[]).map(rowToHero);
@@ -45,6 +46,7 @@ export async function fetchDbProducers(): Promise<Producer[]> {
       .from("profiles")
       .select(PRODUCER_SELECT)
       .eq("role", "producer")
+      .eq("publish_status", "approved")
       .order("created_at", { ascending: false });
     if (error || !data) return [];
     return (data as unknown as ProfileRow[]).map(rowToProducer);
@@ -61,6 +63,7 @@ export async function fetchDbCompanies(): Promise<Company[]> {
       .from("profiles")
       .select(PROFILE_SELECT)
       .eq("role", "company")
+      .eq("publish_status", "approved")
       .order("created_at", { ascending: false });
     if (error || !data) return [];
     return (data as unknown as ProfileRow[]).map(rowToCompany);
@@ -91,7 +94,10 @@ export async function fetchDbCounts(): Promise<DbCounts | null> {
   const supabase = createClient();
   if (!supabase) return null;
   try {
-    const { data, error } = await supabase.from("profiles").select("role");
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("publish_status", "approved");
     if (error || !data) return null;
     const rows = data as { role: string }[];
     return {
