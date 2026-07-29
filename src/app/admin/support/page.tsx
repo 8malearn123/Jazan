@@ -142,6 +142,18 @@ function TicketModal({
               >
                 رفض الطلب
               </button>
+              {ticket.email ? (
+                <a
+                  href={`mailto:${ticket.email}?subject=${encodeURIComponent(
+                    `رد منصة فرصة — ${ticket.topic}`
+                  )}&body=${encodeURIComponent(
+                    `مرحباً ${ticket.userName}،\n\n${reply.trim()}\n\nتحياتنا،\nفريق منصة فرصة`
+                  )}`}
+                  className="cursor-pointer rounded-xl border border-line bg-surface px-5 py-2.5 text-[13px] font-semibold text-charcoal no-underline transition-colors hover:border-jazan hover:text-jazan"
+                >
+                  رد عبر البريد
+                </a>
+              ) : null}
             </>
           ) : null}
           <button
