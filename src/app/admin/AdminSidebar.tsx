@@ -122,6 +122,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { href: "/admin", label: "لوحة المعلومات", icon: GridIcon },
   { href: "/admin/landing", label: "الصفحة الرئيسية", icon: HomeIcon },
+  { href: "/admin/sponsors", label: "الرعاة", icon: SponsorIcon },
   { href: "/admin/verifications", label: "مراجعة الملفات", icon: ShieldIcon, badge: counts.pending },
   { href: "/admin/users", label: "المستخدمون", icon: UsersIcon },
   { href: "/admin/companies", label: "الشركات", icon: BuildingIcon },
@@ -198,6 +199,14 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
         );
       })}
     </nav>
+  );
+}
+
+function SponsorIcon({ className }: { className?: string }) {
+  return (
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z" />
+    </svg>
   );
 }
 
