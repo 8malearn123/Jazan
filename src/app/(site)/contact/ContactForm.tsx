@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { useLocale } from "@/lib/i18n";
 import { useAuth, roleLabels } from "@/components/auth/AuthProvider";
@@ -9,14 +10,27 @@ import { addTicket } from "@/lib/support";
 const inputClass =
   "w-full rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[15px] text-charcoal outline-none transition-colors placeholder:text-[#9aa29d] focus:border-jazan focus:shadow-[0_0_0_4px_rgba(166,63,43,.08)]";
 
-export function ContactForm() {
+const topics = [
+  "استفسار عام",
+  "رعاية المنصة",
+  "شراكة أو تعاون",
+  "مشكلة تقنية",
+  "اقتراح تطوير",
+  "أخرى",
+];
+
+function ContactFormInner() {
   const { d } = useLocale();
   const t = d.contactPage;
   const { user } = useAuth();
+  const params = useSearchParams();
   const [sent, setSent] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [topic, setTopic] = useState(
+    params.get("topic") === "sponsor" ? "رعاية المنصة" : topics[0]
+  );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -27,7 +41,7 @@ export function ContactForm() {
       userName: name.trim(),
       role: member ? (member.role as "hero" | "producer" | "company") : "guest",
       roleLabel: member ? roleLabels[member.role] : "زائر",
-      topic: "تواصل معنا",
+      topic,
       message: message.trim(),
       email: email.trim(),
     });
@@ -77,6 +91,20 @@ export function ContactForm() {
           />
         </div>
         <div>
+          <label className="mb-2 block text-[13px] font-semibold text-charcoal">الموضوع</label>
+          <select
+            className={`${inputClass} cursor-pointer`}
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+          >
+            {topics.map((tp) => (
+              <option key={tp} value={tp}>
+                {tp}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
           <label className="mb-2 block text-[13px] font-semibold text-charcoal">{t.formMsg}</label>
           <textarea
             required
@@ -92,5 +120,20 @@ export function ContactForm() {
         </Button>
       </div>
     </form>
+  );
+}
+
+export function ContactForm() {
+  return (
+    <Suspense
+      fallback={
+        <div
+          className="h-[520px] rounded-[20px] border border-line bg-surface"
+          aria-hidden="true"
+        />
+      }
+    >
+      <ContactFormInner />
+    </Suspense>
   );
 }

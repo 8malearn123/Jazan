@@ -28,7 +28,7 @@ export function Sponsors() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             {sponsors.map((s) => {
               const tile =
-                "flex h-[96px] w-[170px] items-center justify-center overflow-hidden rounded-[14px] border border-line bg-cream p-3.5 transition-[border-color,box-shadow,transform]";
+                "flex h-[132px] w-[176px] items-center justify-center overflow-hidden rounded-[14px] border border-line bg-cream p-4 transition-[border-color,box-shadow,transform]";
               const inner = s.logo ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
@@ -62,7 +62,7 @@ export function Sponsors() {
           </div>
 
           <div className="mt-6 text-center">
-            <Button href="/sponsor" variant="ghost">
+            <Button href="/contact?topic=sponsor" variant="ghost">
               {d.sponsors.become}
             </Button>
           </div>

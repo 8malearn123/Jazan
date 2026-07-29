@@ -14,8 +14,8 @@ export function ContactView() {
     {
       Icon: MailIcon,
       label: t.email,
-      value: "info@jazanheroes.sa",
-      href: "mailto:info@jazanheroes.sa",
+      value: "info@forsa.sa",
+      href: "mailto:info@forsa.sa",
       wrap: "bg-jazan/10 text-jazan",
     },
     {

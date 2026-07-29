@@ -98,7 +98,7 @@ export default function AdminSettingsPage() {
           </div>
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-[13px] font-semibold text-charcoal">البريد الإلكتروني للدعم</label>
-            <input className={inputClass} defaultValue="info@jazanheroes.sa" dir="ltr" />
+            <input className={inputClass} defaultValue="info@forsa.sa" dir="ltr" />
           </div>
         </div>
       </section>
