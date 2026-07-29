@@ -1,13 +1,13 @@
 "use client";
 
 import { Container } from "@/components/ui/Container";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Button } from "@/components/ui/Button";
-import { sponsors } from "@/lib/data";
+import { useSponsors } from "@/lib/sponsors";
 import { useLocale } from "@/lib/i18n";
 
 export function Sponsors() {
   const { d } = useLocale();
+  const sponsors = useSponsors();
   if (sponsors.length === 0) return null;
 
   return (
@@ -25,14 +25,40 @@ export function Sponsors() {
           </div>
 
           <div className="mt-7 grid grid-cols-2 items-center gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {sponsors.map((s) => (
-              <ImagePlaceholder
-                key={s.id}
-                label={d.sponsors.logo}
-                radius={12}
-                className="h-[74px] w-full border border-line"
-              />
-            ))}
+            {sponsors.map((s) => {
+              const logo = s.logo ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={s.logo}
+                  alt={s.name}
+                  className="h-full w-full object-contain p-2"
+                  title={s.name}
+                />
+              ) : (
+                <span className="flex h-full w-full items-center justify-center px-2 text-center text-[13px] font-bold text-muted">
+                  {s.name}
+                </span>
+              );
+              return s.website ? (
+                <a
+                  key={s.id}
+                  href={s.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.name}
+                  className="h-[74px] w-full overflow-hidden rounded-[12px] border border-line bg-cream/50 transition-colors hover:border-jazan"
+                >
+                  {logo}
+                </a>
+              ) : (
+                <div
+                  key={s.id}
+                  className="h-[74px] w-full overflow-hidden rounded-[12px] border border-line bg-cream/50"
+                >
+                  {logo}
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-6 text-center">
