@@ -94,14 +94,22 @@ export function useHeroArt(): { image: string; ready: boolean } {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    // ١) النسخة المخزّنة محلياً تظهر فوراً — بلا انتظار الشبكة إطلاقاً
+    const cached = loadHeroArt();
+    if (cached) {
+      setValue(cached);
+      setReady(true);
+    }
+
     const update = () => setValue(loadHeroArt());
-    update();
     const unsubscribe = onHeroArtChange(update);
+
+    // ٢) التحديث من قاعدة البيانات يجري في الخلفية ولا يُبدَّل إلا عند الاختلاف
     let cancelled = false;
     fetchHeroArtRemote()
       .then((remote) => {
-        if (cancelled) return;
-        if (remote !== null) {
+        if (cancelled || remote === null) return;
+        if (remote !== cached) {
           setValue(remote);
           try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify({ image: remote }));
@@ -113,6 +121,7 @@ export function useHeroArt(): { image: string; ready: boolean } {
       .finally(() => {
         if (!cancelled) setReady(true);
       });
+
     return () => {
       cancelled = true;
       unsubscribe();
