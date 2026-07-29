@@ -182,7 +182,7 @@ export default function AdminSponsorsPage() {
               <img
                 src={logo}
                 alt="معاينة الشعار"
-                className="h-14 w-24 rounded-[10px] border border-line bg-cream object-contain p-1"
+                className="h-[72px] w-auto max-w-[180px] rounded-[10px] border border-line bg-cream object-contain"
               />
               <button
                 type="button"
@@ -195,7 +195,7 @@ export default function AdminSponsorsPage() {
             </span>
           ) : (
             <span className="text-[12px] text-muted">
-              يُفضَّل شعار PNG بخلفية شفافة — يظهر في الصفحة الرئيسية.
+              أي مقاس أو نسبة تعمل — يُعرض بارتفاع موحّد ويتشكّل إطاره حسب شكل شعارك. يُفضَّل PNG بخلفية شفافة.
             </span>
           )}
         </div>
@@ -226,13 +226,13 @@ export default function AdminSponsorsPage() {
             key={s.id}
             className="group overflow-hidden rounded-[16px] border border-line bg-surface transition-[border-color] hover:border-jazan/50"
           >
-            <div className="relative flex h-[120px] items-center justify-center bg-cream p-4">
+            <div className="relative flex h-[120px] items-center justify-center bg-cream">
               {(editId === s.id ? editLogo : s.logo) ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={(editId === s.id ? editLogo : s.logo) as string}
                   alt={s.name}
-                  className="max-h-full max-w-full object-contain"
+                  className="h-full w-auto max-w-full object-contain"
                 />
               ) : (
                 <span className="text-[13px] font-semibold text-muted">{s.name}</span>

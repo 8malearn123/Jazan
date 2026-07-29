@@ -27,15 +27,20 @@ export function Sponsors() {
           {/* توسيط مرن: يبقى متّزناً مع راعٍ واحد أو عشرة */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             {sponsors.map((s) => {
-              const tile =
-                "flex h-[96px] w-[170px] items-center justify-center overflow-hidden rounded-[14px] border border-line bg-cream transition-[border-color,box-shadow,transform]";
+              // الإطار يتشكّل حسب نسبة الشعار: ارتفاع ثابت وعرض تلقائي،
+              // فلا تبقى شرائح فارغة مع الشعارات المربّعة ولا يُقصّ العريض
+              const tile = [
+                "flex h-[96px] items-center justify-center overflow-hidden rounded-[14px]",
+                "border border-line bg-cream transition-[border-color,box-shadow,transform]",
+                s.logo ? "w-auto min-w-[96px] max-w-[240px]" : "w-[170px]",
+              ].join(" ");
               const inner = s.logo ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={s.logo}
                   alt={s.name}
                   title={s.name}
-                  className="h-full w-full object-contain"
+                  className="h-full w-auto max-w-[240px] object-contain"
                 />
               ) : (
                 <span className="line-clamp-2 px-3 text-center text-[14px] font-bold leading-snug text-charcoal">
