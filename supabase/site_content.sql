@@ -1,4 +1,4 @@
--- جدول محتوى الموقع العام (بطل الشهر وغيره)
+-- جدول محتوى الموقع العام (رسمة الواجهة وغيرها)
 -- شغّل هذا الملف مرة واحدة من: Supabase Dashboard → SQL Editor → New query → الصق والصق ثم Run
 
 create table if not exists public.site_content (
@@ -9,20 +9,20 @@ create table if not exists public.site_content (
 
 alter table public.site_content enable row level security;
 
--- القراءة متاحة للجميع (الزوار يشاهدون بطل الشهر)
+-- القراءة متاحة للجميع
 drop policy if exists "site_content_read" on public.site_content;
 create policy "site_content_read"
   on public.site_content for select
   using (true);
 
--- الكتابة مسموحة فقط على مفاتيح محتوى الموقع (بطل الشهر ورسمة الهيرو)
+-- الكتابة مسموحة فقط على مفاتيح محتوى الموقع
 drop policy if exists "site_content_insert" on public.site_content;
 create policy "site_content_insert"
   on public.site_content for insert
-  with check (key in ('hero_month', 'hero_art'));
+  with check (key in ('hero_art'));
 
 drop policy if exists "site_content_update" on public.site_content;
 create policy "site_content_update"
   on public.site_content for update
-  using (key in ('hero_month', 'hero_art'))
-  with check (key in ('hero_month', 'hero_art'));
+  using (key in ('hero_art'))
+  with check (key in ('hero_art'));

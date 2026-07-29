@@ -118,6 +118,7 @@ export type MemberRow = {
   id: string;
   name: string;
   email?: string;
+  publishStatus?: string;
   role: UserRole;
   city?: string;
   verified: boolean;
@@ -132,6 +133,7 @@ export function rowToMember(row: ProfileRow): MemberRow {
     role: row.role,
     city: row.city ?? undefined,
     verified: !!row.verified,
+    publishStatus: row.publish_status ?? undefined,
     createdAt: row.created_at,
   };
 }

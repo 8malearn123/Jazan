@@ -55,29 +55,6 @@ function HomeIcon({ className }: { className?: string }) {
   );
 }
 
-function TrophyIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      width="19"
-      height="19"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-      <path d="M4 22h16" />
-      <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-      <path d="M14 14.66V17c0 .55.47.98.97 1.21 1.18.54 2.03 2.03 2.03 3.79" />
-      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-    </svg>
-  );
-}
-
 function ShieldIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -145,7 +122,6 @@ type NavItem = {
 const navItems: NavItem[] = [
   { href: "/admin", label: "لوحة المعلومات", icon: GridIcon },
   { href: "/admin/landing", label: "الصفحة الرئيسية", icon: HomeIcon },
-  { href: "/admin/hero-month", label: "بطل الشهر", icon: TrophyIcon },
   { href: "/admin/verifications", label: "مراجعة الملفات", icon: ShieldIcon, badge: counts.pending },
   { href: "/admin/users", label: "المستخدمون", icon: UsersIcon },
   { href: "/admin/companies", label: "الشركات", icon: BuildingIcon },
@@ -208,7 +184,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
               "flex items-center gap-3 rounded-[11px] px-[13px] py-[11px] text-sm no-underline transition-colors duration-[200ms]",
               active
                 ? "bg-white/[.08] font-semibold text-white"
-                : "font-medium text-white/70 hover:bg-[#23332E]"
+                : "font-medium text-white/70 hover:bg-[#332B27]"
             )}
           >
             <Icon className={cn("h-[18px] w-[18px] shrink-0", active && "text-amber")} />
@@ -229,19 +205,8 @@ function SidebarHeader() {
   return (
     <div className="flex items-center gap-[10px] px-2 pb-2">
       <span className="flex h-9 w-9 items-center justify-center rounded-[11px] bg-jazan">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.1}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-amber"
-        >
-          <path d="M12 2l2.4 6.6L21 9.3l-5 4.3 1.6 6.9L12 16.9 6.4 20.5 8 13.6l-5-4.3 6.6-.7z" />
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/arrows-white.svg" alt="" aria-hidden className="h-[21px] w-[21px]" />
       </span>
       <div>
         <div className="text-[15px] font-extrabold text-white">فرصة</div>
@@ -253,7 +218,7 @@ function SidebarHeader() {
 
 export function AdminSidebar() {
   return (
-    <aside className="hidden w-[250px] flex-none flex-col bg-[#1c2a26] px-4 py-[22px] lg:flex">
+    <aside className="hidden w-[250px] flex-none flex-col bg-[#26201d] px-4 py-[22px] lg:flex">
       <SidebarHeader />
       <div className="my-[14px] h-px bg-white/[.08]" />
       <NavLinks />
@@ -293,7 +258,7 @@ export function AdminMobileNav() {
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-black/40"
           />
-          <div className="absolute inset-y-0 end-0 flex w-[260px] flex-col bg-[#1c2a26] px-4 py-[22px] shadow-2xl">
+          <div className="absolute inset-y-0 end-0 flex w-[260px] flex-col bg-[#26201d] px-4 py-[22px] shadow-2xl">
             <div className="flex items-center justify-between">
               <SidebarHeader />
               <button
