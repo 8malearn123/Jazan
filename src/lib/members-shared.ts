@@ -61,7 +61,7 @@ export function rowToHero(row: ProfileRow): Hero {
   return {
     id: row.id,
     name: row.name?.trim() || "عضو جديد",
-    title: hp?.title?.trim() || "بطل من أبطال جازان",
+    title: hp?.title?.trim() || "باحث عن فرص من جازان",
     city: row.city?.trim() || "جازان",
     status,
     skills: hp?.skills ?? [],

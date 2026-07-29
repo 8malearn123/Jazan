@@ -3,7 +3,7 @@ import { ContactView } from "./ContactView";
 
 export const metadata: Metadata = {
   title: "تواصل معنا",
-  description: "تواصل مع فريق منصة أبطال جازان عبر البريد أو واتساب.",
+  description: "تواصل مع فريق منصة فرصة عبر البريد أو واتساب.",
 };
 
 export default function ContactPage() {

@@ -108,7 +108,7 @@ export default function PostsPage() {
           onChange={(e) => setContent(e.target.value)}
           rows={4}
           placeholder="بمَ تشارك مجتمع جازان اليوم؟ إنجاز جديد، مشروع أنهيته، خبر يسرّ عملاءك…"
-          className="w-full resize-none rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[14.5px] leading-[1.8] text-charcoal outline-none transition-[border-color,box-shadow] placeholder:text-muted/60 focus:border-jazan focus:shadow-[0_0_0_3px_rgba(15,92,74,.12)]"
+          className="w-full resize-none rounded-xl border-[1.5px] border-line bg-surface px-4 py-3 text-[14.5px] leading-[1.8] text-charcoal outline-none transition-[border-color,box-shadow] placeholder:text-muted/60 focus:border-jazan focus:shadow-[0_0_0_3px_rgba(166,63,43,.12)]"
         />
 
         {image ? (

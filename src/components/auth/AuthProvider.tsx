@@ -179,7 +179,7 @@ export function useAuth(): AuthContextValue {
 }
 
 export const roleLabels: Record<UserRole, string> = {
-  hero: "بطل / مستقل",
+  hero: "باحث عن فرص",
   producer: "أسرة منتجة",
   company: "شركة / جهة",
   admin: "مشرف",

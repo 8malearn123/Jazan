@@ -7,12 +7,12 @@ const STORAGE_KEY = "jazanheroes.locale";
 
 const ar = {
   header: {
-    browse: "تصفّح الأبطال",
+    browse: "تصفّح الباحثين عن فرص",
     producers: "الأسر المنتجة",
     companies: "للشركات",
     how: "كيف تعمل",
     login: "تسجيل الدخول",
-    join: "انضم كبطل",
+    join: "انضم الآن",
     dashboard: "لوحة التحكم",
     adminPanel: "لوحة المشرف",
     hello: "أهلاً،",
@@ -31,12 +31,12 @@ const ar = {
   },
   fab: "تواصل عبر واتساب",
   stats: {
-    heroes: "بطل مسجّل",
+    heroes: "باحث عن فرص",
     producers: "أسرة منتجة",
     companies: "شركة وجهة",
   },
   hero: {
-    tagline: "منصة جازان المجتمعية للمواهب",
+    tagline: "فرصتك لها مكان",
     title1: "مواهب جازان",
     title2: "تلتقي بالفرص الحقيقية",
     desc: "منصة محلية تربط المستقلين والباحثين عن عمل، والأسر المنتجة والصُنّاع، بالشركات والجهات — تواصل مباشر بضغطة زر.",
@@ -74,9 +74,9 @@ const ar = {
     ],
   },
   sample: {
-    kicker: "عيّنة من الأبطال",
+    kicker: "عيّنة من الباحثين عن فرص",
     title: "مواهب من قلب المنطقة",
-    browseAll: "تصفّح كل الأبطال ←",
+    browseAll: "تصفّح كل الباحثين عن فرص ←",
   },
   partners: {
     kicker: "الشركاء",
@@ -89,18 +89,18 @@ const ar = {
   },
   sponsors: {
     kicker: "الرعاة",
-    title: "بدعمٍ من رعاة مبادرة أبطال جازان",
+    title: "بدعمٍ من رعاة مبادرة فرصة",
     desc: "جهات ساهمت في رعاية المنصة ودعمها تسويقياً لتمكين مواهب المنطقة.",
     logo: "شعار راعٍ",
     become: "كن راعياً للمنصة",
   },
   cta: {
-    title: "جاهز تكون من أبطال جازان؟",
+    title: "جاهز تكون من فرصة؟",
     desc: "سجّل مجاناً وابنِ صفحتك خلال دقائق.",
-    join: "انضم كبطل الآن",
+    join: "انضم الآن الآن",
   },
   tabs: {
-    heroes: "الأبطال",
+    heroes: "الباحثون عن فرص",
     producers: "الأسر المنتجة",
     jobs: "الوظائف",
   },
@@ -108,10 +108,10 @@ const ar = {
     open: "خريطة جازان",
     title: "خريطة محافظات جازان",
     subtitle: "مرّر أو اضغط على أي محافظة لعرض إحصائياتها",
-    heroes: "أبطال",
+    heroes: "باحثون عن فرص",
     producers: "أسر منتجة",
     companies: "شركات",
-    empty: "لا يوجد مسجّلون من هذه المحافظة بعد — كن أول الأبطال!",
+    empty: "لا يوجد مسجّلون من هذه المحافظة بعد — كن أول الباحثين عن الفرص!",
     close: "إغلاق",
     clickHint: "اضغط لعرض الحسابات",
     membersIn: "المسجّلون في",
@@ -119,9 +119,9 @@ const ar = {
     backToMap: "رجوع للخريطة",
   },
   browse: {
-    title: "تصفّح أبطال جازان",
+    title: "تصفّح فرصة",
     subtitlePrefix: "مطوّرون، مصمّمون، كتّاب ومواهب من قلب المنطقة — ",
-    subtitleSuffix: " بطل.",
+    subtitleSuffix: " باحث عن فرص.",
     searchPh: "ابحث بالاسم، المهارة، المنتج أو الوظيفة…",
     alsoProducers: "أسر منتجة تقدّم ما تبحث عنه",
     alsoCompanies: "شركات وفرص توظيف مطابقة",
@@ -222,7 +222,7 @@ const ar = {
     backToLogin: "العودة لتسجيل الدخول",
   },
   demo: {
-    hero: { label: "بطل / مستقل", hint: "مطوّر واجهات أمامية" },
+    hero: { label: "باحث عن فرص", hint: "مطوّر واجهات أمامية" },
     producer: { label: "أسرة منتجة", hint: "أكلات جازانية منزلية" },
     company: { label: "شركة / جهة", hint: "تطوير برمجيات" },
     admin: { label: "الإدارة العامة", hint: "لوحة المشرف" },
@@ -239,7 +239,7 @@ const ar = {
     "عطور": "عطور",
   } as Record<string, string>,
   heroPage: {
-    back: "رجوع لتصفّح الأبطال",
+    back: "رجوع لتصفّح الباحثين عن فرص",
     cvBtn: "السيرة الذاتية",
     portfolio: "معرض الأعمال",
     works: "أعمال",
@@ -314,12 +314,12 @@ const ar = {
   faqPage: {
     kicker: "مركز المساعدة",
     title: "الأسئلة الشائعة",
-    desc: "إجابات سريعة لأكثر ما يسأل عنه أبطالنا وشركاؤنا.",
+    desc: "إجابات سريعة لأكثر ما يسأل عنه أعضاؤنا وشركاؤنا.",
     items: [
-      { q: "ما هي منصة أبطال جازان؟", a: "منصة مجتمعية محلية تربط مواهب منطقة جازان — المستقلين والباحثين عن عمل، والأسر المنتجة والصُنّاع — بالشركات والجهات والعملاء، عبر تواصل مباشر بضغطة زر." },
-      { q: "هل التسجيل في المنصة مجاني؟", a: "نعم، التسجيل وإنشاء ملفك التعريفي مجاني تماماً سواء كنت بطلاً أو أسرة منتجة أو شركة." },
-      { q: "كيف أُسجّل كبطل أو مستقل؟", a: "اضغط على «انضم كبطل»، اختر دورك (مستقل / أسرة منتجة / شركة)، ثم أكمل بياناتك وابنِ صفحتك الاحترافية في دقائق." },
-      { q: "كيف أتواصل مع بطل أو أسرة منتجة؟", a: "كل ملف يحتوي زر «تواصل عبر واتساب» يفتح محادثة مباشرة مع صاحب الملف — التواصل والاتفاق يتم بينكما مباشرة." },
+      { q: "ما هي منصة فرصة؟", a: "منصة مجتمعية محلية تربط مواهب منطقة جازان — المستقلين والباحثين عن عمل، والأسر المنتجة والصُنّاع — بالشركات والجهات والعملاء، عبر تواصل مباشر بضغطة زر." },
+      { q: "هل التسجيل في المنصة مجاني؟", a: "نعم، التسجيل وإنشاء ملفك التعريفي مجاني تماماً سواء كنت باحثاً عن فرصة أو أسرة منتجة أو شركة." },
+      { q: "كيف أُسجّل كباحث عن فرصة أو مستقل؟", a: "اضغط على «انضم الآن»، اختر دورك (مستقل / أسرة منتجة / شركة)، ثم أكمل بياناتك وابنِ صفحتك الاحترافية في دقائق." },
+      { q: "كيف أتواصل مع باحث عن فرص أو أسرة منتجة؟", a: "كل ملف يحتوي زر «تواصل عبر واتساب» يفتح محادثة مباشرة مع صاحب الملف — التواصل والاتفاق يتم بينكما مباشرة." },
       { q: "كيف توثّق المنصة الشركات والجهات؟", a: "تمرّ الشركات بمراجعة من فريق المنصة قبل ظهور شارة «موثّقة»، لضمان مصداقية الفرص المنشورة." },
       { q: "أنا صاحب أسرة منتجة، كيف أعرض منتجاتي؟", a: "سجّل كـ«أسرة منتجة»، ثم أضف منتجاتك بالصور والأسعار من لوحة التحكم، وسيتمكّن العملاء من طلبها عبر واتساب." },
       { q: "كيف أنشر وظيفة كشركة؟", a: "سجّل حساب شركة، ثم انشر فرصك الوظيفية من لوحة التحكم وتابع المتقدمين وتواصل معهم مباشرة." },
@@ -352,7 +352,7 @@ const ar = {
     title: "سياسة الخصوصية",
     updated: "آخر تحديث:",
     sections: [
-      { title: "مقدمة", body: "نحن في منصة أبطال جازان نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضّح هذه السياسة كيف نجمع معلوماتك ونستخدمها ونحميها عند استخدامك للمنصة." },
+      { title: "مقدمة", body: "نحن في منصة فرصة نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضّح هذه السياسة كيف نجمع معلوماتك ونستخدمها ونحميها عند استخدامك للمنصة." },
       { title: "المعلومات التي نجمعها", body: "نجمع المعلومات التي تزوّدنا بها عند إنشاء حسابك مثل الاسم والبريد الإلكتروني ورقم التواصل والمدينة والمهارات أو المنتجات التي تعرضها، إضافة إلى بيانات الاستخدام الأساسية لتحسين تجربتك." },
       { title: "كيف نستخدم معلوماتك", body: "نستخدم معلوماتك لإنشاء ملفك التعريفي وعرضه للزوار، وتمكين التواصل المباشر بينك وبين الأطراف الأخرى، وتحسين خدمات المنصة وأمانها." },
       { title: "مشاركة المعلومات", body: "لا نبيع بياناتك الشخصية. تظهر معلومات ملفك العامة (كالاسم والتخصص والمدينة) للزوار بهدف الربط، بينما تبقى بياناتك الحساسة محمية ولا تُشارك مع جهات خارجية إلا بموافقتك أو حسب ما يقتضيه النظام." },
@@ -366,8 +366,8 @@ const ar = {
     title: "شروط الاستخدام",
     updated: "آخر تحديث:",
     sections: [
-      { title: "قبول الشروط", body: "باستخدامك منصة أبطال جازان فأنت توافق على هذه الشروط. إن لم توافق على أي بند منها، يرجى عدم استخدام المنصة." },
-      { title: "طبيعة المنصة", body: "أبطال جازان منصة ربط مجتمعية تعرض ملفات المستقلين والباحثين عن عمل والأسر المنتجة والشركات في منطقة جازان، وتتيح التواصل المباشر بين الأطراف عبر واتساب. المنصة ليست طرفاً في أي اتفاق أو تعامل يتم بين المستخدمين." },
+      { title: "قبول الشروط", body: "باستخدامك منصة فرصة فأنت توافق على هذه الشروط. إن لم توافق على أي بند منها، يرجى عدم استخدام المنصة." },
+      { title: "طبيعة المنصة", body: "فرصة منصة ربط مجتمعية تعرض ملفات المستقلين والباحثين عن عمل والأسر المنتجة والشركات في منطقة جازان، وتتيح التواصل المباشر بين الأطراف عبر واتساب. المنصة ليست طرفاً في أي اتفاق أو تعامل يتم بين المستخدمين." },
       { title: "الحسابات والمعلومات", body: "أنت مسؤول عن صحة المعلومات التي تعرضها في ملفك، وعن الحفاظ على سرية بيانات دخولك. يحق للمنصة إيقاف أو حذف أي حساب يعرض معلومات مضلّلة أو محتوى مخالفاً." },
       { title: "الاستخدام المقبول", body: "يُمنع استخدام المنصة لأي غرض غير نظامي، أو نشر محتوى مسيء أو مخالف للأنظمة المعمول بها في المملكة العربية السعودية، أو انتحال صفة الغير، أو إساءة استخدام بيانات التواصل المعروضة." },
       { title: "التوثيق", body: "شارة «موثّق» تعني أن فريق المنصة راجع بيانات الحساب الأساسية، ولا تُعد ضماناً لجودة الخدمة أو المنتج. ننصح دائماً بالتحقّق والاتفاق الواضح قبل أي تعامل." },
@@ -379,9 +379,9 @@ const ar = {
   sponsorPage: {
     kicker: "برنامج الرعاية",
     title: "كن جزءاً من تمكين مواهب جازان",
-    desc: "انضم لرعاة مبادرة أبطال جازان وادعم المستقلين والأسر المنتجة والشركات المحلية.",
+    desc: "انضم لرعاة مبادرة فرصة وادعم المستقلين والأسر المنتجة والشركات المحلية.",
     cta: "تواصل لرعاية المنصة",
-    whyTitle: "لماذا ترعى أبطال جازان؟",
+    whyTitle: "لماذا ترعى فرصة؟",
     benefits: [
       { title: "وصول لمجتمع محلي", desc: "علامتك التجارية أمام مئات المواهب والأسر والشركات في منطقة جازان." },
       { title: "ظهور مميّز", desc: "شعارك في قسم الرعاة على الصفحة الرئيسية وصفحات المنصة." },
@@ -428,12 +428,12 @@ export type Dict = typeof ar;
 
 const en: Dict = {
   header: {
-    browse: "Browse Heroes",
+    browse: "Browse Seekers",
     producers: "Producer Families",
     companies: "For Companies",
     how: "How It Works",
     login: "Log in",
-    join: "Join as a Hero",
+    join: "Join now",
     dashboard: "Dashboard",
     adminPanel: "Admin Panel",
     hello: "Hi,",
@@ -452,12 +452,12 @@ const en: Dict = {
   },
   fab: "Chat on WhatsApp",
   stats: {
-    heroes: "Registered heroes",
+    heroes: "Registered seekers",
     producers: "Producer families",
     companies: "Companies",
   },
   hero: {
-    tagline: "Jazan's community talent platform",
+    tagline: "Your opportunity has a place",
     title1: "Jazan's talents",
     title2: "meet real opportunities",
     desc: "A local platform connecting freelancers, job seekers, producer families and artisans with companies — direct contact in one click.",
@@ -510,7 +510,7 @@ const en: Dict = {
   },
   sponsors: {
     kicker: "Sponsors",
-    title: "Backed by the sponsors of Jazan Heroes",
+    title: "Backed by the sponsors of Forsa",
     desc: "Organizations that sponsored and promoted the platform to empower local talent.",
     logo: "Sponsor logo",
     become: "Become a sponsor",
@@ -518,10 +518,10 @@ const en: Dict = {
   cta: {
     title: "Ready to become a Jazan Hero?",
     desc: "Sign up for free and build your page in minutes.",
-    join: "Join as a Hero now",
+    join: "Join now now",
   },
   tabs: {
-    heroes: "Heroes",
+    heroes: "Seekers",
     producers: "Producers",
     jobs: "Jobs",
   },
@@ -529,7 +529,7 @@ const en: Dict = {
     open: "Jazan map",
     title: "Jazan Governorates Map",
     subtitle: "Hover or tap any governorate to see its stats",
-    heroes: "Heroes",
+    heroes: "Seekers",
     producers: "Producers",
     companies: "Companies",
     empty: "No registered members from this governorate yet — be the first!",
@@ -540,7 +540,7 @@ const en: Dict = {
     backToMap: "Back to map",
   },
   browse: {
-    title: "Browse Jazan Heroes",
+    title: "Browse opportunity seekers",
     subtitlePrefix: "Developers, designers, writers and talents from the region — ",
     subtitleSuffix: " heroes.",
     searchPh: "Search by name, skill, product or job…",
@@ -737,10 +737,10 @@ const en: Dict = {
     title: "Frequently Asked Questions",
     desc: "Quick answers to what our heroes and partners ask most.",
     items: [
-      { q: "What is Jazan Heroes?", a: "A local community platform connecting Jazan's talents — freelancers, job seekers, producer families and artisans — with companies, organizations and customers, through direct one-click contact." },
+      { q: "What is Forsa?", a: "A local community platform connecting Jazan's talents — freelancers, job seekers, producer families and artisans — with companies, organizations and customers, through direct one-click contact." },
       { q: "Is registration free?", a: "Yes, signing up and creating your profile is completely free whether you're a hero, a producer family, or a company." },
-      { q: "How do I sign up as a hero or freelancer?", a: "Click \"Join as a Hero\", choose your role (freelancer / producer family / company), then complete your details and build your professional page in minutes." },
-      { q: "How do I contact a hero or a producer family?", a: "Every profile has a \"Chat on WhatsApp\" button that opens a direct conversation with the profile owner — communication and agreements happen directly between you." },
+      { q: "How do I sign up as a seeker or freelancer?", a: "Click \"Join now\", choose your role (freelancer / producer family / company), then complete your details and build your professional page in minutes." },
+      { q: "How do I contact a seeker or a producer family?", a: "Every profile has a \"Chat on WhatsApp\" button that opens a direct conversation with the profile owner — communication and agreements happen directly between you." },
       { q: "How does the platform verify companies?", a: "Companies go through a review by the platform team before the \"Verified\" badge appears, to ensure the credibility of posted opportunities." },
       { q: "I run a producer family business — how do I showcase my products?", a: "Register as a \"Producer family\", then add your products with photos and prices from your dashboard, and customers can order them via WhatsApp." },
       { q: "How do I post a job as a company?", a: "Create a company account, post your openings from the dashboard, track applicants, and contact them directly." },
@@ -773,7 +773,7 @@ const en: Dict = {
     title: "Privacy Policy",
     updated: "Last updated:",
     sections: [
-      { title: "Introduction", body: "At Jazan Heroes we respect your privacy and are committed to protecting your personal data. This policy explains how we collect, use, and protect your information when you use the platform." },
+      { title: "Introduction", body: "At Forsa we respect your privacy and are committed to protecting your personal data. This policy explains how we collect, use, and protect your information when you use the platform." },
       { title: "Information we collect", body: "We collect the information you provide when creating your account such as your name, email, contact number, city, and the skills or products you showcase, in addition to basic usage data to improve your experience." },
       { title: "How we use your information", body: "We use your information to create and display your public profile, enable direct contact between you and other parties, and improve the platform's services and security." },
       { title: "Sharing information", body: "We do not sell your personal data. Your public profile details (such as name, specialty, and city) are visible to visitors for connection purposes, while your sensitive data remains protected and is not shared with third parties except with your consent or as required by law." },
@@ -787,8 +787,8 @@ const en: Dict = {
     title: "Terms of Use",
     updated: "Last updated:",
     sections: [
-      { title: "Acceptance of terms", body: "By using Jazan Heroes you agree to these terms. If you do not agree with any clause, please do not use the platform." },
-      { title: "Nature of the platform", body: "Jazan Heroes is a community connection platform showcasing the profiles of freelancers, job seekers, producer families and companies in the Jazan region, enabling direct contact between parties via WhatsApp. The platform is not a party to any agreement or transaction between users." },
+      { title: "Acceptance of terms", body: "By using Forsa you agree to these terms. If you do not agree with any clause, please do not use the platform." },
+      { title: "Nature of the platform", body: "Forsa is a community connection platform showcasing the profiles of freelancers, job seekers, producer families and companies in the Jazan region, enabling direct contact between parties via WhatsApp. The platform is not a party to any agreement or transaction between users." },
       { title: "Accounts and information", body: "You are responsible for the accuracy of the information on your profile and for keeping your login credentials confidential. The platform may suspend or delete any account presenting misleading information or violating content." },
       { title: "Acceptable use", body: "Using the platform for any unlawful purpose, posting offensive content or content violating the laws of Saudi Arabia, impersonating others, or misusing displayed contact information is prohibited." },
       { title: "Verification", body: "The \"Verified\" badge means the platform team reviewed the account's basic information; it is not a guarantee of service or product quality. We always recommend verifying and agreeing clearly before any transaction." },
@@ -800,9 +800,9 @@ const en: Dict = {
   sponsorPage: {
     kicker: "Sponsorship Program",
     title: "Be part of empowering Jazan's talents",
-    desc: "Join the sponsors of the Jazan Heroes initiative and support local freelancers, producer families, and companies.",
+    desc: "Join the sponsors of the Forsa initiative and support local freelancers, producer families, and companies.",
     cta: "Contact us to sponsor",
-    whyTitle: "Why sponsor Jazan Heroes?",
+    whyTitle: "Why sponsor Forsa?",
     benefits: [
       { title: "Reach a local community", desc: "Your brand in front of hundreds of talents, families, and companies in the Jazan region." },
       { title: "Premium visibility", desc: "Your logo in the sponsors section on the homepage and across the platform." },

@@ -24,7 +24,7 @@ export function ProfileHeader({ hero }: { hero: Hero }) {
   const photos = usePublicPhotos(hero.id);
   const wa = whatsappLink(
     hero.whatsapp ?? site.whatsapp,
-    `مرحباً ${hero.name}، شفت ملفك في أبطال جازان`
+    `مرحباً ${hero.name}، شفت ملفك في فرصة`
   );
 
   return (

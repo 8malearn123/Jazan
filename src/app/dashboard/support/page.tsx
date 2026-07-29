@@ -59,7 +59,7 @@ export default function SupportPage() {
 
   const waHref = whatsappLink(
     site.whatsapp,
-    `السلام عليكم، أحتاج مساعدة من إدارة أبطال جازان — ${topic}`
+    `السلام عليكم، أحتاج مساعدة من إدارة فرصة — ${topic}`
   );
 
   return (

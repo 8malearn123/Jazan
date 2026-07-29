@@ -78,7 +78,7 @@ export function HeroBrowseCard({ hero }: { hero: Hero }) {
             {d.cards.viewProfile}
           </Link>
           <a
-            href={whatsappLink(hero.whatsapp ?? site.whatsapp, `مرحباً ${hero.name}، شفت ملفك في أبطال جازان`)}
+            href={whatsappLink(hero.whatsapp ?? site.whatsapp, `مرحباً ${hero.name}، شفت ملفك في فرصة`)}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`تواصل مع ${hero.name} عبر واتساب`}

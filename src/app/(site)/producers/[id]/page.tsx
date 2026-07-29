@@ -17,9 +17,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const producer = getProducer(id) ?? (await getDbProducer(id));
-  if (!producer) return { title: "غير موجود — أبطال جازان" };
+  if (!producer) return { title: "غير موجود — فرصة" };
   return {
-    title: `${producer.name} — أبطال جازان`,
+    title: `${producer.name} — فرصة`,
     description: producer.bio ?? `${producer.category} · ${producer.city}`,
   };
 }

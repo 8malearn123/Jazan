@@ -10,7 +10,7 @@ export type LandingContent = {
 };
 
 export const defaultLanding: LandingContent = {
-  tagline: "منصة جازان المجتمعية للمواهب",
+  tagline: "فرصتك لها مكان",
   title1: "مواهب جازان",
   title2: "تلتقي بالفرص الحقيقية",
   desc: "منصة محلية تربط المستقلين والباحثين عن عمل، والأسر المنتجة والصُنّاع، بالشركات والجهات — تواصل مباشر بضغطة زر.",

@@ -6,7 +6,7 @@ import { CompaniesClient } from "./CompaniesClient";
 import { CompaniesIntro } from "./CompaniesIntro";
 
 export const metadata: Metadata = {
-  title: "الوظائف والشركات · أبطال جازان",
+  title: "الوظائف والشركات · فرصة",
   description:
     "فرص عمل من شركات وجهات منطقة جازان — تصفّح الشركات الموثّقة وأحدث الوظائف وتقدّم مباشرة.",
 };

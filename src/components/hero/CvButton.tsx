@@ -11,7 +11,7 @@ function esc(s: string): string {
 
 function stars(rating: number): string {
   const full = Math.round(rating);
-  return `<span style="color:#e8932e;letter-spacing:2px;">${"★".repeat(full)}</span><span style="color:#d9d5cc;letter-spacing:2px;">${"★".repeat(5 - full)}</span>`;
+  return `<span style="color:#72a98f;letter-spacing:2px;">${"★".repeat(full)}</span><span style="color:#d9d5cc;letter-spacing:2px;">${"★".repeat(5 - full)}</span>`;
 }
 
 function buildCv(hero: Hero): string {
@@ -42,25 +42,25 @@ function buildCv(hero: Hero): string {
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Alexandria',system-ui,sans-serif;color:#1c2a26;background:#fff;padding:32px 36px;font-size:13px;line-height:1.8}
-  .head{display:flex;justify-content:space-between;align-items:center;background:#0f5c4a;color:#fff;border-radius:16px;padding:20px 24px}
+  .head{display:flex;justify-content:space-between;align-items:center;background:#a63f2b;color:#fff;border-radius:16px;padding:20px 24px}
   .head .brand{font-size:18px;font-weight:800}
-  .head .brand span{color:#e8932e}
+  .head .brand span{color:#72a98f}
   .head .meta{font-size:11px;opacity:.85}
   h1{font-size:26px;font-weight:800;margin-top:24px}
   .sub{color:#4a5550;font-size:15px;margin-top:2px}
   .meta-row{color:#6b7770;font-size:12px;margin-top:8px}
-  h2{font-size:15px;font-weight:800;margin:24px 0 10px;color:#0f5c4a;border-bottom:2px solid #e7e2d9;padding-bottom:6px}
+  h2{font-size:15px;font-weight:800;margin:24px 0 10px;color:#a63f2b;border-bottom:2px solid #e7e2d9;padding-bottom:6px}
   .tag{display:inline-block;background:#f3f0e9;border-radius:8px;padding:3px 12px;font-size:12px;margin:0 0 6px 6px;font-weight:600}
   ul{padding-inline-start:22px}
   li{margin-bottom:4px}
   .grid{display:flex;gap:12px}
   .cell{flex:1;border:1.5px solid #e7e2d9;border-radius:14px;padding:12px 16px;text-align:center}
-  .cell .v{font-size:20px;font-weight:800;color:#0f5c4a}
+  .cell .v{font-size:20px;font-weight:800;color:#a63f2b}
   .cell .l{color:#6b7770;font-size:11px}
   .review{border:1.5px solid #e7e2d9;border-radius:12px;padding:12px 14px;margin-bottom:10px}
   .review .a{font-weight:800}
   .foot{margin-top:28px;padding-top:12px;border-top:1px solid #e7e2d9;color:#6b7770;font-size:11px;display:flex;justify-content:space-between}
-  .print-btn{position:fixed;bottom:20px;inset-inline-start:20px;background:#0f5c4a;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 8px 22px rgba(15,92,74,.35)}
+  .print-btn{position:fixed;bottom:20px;inset-inline-start:20px;background:#a63f2b;color:#fff;border:0;border-radius:12px;padding:12px 22px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 8px 22px rgba(166,63,43,.35)}
   @media print{body{padding:0} .print-btn{display:none} .head{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>

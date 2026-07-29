@@ -192,8 +192,8 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-        <StatCard label="إجمالي الأبطال" value={live.heroes} accent="#0F5C4A" dot="bg-jazan" />
-        <StatCard label="الأسر المنتجة" value={live.producers} accent="#E8932E" dot="bg-amber" />
+        <StatCard label="إجمالي الأبطال" value={live.heroes} accent="#A63F2B" dot="bg-jazan" />
+        <StatCard label="الأسر المنتجة" value={live.producers} accent="#72A98F" dot="bg-amber" />
         <StatCard label="الشركات" value={live.companies} accent="#2D7FF9" dot="bg-info" />
         <StatCard label="طلبات التوثيق المعلّقة" value={pending.length} accent="#F59E0B" dot="bg-warn" />
       </div>

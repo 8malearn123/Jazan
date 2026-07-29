@@ -232,7 +232,7 @@ function SidebarHeader() {
         </svg>
       </span>
       <div>
-        <div className="text-[15px] font-extrabold text-white">أبطال جازان</div>
+        <div className="text-[15px] font-extrabold text-white">فرصة</div>
         <div className="text-[11px] text-white/50">لوحة التشغيل</div>
       </div>
     </div>

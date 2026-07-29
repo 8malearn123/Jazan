@@ -3,7 +3,7 @@ import { PrivacyView } from "./PrivacyView";
 
 export const metadata: Metadata = {
   title: "سياسة الخصوصية",
-  description: "سياسة الخصوصية لمنصة أبطال جازان.",
+  description: "سياسة الخصوصية لمنصة فرصة.",
 };
 
 export default function PrivacyPage() {

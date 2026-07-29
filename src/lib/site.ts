@@ -1,6 +1,6 @@
 export const site = {
-  name: "أبطال جازان",
-  tagline: "منصة جازان المجتمعية للمواهب",
+  name: "فرصة",
+  tagline: "فرصتك لها مكان",
   description:
     "منصة محلية تربط المستقلين والباحثين عن عمل، والأسر المنتجة والصُنّاع، بالشركات والجهات — تواصل مباشر بضغطة زر.",
   url: "https://jazan.vercel.app",
@@ -9,7 +9,7 @@ export const site = {
 } as const;
 
 export const navLinks = [
-  { label: "تصفّح الأبطال", href: "/browse" },
+  { label: "تصفّح الباحثين عن فرص", href: "/browse" },
   { label: "للشركات", href: "/companies" },
   { label: "كيف تعمل", href: "/#how-it-works" },
 ] as const;

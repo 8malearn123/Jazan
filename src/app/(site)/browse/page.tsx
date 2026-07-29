@@ -6,9 +6,9 @@ import { BrowseClient } from "./BrowseClient";
 import { BrowseIntro } from "./BrowseIntro";
 
 export const metadata: Metadata = {
-  title: "تصفّح الأبطال · أبطال جازان",
+  title: "تصفّح الباحثين عن فرص · فرصة",
   description:
-    "مطوّرون، مصمّمون، كتّاب ومواهب من قلب منطقة جازان — تصفّح الأبطال وتواصل مباشرة.",
+    "مطوّرون، مصمّمون، كتّاب ومواهب من قلب منطقة جازان — تصفّح الباحثين عن فرص وتواصل مباشرة.",
 };
 
 export default async function BrowseHeroesPage({

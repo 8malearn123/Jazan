@@ -3,7 +3,7 @@ import { SponsorView } from "./SponsorView";
 
 export const metadata: Metadata = {
   title: "كن راعياً",
-  description: "ادعم مواهب جازان وكن راعياً لمنصة أبطال جازان.",
+  description: "ادعم مواهب جازان وكن راعياً لمنصة فرصة.",
 };
 
 export default function SponsorPage() {
