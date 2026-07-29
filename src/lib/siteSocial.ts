@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { site } from "./site";
 
 export type SiteSocialLinks = {
   whatsapp: string;
@@ -12,10 +11,12 @@ export type SiteSocialLinks = {
 const STORAGE_KEY = "jazanheroes.site.social";
 const CHANGE_EVENT = "jazanheroes:site-social";
 
+// لا حسابات رسمية بعد — يضيفها المدير من: لوحة المدير ← الإعدادات،
+// وعندها يظهر قسم «تابعنا» في التذييل تلقائياً
 export const defaultSiteSocial: SiteSocialLinks = {
-  whatsapp: `https://wa.me/${site.whatsapp}`,
-  instagram: "https://instagram.com/jazanheroes",
-  youtube: "https://youtube.com/@jazanheroes",
+  whatsapp: "",
+  instagram: "",
+  youtube: "",
 };
 
 export function loadSiteSocial(): SiteSocialLinks {

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { cn } from "@/lib/cn";
 import { WhatsappIcon, InstagramIcon, YoutubeIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 import { useLocale } from "@/lib/i18n";
@@ -40,7 +41,12 @@ export function SiteFooter() {
   return (
     <footer className="bg-[#26201d] px-5 pb-8 pt-12 sm:px-8">
       <div className="mx-auto w-full max-w-7xl">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div
+          className={cn(
+            "grid grid-cols-2 gap-10",
+            socials.length > 0 ? "md:grid-cols-[1.5fr_1fr_1fr_1fr]" : "md:grid-cols-[1.6fr_1fr_1fr]"
+          )}
+        >
           <div className="col-span-2 md:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/forsa-logo-white.svg" alt="فرصة — FORSA" className="h-[52px] w-auto" />
@@ -66,24 +72,26 @@ export function SiteFooter() {
             </div>
           ))}
 
-          <div>
-            <div className="mb-4 text-sm font-bold text-white">{d.footer.follow}</div>
-            <div className="flex gap-3">
-              {socials.map(({ label, Icon, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  title={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-[11px] bg-white/[.08] text-white/70 transition-colors hover:bg-white/[.16]"
-                >
-                  <Icon width={19} height={19} />
-                </a>
-              ))}
+          {socials.length > 0 ? (
+            <div>
+              <div className="mb-4 text-sm font-bold text-white">{d.footer.follow}</div>
+              <div className="flex gap-3">
+                {socials.map(({ label, Icon, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    title={label}
+                    className="flex h-10 w-10 items-center justify-center rounded-[11px] bg-white/[.08] text-white/70 transition-colors hover:bg-white/[.16]"
+                  >
+                    <Icon width={19} height={19} />
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
 
         <div className="mt-9 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-white/45 sm:flex-row">
